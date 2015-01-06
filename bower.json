@@ -1,0 +1,37 @@
+{
+  "name": "tamago",
+  "version": "0.0.0",
+  "homepage": "https://github.com/momofiona/tamago",
+  "authors": [
+    "cuirong <momofiona@qq.com>"
+  ],
+  "description": "tamago ui",
+  "main": "index.html",
+  "keywords": [
+    "tamago",
+    "cui"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "1.11.1",
+    "seajs": "2.3.0",
+    "seajs-text": "https://github.com/seajs/seajs-text.git",
+    "seajs-css": "https://github.com/seajs/seajs-css.git",
+    "mockjs": "*",
+    "json2": "*",
+    "jqueryui": "1.11",
+    "doT": "~1.0.1",
+    "normalize.css": "~3.0.1",
+    "moment-timezone": "~0.2.2",
+    "mathjs": "~1.0.0",
+    "dew": "https://github.com/lifesinger/dew.git",
+    "underscore": "~1.7.0"
+  }
+}

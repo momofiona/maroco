@@ -1,39 +1,65 @@
 module.exports = function(grunt) {
+    var pkg = grunt.file.readJSON('package.json');
     grunt.initConfig({
-        pkg: grunt.file.readJSON('package.json'),
+        pkg: pkg,
         //copy from bower to tamago/vendor
-        copy: {
-            jquery: {
-                src: 'bower_components/jquery/dist/jquery.min.js',
-                dest: 'tamago/vendor/jquery.js',
-                options: {
-                    process: function(content, srcpath) {
-                        return content.replace("&&define.amd", "&&(define.amd||define.cmd)");
+        /*        copy: {
+                    jquery: {
+                        src: 'bower_components/jquery/dist/jquery.min.js',
+                        dest: 'tamago/vendor/jquery.js',
+                        options: {
+                            process: function(content, srcpath) {
+                                return content.replace("&&define.amd", "&&(define.amd||define.cmd)");
+                            }
+                        }
+                    },
+                    bower: {
+                        expand: true,
+                        cwd: 'bower_components/',
+                        src: ['doT/doT.min.js', 'json2/json2.js', 'seajs/dist/sea.js'],
+                        dest: 'tamago/vendor/',
+                        flatten: true,
+                        filter: 'isFile'
                     }
+                },
+        less: {
+            dev: {
+                options: {
+                    paths: ["css"]
+                },
+                files: {
+                    "css/*.css": "css/*.less"
                 }
             },
-            bower: {
-                expand: true,
-                cwd: 'bower_components/',
-                src: ['doT/doT.min.js', 'json2/json2.js', 'seajs/dist/sea.js'],
-                dest: 'tamago/vendor/',
-                flatten: true,
-                filter: 'isFile'
+            prod: {
+                options: {
+                    paths: ["assets/css"],
+                    cleancss: true,
+                    modifyVars: {
+                        imgPath: '"http://mycdn.com/path/to/images"',
+                        bgColor: 'red'
+                    }
+                },
+                files: {
+                    "path/to/result.css": "path/to/source.less"
+                }
             }
-        },
+        },*/
         concat: {
             options: {
-                // define a string to put between each file in the concatenated output
-                separator: ';'
+                banner:'/*! <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %> */',
+                // separator: ';',
+                stripBanners: true
             },
             build: {
                 files: {
-                    'tamago/tamago.js': [
-                        'tamago/vendor/json2.js',
-                        'tamago/vendor/sea.js',
-                        'tamago/sea.config.js',
-                        'tamago/vendor/jquery.js',
-                        'tamago/vendor/doT.min.js'
+                    'public/js/maroco.js': [
+                        'public/js/vendor/json2.js',
+                        'public/js/vendor/sea.js',
+                        'public/js/vendor/sea-text.js',
+                        'public/js/vendor/sea-css.js',
+                        'public/js/vendor/jquery.js',
+                        'public/js/vendor/underscore-min.js'
                     ]
                 }
             }
@@ -46,7 +72,7 @@ module.exports = function(grunt) {
             },
             build: {
                 files: {
-                    'tamago/vendor/json2.js': 'bower_components/json2/json2.js'
+                    'public/js/_ui.js': 'public/js/ui.js'
                 }
             }
         },
@@ -55,13 +81,13 @@ module.exports = function(grunt) {
             afterconcat: []
         },
         watch: {
-            /*            less: {
+/*            less: {
                 files: ['css/*.less'],
                 tasks: ['less']
             },*/
             livereload: {
                 options: {
-                    livereload: '<%= connect.options.livereload %>'
+                    livereload: true//'<%= connect.options.livereload %>'
                 },
                 files: ['css/*.css', 'js/*.js', './*.html']
             }
@@ -75,7 +101,7 @@ module.exports = function(grunt) {
             },
             livereload: {
                 options: {
-                    open: 'http://<%= connect.options.hostname %>:<%= connect.options.port %>/main/print.html',
+                    open: 'http://<%= connect.options.hostname %>:<%= connect.options.port %>/',
                 }
             }
         },
@@ -83,31 +109,27 @@ module.exports = function(grunt) {
             dist: {
                 src: 'book.js',
                 options: {
-                    destination: 'doc'
+                    destination: 'jsdoc'
                 }
             }
+        },
+        clean:{
+            build:['_config.js']
         }
     });
 
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-concat');
-    grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.loadNpmTasks('grunt-contrib-less');
-    grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-jsdoc');
-    grunt.loadNpmTasks('grunt-devtools');
-
-
-
-    grunt.registerTask('default', ['copy', 'uglify', 'concat']);
-    grunt.registerTask('watch', ['watch']);
-    grunt.registerTask('less', ['less']);
+    //loadNpmTasks
+    for(var key in pkg.devDependencies){
+        grunt.loadNpmTasks(key);
+        console.log('loadNpmTasks:'+key);
+    };
+    //grunt.registerTask('default', ['copy', 'uglify', 'concat']);
+    grunt.registerTask('default', ['uglify:build','concat',"clean:build"]);
+    grunt.registerTask('liveload', ['watch:livereload']);
+    grunt.registerTask('less', ['less:dev']);
     grunt.registerTask('doc', ['jsdoc']);
-    grunt.registerTask('usebower', ['copy']);
 
-    grunt.event.on('watch', function(action, filepath, target) {
-        // grunt.log.writeln(target + ': ' + filepath + ' has ' + action);
-    });
+    /*    grunt.event.on('watch', function(action, filepath, target) {
+            // grunt.log.writeln(target + ': ' + filepath + ' has ' + action);
+        });*/
 };

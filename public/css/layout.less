@@ -1,0 +1,252 @@
+/* layout */
+
+@distance: 10px;
+.row, .xrow {
+    *zoom: 1;
+    overflow: hidden;
+}
+.colX(@num) {
+    width: (100% - .8%*@num)/@num;
+}
+.x, .x1, .x2, .x3, .x4, .x5, .x6, .x7, .x8, .x9, .x10, .x11, .x12 {
+    float: left;
+    margin: 0 .4%;
+    // *margin: 0 .3999999999%;
+    min-height: 1em;
+    overflow: hidden;
+    *zoom: 1;
+}
+.x {
+    margin: 0;
+}
+.x1 {
+    .colX(1);
+}
+.x2 {
+    .colX(2);
+}
+.x3 {
+    .colX(3);
+}
+.x4 {
+    .colX(4);
+}
+.x5 {
+    .colX(5);
+}
+.x6 {
+    .colX(6);
+}
+.x7 {
+    .colX(7);
+}
+.x8 {
+    .colX(8);
+}
+.x9 {
+    .colX(9);
+}
+.x10 {
+    .colX(10);
+}
+.x11 {
+    .colX(11);
+}
+.x12 {
+    .colX(12);
+}
+/* width */
+
+.w(@x) {
+    width: @x*30px;
+}
+.w1 {
+    .w(1);
+}
+.w2 {
+    .w(2);
+}
+.w3 {
+    .w(3);
+}
+.w4 {
+    .w(4);
+}
+.w5 {
+    .w(5);
+}
+.w6 {
+    .w(6);
+}
+.w7 {
+    .w(7);
+}
+.w8 {
+    .w(8);
+}
+.w9 {
+    .w(9);
+}
+.w10 {
+    .w(10);
+}
+.w11 {
+    .w(11);
+}
+.w12 {
+    .w(12);
+}
+/* margin */
+
+.m {
+    margin: @distance !important;
+}
+.m0 {
+    margin: 0 !important;
+}
+.m1 {
+    margin: @distance 0 0 !important;
+}
+.m2 {
+    margin: 0 @distance 0 0 !important;
+}
+.m3 {
+    margin: 0 0 @distance !important;
+}
+.m4 {
+    margin: 0 0 0 @distance !important;
+}
+.m5 {
+    margin: @distance @distance 0 0 !important;
+}
+.m6 {
+    margin: 0 @distance @distance 0 !important;
+}
+.m7 {
+    margin: 0 0 @distance @distance !important;
+}
+.m8 {
+    margin: @distance 0 0 @distance !important;
+}
+.m9 {
+    margin: @distance 0 !important;
+}
+.m10 {
+    margin: 0 @distance !important;
+}
+.m11 {
+    margin: 0 @distance @distance !important;
+}
+.m12 {
+    margin: @distance 0 @distance @distance !important;
+}
+.m13 {
+    margin: @distance @distance 0 !important;
+}
+.m14 {
+    margin: @distance @distance @distance 0 !important;
+}
+/* padding */
+
+.p {
+    padding: @distance !important;
+}
+.p0 {
+    padding: 0 !important;
+}
+.p1 {
+    padding: @distance 0 0 !important;
+}
+.p2 {
+    padding: 0 @distance 0 0 !important;
+}
+.p3 {
+    padding: 0 0 @distance !important;
+}
+.p4 {
+    padding: 0 0 0 @distance !important;
+}
+.p5 {
+    padding: @distance @distance 0 0 !important;
+}
+.p6 {
+    padding: 0 @distance @distance 0 !important;
+}
+.p7 {
+    padding: 0 0 @distance @distance !important;
+}
+.p8 {
+    padding: @distance 0 0 @distance !important;
+}
+.p9 {
+    padding: @distance 0 !important;
+}
+.p10 {
+    padding: 0 @distance !important;
+}
+.p11 {
+    padding: 0 @distance @distance !important;
+}
+.p12 {
+    padding: @distance 0 @distance @distance !important;
+}
+.p13 {
+    padding: @distance @distance 0 !important;
+}
+.p14 {
+    padding: @distance @distance @distance 0 !important;
+}
+/*float*/
+
+.xl {
+    float: left;
+}
+.xr {
+    float: right;
+}
+.x0 {
+    float: none !important;
+}
+.clear {
+    *zoom: 1
+}
+.clear:before, .clear:after {
+    display: table;
+    content: "\20";
+}
+.clear:after {
+    clear: both
+}
+/*align*/
+
+.text-right {
+    text-align: right;
+}
+.text-left {
+    text-align: left;
+}
+.text-center {
+    text-align: center;
+}
+/* scroll */
+.scroll{
+    overflow: auto;
+}
+.scroll::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 10px;
+    height: 10px;
+}
+.scroll::-webkit-scrollbar-thumb {
+    min-height: 2rem;
+    background: rgba(0, 0, 0, 0.3);
+    background-clip: padding-box;
+    border: 3px solid transparent;
+    border-radius: 5px;
+}
+.scroll::-webkit-scrollbar-button {
+    display: none;
+}
+.scroll::-webkit-scrollbar-track {
+    
+}

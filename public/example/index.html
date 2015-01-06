@@ -6,27 +6,114 @@
     <title></title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="../tomago/css/tomago.css">
+    <link rel="stylesheet" type="text/css" href="../css/maroco.css">
+    <style type="text/css">
+    html,body{
+        height: 100%;
+        overflow: hidden;
+    }
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+    /* IE8 +*/
+    .xn {
+        border-radius: 15px;
+        text-indent: 1em;
+        background-color: #d4e4f2;
+    }
+    header.toolbar{
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 3;
+        background: #f0f0f0;
+        border-bottom: 1px solid #d9d9d9;
+    }
+    #sidebar ,#mainbody{
+        position: absolute;
+        top: 40px;
+        left: 0;
+        bottom: 0;
+    }
+    #sidebar{
+        border-right: 1px solid #e3e3e3;
+        background-color: #f9f9f9;
+    }
+    .menu a{
+        display: block;
+        position: relative;
+        overflow: hidden;
+        padding: 4px 12px;
+        line-height: 24px;
+        font-size: 14px;
+        white-space: nowrap;
+        word-wrap: normal;
+        overflow-wrap: normal;
+        text-overflow: ellipsis;
+        cursor: default;
+        color: #555
+    }
+    #mainbody{
+        left: 250px;
+        right: 0;
+    }
+    </style>
+    <script>
+document.createElement('header')
+    </script>
 </head>
 
 <body>
-    <div class="sidebar c">
-        <ul class="nav">
-            <li><a href="@">ICON</a>
-            </li>
-        </ul>
+    <div class="row">
+        <header class="toolbar">
+            <span class="caption">Maroco UI</span>
+            <span class="wall"></span>
+            <span class="rock">toolbar</span>
+        </header>
+        <div class="w8 scroll" id="sidebar">
+            <ul class="menu p10">
+                <li><a href="#layout">格栅系统</a>
+                </li>
+                <li><a href="#text">文字排版</a>
+                </li>
+                <li><a href="#layout">格栅系统</a>
+                </li>
+                <li><a href="#text">文字排版</a>
+                </li>
+                <li><a href="#layout">格栅系统</a>
+                </li>
+                <li><a href="#text">文字排版</a>
+                </li>
+                <li><a href="#layout">格栅系统</a>
+                </li>
+                <li><a href="#text">文字排版</a>
+                </li>
+                <li><a href="#layout">格栅系统</a>
+                </li>
+            </ul>
+        </div>
+        <div class="row scroll" id="mainbody"></div>
     </div>
-    <div class="mainbody c-a">
-
-    </div>
-    <script src="../tamago/tamago.js"></script>
+    <script src="../js/maroco.js"></script>
+    <script src="../js/ui.js"></script>
     <script>
-/*    seajs.use('book',function(a){
-        a('xx');
-    })*/
-seajs.use('jquery',function($){
-    console.log($);
-})
+    var qq=function(s){alert(s)}
+    $(function() {
+        var menus=[{
+            text:'格栅系统',
+            href:'layout'
+        },{
+            text:'文字排版',
+            href:'text'
+        }];
+        $('#sidebar .menu').on('click','a',function(){
+            $('#mainbody').load(this.href.replace(/.*#/g,'')+'.html');
+        }).find('a:eq(0)').trigger('click');
+
+    });
     </script>
 </body>
 
