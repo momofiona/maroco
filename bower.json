@@ -26,12 +26,17 @@
     "seajs-css": "https://github.com/seajs/seajs-css.git",
     "mockjs": "*",
     "json2": "*",
+    "json3": "*",
     "jqueryui": "1.11",
     "doT": "~1.0.1",
     "normalize.css": "~3.0.1",
     "moment-timezone": "~0.2.2",
     "mathjs": "~1.0.0",
     "dew": "https://github.com/lifesinger/dew.git",
-    "underscore": "~1.7.0"
+    "underscore": "~1.7.0",
+    "navgoco": "~0.2.1"
+  },
+  "devDependencies": {
+    "html5shiv": "~3.7.2"
   }
 }

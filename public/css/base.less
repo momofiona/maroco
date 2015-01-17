@@ -1,84 +1,34 @@
-//变量、配色等基础
-.linear-gradient(@from: #fff, @to: #f3f4f5) {
-    // Old browsers 
-    background: @to; // FF3.6+ 
-    background: -moz-linear-gradient(top, @from 0%, @to 100%);
-    // Chrome,Safari4+ 
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, @from), color-stop(100%, @to)); // Chrome10+,Safari5.1+ 
-    background: -webkit-linear-gradient(top, @from 0%, @to 100%);
-    // Opera 11.10+ 
-    background: -o-linear-gradient(top, @from 0%, @to 100%);
-    // IE10+ 
-    background: -ms-linear-gradient(top, @from 0%, @to 100%);
-    // W3C 
-    background: linear-gradient(to bottom, @from 0%, @to 100%);
-    // IE6-9 
-    filter:~"progid:DXImageTransform.Microsoft.gradient( startColorstr='@{from}', endColorstr='@{to}',GradientType=0 )";
-}
-//color from bootstrap
-.base-active() {
-    background-image: -moz-linear-gradient(top, rgba(0, 0, 0, .2) 0%, rgba(0, 0, 0, 0) 40%);
-    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(0, 0, 0, .2)), color-stop(40%, rgba(0, 0, 0, 0)));
-    background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, .2) 0%, rgba(0, 0, 0, 0) 40%);
-    background-image: -o-linear-gradient(top, rgba(0, 0, 0, .2) 0%, rgba(0, 0, 0, 0) 40%);
-    background-image: -ms-linear-gradient(top, rgba(0, 0, 0, .2) 0%, rgba(0, 0, 0, 0) 40%);
-    background-image: linear-gradient(to bottom, rgba(0, 0, 0, .2) 0%, rgba(0, 0, 0, 0) 40%);
-}
-.base-default() {
-    color: #333333;
-    background-color: #fdfefe;
-    border-color: #ddd;
-}
-.base-default(dark) {
-    color: #333333;
-    background-color: darken(#fff, 8%);
-    border-color: darken(#ddd, 8%);
-}
-.base-primary() {
-    color: #fff;
-    background-color: #428bca;
-    border-color: #357ebd;
-}
-.base-primary(dark) {
-    color: #fff;
-    background-color: darken(#428bca, 8%);
-    border-color: darken(#357ebd, 8%);
-}
-.base-success() {
-    color: #fff;
-    background-color: #5cb85c;
-    border-color: #4cae4c;
-}
-.base-info() {
-    color: #fff;
-    background-color: #5bc0de;
-    border-color: #46b8da;
-}
-.base-info(dark) {
-    color: #fff;
-    background-color: darken(#5bc0de, 8%);
-    border-color: darken(#46b8da, 8%);
-}
-.base-warning() {
-    color: #fff;
-    background-color: #f0ad4e;
-    border-color: #eea236;
-}
-.base-danger() {
-    color: #fff;
-    background-color: #d9534f;
-    border-color: #d43f3a;
-}
-.base-danger(dark) {
-    color: #fff;
-    background-color: darken(#d9534f, 8%);
-    border-color: darken(#d43f3a, 8%);
-}
+//http://less.toobug.net/article/reference.html
+/* variable */
+
+@logColor: #fafafa;
+@infoColor: #4abffc;
+@noteColor: #478af8;
+@warnColor: #f9c832;
+@errorColor: #ab2918;
+@safeColor: #129324;
+@linkColor: @noteColor;
+@btnHeight: 36px;
+@radius: 2px; //log b-log text
 .user-select {
     -moz-user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
     user-select: none;
+}
+//Less 函数手册 http://less.toobug.net/article/reference.html
+.linear-gradient(@from: #fff, @to: #f3f4f5) {
+    // Old browsers 
+    background: @to;
+    background-image: -moz-linear-gradient(top, @from 0%, @to 100%); // FF3.6+ 
+    // Chrome,Safari4+ 
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, @from), color-stop(100%, @to)); // Chrome10+,Safari5.1+ 
+    background-image: -webkit-linear-gradient(top, @from 0%, @to 100%);
+    background-image: -o-linear-gradient(top, @from 0%, @to 100%); // Opera 11.10+ 
+    background-image: -ms-linear-gradient(top, @from 0%, @to 100%); // IE10+ 
+    background-image: linear-gradient(to bottom, @from 0%, @to 100%); // W3C 
+    // IE6-8 
+    filter:~"progid:DXImageTransform.Microsoft.gradient( startColorstr='@{from}', endColorstr='@{to}',GradientType=0 )";
 }
 /* base */
 
@@ -87,7 +37,7 @@ html, body {
 }
 body {
     font-family: "Segoe UI", "Lucida Grande", Helvetica, Arial, "Microsoft YaHei", FreeSans, Arimo, "Droid Sans", "wenquanyi micro hei", "Hiragino Sans GB", "Hiragino Sans GB W3", sans-serif;
-    font-size: 14px;
+    font-size: 13px;
     *font-family: "SimSun", "Segoe UI", "Lucida Grande", Helvetica, Arial, sans-serif;
     font-weight: 400;
     line-height: 1.6;
@@ -109,45 +59,8 @@ form {
     margin: 0;
 }
 p {
-    margin: 10px 0;
+    margin: 1em 0;
 }
-.note, .caution, .warning, .safe {
-    padding: .2em .5em .2em .9em;
-    background-color: #fefefe;
-    border: 1px solid;
-    overflow: hidden;
-    border-radius: 2px
-}
-.note {
-    border-color: #36C;
-    color: #36C;
-}
-.caution {
-    border-color: #FC3;
-    color: #FC3;
-}
-.warning {
-    border-color: #A03;
-    color: #A03;
-}
-.safe {
-    border-color: #95be3e;
-    color: #95be3e;
-}
-
-a, a:link {
-    text-decoration: none;
-    color: #39F;
-    font-weight: 600;
-}
-a:visited {
-    color: #236bb2;
-}
-a:active, a:hover {
-    color: #3bf;
-}
-/*h*/
-
 hr {
     display: block;
     padding: 0;
@@ -174,8 +87,9 @@ blockquote {
 }
 mark {
     background: #eee;
-    padding: 0 .5em;
-    border-radius: 4px;
+    padding: 0 .5em !important;
+    margin: 0 .3em !important;
+    *zoom: 1;
 }
 code {
     padding: 2px 4px;
@@ -188,16 +102,231 @@ abbr[title] {
     cursor: help;
     border-bottom: 1px dotted;
 }
+/*float*/
+
+.xl {
+    float: left !important;
+    *display: inline;
+}
+.xr {
+    float: right !important;
+    *display: inline;
+}
+.clear {
+    *zoom: 1;
+    &:before, &:after {
+        display: table;
+        content: "\20";
+    }
+    &:after {
+        clear: both
+    }
+}
+/*align*/
+
+.text-right {
+    text-align: right;
+}
+.text-left {
+    text-align: left;
+}
+.text-center {
+    text-align: center;
+}
+/* scroll */
+
+.scroll {
+    overflow: auto;
+    _overflow: scroll;
+}
+.scroll::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 10px;
+    height: 10px;
+}
+.scroll::-webkit-scrollbar-thumb {
+    min-height: 2rem;
+    background: rgba(0, 0, 0, 0.3);
+    background-clip: padding-box;
+    border: 3px solid transparent;
+    border-radius: 5px;
+}
+.scroll::-webkit-scrollbar-button {
+    display: none;
+}
+// .scroll::-webkit-scrollbar-track {}
+.linear {
+    .linear-gradient() !important;
+}
+.moon {
+    border-radius: 1000px !important;
+}
+a {
+    text-decoration: none;
+    color: #39f;
+    font-weight: 600;
+}
+a:hover {
+    color: #236bb2;
+}
+/* 基本样式，不设置layout */
+
+.log, .info, .note, .warn, .error, .safe, .link {
+    padding: .3em .5em;
+    border-radius: @radius;
+    *zoom: 1;
+}
+.baseFactory(@baseColor, @baseBdColor, @baseFontColor: #fff) {
+    background-color: @logColor;
+    border: 1px solid #ddd;
+    color: #434749;
+}
+.log {
+    .baseFactory(@logColor, #ddd, #434749);
+}
+.info {
+    .baseFactory(@infoColor, @infoColor);
+}
+.note {
+    .baseFactory(@noteColor, @noteColor);
+}
+.warn {
+    .baseFactory(@warnColor, @warnColor, #660F0F);
+}
+.error {
+    .baseFactory(@errorColor, @errorColor);
+}
+.safe {
+    .baseFactory(@safeColor, @safeColor);
+}
+.link {
+    .baseFactory(@linkColor, transparent, @linkColor);
+}
+/*button*/
+
+.b {
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    outline: 0;
+    transition: background-color .2s, color .2s;
+    *zoom: 1;
+    *display: inline;
+    .user-select;
+    &:active, &.b-active {
+        //any but IE6-8
+        box-shadow: inset 0 5px 10px -5px rgba(0, 0, 0, .5);
+        // IE6-8 
+        filter: ~"progid:DXImageTransform.Microsoft.gradient( startColorstr='#55000000', endColorstr='#00000000',GradientType=0)";
+        filter: none\9\0;
+    }
+}
+.b {
+    padding: .5em 1em;
+    line-height:21px;
+    //IE67 button高度宽度lineheight超标问题
+    button& {
+    }
+}
+.b-lg {
+    font-size: 1.5em;
+    padding: 10px 20px !important;
+    line-height: 30px;
+    button& {
+        *height: 52px;
+    }
+}
+.b-log .b-link, .b-log, .b-note, .b-safe, .b-info, .b-error {
+    border-radius: @radius;
+}
+.b-link {
+    color: @linkColor;
+    border: solid 1px @noteColor;
+    background-color: #fff;
+    &:hover {
+        color: @linkColor;
+        background-color: lighten(@linkColor, 30%);
+    }
+    &:active, &.b-active {
+        background-color: @linkColor;
+        color: #fff;
+    }
+}
+.b-log {
+    color: #434749;
+    border: solid 1px #ddd;
+    .linear-gradient();
+    &:hover {
+        .linear-gradient(#f3f4f5, #fff);
+    }
+    &:active, &.b-active {
+        .linear-gradient(#e3e4e5, #fff);
+    }
+}
+.btnFactory(@baseColor, @color: #fff) {
+    background-color: @baseColor;
+    border: solid 1px @baseColor;
+    color: @color;
+    &:hover {
+        background-color: darken(@baseColor, 5%);
+        border-color: darken(@baseColor, 5%);
+        color: @color;
+    }
+    &.b-active, &:active {
+        background-color: darken(@baseColor, 10%);
+        border-color: darken(@baseColor, 10%);
+    }
+}
+.b-note {
+    .btnFactory(@noteColor);
+}
+.b-info {
+    .btnFactory(@infoColor);
+}
+.b-warn {
+    .btnFactory(@warnColor, #660F0F);
+}
+.b-error {
+    .btnFactory(@errorColor);
+}
+.b-safe {
+    .btnFactory(@safeColor);
+}
+//组
+.b-group {
+    display: inline-block;
+    padding-left: 1px;
+    .b {
+        float: left;
+        margin-left: -1px;
+    }
+    :not(button) {
+        border-radius: 0
+    }
+    :first-child:not(button) {
+        border-radius: @radius 0 0 @radius;
+    }
+    :last-child:not(button){
+        border-radius: 0 @radius @radius 0;
+    }
+    .b-link {
+        box-shadow: none;
+        filter: none;
+    }
+}
 /*toolbar*/
 
 .toolbar {
+    .clear;
+    clear: both;
     margin: 0 0 1px;
-    line-height: 29px;
     background: #d4e4f2;
-    padding: 5px 10px;
+    padding: .5em .8em .4em;
     .wall, .nowall {
-        height: 25px;
-        margin: 3px .5em 0;
+        height: @btnHeight;
+        margin: 0 .5em;
         display: inline-block;
         vertical-align: top;
     }
@@ -207,27 +336,86 @@ abbr[title] {
     }
     .caption {
         color: #4472A2;
-    }
-    .rock, .caption {
-        display: inline-block;
+        float: left;
+        line-height: @btnHeight;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-        vertical-align: top;
+    }
+    .rock {
+        display: inline-block;
         margin: 0 .5em 0 0;
     }
-    .pull-right>.rock {
-        margin: 0 0 0 .5em;
-    }
-    .tree {
-        padding: 0 10px;
-        margin: 0 -4px 0 0;
+    .cap {
+        padding: 0 1em;
+        margin: 0 -1px 0 0;
+        height: @btnHeight+-2;
+        line-height: @btnHeight+-2;
+        border-radius: 2px 0 0 2px;
         border: solid 1px #bfbfbf;
-        line-height: 27px;
-        background: #f8f8f8;
-        border-radius: 5px 0 0 5px;
+        border-right: 0;
         display: inline-block;
+        background: #f8f8f8;
         color: #888;
         text-shadow: 0 1px #fff;
     }
+}
+/* input text */
+
+.text, .text-s, .text-xs, .text-m, .text-l, .text-auto {
+    border: solid 1px #bfbfbf;
+    vertical-align: middle;
+    border-radius: @radius;
+    padding: .5em 5px;
+    height: @btnHeight;
+    line-height: 1;
+    *height: @btnHeight/2;
+    *line-height: @btnHeight/2;
+    box-sizing: border-box;
+    outline: 0;
+    border-top-color: #aaa;
+    select& {
+        padding: 5.5px 5px;
+    }
+    &:focus {
+        box-shadow: inset 0 5px 5px -5px #ccc;
+        border: 1px solid #8FB3E1;
+    }
+}
+.text-xs {
+    width: 60px;
+    *width: 48px;
+    select& {
+        width: 60px;
+    }
+}
+.text-s {
+    width: 100px;
+    *width: 88px;
+    select& {
+        width: 100px;
+    }
+}
+.text-m {
+    width: 180px;
+    *width: 168px;
+    select& {
+        width: 180px;
+    }
+}
+.text-l {
+    width: 320px;
+    *width: 308px;
+    select& {
+        width: 320px;
+    }
+}
+.text-auto-wrap {
+    *margin-right: 12px;
+    *zoom:1 .text-auto {
+        display: block;
+    }
+}
+.text-auto {
+    width: 100%;
 }

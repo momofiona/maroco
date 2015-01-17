@@ -1,7 +1,7 @@
 /* layout */
 
 @distance: 10px;
-.row, .xrow {
+.row {
     *zoom: 1;
     overflow: hidden;
 }
@@ -11,10 +11,11 @@
 .x, .x1, .x2, .x3, .x4, .x5, .x6, .x7, .x8, .x9, .x10, .x11, .x12 {
     float: left;
     margin: 0 .4%;
-    // *margin: 0 .3999999999%;
+    //*margin: 0 .3999999999%;
     min-height: 1em;
     overflow: hidden;
     *zoom: 1;
+    _display:inline;
 }
 .x {
     margin: 0;
@@ -60,6 +61,9 @@
 .w(@x) {
     width: @x*30px;
 }
+.w0 {
+    width: auto !important;
+}
 .w1 {
     .w(1);
 }
@@ -94,6 +98,12 @@
     .w(11);
 }
 .w12 {
+    .w(12);
+}
+.w13 {
+    .w(12);
+}
+.w14 {
     .w(12);
 }
 /* margin */
@@ -196,57 +206,4 @@
 .p14 {
     padding: @distance @distance @distance 0 !important;
 }
-/*float*/
 
-.xl {
-    float: left;
-}
-.xr {
-    float: right;
-}
-.x0 {
-    float: none !important;
-}
-.clear {
-    *zoom: 1
-}
-.clear:before, .clear:after {
-    display: table;
-    content: "\20";
-}
-.clear:after {
-    clear: both
-}
-/*align*/
-
-.text-right {
-    text-align: right;
-}
-.text-left {
-    text-align: left;
-}
-.text-center {
-    text-align: center;
-}
-/* scroll */
-.scroll{
-    overflow: auto;
-}
-.scroll::-webkit-scrollbar {
-    -webkit-appearance: none;
-    width: 10px;
-    height: 10px;
-}
-.scroll::-webkit-scrollbar-thumb {
-    min-height: 2rem;
-    background: rgba(0, 0, 0, 0.3);
-    background-clip: padding-box;
-    border: 3px solid transparent;
-    border-radius: 5px;
-}
-.scroll::-webkit-scrollbar-button {
-    display: none;
-}
-.scroll::-webkit-scrollbar-track {
-    
-}

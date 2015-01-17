@@ -1,0 +1,86 @@
+<link rel="stylesheet" type="text/css" href="../css/fa/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="../css/fa/css/font-awesome-ie7.min.css">
+<div class="row">
+    <h1>图标库 <small>Icons</small></h1>
+    <hr>
+    <div class="log f-lg">
+        <img src="/css/img/loading.gif" class="f-rotate-90">
+    </div>
+    <!-- Icomoon -->
+    <h2>Icomoon <small>Font Icon</small></h2>
+    <p>
+        <i class="f m4 f-shutdown"></i>
+        <i class="f m4 f-shutdown rotate1"></i>.rotate1
+        <i class="f m4 f-shutdown rotate2"></i>.rotate2
+        <i class="f m4 f-shutdown rotate3"></i>.rotate3
+    </p>
+    <p>
+        <i class="f m4 f-undo"></i>
+        <i class="f m4 f-undo flipx"></i>.flipx
+        <i class="f m4 f-undo flipy"></i>.flipy
+    </p>
+    <p>
+        <i class="f m4 f-loop rotate"></i>.rotate
+        <mark class="warn"><i class="f f-warning"></i> 这个只有IE10+支持</mark>
+    </p>
+    <p>优点：可变色、可缩放、一个css；缺点：体积大（下面50个图标有28K，IE67补丁5k）、显示效果差，有锯齿。总结：不要用Font icon。</p>
+    <p><a href="http://io-meter.com/2014/07/20/replace-icon-fonts-with-svg/" target="new">SVG方案</a></p>
+    <div id="icomoon" class="note"></div>
+    <p>每次导出文件必须同时导出配置，不然后果很严重。</p>
+    <!-- $ Icomoon -->
+
+    <!-- fontawesome -->
+    <h2>Fontawesome <small>Font Icon</small></h2>
+    <p>FA体积比较大，仅供参考</p>
+    <div id="fontawesome"></div>
+    <!-- $ fontawesome -->
+    <!-- Unicode -->
+    <h2>Unicode 图形 <small>Unicode Icon </small></h2>
+    <p>
+        <select>
+            <option value="300">300px</option>
+            <option value="150">150px</option>
+            <option value="120">120px</option>
+            <option value="100">100px</option>
+            <option value="60">60px</option>
+            <option value="30">30px</option>
+            <option value="20">20px</option>
+            <option value="16" selected>16px</option>
+            <option value="12">12px</option>
+        </select>
+        <select id="select-font">
+            <option value="">默认</option>
+            <option value="u2400">Universalia</option>
+            <option value="Arial">Arial</option>
+            <option value="Courier New">Courier New</option>
+            <option value="Helvetica">Helvetica</option>
+            <option value="Tahoma">Tahoma</option>
+            <option value="Times New Roman">Times New Roman</option>
+            <option value="Verdana">Verdana</option>
+        </select> ("Segoe UI")
+    </p>
+    <div class="log" style="font-size:16px;">
+        &#x25be;&#x25b4;&#9664;&#9654; &nbsp; &#10102;&#10103;&#10104;&#10105;&#10106;&#10107;&#10108;&#10109;&#10110;&#10111; &nbsp; &#10112;&#10113;&#10114;&#10115;&#10116;&#10117;&#10118;&#10119;&#10120;&#10121; &nbsp; &#10122;&#10123;&#10124;&#10125;&#10126;&#10127;&#10128;&#10129;&#10130;&#10131; &nbsp; &#10133;&#10134;
+    </div>
+    <p>只在Unicode编码下才能安全使用,IE6-8下显示效果极差，更多图标参考 <a href="http://unicode-table.com/cn/" target="unicodeicon"><i class="f f-attachment"></i> unicode-table</a>
+    </p>
+    <!-- $ Unicode -->
+</div>
+<script>
+$(function() {
+    //icomoon
+    var classes = ['plus-alt','minus-alt','close-alt','check-alt','denied','plus','minus','checkmark','cross','edit','bin','eye','search','loop','cancel-circle','shutdown','envelop','home','location','alert','calendar','print','undo','lock','unlock','tool','gear','power','org','attachment','down','upload','tile','list','help','info','warning','ar-b','ar-t','ar-l','ar-r','ar-bt','aro-l','aro-r','aro-t','aro-b','more','bullhorn','smile','sad','link'];
+    $('#icomoon').html('<i class="m5 f f-' + classes.join('"></i><i class="m5 f f-') + '"></i>');
+
+    //Fontawesome
+    classes = ["glass", "music", "search", "envelope-o", "heart", "star", "star-o", "user", "film", "th-large", "th", "th-list", "check", "times", "search-plus", "search-minus", "power-off", "signal", "gear", "cog", "trash-o", "home", "file-o", "clock-o", "road", "download", "arrow-circle-o-down", "arrow-circle-o-up", "inbox", "play-circle-o", "rotate-right", "repeat", "refresh", "list-alt", "lock", "flag", "headphones", "volume-off", "volume-down", "volume-up", "qrcode", "barcode", "tag", "tags", "book", "bookmark", "print", "camera", "font", "bold", "italic", "text-height", "text-width", "align-left", "align-center", "align-right", "align-justify", "list", "dedent", "outdent", "indent", "video-camera", "photo", "image", "picture-o", "pencil", "map-marker", "adjust", "tint", "edit", "pencil-square-o", "share-square-o", "check-square-o", "arrows", "step-backward", "fast-backward", "backward", "play", "pause", "stop", "forward", "fast-forward", "step-forward", "eject", "chevron-left", "chevron-right", "plus-circle", "minus-circle", "times-circle", "check-circle", "question-circle", "info-circle", "crosshairs", "times-circle-o", "check-circle-o", "ban", "arrow-left", "arrow-right", "arrow-up", "arrow-down", "mail-forward", "share", "expand", "compress", "plus", "minus", "asterisk", "exclamation-circle", "gift", "leaf", "fire", "eye", "eye-slash", "warning", "exclamation-triangle", "plane", "calendar", "random", "comment", "magnet", "chevron-up", "chevron-down", "retweet", "shopping-cart", "folder", "folder-open", "arrows-v", "arrows-h", "bar-chart-o", "twitter-square", "facebook-square", "camera-retro", "key", "gears", "cogs", "comments", "thumbs-o-up", "thumbs-o-down", "star-half", "heart-o", "sign-out", "linkedin-square", "thumb-tack", "external-link", "sign-in", "trophy", "github-square", "upload", "lemon-o", "phone", "square-o", "bookmark-o", "phone-square", "twitter", "facebook", "github", "unlock", "credit-card", "rss", "hdd-o", "bullhorn", "bell", "certificate", "hand-o-right", "hand-o-left", "hand-o-up", "hand-o-down", "arrow-circle-left", "arrow-circle-right", "arrow-circle-up", "arrow-circle-down", "globe", "wrench", "tasks", "filter", "briefcase", "arrows-alt", "group", "users", "chain", "link", "cloud", "flask", "cut", "scissors", "copy", "files-o", "paperclip", "save", "floppy-o", "square", "navicon", "reorder", "bars", "list-ul", "list-ol", "strikethrough", "underline", "table", "magic", "truck", "pinterest", "pinterest-square", "google-plus-square", "google-plus", "money", "caret-down", "caret-up", "caret-left", "caret-right", "columns", "unsorted", "sort", "sort-down", "sort-desc", "sort-up", "sort-asc", "envelope", "linkedin", "rotate-left", "undo", "legal", "gavel", "dashboard", "tachometer", "comment-o", "comments-o", "flash", "bolt", "sitemap", "umbrella", "paste", "clipboard", "lightbulb-o", "exchange", "cloud-download", "cloud-upload", "user-md", "stethoscope", "suitcase", "bell-o", "coffee", "cutlery", "file-text-o", "building-o", "hospital-o", "ambulance", "medkit", "fighter-jet", "beer", "h-square", "plus-square", "angle-double-left", "angle-double-right", "angle-double-up", "angle-double-down", "angle-left", "angle-right", "angle-up", "angle-down", "desktop", "laptop", "tablet", "mobile-phone", "mobile", "circle-o", "quote-left", "quote-right", "spinner", "circle", "mail-reply", "reply", "github-alt", "folder-o", "folder-open-o", "smile-o", "frown-o", "meh-o", "gamepad", "keyboard-o", "flag-o", "flag-checkered", "terminal", "code", "mail-reply-all", "reply-all", "star-half-empty", "star-half-full", "star-half-o", "location-arrow", "crop", "code-fork", "unlink", "chain-broken", "question", "info", "exclamation", "superscript", "subscript", "eraser", "puzzle-piece", "microphone", "microphone-slash", "shield", "calendar-o", "fire-extinguisher", "rocket", "maxcdn", "chevron-circle-left", "chevron-circle-right", "chevron-circle-up", "chevron-circle-down", "html5", "css3", "anchor", "unlock-alt", "bullseye", "ellipsis-h", "ellipsis-v", "rss-square", "play-circle", "ticket", "minus-square", "minus-square-o", "level-up", "level-down", "check-square", "pencil-square", "external-link-square", "share-square", "compass", "toggle-down", "caret-square-o-down", "toggle-up", "caret-square-o-up", "toggle-right", "caret-square-o-right", "euro", "eur", "gbp", "dollar", "usd", "rupee", "inr", "cny", "rmb", "yen", "jpy", "ruble", "rouble", "rub", "won", "krw", "bitcoin", "btc", "file", "file-text", "sort-alpha-asc", "sort-alpha-desc", "sort-amount-asc", "sort-amount-desc", "sort-numeric-asc", "sort-numeric-desc", "thumbs-up", "thumbs-down", "youtube-square", "youtube", "xing", "xing-square", "youtube-play", "dropbox", "stack-overflow", "instagram", "flickr", "adn", "bitbucket", "bitbucket-square", "tumblr", "tumblr-square", "long-arrow-down", "long-arrow-up", "long-arrow-left", "long-arrow-right", "apple", "windows", "android", "linux", "dribbble", "skype", "foursquare", "trello", "female", "male", "gittip", "sun-o", "moon-o", "archive", "bug", "vk", "weibo", "renren", "pagelines", "stack-exchange", "arrow-circle-o-right", "arrow-circle-o-left", "toggle-left", "caret-square-o-left", "dot-circle-o", "wheelchair", "vimeo-square", "turkish-lira", "try", "plus-square-o", "space-shuttle", "slack", "envelope-square", "wordpress", "openid", "institution", "bank", "university", "mortar-board", "graduation-cap", "yahoo", "google", "reddit", "reddit-square", "stumbleupon-circle", "stumbleupon", "delicious", "digg", "pied-piper-square", "pied-piper", "pied-piper-alt", "drupal", "joomla", "language", "fax", "building", "child", "paw", "spoon", "cube", "cubes", "behance", "behance-square", "steam", "steam-square", "recycle", "automobile", "car", "cab", "taxi", "tree", "spotify", "deviantart", "soundcloud", "database", "file-pdf-o", "file-word-o", "file-excel-o", "file-powerpoint-o", "file-photo-o", "file-picture-o", "file-image-o", "file-zip-o", "file-archive-o", "file-sound-o", "file-audio-o", "file-movie-o", "file-video-o", "file-code-o", "vine", "codepen", "jsfiddle", "life-bouy", "life-saver", "support", "life-ring", "circle-o-notch", "ra", "rebel", "ge", "empire", "git-square", "git", "hacker-news", "tencent-weibo", "qq", "wechat", "weixin", "send", "paper-plane", "send-o", "paper-plane-o", "history", "circle-thin", "header", "paragraph", "sliders", "share-alt", "share-alt-square", "bomb "];
+    $('#fontawesome').html('<b class="m5 fa error fa-' + classes.join('"></b><b class="m5 fa fa-') + '"></b>');
+
+    //unicode 字体字号
+    var log = $('#select-font').change(function() {
+        log.css('font-family', this.value);
+    }).prev().change(function() {
+        log.css('font-size', this.value + 'px');
+    }).end().next();
+})
+</script>

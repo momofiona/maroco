@@ -1,0 +1,77 @@
+<h1>按钮 <small>Button</small></h1>
+<hr>
+
+<button>button xl <i class="f f-ar-b"></i>
+</button>
+<h2>颜色</h2>
+<p>
+    <b class="b">b<i class="m4 f f-ar-b"></i></b>
+    <b class="b b-log">log <i class="f f-ar-b"></i></b>
+    <b class="b b-info">info<i class="m4 f f-ar-b"></i></b>
+    <b class="b b-note">note<i class="m4 f f-ar-b"></i></b>
+    <b class="b b-warn">warn<i class="m4 f f-ar-b"></i></b>
+    <b class="b b-error">error<i class="m4 f f-ar-b"></i></b>
+    <b class="b b-link">link<i class="m4 f f-ar-b"></i></b>
+</p>
+<h2>不同标签</h2>
+<div>
+    <b class="b b-log">b</b>
+    <i class="b b-log">i</i>
+    <div class="b b-log">div</div>
+    <a class="b b-log">a</a>
+    <a class="b b-log" href="javascript:;">a:href <i class="i i-loading"></i></a>
+    <div class="b b-log">div</div>
+    <span class="b b-log">span</span>
+    <button class="b b-log">button</button>
+    <input class="b b-log" type="button" value="input">
+    <input class="b b-log" type="submit" value="submit">
+</div>
+<h2>toolbar</h2>
+<div class="toolbar error">
+    <div class="xr">
+        <span class="cap xl">哈哈</span>
+        <input class="text m2 xl">
+        <span class="b b-note">提交<i class="m4 f f-ar-b"></i></span>
+    </div>
+    <span class="caption">caption文字：</span>
+    <button class="b xl">button xl<i class="m4 f f-ar-b"></i>
+    </button>
+    <span class="wall xl"></span>
+    <button class="b xl b-note">button xl<i class="m4 f f-ar-b"></i>
+    </button>
+</div>
+<h2>按钮组</h2>
+<p>
+    <span class="b-group m2">
+        <button class="b b-link">button <i class="m4 f f-ar-b"></i></button>
+        <span class="b  b-link b-active">span  <i class="m4 f f-ar-b"></i></span>
+    <a class="b b-link" href="#btn">span  <i class="m4 f f-ar-b"></i></a>
+    </span>
+    <span class="b-group m2">
+        <button class="b b-note">button <i class="m4 f f-ar-b"></i></button>
+        <span class="b  b-note b-active">span  <i class="m4 f f-ar-b"></i></span>
+    <a class="b b-note" href="#btn">span  <i class="m4 f f-ar-b"></i></a>
+    </span>
+    <span class="b-group m2">
+        <span class="b  b-error b-active">span  <i class="m4 f f-ar-b"></i></span>
+    <a class="b b-error" href="#btn">span  <i class="m4 f f-ar-b"></i></a>
+    </span>
+    <span class="b-group">
+        <button class="b b-link">button</button>
+        <span class="b  b-link"><i class="f f-ar-b"></i></span>
+    </span>
+</p>
+<p>
+    <span class="b-group">
+        <button class="b b-lg">button <i class="m4 f f-ar-b"></i></button>
+        <button class="b b-lg b-active">span</button>
+        <button class="b b-lg ">span</button>
+    </span>
+</p>
+<script>
+setTimeout(function() {
+    var a = [$('.cap').outerHeight(), $('input').outerHeight(), $('button.xl').outerHeight(), $('button.b-link').outerHeight()]
+    console.log(a);
+    if (UI.browser.ie == 6) alert(a.join())
+}, 500);
+</script>

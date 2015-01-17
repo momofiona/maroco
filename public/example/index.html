@@ -1,14 +1,20 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>Maroco UI</title>
+    <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="../css/maroco.css">
+    <link rel="stylesheet" href="../css/maroco.css">
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="../css/icomoon/ie7/ie7.css">
+    <![endif]-->
+    <script src="../js/maroco.js"></script>
+    <script src="../js/ui/ui.js"></script>
     <style type="text/css">
-    html,body{
+    html,
+    body {
         height: 100%;
         overflow: hidden;
     }
@@ -18,103 +24,148 @@
         list-style: none;
     }
     /* IE8 +*/
+    
     .xn {
         border-radius: 15px;
         text-indent: 1em;
         background-color: #d4e4f2;
     }
-    header.toolbar{
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
+    header.toolbar {
+        position: relative;
         z-index: 3;
-        background: #f0f0f0;
         border-bottom: 1px solid #d9d9d9;
+        box-shadow: 0 0 5px rgba(100, 100, 100, .2);
+        overflow: hidden;
     }
-    #sidebar ,#mainbody{
+    #sidebar,
+    #mainbody {
         position: absolute;
         top: 40px;
         left: 0;
         bottom: 0;
+        overflow: hidden;
+        overflow-y: auto;
+        background: #fff;
     }
-    #sidebar{
+    #sidebar {
         border-right: 1px solid #e3e3e3;
         background-color: #f9f9f9;
     }
-    .menu a{
+    .menu a {
         display: block;
         position: relative;
         overflow: hidden;
-        padding: 4px 12px;
+        padding: 5px 12px;
         line-height: 24px;
         font-size: 14px;
         white-space: nowrap;
         word-wrap: normal;
         overflow-wrap: normal;
         text-overflow: ellipsis;
-        cursor: default;
         color: #555
     }
-    #mainbody{
-        left: 250px;
+    .menu li{
+        _zoom:1;
+        overflow: hidden;
+        _vertical-align: bottom;
+    }
+    .menu a:hover {
+        background: #ddd;
+    }
+    .menu a.active {
+        background: #ddd;
+    }
+    #mainbody {
+        left: 240px;
         right: 0;
     }
     </style>
-    <script>
-document.createElement('header')
-    </script>
 </head>
 
 <body>
     <div class="row">
-        <header class="toolbar">
+        <header class="toolbar linear">
             <span class="caption">Maroco UI</span>
             <span class="wall"></span>
             <span class="rock">toolbar</span>
         </header>
-        <div class="w8 scroll" id="sidebar">
-            <ul class="menu p10">
+        <div class="w7 scroll" id="sidebar">
+            <ul class="menu m9">
                 <li><a href="#layout">格栅系统</a>
                 </li>
                 <li><a href="#text">文字排版</a>
                 </li>
-                <li><a href="#layout">格栅系统</a>
+                <li><a href="#icon">图标库</a>
                 </li>
-                <li><a href="#text">文字排版</a>
+                <li><a href="#btn">按钮</a>
                 </li>
-                <li><a href="#layout">格栅系统</a>
+                <li><a href="#notify">提示</a>
                 </li>
-                <li><a href="#text">文字排版</a>
+                <li><a href="#ctable">表格</a>
                 </li>
-                <li><a href="#layout">格栅系统</a>
+                <li><a href="#girlfriend">规范</a>
                 </li>
-                <li><a href="#text">文字排版</a>
+                <li><a href="#mock">假数据</a>
                 </li>
-                <li><a href="#layout">格栅系统</a>
+                <li><a href="#charts">图表Higncharts/jqplot</a>
+                </li>
+                <li><a href="#watch">数据监控(beta)</a>
                 </li>
             </ul>
         </div>
-        <div class="row scroll" id="mainbody"></div>
+        <div class="scroll" id="mainbody"></div>
     </div>
-    <script src="../js/maroco.js"></script>
-    <script src="../js/ui.js"></script>
     <script>
-    var qq=function(s){alert(s)}
-    $(function() {
-        var menus=[{
-            text:'格栅系统',
-            href:'layout'
-        },{
-            text:'文字排版',
-            href:'text'
-        }];
-        $('#sidebar .menu').on('click','a',function(){
-            $('#mainbody').load(this.href.replace(/.*#/g,'')+'.html');
-        }).find('a:eq(0)').trigger('click');
-
+    seajs.use(['ui'], function(UI) {
+        //Backbone Router
+        var mainbody = $('#mainbody'),
+            sidebar = $('#sidebar'),
+            menus = sidebar.find('a'),
+            legalMod = _.reduce(menus, function(memo, a) {
+                memo.push(a.hash);
+                return memo;
+            }, []),
+            AppRouter = Backbone.Router.extend({
+                routes: {
+                    ':mod': 'loader',
+                    '*error': 'errorHander'
+                },
+                loader: function(mod) {
+                    if (_.indexOf(legalMod, '#' + mod) > -1) {
+                        mainbody.empty().scrollTop(0).load(mod + '.html', function(res, state, xhr) {
+                            if (state == 'error') {
+                                mainbody.html(res);
+                            }
+                        });
+                        menus.removeClass('active').filter('[href$="#' + mod + '"]').addClass('active');
+                    } else {
+                        this.errorHander.call(this);
+                    }
+                },
+                errorHander: function() {
+                    location.hash = 'layout';
+                }
+            });
+        var router = new AppRouter();
+        Backbone.history.start();
+        //IE6 fix
+        if(UI.browser.ie<8){
+            $(window).resize(function(){
+                var h=$(this).height()-40;
+                mainbody.height(h).width($(this).width()-240);
+                sidebar.height(h);
+            }).resize();
+        }
     });
     </script>
+
+    <!-- js 代码高亮 -->
+    <script src="../js/syntaxhighlighter/scripts/shCore.js"></script>
+    <script src="../js/syntaxhighlighter/scripts/shBrushJScript.js"></script>
+    <script src="../js/syntaxhighlighter/scripts/shBrushXml.js"></script>
+    <link rel="stylesheet" href="../js/syntaxhighlighter/styles/shCoreDefault.css" />
+    <!-- $ js 代码高亮 -->
+
 </body>
 
 </html>
