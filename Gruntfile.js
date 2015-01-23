@@ -59,8 +59,10 @@ module.exports = function(grunt) {
                         'public/js/vendor/sea-text.js',
                         'public/js/vendor/sea-css.js',
                         'public/js/vendor/jquery.js',
+                        'public/js/vendor/doT.min.js',
                         'public/js/vendor/underscore-min.js',
-                        'public/js/vendor/backbone-min.js',
+                        // 'public/js/vendor/backbone-min.js',
+                        // 'public/js/vendor/doT.min.js',
                         //组件只用到了menu dialog datepicker autocomplete，逐渐淘汰jquery UI
                         //position drag drop sortable继续留用或找其他方案
                         'public/js/vendor/jqueryui/jquery-ui.min.js',

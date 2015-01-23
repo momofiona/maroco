@@ -1,0 +1,21 @@
+<h1>提示 <small>notify</small></h1>
+<hr>
+</button>
+<h2>弹出提示</h2>
+<p>
+    <b class="b silver">loading</b>
+    <b class="b note">confirm</b>
+    <b class="b warn">warning</b>
+    <b class="b error">error</b>
+</p>
+<div class="notify m note">
+    <i class="i i-loading"></i> 加载中
+</div>
+<script>
+//IE6、7 link button avtive问题
+if (UI.browser.ie < 8) {
+    $(document).on('click', '.b', function() {
+        $(this).blur();
+    })
+}
+</script>

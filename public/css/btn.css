@@ -1,0 +1,7 @@
+/*.loopWW(@num,@prefix) when(@num>0){
+    @{prefix}@{num}{
+        width: @num*30px; 
+    }
+    .loopWW(@num - 1 ,@prefix);
+}
+.loopWW(14 ,~'.w');*/

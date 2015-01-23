@@ -103,10 +103,10 @@
   width: 360px;
 }
 .w13 {
-  width: 360px;
+  width: 390px;
 }
 .w14 {
-  width: 360px;
+  width: 420px;
 }
 /* margin */
 .m {
@@ -205,52 +205,4 @@
 }
 .p14 {
   padding: 10px 10px 10px 0 !important;
-}
-/*float*/
-.xl {
-  float: left;
-}
-.xr {
-  float: right;
-}
-.clear {
-  *zoom: 1;
-}
-.clear:before,
-.clear:after {
-  display: table;
-  content: "\20";
-}
-.clear:after {
-  clear: both;
-}
-/*align*/
-.text-right {
-  text-align: right;
-}
-.text-left {
-  text-align: left;
-}
-.text-center {
-  text-align: center;
-}
-/* scroll */
-.scroll {
-  overflow: auto;
-  _overflow: scroll;
-}
-.scroll::-webkit-scrollbar {
-  -webkit-appearance: none;
-  width: 10px;
-  height: 10px;
-}
-.scroll::-webkit-scrollbar-thumb {
-  min-height: 2rem;
-  background: rgba(0, 0, 0, 0.3);
-  background-clip: padding-box;
-  border: 3px solid transparent;
-  border-radius: 5px;
-}
-.scroll::-webkit-scrollbar-button {
-  display: none;
 }

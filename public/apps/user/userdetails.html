@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html class="noscroll">
+
+<head>
+    <meta charset="utf-8">
+    <title>用户基本信息</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/jqueryui/jquery-ui.css">
+</head>
+
+<body class="noscroll">
+    <div class="columns-block noscroll">
+        <!-- column-auto主栏（宽度自适应）、column-last最后一栏 -->
+        <div class="column1 column-first sidebar">
+            <div class="userCbox cp"></div>
+            <ul class="nav">
+                <li class="active"><a href="#" cid="baseinfo">基本设置</a>
+                </li>
+                <li><a href="#" cid="expatriate" id="wji" style="display:none;">外籍人员</a>
+                </li>
+                <!--                 <li id="roleManage" class="vhide"><a href="#" cid="role">所属角色</a>
+                </li> -->
+            </ul>
+        </div>
+        <div class="column-auto column-last mainbody">
+            <i class="cicon-loading cicon"></i>
+        </div>
+    </div>
+    <script src="../seajs.build.js"></script>
+    <script src="../js/vendor/jqueryui/jquery-ui.min.js"></script>
+    <script>
+    seajs.use(['jquery', 'dot', 'js/plugin/jquery.rollbar.min'], function($, dot, tooltip) {
+        var url = $.url();
+        var menuhash=top.location.hash.replace('#','');
+        var userId = url.param('userId');
+        var action = url.param('action');
+        var orgId = url.param('orgId');
+        var orgName = url.param('orgName');
+        var enterpriseId = url.param('enterpriseId');
+        if (action === 'edit') {
+            //管理员新建模式
+            $('#wji').show();
+        } else if (action === 'self') {
+            //个人编辑模式 
+            $('#wji').show();
+            userId = top.USER.userId;
+        } else if (action === 'create') {
+            $('#wji').remove();
+        } else {
+             $('#wji').show();
+            return;
+        }
+        var validateForm = $('#userBaseinfoForm');
+        var mainbody = $('.mainbody');
+        var navgoco = $('.nav');
+        mainbody.rollbar({
+            //lazyCheckScroll:1000, 有此参数会开启定时监测
+            pathPadding: '5px',
+            sliderOpacity: .1
+        });
+        var container = mainbody.find('>.rollbar-content');
+        navgoco.navgoco({
+            onClickAfter: function(e, submenu) {
+                e.preventDefault();
+                navgoco.find('.active').removeClass('active');
+                var li = $(this).closest('li').addClass('active');
+                var cid = this.getAttribute('cid');
+                container.html('<i class="cicon-loading cicon cpt"></i>');
+                if (cid === 'baseinfo') {
+                    //基本信息
+                    seajs.use('./userbaseinfo', function(userinfo) {
+                        userinfo.show({
+                            userId: userId || '', //userId为空的时候为编辑模式,
+                            action: action,
+                            orgId: orgId,
+                            orgName: orgName,
+                            container: container,
+                            enterpriseId:enterpriseId,
+                            callback: function(data) {
+                                if(!data.userName) return;
+                                //这里设置 userCbox
+                                $('.userCbox').html('<img src="' + (data.avanta || '') + '"><div class="user-name">' + data.userName + '</div>');
+                                // top.USER.u
+                            },
+                            saved:function(){
+                                top.MENU.cache[menuhash]._dofresh();
+                            }
+                        })
+                    });
+                }else if(cid === 'expatriate' && action!='create') {
+                	seajs.use('../user/expatriate', function(userinfo) {
+                        userinfo.show({
+                            userId: userId ||'',
+                            action: action,
+                            container: container,
+                            enterpriseId:enterpriseId,
+                            callback: function(data) {
+                                if (!data.userName) return;
+                                //这里设置 userCbox
+                                $('.userCbox').html('<img src="../user/showImg?fileId=' + (data.portrait || '') + '"><div class="user-name">' + data.userName + '</div>');
+                            },
+                            saved:function(){
+                            	//如果修改的是自己的信息，刷新页面
+                            	top.location.reload();
+                            }
+                        })
+                    });
+                }
+                /* else if (cid === 'role') {
+                    //所属角色
+                    seajs.use('./setrole', function(role) {
+                        role.show({
+                            userId: userId || '',
+                            container: container,
+                            callback: function(data) {
+                                //里设置 
+                            }
+                        })
+                    });
+                }*/
+
+            }
+        })
+        navgoco.find('a:eq(0)').click();
+    });
+    </script>
+</body>
+
+</html>

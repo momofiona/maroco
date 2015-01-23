@@ -1,0 +1,142 @@
+/**
+ * Button
+ * 兼容IE6的写法
+ * 另外IE中：active比较变态
+ */
+
+.b {
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    outline: 0;
+    transition: background-color .3s, color .3s, border-color .3s;
+    box-sizing: border-box;
+    *zoom: 1;
+    *display: inline;
+    &:extend(.user-select);
+    &:active {
+        &:extend(.b-active);
+    }
+    .f,.i{
+        vertical-align: middle;
+    }
+    padding: .5em 1em;
+    line-height: 21px;
+    /*
+    问题：在ie6中，当文字和img、input、textarea、select、object等对象在同一个容器中的时候，line-height属性失效。
+只有全文字时，line-height属性才有效。
+解决方法1： 
+在其中一个非文字的对象的样式中增加：
+margin: (容器的line-height - 对象本身的高度)/2px 0;  
+vertical-align:middle;
+     */
+    
+    _height: 21px; //ie6 必须加height,当b中带.i时line-height 丢失
+    //IE67 9 10 button高度宽度line-height超标问题
+    button& {
+        *height: 36px;
+        /*        
+        *height:37px;
+        _height: 21.9px;
+        _line-height: 19px;
+        _padding: 5px 1em;*/
+    }
+    input& {
+        *height: 36px;
+    }
+}
+//hover
+.log-hover {
+    background-color: #fefefe;
+}
+.silver-hover {
+    .linear-gradient(#f3f4f5, #fff);
+}
+.info-hover {
+    background-color: darken(@infoColor, 9%);
+    border-color: darken(@infoColor, 9%);
+}
+.note-hover {
+    background-color: darken(@noteColor, 9%);
+    border-color: darken(@noteColor, 9%);
+}
+.warn-hover {
+    background-color: darken(@warnColor, 9%);
+    border-color: darken(@warnColor, 9%);
+}
+.error-hover {
+    background-color: darken(@errorColor, 9%);
+    border-color: darken(@errorColor, 9%);
+}
+.safe-hover {
+    background-color: darken(@safeColor, 9%);
+    border-color: darken(@safeColor, 9%);
+}
+.link-hover {
+    background-color: @linkColor;
+    color: #fff !important;
+}
+//active
+.b-active {
+    //any but IE6-8
+    box-shadow: inset 0 5px 10px -5px rgba(0, 0, 0, .5);
+    // IE6-8 
+    filter: ~"progid:DXImageTransform.Microsoft.gradient( startColorstr='#55000000', endColorstr='#00000000',GradientType=0)";
+}
+//IE9 10 ...去掉IE9 b-active中的filter
+@media screen and (min-width: 0) {
+    /*\9\0  IE 8 9 10*/
+    .b-active {
+        filter: none\9\0;
+    }
+}
+.log-active {
+    &:extend(.log-hover, .b-active);
+}
+.silver-active {
+    &:extend(.silver-hover, .b-active);
+}
+.info-active {
+    &:extend(.info-hover, .b-active);
+}
+.note-active {
+    &:extend(.note-hover, .b-active);
+}
+.warn-active {
+    &:extend(.warn-hover, .b-active);
+}
+.error-active {
+    &:extend(.error-hover, .b-active);
+}
+.safe-active {
+    &:extend(.safe-hover, .b-active);
+}
+.link-active {
+    &:extend(.link-hover, .b-active);
+}
+
+.b-lg {
+    font-size: 1.5em;
+    button& {
+        *height: 52px;
+    }
+}
+//button group
+.group {
+    display: inline-block;
+    vertical-align: middle;
+    padding-left: 1px;
+    .b,.text{
+        float: left;
+        margin-left: -1px;
+        border-radius: 0;
+    }
+    :first-child{
+        border-radius: @radius 0 0 @radius;
+    }
+    :last-child{
+        border-radius: 0 @radius @radius 0;
+    }
+}

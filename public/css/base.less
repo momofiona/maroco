@@ -1,6 +1,15 @@
-//http://less.toobug.net/article/reference.html
+//http://www.lesscss.net/features/#extend-feature
+/**
+ * hack
+ * \9 IE10以下 IE678910
+ * \0 IE8以上  IE89 10 11 opera(?)
+ * \9\0 IE89 10
+ * _ IE6
+ * * IE67
+ */
 /* variable */
 
+@fontColor: #434749;
 @logColor: #fafafa;
 @infoColor: #4abffc;
 @noteColor: #478af8;
@@ -27,7 +36,7 @@
     background-image: -o-linear-gradient(top, @from 0%, @to 100%); // Opera 11.10+ 
     background-image: -ms-linear-gradient(top, @from 0%, @to 100%); // IE10+ 
     background-image: linear-gradient(to bottom, @from 0%, @to 100%); // W3C 
-    // IE6-8 
+    // IE6-8 不幸IE9也认识
     filter:~"progid:DXImageTransform.Microsoft.gradient( startColorstr='@{from}', endColorstr='@{to}',GradientType=0 )";
 }
 /* base */
@@ -114,11 +123,9 @@ abbr[title] {
 }
 .clear {
     *zoom: 1;
-    &:before, &:after {
+    &:after {
         display: table;
         content: "\20";
-    }
-    &:after {
         clear: both
     }
 }
@@ -171,18 +178,22 @@ a:hover {
 }
 /* 基本样式，不设置layout */
 
-.log, .info, .note, .warn, .error, .safe, .link {
+.log, .silver, .info, .note, .warn, .error, .safe, .link {
+    // overflow: hidden;
     padding: .3em .5em;
     border-radius: @radius;
-    *zoom: 1;
 }
 .baseFactory(@baseColor, @baseBdColor, @baseFontColor: #fff) {
-    background-color: @logColor;
-    border: 1px solid #ddd;
-    color: #434749;
+    background-color: @baseColor;
+    border: 1px solid @baseBdColor;
+    color: @baseFontColor !important;
 }
 .log {
-    .baseFactory(@logColor, #ddd, #434749);
+    .baseFactory(@logColor, #ddd, @fontColor);
+}
+.silver {
+    .baseFactory(@logColor, #ddd, @fontColor);
+    .linear-gradient();
 }
 .info {
     .baseFactory(@infoColor, @infoColor);
@@ -200,130 +211,18 @@ a:hover {
     .baseFactory(@safeColor, @safeColor);
 }
 .link {
-    .baseFactory(@linkColor, transparent, @linkColor);
+    .baseFactory(transparent, @linkColor, @linkColor);
 }
-/*button*/
 
-.b {
-    display: inline-block;
-    font-weight: 400;
-    text-align: center;
-    vertical-align: middle;
-    cursor: pointer;
-    outline: 0;
-    transition: background-color .2s, color .2s;
-    *zoom: 1;
-    *display: inline;
-    .user-select;
-    &:active, &.b-active {
-        //any but IE6-8
-        box-shadow: inset 0 5px 10px -5px rgba(0, 0, 0, .5);
-        // IE6-8 
-        filter: ~"progid:DXImageTransform.Microsoft.gradient( startColorstr='#55000000', endColorstr='#00000000',GradientType=0)";
-        filter: none\9\0;
-    }
-}
-.b {
-    padding: .5em 1em;
-    line-height:21px;
-    //IE67 button高度宽度lineheight超标问题
-    button& {
-    }
-}
-.b-lg {
-    font-size: 1.5em;
-    padding: 10px 20px !important;
-    line-height: 30px;
-    button& {
-        *height: 52px;
-    }
-}
-.b-log .b-link, .b-log, .b-note, .b-safe, .b-info, .b-error {
-    border-radius: @radius;
-}
-.b-link {
-    color: @linkColor;
-    border: solid 1px @noteColor;
-    background-color: #fff;
-    &:hover {
-        color: @linkColor;
-        background-color: lighten(@linkColor, 30%);
-    }
-    &:active, &.b-active {
-        background-color: @linkColor;
-        color: #fff;
-    }
-}
-.b-log {
-    color: #434749;
-    border: solid 1px #ddd;
-    .linear-gradient();
-    &:hover {
-        .linear-gradient(#f3f4f5, #fff);
-    }
-    &:active, &.b-active {
-        .linear-gradient(#e3e4e5, #fff);
-    }
-}
-.btnFactory(@baseColor, @color: #fff) {
-    background-color: @baseColor;
-    border: solid 1px @baseColor;
-    color: @color;
-    &:hover {
-        background-color: darken(@baseColor, 5%);
-        border-color: darken(@baseColor, 5%);
-        color: @color;
-    }
-    &.b-active, &:active {
-        background-color: darken(@baseColor, 10%);
-        border-color: darken(@baseColor, 10%);
-    }
-}
-.b-note {
-    .btnFactory(@noteColor);
-}
-.b-info {
-    .btnFactory(@infoColor);
-}
-.b-warn {
-    .btnFactory(@warnColor, #660F0F);
-}
-.b-error {
-    .btnFactory(@errorColor);
-}
-.b-safe {
-    .btnFactory(@safeColor);
-}
-//组
-.b-group {
-    display: inline-block;
-    padding-left: 1px;
-    .b {
-        float: left;
-        margin-left: -1px;
-    }
-    :not(button) {
-        border-radius: 0
-    }
-    :first-child:not(button) {
-        border-radius: @radius 0 0 @radius;
-    }
-    :last-child:not(button){
-        border-radius: 0 @radius @radius 0;
-    }
-    .b-link {
-        box-shadow: none;
-        filter: none;
-    }
-}
 /*toolbar*/
 
 .toolbar {
-    .clear;
+    &:extend(.clear all);
     clear: both;
     margin: 0 0 1px;
     background: #d4e4f2;
     padding: .5em .8em .4em;
+    height: @btnHeight;
     .wall, .nowall {
         height: @btnHeight;
         margin: 0 .5em;
@@ -334,7 +233,7 @@ a:hover {
         border-left: solid 1px darken(#d4e4f2, 10%);
         border-right: solid 1px lighten(#d4e4f2, 10%);
     }
-    .caption {
+    .caption,.rock {
         color: #4472A2;
         float: left;
         line-height: @btnHeight;
@@ -342,9 +241,10 @@ a:hover {
         text-overflow: ellipsis;
         white-space: nowrap;
     }
-    .rock {
+    .caption {
         display: inline-block;
         margin: 0 .5em 0 0;
+        vertical-align: middle;
     }
     .cap {
         padding: 0 1em;
@@ -362,60 +262,45 @@ a:hover {
 }
 /* input text */
 
-.text, .text-s, .text-xs, .text-m, .text-l, .text-auto {
+.text, .text-auto {
     border: solid 1px #bfbfbf;
     vertical-align: middle;
     border-radius: @radius;
     padding: .5em 5px;
     height: @btnHeight;
     line-height: 1;
-    *height: @btnHeight/2;
+    *height: @btnHeight/2+2;
     *line-height: @btnHeight/2;
+    color: @fontColor;
     box-sizing: border-box;
     outline: 0;
     border-top-color: #aaa;
-    select& {
-        padding: 5.5px 5px;
-    }
+    transition: width .3s;
     &:focus {
         box-shadow: inset 0 5px 5px -5px #ccc;
         border: 1px solid #8FB3E1;
     }
 }
-.text-xs {
-    width: 60px;
-    *width: 48px;
-    select& {
-        width: 60px;
-    }
-}
-.text-s {
-    width: 100px;
-    *width: 88px;
-    select& {
-        width: 100px;
-    }
-}
-.text-m {
-    width: 180px;
-    *width: 168px;
-    select& {
-        width: 180px;
-    }
-}
-.text-l {
-    width: 320px;
-    *width: 308px;
-    select& {
-        width: 320px;
-    }
-}
 .text-auto-wrap {
     *margin-right: 12px;
-    *zoom:1 .text-auto {
+    *zoom: 1;
+    .text-auto {
         display: block;
     }
 }
 .text-auto {
     width: 100%;
+}
+/* notify */
+
+.notify {
+    position: absolute;
+}
+.notify-link {
+    position: absolute;
+    border-radius: @radius;
+    background: url(../img/alpha-black-50.png);
+    background: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+    padding: 1em;
 }

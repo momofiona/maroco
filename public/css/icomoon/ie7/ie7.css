@@ -1,65 +1,110 @@
-.f-plus-alt {
-	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe603;');
+.f-grid {
+	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf009;');
 }
-.f-minus-alt {
+.f-bell {
+	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf0a2;');
+}
+.f-more {
+	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf141;');
+}
+.f-down2 {
 	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe604;');
 }
-.f-close-alt {
-	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe601;');
+.f-up {
+	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe605;');
 }
-.f-check-alt {
+.f-home {
+	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe002;');
+}
+.f-browse {
+	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe0a2;');
+}
+.f-user {
+	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe199;');
+}
+.f-star-empty {
+	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe2ff;');
+}
+.f-star {
+	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe301;');
+}
+.f-pencil {
 	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe600;');
 }
-.f-denied {
-	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe602;');
+.f-filter {
+	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe443;');
 }
-.f-plus {
-	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xea0a;');
+.f-warn {
+	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe601;');
 }
-.f-minus {
-	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xea0b;');
+.f-calendar {
+	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe603;');
 }
-.f-checkmark {
-	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xea10;');
+.f-share {
+	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe48c;');
 }
-.f-cross {
-	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xea0f;');
-}
-.f-edit {
-	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe905;');
-}
-.f-bin {
-	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf014;');
-}
-.f-eye {
-	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf06e;');
-}
-.f-search {
-	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe986;');
-}
-.f-loop {
-	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xea2e;');
-}
-.f-cancel-circle {
-	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xea0d;');
+.f-org {
+	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe9bc;');
 }
 .f-shutdown {
 	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe9b6;');
 }
-.f-envelop {
-	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf003;');
+.f-menus {
+	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf05e;');
 }
-.f-home {
-	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf015;');
+.f-add {
+	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe63a;');
 }
-.f-location {
-	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe948;');
+.f-minus {
+	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe63c;');
+}
+.f-multiply {
+	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe60c;');
+}
+.f-checkmark {
+	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe62e;');
+}
+.f-bin {
+	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf014;');
+}
+.f-search {
+	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe607;');
+}
+.f-eye {
+	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf06e;');
+}
+.f-tool {
+	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe991;');
+}
+.f-gear {
+	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf013;');
+}
+.f-info {
+	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe62b;');
+}
+.f-question {
+	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe640;');
 }
 .f-alert {
 	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe950;');
 }
-.f-calendar {
-	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe953;');
+.f-location {
+	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe948;');
+}
+.f-buy {
+	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe639;');
+}
+.f-denied {
+	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe602;');
+}
+.f-loop {
+	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xea2e;');
+}
+.f-turnr {
+	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe613;');
+}
+.f-close {
+	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xea0d;');
 }
 .f-print {
 	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe954;');
@@ -68,25 +113,16 @@
 	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe967;');
 }
 .f-lock {
-	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe98f;');
+	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf06a;');
 }
 .f-unlock {
 	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe990;');
 }
-.f-tool {
-	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe991;');
-}
-.f-gear {
-	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf013;');
-}
-.f-power {
-	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe9b5;');
-}
-.f-org {
-	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe9bc;');
-}
 .f-attachment {
 	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe9cd;');
+}
+.f-link {
+	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf05c;');
 }
 .f-down {
 	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe9c7;');
@@ -94,60 +130,15 @@
 .f-upload {
 	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe9c8;');
 }
-.f-tile {
-	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf00a;');
-}
 .f-list {
 	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf00b;');
 }
-.f-help {
-	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf059;');
-}
-.f-info {
-	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf05a;');
-}
-.f-warning {
-	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf071;');
-}
-.f-ar-b {
+.f-arb {
 	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf0d7;');
 }
-.f-ar-t {
+.f-art {
 	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf0d8;');
 }
-.f-ar-l {
-	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf0d9;');
-}
-.f-ar-r {
-	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf0da;');
-}
-.f-ar-bt {
+.f-arbt {
 	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf0dc;');
-}
-.f-aro-l {
-	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf104;');
-}
-.f-aro-r {
-	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf105;');
-}
-.f-aro-t {
-	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf106;');
-}
-.f-aro-b {
-	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf107;');
-}
-.f-more {
-	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf141;');
-}
-.f-bullhorn {
-	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe05f;');
-}
-.f-smile {
-	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe320;');
-}
-.f-sad {
-	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe324;');
-}
-.f-link {
-	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe005;');
 }

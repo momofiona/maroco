@@ -1,17 +1,11 @@
-/**
- *  underscore template tag
- */
-_.templateSettings = {
-    evaluate: /\{\{([\s\S]+?)\}\}/g,
-    interpolate: /\{\{=([\s\S]+?)\}\}/g,
-    escape: /\{\{-([\s\S]+?)\}\}/g
-};
-
 //seajs config2
 seajs.config({
-    alias: {},
+    alias: {
+        dot: 'js/vendor/doT.min'
+    },
     paths: {
-        'apps': '../apps'
+        'apps': '../apps',
+        'ui': 'js/ui'
     },
     base: seajs.resolve('/'),
     vars: {
@@ -54,6 +48,8 @@ seajs.config({
             HOME: 36,
             LEFT: 37
         },
+        noop=$.noop,
+        uuid=0,
         UI = window.UI = {};
 
     /**
@@ -66,7 +62,7 @@ seajs.config({
                 ie: window.atob ? 10 : document.addEventListener ? 9 : document.querySelector ? 8 : window.XMLHttpRequest ? 7 : 6
             }
             //hack需要 ie6-8 因为需要排除IE9来加filter
-        $('html').addClass('ie' + browser.ie+(browser.ie<9?' ie6-8':''));
+        // $('html').addClass('ie' + browser.ie + (browser.ie < 9 ? ' ie6-8' : ''));
     } else {
         browser = {
             ie11: '-ms-scroll-limit' in document.documentElement.style && '-ms-ime-align' in document.documentElement.style,
@@ -82,10 +78,7 @@ seajs.config({
      * 全局唯一ID ，局部可用_.uniqueId(UI.guid)
      * @type {[type]}
      */
-    var noop = $.noop,
-        uuid = 0,
-        //位数不固定30位左右
-        guid = function() {
+    var guid = function() {
             var n = _.now().toString(32),
                 i;
             for (i = 0; i < 5; i++) {
@@ -173,8 +166,8 @@ seajs.config({
     var loader = function(config) {
         config = $.extend({
             baseparms: {},
-            beforeLoad: $.noop,
-            afterLoad: $.noop
+            beforeLoad: noop,
+            afterLoad: noop
         }, config);
         var filter = config.filter,
             baseparms = config.baseparms;
@@ -202,6 +195,43 @@ seajs.config({
         }
     }
     UI.loader = loader;
+
+    /**
+     * button 给页面上所有btn绑定事件
+     * @type {Array}
+     */
+    var btnClassNames = ['log', 'silver', 'note', 'info', 'warn', 'error', 'link'];
+    var button = UI.button = function(dom, cName) {
+        //主动触发
+        var _t = $(dom);
+        if (_t.data('btype') === undefined) {
+            cName = cName || _.find(btnClassNames, function(name) {
+                return _t.hasClass(name);
+            });
+            if (cName) {
+                _t.addClass(cName + '-hover');
+                _t.mouseenter(function() {
+                    $(this).addClass(cName + '-hover');
+                }).mouseleave(function() {
+                    $(this).removeClass(cName + '-hover');
+                }).mousedown(function(e) {
+                    //解决鼠标拖动元素的时候
+                    e.preventDefault();
+                    var _btn = $(this).addClass(cName + '-active');
+                    $(document).one('mouseup', function(e) {
+                        _btn.removeClass(cName + '-active');
+                    });
+                });
+            }
+            _t.data('btype', cName);
+        }
+        return _t;
+    };
+    //被动触发
+    $(document).on('mouseenter', '.b.' + btnClassNames.join(',.b.'), function() {
+        button(this);
+    });
+
 
     define('ui', function(require) {
         require('api'); //注掉此行来禁用假数据
