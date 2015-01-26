@@ -1,18 +1,18 @@
-<h1>表单 <small>Form Elements</small></h1>
-<hr>
-</button>
-<h2>Button</h2>
-<p>组合式按钮，hover和active依赖js</p>
-<p>
-    <b class="b">b<i class="m4 f f-arb"></i></b>
-    <b class="b log"><i class="f f-upload"></i></b>
-    <b class="b info"><i class="f m2 f-add"></i>新建</b>
-    <b class="b note"><i class="m2 f f-undo"></i>返回</b>
-    <b class="b warn"><i class="m2 f f-buy"></i>购买</b>
-    <b class="b error"><i class="m2 f f-bin"></i>删除</b>
-    <b class="b link"><i class="m2 f f-link"></i>link</b>
-</p>
-<pre class="brush: html;">
+<div class="m4">
+    <h1>表单 <small>Form Elements</small></h1>
+    <hr>
+    <h2>Button</h2>
+    <p>组合式按钮，hover和active依赖js</p>
+    <p>
+        <b class="b">b<i class="m4 f f-arb"></i></b>
+        <b class="b log"><i class="f f-upload"></i></b>
+        <b class="b info"><i class="f m2 f-add"></i>新建</b>
+        <b class="b note"><i class="m2 f f-undo"></i>返回</b>
+        <b class="b warn"><i class="m2 f f-buy"></i>购买</b>
+        <b class="b error"><i class="m2 f f-bin"></i>删除</b>
+        <b class="b link"><i class="m2 f f-link"></i>link</b>
+    </p>
+    <pre class="brush: html;">
     &lt;b class="b">b&lt;i class="m4 f f-arb">&lt;/i>&lt;/b>
     &lt;b class="b log">&lt;i class="f f-upload">&lt;/i>&lt;/b>
     &lt;b class="b info">&lt;i class="f m2 f-add">&lt;/i>新建&lt;/b>
@@ -21,20 +21,20 @@
     &lt;b class="b error">&lt;i class="m2 f f-bin">&lt;/i>删除&lt;/b>
     &lt;b class="b link">&lt;i class="m2 f f-link">&lt;/i>link&lt;/b>
 </pre>
-<h3>不同标签</h3>
-<div>
-    <b class="b log">b</b>
-    <i class="b log">i</i>
-    <div class="b log">div</div>
-    <a class="b log">a</a>
-    <a class="b note" href="javascript:;">a:href:note <i class="i i-loading"></i></a>
-    <span class="b log">span</span>
-    <span class="b log">中文</span>
-    <button class="b log">button</button>
-    <input class="b log" type="button" value="input">
-    <input class="b log" type="submit" value="submit">
-</div>
-<pre class="brush: html;">
+    <h3>不同标签</h3>
+    <div>
+        <b class="b log">b</b>
+        <i class="b log">i</i>
+        <div class="b log">div</div>
+        <a class="b log">a</a>
+        <a class="b note" href="javascript:;">a:href:note <i class="i i-loading"></i></a>
+        <span class="b log">span</span>
+        <span class="b log">中文</span>
+        <button class="b log">button</button>
+        <input class="b log" type="button" value="input">
+        <input class="b log" type="submit" value="submit">
+    </div>
+    <pre class="brush: html;">
     &lt;b class="b log">b&lt;/b>
     &lt;i class="b log">i&lt;/i>
     &lt;div class="b log">div&lt;/div>
@@ -46,53 +46,72 @@
     &lt;input class="b log" type="button" value="input">
     &lt;input class="b log" type="submit" value="submit">
 </pre>
-<p>PS：如无特别情况，按钮使用b或者a标签</p>
-<h2>toolbar</h2>
-<div class="toolbar">
-    <div class="xr">
-        <span class="cap xl">哈哈</span>
-        <input class="text m2 xl">
-        <span class="b note">提交<i class="m4 f f-arb"></i></span>
+    <p>PS：如无特别情况，按钮使用b或者a标签</p>
+    <h2>toolbar</h2>
+    <div class="toolbar">
+        <span class="caption">caption文字：</span>
+        <div class="xr">
+            <span class="cap xl">哈哈</span>
+            <input class="text m2 xl">
+            <span class="b note">提交<i class="m4 f f-arb"></i></span>
+        </div>
+        <button class="b">button<i class="m4 f f-arb"></i>
+        </button>
+        <span class="wall"></span>
+        <button class="b note">button xl<i class="m4 f f-arb"></i>
+        </button>
+        <select class="text m4">
+            <option>知道么</option>
+            <option>select在IE67上无法控制高度</option>
+            <option>select。。。</option>
+        </select>
     </div>
-    <span class="caption">caption文字：</span>
-    <button class="b xl">button xl<i class="m4 f f-arb"></i>
-    </button>
-    <span class="wall xl"></span>
-    <button class="b xl note">button xl<i class="m4 f f-arb"></i>
-    </button>
-    <select class="text m4">
-        <option>知道么</option>
-        <option>select在IE67上无法控制高度</option>
-        <option>select。。。</option>
-    </select>
-</div>
-<h2>按钮组</h2>
-<p>
-    <span class="group m2">
+    <h2>按钮组 <small>Group</small></h2>
+    <p>
+        <span class="group m2" id="demoBtnset">
         <button class="b link">button <i class="m4 f f-arb"></i></button>
         <span class="b link link-active">span  <i class="m4 f f-arb"></i></span>
         <a class="b link" href="#btn">a  <i class="m4 f f-arb"></i></a>
-    </span>
-    <span class="group m4">
+        </span>
+        <span class="group m2" id="demoBtnset2"></span>
+        <span class="group m4">
             <button class="b log">button</button>
             <span class="b silver"><i class="f f-arb"></i></span>
-    </span>
-    <span class="group m4">
+        </span>
+        <span class="group m4">
         <input class="text w5">
         <a class="b link" href="#btn"><i class="f f-search"></i></a>
     </span>
-</p>
-<p>
-    <span class="group m2">
-        <button class="b note">button <i class="m4 f f-arb"></i></button>
-        <span class="b note note-active">span  <i class="m4 f f-arb"></i></span>
-    <a class="b note" href="#btn">a  <i class="m4 f f-arb"></i></a>
-    </span>
-    <span class="group m2">
-        <span class="b error error-active">span  <i class="m4 f f-arb"></i></span>
-    <a class="b error" href="#btn">a  <i class="m4 f f-arb"></i></a>
-    </span>
-</p>
+    </p>
+    <p id="otherGroup">
+        <span class="group m2">
+    <a class="b log" href="#btn">a</a>
+        <span class="b log log-active">span</span>
+        <a class="b log" href="#btn">a</a>
+        </span>
+        <span class="group m2">
+    <a class="b info" href="#btn">a</a>
+        <span class="b info info-active">span</span>
+        <a class="b info" href="#btn">a</a>
+        </span>
+        <span class="group m2">
+    <a class="b warn" href="#btn">a</a>
+        <span class="b warn warn-active">span</span>
+        <a class="b warn" href="#btn">a</a>
+        </span>
+        <span class="group m2">
+    <a class="b safe" href="#btn">a</a>
+        <span class="b safe safe-active">span</span>
+        <a class="b safe" href="#btn">a</a>
+        </span>
+        <span class="group m2">
+    <a class="b note" href="#btn">a</a>
+        <span class="b note note-active">span</span>
+        <a class="b note" href="#btn">a</a>
+        </span>
+    </p>
+    <div class="footman"></div>
+</div>
 <script>
 previewCode();
 //IE6、7 link button avtive问题
@@ -101,8 +120,35 @@ previewCode();
         $(this).blur();
     })
 }*/
-seajs.use('ui/buttonset',function(buttonset){
-    // debugger;
-});
+seajs.use('ui/buttonset', function(buttonset) {
+    buttonset({
+        el: '#demoBtnset',
+        onselect: function(e, config) {
+            // debugger;
+        }
+    });
+    buttonset({
+        cls: 'error',
+        el: '#demoBtnset2',
+        data: [{
+            label: '高级'
+        }, {
+            label: '中级',
+            selected: true
+        }, {
+            label: '初级'
+        }],
+        multi: true
+    });
+    $('#otherGroup').children().each(function() {
+        var _t = this;
+        buttonset({
+            el: _t,
+            init: function() {
+                this.cls = this.el.children()[0].className.replace('b ', '');
+            }
+        });
+    });
 
+});
 </script>

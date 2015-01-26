@@ -1,12 +1,23 @@
 /*
- * router
- * hash中不允许带:()和*
+ * @preserve Router
+ * @description An easy tool for hashchange
+ * @author momo
+ * @version 1.0
+ * @example router({
+            'layout/:id': function(id) {
+                //trigger when location.hash='layout/12'
+                //and id will eaqual '12'
+            },
+            "*": function(hash) {
+                //trigger when no other compart above
+            }
+        });
  */
 define(function(require, exports, module) {
     var _oldHash,
         all = /\*.*$/,
         part = /([^\/]?)\:[^\/]*/g,
-        escapeRegExp = /[\-{}\[\]+?.,\\\^$|#\s]/g,
+        escapeRegExp = /[\-{}\[\]\(\)+?.,\\\^$|#\s]/g,
         route = _.memoize(function(ru) {
             return new RegExp('^#?' + ru.replace(escapeRegExp, '\\$&').replace(all, '(.*)').replace(part, '$1([^\/]*)') + '$');
         });
@@ -16,8 +27,7 @@ define(function(require, exports, module) {
             $.each(routeConfig, function(k, v) {
                 var choice = hash.match(route(k));
                 if (choice) {
-                    var fn = _.isString(v) ? routeConfig[v] : v;
-                    fn.apply(routeConfig, choice.slice(1));
+                    v.apply(routeConfig, choice.slice(1));
                     return false;
                 }
             });
@@ -35,7 +45,5 @@ define(function(require, exports, module) {
                 }, 100);
             }
         }
-        //主动触发第一次
-
     }
 });

@@ -1,21 +1,169 @@
-<h1>提示 <small>notify</small></h1>
-<hr>
-</button>
-<h2>弹出提示</h2>
-<p>
-    <b class="b silver">loading</b>
-    <b class="b note">confirm</b>
-    <b class="b warn">warning</b>
-    <b class="b error">error</b>
-</p>
-<div class="notify m note">
-    <i class="i i-loading"></i> 加载中
+<div class="m4">
+    <h1>提示 <small>notify</small></h1>
+    <hr>
+    </button>
+    <h2>弹出提示</h2>
+    <p id="demoNotify">
+        <span class="group">
+        <b class="b silver ac-loading">loading</b>
+        <b class="b silver ac-loading-shutdown">loading shutdown</b>
+    </span>
+        <span class="b note ac-loading2">loading带关闭</span>
+        <b class="b silver ac-loading3">loading自动关闭</b>
+        <b class="b note ac-confirm">confirm</b>
+        <b class="b warn ac-warn">warning</b>
+        <b class="b error ac-error">error</b>
+        <b class="b safe ac-safe">safe</b>
+        <b class="b info ac-clear">清空</b>
+    </p>
+    <h2>当dialog用</h2>
+    <p>考虑IE6，dialog 必须有宽度</p>
+    <div class="dialog m note w8" style="position:relative;float:left;">
+        <i class="f f-multiply dialog-close"></i>
+        <div class="dialog-title">
+            note dialog
+        </div>
+        <div class="dialog-con">
+            <i class="i i-loading"></i> 加载中
+        </div>
+        <div class="dialog-foot">
+            <b class="b log xr m4">取消</b>
+            <b class="b xr note">确定</b>
+        </div>
+    </div>
+
+    <div class="dialog m log w8" style="position:relative;float:left;">
+        <i class="f f-multiply dialog-close"></i>
+        <div class="dialog-title">
+            log dialog
+        </div>
+        <div class="dialog-con">
+            <i class="i i-loading"></i> 加载中
+        </div>
+        <div class="dialog-foot">
+            <b class="b log xr m4">取消</b>
+            <b class="b xr note">确定</b>
+        </div>
+    </div>
+
+    <div class="dialog m error w8" style="position:relative;float:left;">
+        <i class="f f-multiply dialog-close"></i>
+        <div class="dialog-title">
+            error dialog
+        </div>
+        <div class="dialog-con">
+            <i class="i i-loading"></i> 加载中
+        </div>
+        <div class="dialog-foot">
+            <b class="b log xr m4">取消</b>
+            <b class="b xr note">确定</b>
+        </div>
+    </div>
+    <div class="dialog m safe w8" style="position:relative;float:left;">
+        <i class="f f-multiply dialog-close"></i>
+        <div class="dialog-title">
+            safe dialog
+        </div>
+        <div class="dialog-con">
+            <i class="i i-loading"></i> 加载中
+        </div>
+        <div class="dialog-foot">
+            <b class="b log xr m4">取消</b>
+            <b class="b xr note">确定</b>
+        </div>
+    </div>
+    <div class="dialog m silver w8" style="position:relative;float:left;">
+        <i class="f f-multiply dialog-close"></i>
+        <div class="dialog-title">
+            silver dialog
+        </div>
+        <div class="dialog-con">
+            <i class="i i-loading"></i> 加载中
+        </div>
+        <div class="dialog-foot">
+            <b class="b log xr m4">取消</b>
+            <b class="b xr note">确定</b>
+        </div>
+    </div>
+    <div class="dialog m info w8" style="position:relative;float:left;">
+        <i class="f f-multiply dialog-close"></i>
+        <div class="dialog-title">
+            info dialog
+        </div>
+        <div class="dialog-con">
+            <i class="i i-loading"></i> 加载中
+        </div>
+        <div class="dialog-foot">
+            <b class="b log xr m4">取消</b>
+            <b class="b xr note">确定</b>
+        </div>
+    </div>
+    <div class="dialog m link w8" style="position:relative;float:left;">
+        <i class="f f-multiply dialog-close"></i>
+        <div class="dialog-title">
+            link dialog
+        </div>
+        <div class="dialog-con">
+            <i class="i i-loading"></i> 加载中
+        </div>
+        <div class="dialog-foot">
+            <b class="b log xr m4">取消</b>
+            <b class="b xr note">确定</b>
+        </div>
+    </div>
+    <div class="footman"></div>
 </div>
 <script>
-//IE6、7 link button avtive问题
-if (UI.browser.ie < 8) {
-    $(document).on('click', '.b', function() {
-        $(this).blur();
-    })
-}
+seajs.use('ui/notify', function(notify) {
+    var loadingTip;
+    UI({
+        el: '#demoNotify',
+        events: {
+            'click .ac-loading': function(e, config) {
+                loadingTip = notify.loading({
+                    draggable: true
+                });
+            },
+            'click .ac-loading-shutdown': function(e, config) {
+                loadingTip && loadingTip.close();
+            },
+            'click .ac-loading2': function(e, config) {
+                notify.loading({
+                    cls: 'note',
+                    closeable: true,
+                    onclose: function() {
+                        alert('onclose');
+                    }
+                });
+            },
+            'click .ac-loading3': function(e, config) {
+                notify.loading({
+                    msg: '3秒后自动关闭',
+                    timeout: 3
+                });
+            },
+            'click .ac-confirm': function(e, config) {
+                notify.confirm({
+                    msg: '确认要更改此组织权限？',
+                    callback: function(result) {
+                        alert(result);
+                    }
+                });
+            },
+            'click .ac-warn': function(e, config) {
+                notify.warn('警告');
+            },
+            'click .ac-error': function(e, config) {
+                notify.error('错误');
+            },
+            'click .ac-safe': function(e, config) {
+                notify.safe('成功');
+            },
+            'click .ac-clear': function(e, config) {
+                notify.clear();
+            }
+
+        }
+    });
+});
 </script>

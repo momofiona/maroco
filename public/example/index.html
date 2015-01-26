@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="noscroll">
 
 <head>
     <meta charset="utf-8">
@@ -14,23 +14,8 @@
     <script src="../js/maroco.js"></script>
     <script src="../js/ui/ui.js"></script>
     <style type="text/css">
-    html,
-    body {
-        height: 100%;
-        overflow: hidden;
-    }
-    ul {
-        margin: 0;
-        padding: 0;
-        list-style: none;
-    }
     /* IE8 +*/
     
-    .xn {
-        border-radius: 15px;
-        text-indent: 1em;
-        background-color: #d4e4f2;
-    }
     header.toolbar {
         position: relative;
         z-index: 3;
@@ -38,7 +23,7 @@
         box-shadow: 0 0 5px rgba(100, 100, 100, .2);
         overflow: hidden;
     }
-    #sidebar,
+    #sideMenu,
     #mainbody {
         position: absolute;
         top: 48px;
@@ -48,37 +33,18 @@
         overflow-y: auto;
         background: #fff;
     }
-    #sidebar {
+    #sideMenu {
         border-right: 1px solid #e3e3e3;
         background-color: #f9f9f9;
     }
-    .menu a {
-        display: block;
-        position: relative;
-        overflow: hidden;
-        padding: 5px 12px;
-        line-height: 24px;
-        font-size: 14px;
-        white-space: nowrap;
-        word-wrap: normal;
-        overflow-wrap: normal;
-        text-overflow: ellipsis;
-        color: #555
-    }
-    .menu li {
-        _zoom: 1;
-        overflow: hidden;
-        _vertical-align: bottom;
-    }
-    .menu a:hover {
-        background: #ddd;
-    }
-    .menu a.active {
-        background: #ddd;
-    }
     #mainbody {
-        left: 240px;
+        left: 152px;
         right: 0;
+    }
+    .appframe{
+        width: 100%;
+        height: 100%;
+        border:0;
     }
     </style>
 </head>
@@ -90,8 +56,10 @@
             <span class="wall"></span>
             <span class="rock">toolbar</span>
         </header>
-        <div class="w7 scroll" id="sidebar">
-            <ul class="menu m9">
+        <div class="w5 scroll" id="sideMenu">
+            <ul class="nav m9">
+                <li><a href="#app/user/main">用户管理</a>
+                </li>
                 <li><a href="#layout">格栅系统</a>
                 </li>
                 <li><a href="#text">文字排版</a>
@@ -104,15 +72,17 @@
                 </li>
                 <li><a href="#ctable">表格</a>
                 </li>
-                <li><a href="#girlfriend">规范</a>
-                </li>
                 <li><a href="#mock">假数据</a>
                 </li>
-                <li><a href="#mock">router</a>
-                </li>
-                <li><a href="#charts">图表Higncharts/jqplot</a>
+                <li><a href="#router">Router</a>
                 </li>
                 <li><a href="#watch">数据监控(beta)</a>
+                </li>
+                <li><a href="#girlfriend"><i class="m2 f f-browse"></i>杂物</a>
+                </li>
+                <li><a href="#vm"><i class="m2 xl f f-alert"></i>双向绑定</a>
+                </li>
+                <li><a href="#charts"><i class="m2 xl f f-alert"></i>图表Higncharts/jqplot</a>
                 </li>
             </ul>
         </div>
@@ -120,17 +90,29 @@
     </div>
     <script>
     seajs.use(['ui', 'ui/router'], function(UI, router) {
-        //Backbone Router
+        //Nav
+        // $('.nav').navgoco();
         var mainbody = $('#mainbody'),
-            sidebar = $('#sidebar'),
-            menus = sidebar.find('a'),
+            sideMenu = $('#sideMenu'),
+            menus = sideMenu.find('a'),
             legalMod = _.reduce(menus, function(memo, a) {
                 memo.push(a.hash);
                 return memo;
             }, []);
+        //router
         router({
-            'layout/:id': function(id) {
-                console.log(id);
+            'app/*': function(mod) {
+                seajs.use('apps/' + mod,function(view){
+                    view.show({
+                        container:mainbody.empty()
+                    })
+                });
+                return;
+                mainbody.empty().scrollTop(0).load('../apps/' + mod, function(res, state, xhr) {
+                        if (state == 'error') {
+                            mainbody.html(res);
+                        }
+                    });
             },
             "*": function(mod) {
                 if (_.indexOf(legalMod, '#' + mod) > -1) {
@@ -139,50 +121,30 @@
                             mainbody.html(res);
                         }
                     });
-                }else{
-                    location.hash=legalMod[0];
+                    menus.filter('[href$="#' + mod + '"]').parent().addClass('active').siblings().removeClass('active');
+                } else {
+                    location.hash = legalMod[0];
                 }
             }
         });
-        /*           AppRouter = Backbone.Router.extend({
-                       routes: {
-                           ':mod': 'loader',
-                           '*error': 'errorHander'
-                       },
-                       loader: function(mod) {
-                           if (_.indexOf(legalMod, '#' + mod) > -1) {
-                               mainbody.empty().scrollTop(0).load(mod + '.html', function(res, state, xhr) {
-                                   if (state == 'error') {
-                                       mainbody.html(res);
-                                   }
-                               });
-                               menus.removeClass('active').filter('[href$="#' + mod + '"]').addClass('active');
-                           } else {
-                               this.errorHander.call(this);
-                           }
-                       },
-                       errorHander: function() {
-                           location.hash = 'layout';
-                       }
-                   });
-               var router = new AppRouter();
-               Backbone.history.start();*/
         //IE6 fix
         if (UI.browser.ie < 8) {
             $(window).resize(function() {
                 var h = $(this).height() - 48;
-                mainbody.height(h).width($(this).width() - 240);
-                sidebar.height(h);
+                mainbody.height(h).width($(this).width() - 181);
+                sideMenu.height(h);
             }).resize();
         }
     });
 
     var previewCode = function() {
-        $('pre').each(function() {
-            SyntaxHighlighter.highlight({
-                toolbar: false
-            }, this)
-        })
+        $(function() {
+            $('pre').each(function() {
+                SyntaxHighlighter.highlight({
+                    toolbar: false
+                }, this)
+            })
+        });
     }
     </script>
 

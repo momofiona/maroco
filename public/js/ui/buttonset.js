@@ -1,43 +1,48 @@
 /**
  * buttonset
- * @param  {[type]} require [description]
  */
 define(function(require, exports, module) {
-    var watch = require('ui/watch'),
-        dot = require('dot');
+    var watch = require('ui/watch');
     var defaults = {
         cls: 'link',
-        multi: false //多选
-    }
-    var btnSet = Backbone.View.extend({
         events: {
-            "dblclick": "open",
-            "click .icon.doc": "select",
-            "contextmenu .icon.doc": "showMenu",
-            "click .show_notes": "toggleNotes",
-            "click .title .lock": "editAccessLevel",
-            "mouseover .title .date": "showTooltip"
+            'click .b': function(e, config) {
+                var ac = config.cls + '-active active';
+                if(config.multi){
+                    $(this).toggleClass(ac).removeClass(config.cls+'-hover');
+                }else{
+                    $(this).addClass(ac).siblings().removeClass(ac);
+                }
+                if (config.onselect) config.onselect.call(this, e, config);
+            }
         },
-
-        render: function() {
-            this.$el.html(this.template(this.model.attributes));
-            return this;
+        getSelected: function() {
+            return this.el.children().filter('.active');
         },
-
-        open: function() {
-            window.open(this.model.get("viewer_url"));
-        },
-
-        select: function() {
-            this.model.set({
-                selected: true
+        getSelectData: function() {
+            var out=[],data=this.data;
+            if(!data){
+                return out;
+            }
+            this.el.children().each(function(i,o){
+                if($(o).hasClass('active')) out.push(data[i]);
+            });
+            return out;
+        }
+    }
+    var tmp = _.dot('{{~it.data :v:i}}<b class="b {{=it.cls}}{{?v.selected}} {{=it.cls}}-active{{?}}">{{=v.label}}</b>{{~}}');
+    return function(config) {
+        config = _.extend(_.proto(defaults), config);
+        UI(config);
+        if(config.data){
+            config.el.html(tmp(config));
+        }
+        //IE6禁止复制
+        if(UI.browser.ie==6){
+            config.el.children().each(function(){
+                this.onselectstart=function(){return false;}
             });
         }
-    });
-    var tmp = dot.template('{{~it.data :v:i}}<b class="b {{it.cls}}">{{v.label}}</b>{{~}}');
-    var buttonset = function(dom, config) {
-        config = _.extend({}, defaults, config);
-        $()
+        return config;
     }
-    return buttonset;
 });

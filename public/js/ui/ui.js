@@ -1,10 +1,10 @@
 //seajs config2
 seajs.config({
     alias: {
-        dot: 'js/vendor/doT.min'
+        dot: 'js/vendor/doT.min',
+        ztree:'js/vendor/zTree/jquery.ztree.all-3.5.min.js'
     },
     paths: {
-        'apps': '../apps',
         'ui': 'js/ui'
     },
     base: seajs.resolve('/'),
@@ -16,23 +16,11 @@ seajs.config({
     ]
 });
 
-//console fix，生产环境用uglify去掉console
-(function() {
-    if (window.console) return;
-    var methods = [
-            'assert', 'clear', 'count', 'debug', 'dir', 'dirxml', 'error',
-            'exception', 'group', 'groupCollapsed', 'groupEnd', 'info', 'log',
-            'markTimeline', 'profile', 'profileEnd', 'table', 'time', 'timeEnd',
-            'timeStamp', 'trace', 'warn'
-        ],
-        length = methods.length,
-        console = window.console = {};
-    while (length--) {
-        console[methods[length]] = $.noop;
-    }
-})();
-
-//UI base
+/**
+ * UI base
+ * 数据类的放到_
+ * UI类的放到UI下
+ */
 (function($) {
     'use strict';
     //KeyCode
@@ -48,10 +36,33 @@ seajs.config({
             HOME: 36,
             LEFT: 37
         },
-        noop=$.noop,
-        uuid=0,
-        UI = window.UI = {};
-
+        //UI widget
+        UI = function(config) {
+            config.$ = function(arg) {
+                return $(arg, this.el);
+            };
+            //el init
+            config.el = $(config.el || '<div/>');
+            if (config.init) {
+                config.init.apply(config);
+            }
+            //绑定事件
+            _.each(config.events, function(v, k) {
+                var s = k.indexOf(' ');
+                config.el.on(k.slice(0, s), $.trim(k.slice(s + 1)), function(event) {
+                    var _fn = (_.isString(v) ? config[v] : v);
+                    if (_fn) _fn.call(this, event, config);
+                });
+            });
+            return config;
+        };
+    //一些基本属性
+    _.extend(UI, {
+        //非法字符，依据windows文件夹命名规则
+        illegalCharacter: /[^\\\/:\*\?\"<>\|]/,
+        //分页每页数量
+        itemsOnPage: 15
+    });
     /**
      * 浏览器判断 主要判断IE6-10
      */
@@ -59,10 +70,8 @@ seajs.config({
     if (!!window.ActiveXObject) {
         //IE6-10
         browser = {
-                ie: window.atob ? 10 : document.addEventListener ? 9 : document.querySelector ? 8 : window.XMLHttpRequest ? 7 : 6
-            }
-            //hack需要 ie6-8 因为需要排除IE9来加filter
-        // $('html').addClass('ie' + browser.ie + (browser.ie < 9 ? ' ie6-8' : ''));
+            ie: window.atob ? 10 : document.addEventListener ? 9 : document.querySelector ? 8 : window.XMLHttpRequest ? 7 : 6
+        }
     } else {
         browser = {
             ie11: '-ms-scroll-limit' in document.documentElement.style && '-ms-ime-align' in document.documentElement.style,
@@ -74,31 +83,57 @@ seajs.config({
     }
     UI.browser = browser;
 
-    /**
-     * 全局唯一ID ，局部可用_.uniqueId(UI.guid)
-     * @type {[type]}
-     */
-    var guid = function() {
+    //underscore mixin
+    _.mixin({
+        /**
+         * 全局唯一ID ，局部可用_.uniqueId(UI.guid)
+         */
+        guid: function(prefix) {
             var n = _.now().toString(32),
                 i;
             for (i = 0; i < 5; i++) {
                 n += Math.floor(Math.random() * 65535).toString(32);
             }
-            return n + (uuid++).toString(32);
-        };
-    UI.guid = guid;
-
-    /**
-     * 原型链
-     * @param  {[type]} proto 原型对象
-     * @return {Object}       新对象
-     */
-    var proto = Object.create || function(proto) {
-        function F() {};
-        F.prototype = proto;
-        return new F;
-    };
-    UI.proto = proto;
+            n += _.uniqueId().toString(32);
+            return prefix ? prefix + n : n;
+        },
+        //原型链
+        proto: Object.create || function(proto) {
+            function F() {};
+            F.prototype = proto;
+            return new F;
+        },
+        dot: doT.template,
+        queryString: function(str, sep, eq) {
+            var ret = {};
+            if (typeof str !== 'string' || $.trim(str).length === 0) {
+                return ret;
+            }
+            str=$.trim(str).replace(/^\?+/,'');
+            var pairs = str.split(sep || '&'),
+                re = /^(\w+)\[\]$/,
+                pair, key, val, m;
+            eq = eq || '=';
+            for (var i = 0; i < pairs.length; i++) {
+                pair = pairs[i].split(eq);
+                key = decodeURIComponent($.trim(pair[0]));
+                val = decodeURIComponent($.trim(pair.slice(1).join(eq)));
+                m = key.match(re);
+                if (m && m[1]) {
+                    key = m[1];
+                }
+                if (ret.hasOwnProperty(key)) {
+                    if (!_.isArray(ret[key])) {
+                        ret[key] = [ret[key]];
+                    }
+                    ret[key].push(val);
+                } else {
+                    ret[key] = m ? [val] : val;
+                }
+            }
+            return ret;
+        }
+    });
 
     /**
      * Input Event Fixed
@@ -166,8 +201,8 @@ seajs.config({
     var loader = function(config) {
         config = $.extend({
             baseparms: {},
-            beforeLoad: noop,
-            afterLoad: noop
+            beforeLoad: $.noop,
+            afterLoad: $.noop
         }, config);
         var filter = config.filter,
             baseparms = config.baseparms;
@@ -216,8 +251,10 @@ seajs.config({
                     $(this).removeClass(cName + '-hover');
                 }).mousedown(function(e) {
                     //解决鼠标拖动元素的时候
+                    var _btn = $(this);
+                    if (_btn.hasClass('active')) return;
                     e.preventDefault();
-                    var _btn = $(this).addClass(cName + '-active');
+                    _btn.addClass(cName + '-active');
                     $(document).one('mouseup', function(e) {
                         _btn.removeClass(cName + '-active');
                     });
@@ -231,12 +268,13 @@ seajs.config({
     $(document).on('mouseenter', '.b.' + btnClassNames.join(',.b.'), function() {
         button(this);
     });
-
-
+    //设置seaID
     define('ui', function(require) {
         require('api'); //注掉此行来禁用假数据
         return UI;
     });
+    //暴露全局调用
+    window.UI = UI;
 })(jQuery);
 
 
@@ -244,11 +282,9 @@ seajs.config({
 //全局ajax处理
 $.ajaxSetup({
     //ie 都不缓存
-    cache: !!UI.browser.ie,
+    cache: !UI.browser.ie,
     complete: function(jqXHR) {},
-    data: {
-        a: 12
-    },
+    data: {},
     error: function(jqXHR, textStatus, errorThrown) {
 
         //请求失败统一处理
@@ -260,6 +296,15 @@ $(document).ajaxSuccess(function(event, XMLHttpRequest, ajaxOptions) {
         //没有登录 跳转到登录页面
     }
 });
+
+//console fix，生产环境用uglify去掉console
+(function() {
+    if (window.console) return;
+    var console = window.console = {};
+    _.each('assert clear count debug dir dirxml error exception group groupCollapsed groupEnd info log markTimeline profile profileEnd table time timeEnd timeStamp trace warn'.split(' '), function(o) {
+        console[o] = $.noop;
+    });
+})();
 //让IE6-8认识HTML5标签
 if (UI.browser.ie < 9) _.each("abbr article aside audio bdi canvas data datalist details dialog figcaption figure footer header hgroup main mark meter nav output picture progress section summary template time video".split(' '), function(o) {
     document.createElement(o);

@@ -1,81 +1,48 @@
-<!DOCTYPE HTML>
-<html class="noscroll">
-
-<head>
-    <meta charset="utf-8">
-    <title>Maroco UI</title>
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="../../css/maroco.css">
-    <link rel="stylesheet" href="../../css/zTree/zTreeStyle.css">
-    <link rel="stylesheet" href="../../css/jqueryui/jquery-ui.css">
-    <!--[if lt IE 8]>
-    <link rel="stylesheet" href="../css/icomoon/ie7/ie7.css">
-    <![endif]-->
-    <style type="text/css">
-    #peopleZTree .ztree {
-        padding: 10px;
-    }
-    #catalog {
-        max-width: 150px;
-    }
-    </style>
-</head>
-
-<body>
-    <div class="columns-block noscroll">
-        <div id="peopleZTree" class="x w5 m2 sidebar">
-            <ul id="peopleTree" class="ztree"></ul>
+<link rel="stylesheet" href="../css/zTree/zTreeStyle.css">
+<style type="text/css">
+#peopleZTree {
+    max-width: 200px;
+}
+#catalog {
+    max-width: 150px;
+}
+</style>
+<div id="peopleZTree" class="x w7 m2 p2 sidebar noscroll">
+    <ul id="peopleTree" class="ztree"></ul>
+</div>
+<div id="peopleViewer" class="row mainbody">
+    <div class="toolbar">
+        <div class="xr w6">
+            <div id="search"></div>
         </div>
-        <div id="peopleViewer" class="row mainbody">
-            <div class="toolbar ctoolbar">
-                <span id="catalog" class="dicon-org rock"></span>
-                <div class="pull-right">
-                    <!-- <div class="search-text">
-                         <input class="text" placeholder='查找人员'>
-                        <span class='cicon cicon-cancel'></span>
-                    </div> -->
-                </div>
-                <span class="cui-btn btn-editDepart" title="编辑当前部门"><b class="cicon btn-icon-first cicon-edit"></b>编辑</span>
-                <span class="cui-btn btn-addDepart"><b class="cicon btn-icon-first cicon-add"></b>添加子部门</span>
-                <span class="cui-btn btn-delDepar" title="删除当前部门"><b class="cicon btn-icon-first cicon-remove"></b>删除</span>
-                <span class="wall"></span>
-                <span class="dicon-user rock">人员</span>
-                <span class="cui-btn btn-addPeople" title="在当前部门添加人员"><b class="cicon btn-icon-first cicon-add"></b>添加</span>
-                <span class="cui-btn btn-changeDepart" title="为选择的人员更换部门">更换部门</span>
-                <!--                 <span class="cui-btn btn-addPeople" title="删除所选人员"><b class="cicon btn-icon-first cicon-remove"></b>删除</span> -->
-            </div>
-            <div id="peoples"></div>
-        </div>
+        <span id="catalog" class="dicon-org xl caption"></span>
+        <span class="b log rock btn-editDepart" title="编辑当前部门"><i class="f f-pencil"></i></span>
+        <span class="b note rock btn-addDepart" title="在当前部门添加子部门"><i class="f f-add"></i></span>
+        <span class="b error rock btn-delDepar" title="删除当前部门"><i class="f f-bin"></i></span>
+        <span class="wall"></span>
+        <span class="dicon-user caption"><i class="f f-user"></i> 人员</span>
+        <span class="b note rock btn-addPeople" title="在当前部门添加人员"><i class="f f-add"></i></span>
+        <span class="b log rock btn-changeDepart" title="为选择的人员更换部门"><i class="f f-tool"></i> 更换部门</span>
+        <span class="b error btn-addPeople" title="删除所选人员"><i class="f f-bin"></i></span>
     </div>
-</body>
-
-
-<script src="../../js/maroco.js"></script>
-<script src="../../js/ui/ui.js"></script>
-<script src="../../js/vendor/jqueryui/jquery-ui.min.js"></script>
-<script src="../../js/vendor/zTree/jquery.ztree.all-3.5.min.js"></script>
+    <div id="peoples"></div>
+</div>
 <script>
-seajs.use(['jquery', 'dot', 'js/ctable'], function($, dot, ctable) {
-    var url = $.url();
-    var enterpriseId = url.param('enterpriseId') || "";
-    //search
-    $('.search-text .text').on('input', function() {}).on('keyup', function(e) {
-        if (e.keyCode == "13") {
-            $(this).trigger('search');
-        } else {
-            if (this.value == "") {
-                $(this).next().hide();
-            } else {
-                $(this).next().show();
-            }
+seajs.use(['ui', 'ui/ctable', 'ui/searchbox', 'ztree'], function(ctable, searchbox) {
+    // var url = _.queryString(location.search);
+    var enterpriseId = "";
+    //no filter
+    $('#search').searchbox({
+        placeholder: '在当前部门下查找',
+        value: '',
+        search: function(value, filter) {
+            //回车和点击清空按钮时触发
+            console.log(value, filter)
+        },
+        input: function(value, filter) {
+            //键入内容时触发
+            console.log(value, filter)
         }
-    }).on('search', function(e) {
-        var val = $.trim(this.value);
-
-    }).next().click(function() {
-        $(this).hide().prev().val('').focus();
     });
     //ztree
     var orgTree, peopleListTable;
@@ -93,7 +60,8 @@ seajs.use(['jquery', 'dot', 'js/ctable'], function($, dot, ctable) {
         },
         callback: {
             onClick: function(event, treeId, treeNode) {
-                $('#catalog').html(treeNode.name).attr('data-id', treeNode.userId);
+                enterpriseId=treeNode.id;
+                $('#catalog').html('<i class="f f-org" title="' + treeNode.name + '"></i> ' + treeNode.name);
                 //如果是单位，出现单位功能按钮
                 peopleListTable.load({
                     orgId: treeNode.id
@@ -109,12 +77,12 @@ seajs.use(['jquery', 'dot', 'js/ctable'], function($, dot, ctable) {
     }]*/
     var makePeopleTree = function() {
         $.ajax({
-            url: "../user/getTree?enterpriseId=" + enterpriseId,
+            url: "/json/getTree",
             dataType: 'json',
             success: function(v) {
                 var zNodes = v.result;
                 $.each(zNodes, function(i, o) {
-                    o.icon = '../img/org-s.png';
+                    o.icon = '../css/img/org-s.png';
                 });
                 orgTree = $.fn.zTree.init($("#peopleTree"), setting, zNodes);
                 orgTree.expandAll(true);
@@ -123,7 +91,6 @@ seajs.use(['jquery', 'dot', 'js/ctable'], function($, dot, ctable) {
 
         });
     }
-    makePeopleTree();
     //成员列表输出
     peopleListTable = ctable({
         container: '#peoples',
@@ -163,16 +130,16 @@ seajs.use(['jquery', 'dot', 'js/ctable'], function($, dot, ctable) {
                     "2": "冻结",
                     "3": "已删除"
                 }
-                var title="登录名:"+record.loginName;
-                if(record.reserveB&&record.idCard){
-                    title+="\n"+_.escape(record.reserveB+":"+record.idCard);
+                var title = "登录名:" + record.loginName;
+                if (record.reserveB && record.idCard) {
+                    title += "\n" + _.escape(record.reserveB + ":" + record.idCard);
                 }
                 return [
-                    ['<a href="javascript:;" class="action-person-view" title="'+ title +'">' + record.userName + '</a>', 
-                    record.sex == 0 ? '男' : '女',
-                    record.mobile, 
-                    record.email, 
-                    record.position,
+                    ['<a href="javascript:;" class="action-person-view" title="' + title + '">' + record.userName + '</a>',
+                        record.sex == 0 ? '男' : '女',
+                        record.mobile,
+                        record.email,
+                        record.position,
                         record.reserveA,
                         status[record.userStatus],
                         '<a href="javascript:;" class="cpr action-person-freeze">' + (record.userStatus == 1 ? "冻结" : "解冻") + '</a>\
@@ -186,10 +153,11 @@ seajs.use(['jquery', 'dot', 'js/ctable'], function($, dot, ctable) {
         //每页数量
         itemsOnPage: UI.itemsOnPage,
         //加载路径 DATATODO
-        url: '../user/getUserByOrgId',
+        url: '/json/getUserByOrgId',
         //需要固定提交的参数
         baseparams: {}
     });
+    makePeopleTree();
     //查看人员
     $('#peoples').on('click', '.action-person-view', function() {
             var data = $(this).closest('tr').attr('data-index');
@@ -456,12 +424,6 @@ seajs.use(['jquery', 'dot', 'js/ctable'], function($, dot, ctable) {
         })
     });
 
-});
-seajs.use(['jquery', 'js/ui.cscroll.js'], function() {
-    $('#peopleZTree').cscroll({
-        // theme: 'minimal-dark'
-        // ,scrollbarPosition:'outside'
-    });
 });
 </script>
 

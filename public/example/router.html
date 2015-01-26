@@ -1,0 +1,32 @@
+<div class="m4">
+    <h1>假数据 <small>Mock</small></h1>
+    <hr>
+    <div id="jsonMock">
+        <p>example页面使用的router规则</p>
+        <pre class="brush: js;">
+        seajs.use(['ui', 'ui/router'], function(UI, router) {
+            //IE67当第一次调用router的时候
+            router({
+                'layout/:id': function(id) {
+                    console.log(id);
+                },
+                "*": function(mod) {
+                    //当上面都没有匹配成功的时候执行
+                }
+            })
+        });
+    </pre>
+    </div>
+    <div class="footman"></div>
+</div>
+<script>
+$(function() {
+    previewCode();
+    $('#jsonMock').find('.ac-mock').on('click', function() {
+        $.getJSON('/json/members', function(json) {
+            console.log(json);
+        });
+
+    });
+});
+</script>

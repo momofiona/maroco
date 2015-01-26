@@ -56,8 +56,8 @@ module.exports = function(grunt) {
                     'public/js/maroco.js': [
                         'public/js/vendor/json2.js',
                         'public/js/vendor/sea.js',
-                        'public/js/vendor/sea-text.js',
-                        'public/js/vendor/sea-css.js',
+                        'public/js/vendor/seajs-text.js',
+                        'public/js/vendor/seajs-css.js',
                         'public/js/vendor/jquery.js',
                         'public/js/vendor/doT.min.js',
                         'public/js/vendor/underscore-min.js',

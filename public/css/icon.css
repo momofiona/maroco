@@ -7,7 +7,6 @@
   background-repeat: no-repeat;
   background-position: center;
   vertical-align: middle;
-  line-height: 1;
 }
 .i-loading {
   background-position: left 2px;
@@ -51,9 +50,16 @@ b.i-error {
 b.i-close {
   background-position: -72px -24px;
 }
+.i-cancel {
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
+  background: url(img/cancel.png) no-repeat;
+}
 /* font-icons */
 .f {
   display: inline-block;
+  font-size: 16px;
 }
 .f-lg {
   font-size: 1.33333333em;
@@ -74,8 +80,8 @@ b.i-close {
 }
 @font-face {
   font-family: 'icomoon';
-  src: url('icomoon/fonts/icomoon.eot?-wcg0of');
-  src: url('icomoon/fonts/icomoon.eot?#iefix-wcg0of') format('embedded-opentype'), url('icomoon/fonts/icomoon.woff?-wcg0of') format('woff'), url('icomoon/fonts/icomoon.ttf?-wcg0of') format('truetype'), url('icomoon/fonts/icomoon.svg?-wcg0of#icomoon') format('svg');
+  src: url('icomoon/fonts/icomoon.eot?x066mx');
+  src: url('icomoon/fonts/icomoon.eot?#iefixx066mx') format('embedded-opentype'), url('icomoon/fonts/icomoon.woff?x066mx') format('woff'), url('icomoon/fonts/icomoon.ttf?x066mx') format('truetype'), url('icomoon/fonts/icomoon.svg?x066mx#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -91,8 +97,35 @@ b.i-close {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.f-grid:before {
+  content: "\f009";
+}
+.f-bell:before {
+  content: "\f0a2";
+}
+.f-more:before {
+  content: "\f141";
+}
+.f-down2:before {
+  content: "\e604";
+}
+.f-up:before {
+  content: "\e605";
+}
 .f-home:before {
-  content: "\e001";
+  content: "\e002";
+}
+.f-browse:before {
+  content: "\e0a2";
+}
+.f-user:before {
+  content: "\e199";
+}
+.f-star-empty:before {
+  content: "\e2ff";
+}
+.f-star:before {
+  content: "\e301";
 }
 .f-pencil:before {
   content: "\e600";
@@ -108,12 +141,6 @@ b.i-close {
 }
 .f-share:before {
   content: "\e48c";
-}
-.f-bell:before {
-  content: "\f0a2";
-}
-.f-more:before {
-  content: "\f141";
 }
 .f-org:before {
   content: "\e9bc";
@@ -201,9 +228,6 @@ b.i-close {
 }
 .f-upload:before {
   content: "\e9c8";
-}
-.f-tile:before {
-  content: "\f00a";
 }
 .f-list:before {
   content: "\f00b";

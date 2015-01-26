@@ -1,0 +1,425 @@
+/* ctable */
+.ctable,.ctable table{
+	background-color: #fff;
+	*zoom:1;
+	width: 100%;
+    line-height: 21px;
+    table-layout: fixed;
+    border-collapse: collapse;
+    border:none;
+}
+.ctable{
+    clear: both;
+    td, th {
+        padding: 8px;
+        *padding:8px 0;
+        border:solid 1px #ddd;
+        overflow: hidden;
+    }
+    thead {
+        color: #333;
+        font-size: 13px;
+        th {
+            background-color: #f5f5f5;
+            &:extend(.linear all);
+            font-weight: normal;
+            text-shadow: 1px 1px 0px #FFF;
+        	box-shadow: inset 1px 1px 0px #FFF;
+        }
+    }
+    tbody {
+        .ctable-edge .cicon {
+            visibility: hidden;
+            cursor: pointer;
+        }
+        .v-edit .cicon {
+            visibility: visible;
+        }
+    }
+    .line {
+        padding: 8px;
+        margin: 0 -8px;
+        border-top: 1px solid #ddd;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+    }
+    td .line:first-child,.line-first{
+            border-top:0;
+            margin-top: -8px;
+    }
+    td .line:last-child{
+            margin-bottom: -8px;
+    }
+    /*边角*/
+    .ctable-edge {
+        padding: 0;
+        text-align: center;
+        .user-select;
+        .cicon {
+            margin: 0 4px 0 0;
+            transition:background-position .3s;
+        }
+    }
+    .v-edit {
+        padding: 0;
+    }
+    .odd {
+        background:#fdfdfd;
+    }
+    .ctable-hover {
+    	background: #ffffcb;
+        .ctable-edge .cicon {
+            visibility: visible;
+        }
+    }
+    .ctable-selected{
+    	background-color: #039ACC;
+    	color: #fff;
+    	td{
+    		box-shadow: none;
+    		border-color: #039ACC;
+    	}
+    	.dicon-arrow-right{
+    		background-image: url(img/arrow-right-white.png)
+    	}
+    }
+    .ctable-colgroup{
+    	padding:3px 8px;
+        *padding:3px 0;
+    }
+    .ctable-caption{
+        text-align: left;
+        padding: 5px 10px;
+        font-size: 16px;
+        font-family: 'Microsoft Yahei';
+    }
+}
+.ctable-head{
+	position: relative;
+	z-index: 1;
+	transition:box-shadow .2s;
+	.ctable-scroll-top &{
+		box-shadow: 0 3px 3px rgba(0, 0, 0, 0.1);
+	}
+}
+.ctable-body-scroller{
+	margin-top: -1px;
+	overflow: hidden;
+	position: relative;
+    .rollbar-content {
+        float: left;
+    }
+}
+.ctable-foot{
+	height: 20px;
+	line-height: 20px;
+	border-top: solid 1px #ddd;
+	margin-top: -1px;
+	position: relative;
+	z-index: 10;
+	padding: 5px 0;
+	.simple-pagination{
+		padding: 0;
+		margin: 0;
+	}
+	td{
+		padding: 5px 0;
+		border:none;
+	}
+}
+
+.ctable-status{
+	float: left;
+	padding: 0 5px;
+	line-height: 28px;
+}
+.ctable-edgemod {
+    .ctable-edge {
+        border:none;
+        background: #fff;
+        box-shadow:none;
+    }
+}
+.chandler {
+    background:#f5f5f5 url(img/handler.png) repeat-y;
+    cursor: move;
+    padding: 0;
+    font-size: 0;
+    .user-select;
+}
+.csortable {
+    background-position: 95% center;
+    background-repeat: no-repeat;
+    background-image: url(img/dropdown_arrow.png);
+    cursor: default;
+    .user-select;
+}
+.csortable-asc {
+    background-image: url(img/dropdown_arrow_up.png);
+}
+.csortable-desc {
+    background-image: url(img/dropdown_arrow_down.png);
+}
+.ctable-skin-blank {
+	border-top:solid 1px #ccc;
+    td {
+        border:none;
+        border-bottom: solid 1px #eee;
+    }
+}
+.ctable-skin-form {
+	border:none;
+	background:none;
+    tr.odd {
+        background:#fcfcfc;
+    }
+    td, th {
+        border:none;
+    }
+    tbody {
+        tr:hover {
+            background: none;
+        }
+    }
+}
+.ctable-checkall, .ctable-checkbox {
+    vertical-align: middle;
+}
+/* 分页 */
+
+/**
+* CSS themes for simplePagination.js
+* Author: Flavius Matis - http://flaviusmatis.github.com/
+* URL: https://github.com/flaviusmatis/simplePagination.js
+*/
+ ul.simple-pagination {
+    list-style: none;
+}
+.simple-pagination {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    overflow: hidden;
+    padding: 0 5px 5px 0;
+    margin: 0;
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        text-align: center;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+    li {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        float: none;
+        display: inline;
+    }
+}
+.ctable-theme {
+    a, span {
+        display: inline-block;
+        text-decoration: none;
+        color: #333;
+        font-size: 12px;
+        line-height: 20px;
+        font-weight: normal;
+        text-align: center;
+        border: 1px solid #AAA;
+        border-right: none;
+        padding: 3px 10px;
+        background: #efefef;
+        /* Old browsers */
+        background: -moz-linear-gradient(top, #ffffff 0%, #efefef 100%);
+        /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(100%, #efefef));
+        /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top, #ffffff 0%, #efefef 100%);
+        /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top, #ffffff 0%, #efefef 100%);
+        /* Opera11.10+ */
+        background: -ms-linear-gradient(top, #ffffff 0%, #efefef 100%);
+        /* IE10+ */
+        background: linear-gradient(top, #ffffff 0%, #efefef 100%);
+        /* W3C */
+        text-shadow: 0 1px rgba(255, 255, 255, 0.8);
+        color: #454545
+    }
+}
+.ctable-theme a:hover {
+    text-decoration: none;
+    background: #efefef;
+    /* Old browsers */
+    background: -moz-linear-gradient(top, #efefef 0%, #bbbbbb 100%);
+    /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #efefef), color-stop(100%, #bbbbbb));
+    /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #efefef 0%, #bbbbbb 100%);
+    /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #efefef 0%, #bbbbbb 100%);
+    /* Opera11.10+ */
+    background: -ms-linear-gradient(top, #efefef 0%, #bbbbbb 100%);
+    /* IE10+ */
+    background: linear-gradient(top, #efefef 0%, #bbbbbb 100%);
+    /* W3C */
+}
+.ctable-theme .prev {
+    border-radius: 3px 0 0 3px;
+}
+.ctable-theme .next {
+    border-right: 1px solid #AAA;
+    border-radius: 0 3px 3px 0;
+}
+.ctable-theme .current {
+    background: #bbbbbb;
+    /* Old browsers */
+    background: -moz-linear-gradient(top, #bbbbbb 0%, #efefef 100%);
+    /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #bbbbbb), color-stop(100%, #efefef));
+    /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #bbbbbb 0%, #efefef 100%);
+    /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #bbbbbb 0%, #efefef 100%);
+    /* Opera11.10+ */
+    background: -ms-linear-gradient(top, #bbbbbb 0%, #efefef 100%);
+    /* IE10+ */
+    background: linear-gradient(top, #bbbbbb 0%, #efefef 100%);
+    /* W3C */
+    cursor: default;
+}
+.ctable-theme .ellipse {
+    cursor: default;
+    background: #fff;
+	border-top: 0;
+	border-bottom: 0;
+}
+/*报表*/
+.ctable{
+	.cicon-fx,.cicon-money{
+        margin-left: .5em;
+        vertical-align: top;
+        visibility: hidden;
+        cursor: pointer;
+    }
+    .ctable-hover .cicon-fx {
+        visibility: visible;
+    }
+}
+
+/*searchtext*/
+.search-text {
+    position: relative;
+    padding: 0 25px;
+    background: #ffffff url(img/search-text.png) no-repeat 6px center;
+    .i-cancel {
+        cursor: pointer;
+        position: absolute;
+        display: none;
+        right: 2px;
+        top: 5px;
+        margin: 0;
+        transition:-webkit-transform 0.3s;
+        &:hover{
+            -webkit-transform:rotate(180deg);
+        }
+    }
+    .search-filter {
+        position: absolute;
+        left: 25px;
+        line-height:29px;
+        top: -1px;
+        border-right:solid 1px #eee;
+        white-space: nowrap;
+        text-overflow:ellipsis;
+        cursor: pointer;
+        color: #6FB3E0;
+        box-shadow: 3px 0 6px -5px;
+    }
+}
+
+/* rollbar paths style */
+.rollbar-path-vertical, .rollbar-path-horizontal {
+    position: absolute;
+    background-color: #eee;
+    background-color: rgba(220, 220, 220, 0.5);
+    z-index: 100;
+}
+.rollbar-path-horizontal {
+    bottom: 0px;
+    left: 0;
+    width: 100%;
+    height: 10px;
+}
+.rollbar-path-vertical {
+    right: 0px;
+    top: 0;
+    height: 100%;
+    width: 10px;
+}
+/* rollbar paths inner shadow */
+.rollbar-path-vertical {
+    box-shadow: inset 1px 0px 1 rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: inset 1px 0px 1 rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: inset 1px 0px 0 rgba(0, 0, 0, 0.1);
+}
+.rollbar-path-horizontal {
+    box-shadow: inset 0px 1px 1 rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: inset 0px 1px 1 rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: inset 0px 1px 0 rgba(0, 0, 0, 0.1);
+}
+/* rollbar handle style */
+.rollbar-handle {
+    position: relative;
+    top: 0;
+    left: 0;
+    background-color: #58bcee;
+}
+/* prevent handle selection */
+.rollbar-handle {
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.rollbar-path-vertical .rollbar-handle {
+    height: 20%;
+    width: 100%;
+}
+.rollbar-path-horizontal .rollbar-handle {
+    width: 20%;
+    height: 100%;
+}
+/* round corners for rollbar handle and paths */
+.rollbar-path-vertical, .rollbar-path-horizontal, .rollbar-handle {
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+/* rollbar themes: rollbar-blue*/
+.rollbar{
+    .rollbar-path-vertical,.rollbar-path-horizontal {
+
+        border-radius: 0px;
+        .rollbar-handle{
+            border-radius: 0px;
+            transition:height .3s, width .3s;
+        }
+    }
+    .rollbar-path-vertical {
+        width: 5px;
+    }
+    .rollbar-path-horizontal {
+        height: 5px;
+    }
+}
+.rollbar-content {
+    transition:top .2s;
+}
+.rollbar-pad{
+    padding-right: @distance;
+}
