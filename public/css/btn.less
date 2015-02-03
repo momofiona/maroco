@@ -4,6 +4,7 @@
  * 兼容IE6的写法
  * 另外IE中：active比较变态
  */
+
 .b {
     display: inline-block;
     font-weight: 400;
@@ -19,8 +20,8 @@
     &:active {
         &:extend(.b-active);
     }
-    .f,.i{
-        vertical-align: text-bottom;
+    .f, .i {
+        vertical-align: text-bottom; //chrome
     }
     padding: .5em 1em;
     line-height: 21px !important;
@@ -33,18 +34,12 @@ margin: (容器的line-height - 对象本身的高度)/2px 0;
 vertical-align:middle;
      */
     
-    _height: 21px; //ie6 必须加height,当b中带.i时line-height 丢失
-    //IE67 9 10 button高度宽度line-height超标问题
-    button& {
+    *height: 20px; //ie7
+    _height: 22px; //ie6 必须加height,当b中带inline-block元素时line-height 丢失
+    //IE67中不计算padding;
+    button&, input& {
         *height: 36px;
-        /*        
-        *height:37px;
-        _height: 21.9px;
-        _line-height: 19px;
-        _padding: 5px 1em;*/
-    }
-    input& {
-        *height: 36px;
+        *padding: 0 1em;
     }
 }
 //hover
@@ -88,6 +83,7 @@ vertical-align:middle;
 //IE9 10 ...去掉IE9 b-active中的filter
 @media screen and (min-width: 0) {
     /*\9\0  IE 8 9 10*/
+    
     .b-active {
         filter: none\9\0;
     }
@@ -116,7 +112,6 @@ vertical-align:middle;
 .link-active {
     &:extend(.link-hover, .b-active);
 }
-
 .b-lg {
     font-size: 1.5em;
     button& {
@@ -128,18 +123,19 @@ vertical-align:middle;
     display: inline-block;
     vertical-align: middle;
     padding-left: 1px;
-    .b,.text{
+    .b, .text {
         _float: left;
+        margin-left: -1px;
     }
-    >.b,>.text{
+    >.b, >.text {
         float: left;
         margin-left: -1px;
-    	border-radius: 0;
+        border-radius: 0;
     }
-    :first-child{
+    :first-child {
         border-radius: @radius 0 0 @radius;
     }
-    :last-child{
+    :last-child {
         border-radius: 0 @radius @radius 0;
     }
 }

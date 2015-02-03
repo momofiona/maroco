@@ -15,19 +15,22 @@
  */
 define(function(require, exports, module) {
     var _oldHash,
+        hmark=/^#!?/,
         all = /\*.*$/,
         part = /([^\/]?)\:[^\/]*/g,
         escapeRegExp = /[\-{}\[\]\(\)+?.,\\\^$|#\s]/g,
         route = _.memoize(function(ru) {
-            return new RegExp('^#?' + ru.replace(escapeRegExp, '\\$&').replace(all, '(.*)').replace(part, '$1([^\/]*)') + '$');
+            return new RegExp('^' + ru.replace(hmark,'').replace(escapeRegExp, '\\$&').replace(all, '(.*)').replace(part, '$1([^\/]*)') + '$');
         });
     return function(routeConfig) {
         $(window).on('hashchange', function() {
-            var hash = location.hash;
+            var hash = location.hash.replace(hmark,'');
+            //hash可能为空
             $.each(routeConfig, function(k, v) {
+                if(k.charAt(0)!=="#") return;
                 var choice = hash.match(route(k));
                 if (choice) {
-                    v.apply(routeConfig, choice.slice(1));
+                    (_.isFunction(v)?v:routeConfig[v]).apply(routeConfig, choice.slice(1));
                     return false;
                 }
             });
@@ -35,7 +38,8 @@ define(function(require, exports, module) {
         //IE8-
         if (_oldHash === undefined) {
             _oldHash = location.hash;
-            if (!('onhashchange' in window)) {
+            //IE调试模式下IE7也有onhashchange属性
+            if (!('onhashchange' in window)||UI.browser.ie<8) {
                 setInterval(function() {
                     var hash = location.hash;
                     if (hash !== _oldHash) {

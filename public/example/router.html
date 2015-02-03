@@ -1,5 +1,5 @@
 <div class="m4">
-    <h1>假数据 <small>Mock</small></h1>
+    <h1>Router <small>Router</small></h1>
     <hr>
     <div id="jsonMock">
         <p>example页面使用的router规则</p>
@@ -7,12 +7,13 @@
         seajs.use(['ui', 'ui/router'], function(UI, router) {
             //IE67当第一次调用router的时候
             router({
-                'layout/:id': function(id) {
-                    console.log(id);
+                //以#开头的属性会和hash去匹配
+                '#layout/:id': "method",
+                "#*": function(mod) {
+                    //从上到下匹配，取第一个执行，没有则不执行
                 },
-                "*": function(mod) {
-                    //当上面都没有匹配成功的时候执行
-                }
+                //自定义属性，不参加匹配
+                method:function(){}
             })
         });
     </pre>

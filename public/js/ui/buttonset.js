@@ -7,40 +7,50 @@ define(function(require, exports, module) {
         cls: 'link',
         events: {
             'click .b': function(e, config) {
-                var ac = config.cls + '-active active';
-                if(config.multi){
-                    $(this).toggleClass(ac).removeClass(config.cls+'-hover');
-                }else{
+                var ac = config.cls + '-active active',
+                    data = config.data[$(this).attr('index')];
+                if (config.multi) {
+                    data.on=!data.on;
+                    $(this).toggleClass(ac,data.on).removeClass(config.cls + '-hover');
+                } else {
+                    //如果已经选中了就不要再次执行
+                    if(data.on) return;
+                    _.each(config.data, function(o, i) {
+                        o.on = false;
+                    });
+                    data.on = true;
                     $(this).addClass(ac).siblings().removeClass(ac);
                 }
-                if (config.onselect) config.onselect.call(this, e, config);
+                if (config.onselect) config.onselect.call(this, e, config, data);
             }
         },
         getSelected: function() {
-            return this.el.children().filter('.active');
-        },
-        getSelectData: function() {
-            var out=[],data=this.data;
-            if(!data){
-                return out;
-            }
-            this.el.children().each(function(i,o){
-                if($(o).hasClass('active')) out.push(data[i]);
+            return _.filter(this.data, function(o, i) {
+                return o.on
             });
-            return out;
         }
     }
-    var tmp = _.dot('{{~it.data :v:i}}<b class="b {{=it.cls}}{{?v.selected}} {{=it.cls}}-active{{?}}">{{=v.label}}</b>{{~}}');
+    var tmp = _.dot('{{~it.data :v:i}}<b index="{{=i}}" class="b {{=it.cls}}{{?v.on}} {{=it.cls}}-active{{?}}">{{=v.label}}</b>{{~}}');
     return function(config) {
         config = _.extend(_.proto(defaults), config);
         UI(config);
-        if(config.data){
+        if (config.data) {
             config.el.html(tmp(config));
+        } else {
+            var _d = config.data = [];
+            config.el.children('.b').each(function(i, o) {
+                _d.push({
+                    on: $(o).attr('index', i).hasClass('active'),
+                    label: $(o).text()
+                });
+            })
         }
         //IE6禁止复制
-        if(UI.browser.ie==6){
-            config.el.children().each(function(){
-                this.onselectstart=function(){return false;}
+        if (UI.browser.ie == 6) {
+            config.el.children().each(function() {
+                this.onselectstart = function() {
+                    return false;
+                }
             });
         }
         return config;

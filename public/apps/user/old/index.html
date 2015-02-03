@@ -3,9 +3,6 @@
 #peopleZTree {
     max-width: 200px;
 }
-#catalog {
-    max-width: 150px;
-}
 </style>
 <div id="peopleZTree" class="x w7 m2 p2 sidebar noscroll">
     <ul id="peopleTree" class="ztree"></ul>
@@ -15,10 +12,10 @@
         <div class="xr w6">
             <div id="search"></div>
         </div>
-        <span id="catalog" class="dicon-org xl caption"></span>
-        <span class="b log rock btn-editDepart" title="编辑当前部门"><i class="f f-pencil"></i></span>
+        <span id="catalog" class="dicon-org xl caption w5"></span>
+<!--         <span class="b log rock btn-editDepart" title="编辑当前部门"><i class="f f-pencil"></i></span>
         <span class="b note rock btn-addDepart" title="在当前部门添加子部门"><i class="f f-add"></i></span>
-        <span class="b error rock btn-delDepar" title="删除当前部门"><i class="f f-bin"></i></span>
+        <span class="b error rock btn-delDepar" title="删除当前部门"><i class="f f-bin"></i></span> -->
         <span class="wall"></span>
         <span class="dicon-user caption"><i class="f f-user"></i> 人员</span>
         <span class="b note rock btn-addPeople" title="在当前部门添加人员"><i class="f f-add"></i></span>
@@ -61,7 +58,7 @@ seajs.use(['ui', 'ui/ctable', 'ui/searchbox', 'ztree'], function(ctable, searchb
         callback: {
             onClick: function(event, treeId, treeNode) {
                 enterpriseId=treeNode.id;
-                $('#catalog').html('<i class="f f-org" title="' + treeNode.name + '"></i> ' + treeNode.name);
+                $('#catalog').html('<i class="f f-org" title="' + treeNode.name + '"></i> ' + treeNode.name+'<i class="m4 f f-arb"></i>');
                 //如果是单位，出现单位功能按钮
                 peopleListTable.load({
                     orgId: treeNode.id

@@ -5,30 +5,34 @@
     <h2>弹出提示</h2>
     <p id="demoNotify">
         <span class="group">
-        <b class="b silver ac-loading">loading</b>
-        <b class="b silver ac-loading-shutdown">loading shutdown</b>
-    </span>
-        <span class="b note ac-loading2">loading带关闭</span>
-        <b class="b silver ac-loading3">loading自动关闭</b>
+            <b class="b silver ac-loading">loading</b>
+            <b class="b silver ac-loading-shutdown">loading shutdown</b>
+            <b class="b info ac-clear"><i class="f f-close"></i> 清空</b>
+        </span>
+        <span class="group">
+            <b class="b silver ac-loading2">带关闭</b>
+            <b class="b silver ac-loading3">自动关闭</b>
+        </span>
         <b class="b note ac-confirm">confirm</b>
         <b class="b warn ac-warn">warning</b>
         <b class="b error ac-error">error</b>
         <b class="b safe ac-safe">safe</b>
-        <b class="b info ac-clear">清空</b>
+        <b class="b link ac-dialog">open a dialog</b> 
     </p>
     <h2>当dialog用</h2>
-    <p>考虑IE6，dialog 必须有宽度</p>
-    <div class="dialog m note w8" style="position:relative;float:left;">
+    <p>考虑IE6，dialog 必须有宽度,当存在buttons或者title参数的时候会被当成是dialog处理,明确指定type='dialog'时候也一样</p>
+    <div class="dialog m note w8 am-popin" style="position:relative;float:left;">
         <i class="f f-multiply dialog-close"></i>
+        <i class="f f-minus dialog-tool"></i>
         <div class="dialog-title">
             note dialog
         </div>
-        <div class="dialog-con">
+        <div class="dialog-con am-popin">
             <i class="i i-loading"></i> 加载中
         </div>
         <div class="dialog-foot">
             <b class="b log xr m4">取消</b>
-            <b class="b xr note">确定</b>
+            <b class="b xr note"><i class="f f-checkmark f-lg m2"></i>确定</b>
         </div>
     </div>
 
@@ -46,7 +50,7 @@
         </div>
     </div>
 
-    <div class="dialog m error w8" style="position:relative;float:left;">
+    <div class="dialog m error w8 am-fadeup" style="position:relative;float:left;">
         <i class="f f-multiply dialog-close"></i>
         <div class="dialog-title">
             error dialog
@@ -115,6 +119,7 @@
 </div>
 <script>
 seajs.use('ui/notify', function(notify) {
+    UI.notify=notify;
     var loadingTip;
     UI({
         el: '#demoNotify',
@@ -132,12 +137,13 @@ seajs.use('ui/notify', function(notify) {
                     cls: 'note',
                     closeable: true,
                     onclose: function() {
-                        alert('onclose');
+                        notify.note('onclose trigger',1);
                     }
                 });
             },
             'click .ac-loading3': function(e, config) {
                 notify.loading({
+                    cls: 'safe',
                     msg: '3秒后自动关闭',
                     timeout: 3
                 });
@@ -146,7 +152,11 @@ seajs.use('ui/notify', function(notify) {
                 notify.confirm({
                     msg: '确认要更改此组织权限？',
                     callback: function(result) {
-                        alert(result);
+                        if(result){
+                            notify.safe('yes',1)
+                        }else{
+                            notify.error('no',1)
+                        }
                     }
                 });
             },
@@ -161,6 +171,30 @@ seajs.use('ui/notify', function(notify) {
             },
             'click .ac-clear': function(e, config) {
                 notify.clear();
+            },
+            'click .ac-dialog': function(e, config) {
+                var _btn=$(this);
+                notify({
+                    title:_.uniqueId()+'番',
+                    msg:'消息msg',
+                    draggable:true,
+                    resizable:true,
+                    mask:true,
+                    oncreate:function(){
+                        var a=$('<b class="b link">继续弹</b>').click(function(){
+                            _btn.trigger('click');
+                        });
+                        this.contentEl.append(a);
+                    },
+                    buttons:[{
+                        label:'关闭',
+                        cls:'error',
+                        click:function(e,config){
+                           console.log(config);
+                           config.close();
+                        }
+                    }]
+                });
             }
 
         }

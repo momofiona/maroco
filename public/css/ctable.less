@@ -3,6 +3,7 @@
 	background-color: #fff;
 	*zoom:1;
 	width: 100%;
+    overflow:hidden;
     line-height: 21px;
     table-layout: fixed;
     border-collapse: collapse;
@@ -12,7 +13,7 @@
     clear: both;
     td, th {
         padding: 8px;
-        *padding:8px 0;
+        // *padding:8px 0;
         border:solid 1px #ddd;
         overflow: hidden;
     }
@@ -114,6 +115,7 @@
 }
 .ctable-foot{
 	height: 20px;
+    overflow:hidden;
 	line-height: 20px;
 	border-top: solid 1px #ddd;
 	margin-top: -1px;
@@ -123,10 +125,6 @@
 	.simple-pagination{
 		padding: 0;
 		margin: 0;
-	}
-	td{
-		padding: 5px 0;
-		border:none;
 	}
 }
 
@@ -275,21 +273,8 @@
     border-radius: 0 3px 3px 0;
 }
 .ctable-theme .current {
-    background: #bbbbbb;
-    /* Old browsers */
-    background: -moz-linear-gradient(top, #bbbbbb 0%, #efefef 100%);
-    /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #bbbbbb), color-stop(100%, #efefef));
-    /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top, #bbbbbb 0%, #efefef 100%);
-    /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top, #bbbbbb 0%, #efefef 100%);
-    /* Opera11.10+ */
-    background: -ms-linear-gradient(top, #bbbbbb 0%, #efefef 100%);
-    /* IE10+ */
-    background: linear-gradient(top, #bbbbbb 0%, #efefef 100%);
-    /* W3C */
-    cursor: default;
+    background: #eee;
+
 }
 .ctable-theme .ellipse {
     cursor: default;

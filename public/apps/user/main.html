@@ -10,16 +10,19 @@
         <div class="xr w6">
             <div class="ac-search"></div>
         </div>
-        <span class="xl caption ac-orgname"></span>
-        <span class="b log rock ac-editDepart" title="编辑当前部门"><i class="f f-pencil"></i></span>
-        <span class="b note rock ac-addDepart" title="在当前部门添加子部门"><i class="f f-add"></i></span>
-        <span class="b error rock ac-delDepar" title="删除当前部门"><i class="f f-bin"></i></span>
+        <span class="xl caption" data-dropdown="next">
+        <i class="f f-org"></i> <span class="ac-orgname"></span> <i class="m4 f f-arb"></i>
+        </span>
+        <ul class="tip1 dropdown menu">
+            <li><a class="ac-editDepart"><i class="f f-pencil"></i> 编辑当前部门</a></li>
+            <li><a class="ac-addDepart"><i class="f f-add"></i> 添加子部门</a></li>
+            <li><a class="ac-delDepar menu-error"><i class="f f-bin"></i> 删除当前部门</a></li>
+            <li class="devider"></li>
+            <li><a class="ac-addDepart"><i class="f f-user"></i> 添加人员</a></li>
+        </ul>
         <span class="wall"></span>
-        <span class="caption"><i class="f f-user"></i> 人员</span>
-        <span class="b note rock ac-addPeople" title="在当前部门添加人员"><i class="f f-add"></i></span>
         <span class="b log rock ac-changeDepart" title="为选择的人员更换部门"><i class="f f-tool"></i> 更换部门</span>
-        <span class="b error rock ac-addPeople" title="删除所选人员"><i class="f f-bin"></i></span>
-        <span class="wall"></span>
+        <span class="b error rock ac-addPeople" title="删除所选人员"><i class="f f-bin"></i> 删除人员</span>
     </div>
     <div class="ac-peoples"></div>
 </div>

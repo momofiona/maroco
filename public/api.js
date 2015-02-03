@@ -10,7 +10,7 @@ define(function(require, exports, module) {
             'id|+1': 12,
             "cname": '@WORD',
             "address": "@TITLE",
-            "thumb": '@IMAGE',
+            "avanta": '@IMAGE',
             "from": '@STRING(3,8)',
             "sender": '@NAME',
             "sendtime": '@DATE("yyyy-MM-dd hh:mm:ss")'
@@ -36,17 +36,37 @@ define(function(require, exports, module) {
     Mock.mock('/json/getUserByOrgId', 'get', {
         "total|200": 12,
         "result|20": [{
-            'id|+1': 12,
-            "sex|1": true,
+            'id': '@GUID',
+            "sex|0-1": 1,
             "userName": '@WORD',
             "loginName": "@WORD",
-            "thumb": '@IMAGE',
-            "position": '@WORD',
+            "avanta": '@IMAGE',
+            "address": '@AREA @REGION',
+            "cardId": '@ID',
+            "position": [{
+                orgId: '@GUID',
+                orgName: '@WORD',
+
+            }],
             "reserveA": '@WORD',
             "mobile|11": 1,
             "email": '@EMAIL',
             "sendtime": '@DATE("yyyy-MM-dd hh:mm:ss")'
         }]
     });
-    
+
+    //根据用户ID获取用户所有可获得的权限列表
+    Mock.mock('/json/getPowerByUserId', 'get', {
+        "result|1-2": [{
+            "orgName": '@WORD', //所属部门或者组织
+            "orgId": '@GUID',
+            "roles|2-4": [{
+                "id": "@GUID",
+                "name": "@WORD",
+                "power":'@boolean',
+                "description": '@WORD'
+            }]
+        }]
+    });
+
 });

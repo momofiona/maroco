@@ -2,7 +2,7 @@
 seajs.config({
     alias: {
         dot: 'js/vendor/doT.min',
-        ztree:'js/vendor/zTree/jquery.ztree.all-3.5.min.js'
+        ztree: 'js/vendor/zTree/jquery.ztree.all-3.5.min.js'
     },
     paths: {
         'ui': 'js/ui'
@@ -54,6 +54,9 @@ seajs.config({
                     if (_fn) _fn.call(this, event, config);
                 });
             });
+            if (config.create) {
+                config.create.apply(config);
+            }
             return config;
         };
     //一些基本属性
@@ -109,7 +112,7 @@ seajs.config({
             if (typeof str !== 'string' || $.trim(str).length === 0) {
                 return ret;
             }
-            str=$.trim(str).replace(/^\?+/,'');
+            str = $.trim(str).replace(/^\?+/, '');
             var pairs = str.split(sep || '&'),
                 re = /^(\w+)\[\]$/,
                 pair, key, val, m;
@@ -267,7 +270,10 @@ seajs.config({
     //被动触发
     $(document).on('mouseenter', '.b.' + btnClassNames.join(',.b.'), function() {
         button(this);
+    }).on('click','a[href="#"]',function(){
+        return false;
     });
+
     //设置seaID
     define('ui', function(require) {
         require('api'); //注掉此行来禁用假数据

@@ -22,31 +22,40 @@
     &lt;b class="b link">&lt;i class="m2 f f-link">&lt;/i>link&lt;/b>
 </pre>
     <h3>不同标签</h3>
+    <ol>
+        <li>IE67中 div 、 a:hover 、只包含图标的节点 元素后面不带空字符节点 所以没有后边距</li>
+        <li>IE67中 button 元素前面不带空字符节点 所以没有前边距</li>
+        <li>IE6中 元素内有display:inline-block元素就会丢失line-height</li>
+        <li>IE6中 不带href的a标签没有:hover特性</li>
+    </ol>
     <div>
         <b class="b log">b</b>
+        <b class="b log"><i class="f f-upload"></i></b>
         <i class="b log">i</i>
         <div class="b log">div</div>
         <a class="b log">a</a>
         <a class="b note" href="javascript:;">a:href:note <i class="i i-loading"></i></a>
         <span class="b log">span</span>
-        <span class="b log">中文</span>
+        <span class="b log">span中文</span>
         <button class="b log">button</button>
         <input class="b log" type="button" value="input">
         <input class="b log" type="submit" value="submit">
     </div>
-    <pre class="brush: html;">
-    &lt;b class="b log">b&lt;/b>
-    &lt;i class="b log">i&lt;/i>
-    &lt;div class="b log">div&lt;/div>
-    &lt;a class="b log">a&lt;/a>
-    &lt;a class="b note" href="javascript:;">a:href:note &lt;i class="i i-loading">&lt;/i>&lt;/a>
-    &lt;span class="b log">span&lt;/span>
-    &lt;span class="b log">中文&lt;/span>
-    &lt;button class="b log">button&lt;/button>
-    &lt;input class="b log" type="button" value="input">
-    &lt;input class="b log" type="submit" value="submit">
-</pre>
-    <p>PS：如无特别情况，按钮使用b或者a标签</p>
+    <pre class="brush:html;">
+        &lt;b class="b log">b&lt;/b>
+        &lt;b class="b log">&lt;i class="f f-upload">&lt;/i>&lt;/b>
+        &lt;i class="b log">i&lt;/i>
+        &lt;div class="b log">div&lt;/div>
+        &lt;a class="b log">a&lt;/a>
+        &lt;a class="b note" href="javascript:;">a:href:note &lt;i class="i i-loading">&lt;/i>&lt;/a>
+        &lt;span class="b log">span&lt;/span>
+        &lt;span class="b log">span中文&lt;/span>
+        &lt;button class="b log">button&lt;/button>
+        &lt;input class="b log" type="button" value="input">
+        &lt;input class="b log" type="submit" value="submit">
+    </pre>
+
+    <p>PS：推荐使用b标签</p>
     <h2>toolbar</h2>
     <div class="toolbar">
         <span class="caption">caption文字：</span>
@@ -75,7 +84,7 @@
         </span>
         <span class="group m2" id="demoBtnset2"></span>
         <span class="group m4">
-            <button class="b log">button</button>
+            <b class="b log">b log </b>
             <span class="b silver"><i class="f f-arb"></i></span>
         </span>
         <span class="group m4">
@@ -83,6 +92,46 @@
         <a class="b link" href="#btn"><i class="f f-search"></i></a>
     </span>
     </p>
+    <div class="log">
+        <pre class="brush:js;">
+seajs.use('ui/buttonset', function(buttonset) {
+    buttonset({
+        el: '#demoBtnset',
+        onselect: function(e, config, data) {
+            console.log(data);
+            debugger;
+        }
+    });
+    buttonset({
+        cls: 'error',
+        el: '#demoBtnset2',
+        data: [{
+            label: '高级'
+        }, {
+            label: '中级',
+            on: true //开启状态
+        }, {
+            label: '初级'
+        }],
+        multi: true,
+        onselect: function(e, config, data) {
+            console.log(data);
+            debugger;
+        }
+    });
+    $('#otherGroup').children().each(function() {
+        var _t = this;
+        buttonset({
+            el: _t,
+            init: function() {
+                this.cls = this.el.children()[0].className.replace('b ', '');
+            }
+        });
+    });
+
+});
+    </pre>
+    </div>
     <p id="otherGroup">
         <span class="group m2">
     <a class="b log" href="#btn">a</a>
@@ -123,8 +172,8 @@ previewCode();
 seajs.use('ui/buttonset', function(buttonset) {
     buttonset({
         el: '#demoBtnset',
-        onselect: function(e, config) {
-            // debugger;
+        onselect: function(e, config, data) {
+            console.log(data,this);
         }
     });
     buttonset({
@@ -134,11 +183,14 @@ seajs.use('ui/buttonset', function(buttonset) {
             label: '高级'
         }, {
             label: '中级',
-            selected: true
+            on: true //开启状态
         }, {
             label: '初级'
         }],
-        multi: true
+        multi: true,
+        onselect: function(e, config, data) {
+            console.log(data,this);
+        }
     });
     $('#otherGroup').children().each(function() {
         var _t = this;

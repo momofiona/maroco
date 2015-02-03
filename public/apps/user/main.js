@@ -8,6 +8,7 @@ define(function(require, exports, module) {
 
     // var url = _.queryString(location.search);
     exports.show = function(opt) {
+        // 组织关系依赖enterpriseId
         var enterpriseId = "";
         var orgTreeSetting = {
             data: {
@@ -27,7 +28,7 @@ define(function(require, exports, module) {
                 }
             }
         };
-        var userManeger = UI({
+        var userManeger = window.userManager = UI({
             orgTree: null,
             peopleListTable: null,
             catalog: null,
@@ -52,7 +53,7 @@ define(function(require, exports, module) {
             },
             //点击左边的树节点，刷出右边的列表
             renderUser: function(treeNode) {
-                this.catalog.html('<i class="f f-org" title="' + treeNode.name + '"></i> ' + treeNode.name);
+                this.catalog.html(treeNode.name).attr('title', treeNode.name);
                 //如果是单位，出现单位功能按钮
                 this.peopleListTable.load({
                     orgId: treeNode.id
@@ -84,14 +85,23 @@ define(function(require, exports, module) {
                         width: 60
                     }, {
                         title: '操作',
-                        width: 180
+                        width: 80
                     }],
                     checkbox: true,
                     height: 'window',
                     blankText: '当前部门没有成员',
                     events: {
                         'click .action-person-view': function(event, tr, data, config) {
-                            debugger;
+                            //传入一个容器和一个销毁方法
+                            seajs.use('apps/user/user', function(user) {
+                                user.show({
+                                    container: userManeger.openSub(),
+                                    data:data,
+                                    destroy: function() {
+                                        userManeger.closeSub();
+                                    }
+                                })
+                            })
                             return false;
                         },
                         'click .action-person-remove': function(event, tr, data, config) { //查看人员
@@ -120,10 +130,7 @@ define(function(require, exports, module) {
                                     record.position,
                                     record.reserveA,
                                     status[record.userStatus],
-                                    '<a href="javascript:;" class="cpr action-person-freeze">' + (record.userStatus == 1 ? "冻结" : "解冻") + '</a>\
-                        <a href="userdetails.html?userId=' + record.userId + '" class="cpr action-person-view">编辑</a>\
-                        <a href="javascript:;" class="cpr action-person-reset">重置密码</a>\
-                        <a href="javascript:;" class="action-person-remove">删除</a>'
+                                    '<a href="javascript:;" class="cpr action-person-freeze">' + (record.userStatus == 1 ? "冻结" : "解冻") + '</a>'
                                 ]
                             ];
                         });
@@ -133,8 +140,20 @@ define(function(require, exports, module) {
                     baseparams: {}
                 });
             },
+            //打开子页面
+            openSub: function() {
+                this.el.hide();
+                return this.subEl = $('<div class="am-fadeinright scroll"></div>').insertAfter(this.el);
+            },
+            closeSub: function() {
+                if (this.subEl) {
+                    this.subEl.remove();
+                    this.el.show();
+                    this.subEl = null;
+                }
+            },
             init: function() {
-                this.el.addClass('noscroll').html(template).appendTo(opt.container);
+                this.el.addClass('noscroll am-fadeinright').html(template).appendTo(opt.container);
                 this.catalog = this.$('.ac-orgname');
                 this.makePeopleListTable();
                 this.makePeopleTree();
@@ -164,6 +183,7 @@ define(function(require, exports, module) {
 
             }
         });
+
 
     }
 });

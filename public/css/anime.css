@@ -1,39 +1,95 @@
 /*基础变形*/
 .rotate1 {
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
   -webkit-transform: rotate(90deg);
   -moz-transform: rotate(90deg);
   -ms-transform: rotate(90deg);
   -o-transform: rotate(90deg);
   transform: rotate(90deg);
 }
-.ie6-8 .rotate1 {
-  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
-}
 .rotate2 {
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
   -webkit-transform: rotate(180deg);
   -moz-transform: rotate(180deg);
   -ms-transform: rotate(180deg);
   -o-transform: rotate(180deg);
   transform: rotate(180deg);
 }
-.ie6-8 .rotate2 {
-  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
-}
 .rotate3 {
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
   -webkit-transform: rotate(270deg);
   -moz-transform: rotate(270deg);
   -ms-transform: rotate(270deg);
   -o-transform: rotate(270deg);
   transform: rotate(270deg);
 }
-.ie6-8 .rotate3 {
-  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+/*flip*/
+.flipx {
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0,mirror=1);
+  -webkit-transform: scale(-1, 1);
+  -moz-transform: scale(-1, 1);
+  -ms-transform: scale(-1, 1);
+  -o-transform: scale(-1, 1);
+  transform: scale(-1, 1);
+}
+.flipy {
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2,mirror=1);
+  -webkit-transform: scale(1, -1);
+  -moz-transform: scale(1, -1);
+  -ms-transform: scale(1, -1);
+  -o-transform: scale(1, -1);
+  transform: scale(1, -1);
+}
+@media screen and (min-width: 0) {
+  .rotate1,
+  .rotate2,
+  .rotate3,
+  .flipx,
+  .flipy {
+    filter: none;
+  }
 }
 .rotate {
   -webkit-animation: spin_rotate 2s infinite linear;
   -moz-animation: spin_rotate 2s infinite linear;
   -o-animation: spin_rotate 2s infinite linear;
   animation: spin_rotate 2s infinite linear;
+}
+.am-rotate {
+  transition: -webkit-transform 0.3s;
+  transition: -ms-transform 0.3s;
+  transition: transform .3s;
+}
+.am-rotate:hover {
+  -o-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+.am-popin {
+  -webkit-animation: popin .3s ease;
+  -moz-animation: popin .3s ease;
+  -ms-animation: popin .3s ease;
+  animation: popin .3s ease;
+}
+.am-fadeup {
+  -webkit-animation: fadeup .3s ease;
+  -moz-animation: fadeup .3s ease;
+  -ms-animation: fadeup .3s ease;
+  animation: fadeup .3s ease;
+}
+.am-fadeinright {
+  -webkit-animation: fadeinright .3s ease;
+  -moz-animation: fadeinright .3s ease;
+  -ms-animation: fadeinright .3s ease;
+  animation: fadeinright .3s ease;
+}
+.am-fadeoutright {
+  -webkit-animation: fadeoutright .3s ease;
+  -moz-animation: fadeoutright .3s ease;
+  -ms-animation: fadeoutright .3s ease;
+  animation: fadeoutright .3s ease;
 }
 @-moz-keyframes spin_rotate {
   0% {
@@ -69,53 +125,98 @@
     transform: rotate(359deg);
   }
 }
-/*flip*/
-.flipx {
-  -webkit-transform: scale(-1, 1);
-  -moz-transform: scale(-1, 1);
-  -ms-transform: scale(-1, 1);
-  -o-transform: scale(-1, 1);
-  transform: scale(-1, 1);
-}
-.ie6-8 .flipx {
-  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0,mirror=1);
-}
-.flipy {
-  -webkit-transform: scale(1, -1);
-  -moz-transform: scale(1, -1);
-  -ms-transform: scale(1, -1);
-  -o-transform: scale(1, -1);
-  transform: scale(1, -1);
-}
-.ie6-8 .flipy {
-  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2,mirror=1);
-}
 /* animate */
 .transition {
   transition: all .4s;
 }
-@-webkit-keyframes slideDown {
+@-webkit-keyframes fadeup {
+  from {
+    -webkit-transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    -webkit-transform: translateY(0);
+    opacity: 1;
+  }
+}
+@-ms-keyframes fadeup {
+  from {
+    -ms-transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    -ms-transform: translateY(0);
+    opacity: 1;
+  }
+}
+@keyframes fadeup {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+@-webkit-keyframes fadeinright {
   from {
     -webkit-transform: translateX(20px);
+    opacity: 0;
   }
   to {
     -webkit-transform: translateX(0);
+    opacity: 1;
   }
 }
-@-ms-keyframes slideDown {
+@-ms-keyframes fadeinright {
   from {
     -ms-transform: translateX(20px);
+    opacity: 0;
   }
   to {
     -ms-transform: translateX(0);
+    opacity: 1;
   }
 }
-@keyframes slideDown {
+@keyframes fadeinright {
   from {
     transform: translateX(20px);
+    opacity: 0;
   }
   to {
     transform: translateX(0);
+    opacity: 1;
+  }
+}
+@-webkit-keyframes fadeoutright {
+  to {
+    -webkit-transform: translateX(20px);
+    opacity: 0;
+  }
+  from {
+    -webkit-transform: translateX(0);
+    opacity: 1;
+  }
+}
+@-ms-keyframes fadeoutright {
+  to {
+    -ms-transform: translateX(20px);
+    opacity: 0;
+  }
+  from {
+    -ms-transform: translateX(0);
+    opacity: 1;
+  }
+}
+@keyframes fadeoutright {
+  to {
+    transform: translateX(20px);
+    opacity: 0;
+  }
+  from {
+    transform: translateX(0);
+    opacity: 1;
   }
 }
 @-webkit-keyframes fadein {

@@ -197,8 +197,8 @@ define(function(require, exports, module) {
                 config._colgroup = true;
             }
         });
-
-        var table = (config.height || config.maxHeight) ? $(_table(config)) : $(_tableNormal(config)),
+        //(config.height || config.maxHeight) ? $(_table(config)) : $(_tableNormal(config))
+        var table = $(_table(config)),
             scrollBody = table.find('>.ctable-body-scroller'),
             thead = table.find('thead');
             //IE7 fix - 去掉thead后面多出来的tbody

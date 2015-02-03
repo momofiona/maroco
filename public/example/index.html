@@ -8,6 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../css/maroco.css">
+    <link rel="stylesheet" href="../css/jqueryui/jquery-ui.css">
     <!--[if lt IE 8]>
     <link rel="stylesheet" href="../css/icomoon/ie7/ie7.css">
     <![endif]-->
@@ -16,12 +17,16 @@
     <style type="text/css">
     /* IE8 +*/
     
-    header.toolbar {
-        position: relative;
+    header {
+        position: fixed;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
         z-index: 3;
         border-bottom: 1px solid #d9d9d9;
         box-shadow: 0 0 5px rgba(100, 100, 100, .2);
-        overflow: hidden;
     }
     #sideMenu,
     #mainbody {
@@ -41,57 +46,70 @@
         left: 152px;
         right: 0;
     }
-    .appframe{
+    .appframe {
         width: 100%;
         height: 100%;
-        border:0;
+        border: 0;
     }
+    .nav li {
+        *zoom: 1;
+    }
+    .nav a {}
     </style>
 </head>
 
 <body>
     <div class="row">
-        <header class="toolbar linear">
-            <span class="caption">Maroco UI</span>
-            <span class="wall"></span>
-            <span class="rock">toolbar</span>
+        <header class="linear">
+            <div class="toolbar">
+                <span class="caption">Maroco UI</span>
+                <span class="wall"></span>
+                <span class="rock">toolbar</span>
+            </div>
         </header>
         <div class="w5 scroll" id="sideMenu">
             <ul class="nav m9">
-                <li><a href="#app/user/main">用户管理</a>
+                <li><a href="#!apps/user/main">用户管理</a>
                 </li>
-                <li><a href="#layout">格栅系统</a>
+                <li><a href="#!layout">格栅系统</a>
                 </li>
-                <li><a href="#text">文字排版</a>
+                <li><a href="#!text">文字排版</a>
                 </li>
-                <li><a href="#icon">图标库</a>
+                <li><a href="#!icon">图标库</a>
                 </li>
-                <li><a href="#btn">表单</a>
+                <li><a href="#!btn">表单</a>
                 </li>
-                <li><a href="#notify">提示</a>
+                <li><a href="#!notify">提示</a>
                 </li>
-                <li><a href="#ctable">表格</a>
+                <li><a href="#!ctable">表格</a>
                 </li>
-                <li><a href="#mock">假数据</a>
+                <li><a href="#!css3"><i class="m2 f f-star"></i>CSS动画</a>
                 </li>
-                <li><a href="#router">Router</a>
+                <li><a href="#!girlfriend"><i class="m2 f f-browse"></i>小工具</a>
+                    <ul>
+                        <li><a href="#!router">Router</a>
+                        </li>
+                        <li><a href="#!mock">假数据</a>
+                        </li>
+                    </ul>
                 </li>
-                <li><a href="#watch">数据监控(beta)</a>
+                <li><a href="#!vm"><i class="m2 f f-alert"></i>双向绑定</a>
+                    <ul>
+                        <li><a href="#!watch">数据监控(beta)</a>
+                        </li>
+                    </ul>
                 </li>
-                <li><a href="#girlfriend"><i class="m2 f f-browse"></i>杂物</a>
-                </li>
-                <li><a href="#vm"><i class="m2 xl f f-alert"></i>双向绑定</a>
-                </li>
-                <li><a href="#charts"><i class="m2 xl f f-alert"></i>图表Higncharts/jqplot</a>
+                <li><a href="#!charts"><i class="m2 f f-alert"></i>图表</a>
                 </li>
             </ul>
         </div>
         <div class="scroll" id="mainbody"></div>
     </div>
     <script>
+    // BL BC CR TL TC TR
     seajs.use(['ui', 'ui/router'], function(UI, router) {
         //Nav
-        // $('.nav').navgoco();
+        $('.nav').navgoco();
         var mainbody = $('#mainbody'),
             sideMenu = $('#sideMenu'),
             menus = sideMenu.find('a'),
@@ -99,45 +117,52 @@
                 memo.push(a.hash);
                 return memo;
             }, []);
-        //router
+        //#
         router({
-            'app/*': function(mod) {
-                seajs.use('apps/' + mod,function(view){
+            '#apps/*': function(mod) {
+                seajs.use('apps/' + mod, function(view) {
                     view.show({
-                        container:mainbody.empty()
+                        container: mainbody.empty()
                     })
                 });
-                return;
-                mainbody.empty().scrollTop(0).load('../apps/' + mod, function(res, state, xhr) {
-                        if (state == 'error') {
-                            mainbody.html(res);
-                        }
-                    });
+                this.hashMap('apps/' + mod);
             },
-            "*": function(mod) {
-                if (_.indexOf(legalMod, '#' + mod) > -1) {
+            "#*": function(mod) {
+                if (_.indexOf(legalMod, '#!' + mod) > -1) {
                     mainbody.empty().scrollTop(0).load(mod + '.html', function(res, state, xhr) {
                         if (state == 'error') {
                             mainbody.html(res);
                         }
                     });
-                    menus.filter('[href$="#' + mod + '"]').parent().addClass('active').siblings().removeClass('active');
+                    this.hashMap(mod);
                 } else {
                     location.hash = legalMod[0];
                 }
+            },
+            hashMap: function(mod) {
+                menus.parent().removeClass('active').end().filter('[href$="#!' + mod + '"]').parent().addClass('active');
             }
         });
         //IE6 fix
         if (UI.browser.ie < 8) {
             $(window).resize(function() {
                 var h = $(this).height() - 48;
-                mainbody.height(h).width($(this).width() - 181);
+                mainbody.height(h).width($(this).width() - sideMenu.width());
                 sideMenu.height(h);
             }).resize();
+            //IE6 背景缓存
+            if (UI.browser.ie == 6) {
+                try {
+                    document.execCommand("BackgroundImageCache", false, true);
+                } catch (e) {}
+            }
+            $(window).resize();
         }
+
     });
 
     var previewCode = function() {
+        return;
         $(function() {
             $('pre').each(function() {
                 SyntaxHighlighter.highlight({
@@ -148,11 +173,11 @@
     }
     </script>
 
-    <!-- js 代码高亮 -->
+    <!-- js 代码高亮  让IE8-下 jqery的animate报错
     <script src="../js/syntaxhighlighter/scripts/shCore.js"></script>
     <script src="../js/syntaxhighlighter/scripts/shBrushJScript.js"></script>
     <script src="../js/syntaxhighlighter/scripts/shBrushXml.js"></script>
-    <link rel="stylesheet" href="../js/syntaxhighlighter/styles/shCoreDefault.css" />
+    <link rel="stylesheet" href="../js/syntaxhighlighter/styles/shCoreDefault.css" />-->
     <!-- $ js 代码高亮 -->
 
 </body>

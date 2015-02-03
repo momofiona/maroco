@@ -1,10 +1,11 @@
 <script src="../js/fun/snowfall.jquery.js"></script>
 <div class="row m4">
-    <h1>杂物间 <small>Rules</small></h1>
+    <h1>小工具 <small>Potatoes</small></h1>
     <hr>
     <p>所有文件编码全部UTF8</p>
-    <h2>万能Hack <small>Snow Fall</small></h2>
-    <pre class="brush:html;">
+    <section>
+        <h2>万能Hack <small>Snow Fall</small></h2>
+        <pre class="brush:html;">
         &lt;!--[if lt IE 7 ]> &lt;html class="ie6 ie6-9 ie6-8"> &lt;![endif]-->
         &lt;!--[if IE 7 ]>    &lt;html class="ie7 ie6-9 ie6-8"> &lt;![endif]-->
         &lt;!--[if IE 8 ]>    &lt;html class="ie8 ie6-9 ie6-8"> &lt;![endif]-->
@@ -13,44 +14,82 @@
         &lt;html>
         &lt;!--&lt;![endif]-->
     </pre>
-    <ol>
-        <li>UI.brower</li>
-        <li>_ + * \9 \0 \9\0</li>
-        <li>media IE9+</li>
-    </ol>
-    <h2>Unicode 飘雪 <small>Snow Fall</small></h2>
-    <p>
-        <button id="snowstart">下雪</button>
-        <button id="snowstop">停止</button>
-    </p>
-    <pre class="brush: js;">
-        &lt;script src="../js/fun/snowfall.jquery.js">&lt;/script>
-        &lt;script>
-        $(function(){
-            $(document).snowfall('clear');
-            $(document).snowfall({round:true,minSize:4,maxSize:35,text:'❄',flakeColor:'',flakeCount:50});
+        <ol>
+            <li>UI.brower.ie==6</li>
+            <li>_ + * \9 \0 \9\0</li>
+            <li>media IE9+</li>
+        </ol>
+    </section>
+    <section>
+        <h2>Unicode 飘雪 <small>Snow Fall</small></h2>
+        <p>
+            <button id="snowing" class="b link w4">开始</button>
+        </p>
+        <pre class="brush: js;">
+            &lt;script src="../js/fun/snowfall.jquery.js">&lt;/script>
+            &lt;script>
+            $(function(){
+                $(document).snowfall('clear');
+                $(document).snowfall({round:true,minSize:4,maxSize:35,text:'❄',flakeColor:'',flakeCount:50});
+            });
+            &lt;/script>
+        </pre>
+        <script>
+        $(function() {
+            $('#snowing').click(function() {
+                var _t=$(this);
+                if(_t.hasClass('active')){
+                    _t.removeClass('active link-active').text('开始');
+                    $(document).snowfall('clear');
+                }else{
+                    _t.addClass('active link-active').text('停止');;
+                    $(document).snowfall({
+                        round: true,
+                        minSize: 4,
+                        maxSize: 35,
+                        text: '❄',
+                        flakeColor: '',
+                        flakeCount: 50
+                    });
+                }
+            });
         });
-        &lt;/script>
-    </pre>
+        </script>
+    </section>
+    <section>
+        <h2>垂直居中 <small>Vertical-align: middle</small></h2>
+        <style type="text/css">
+        .va {
+            width: 400px;
+            height: 100px;
+            vertical-align: middle;
+            display: table-cell;
+        }
+        .va-helper {
+            display: none;
+            height: 100%;
+            width: 0;
+            *display: inline;
+            *vertical-align: middle;
+            *zoom: 1;
+        }
+        .va_con {
+            *zoom: 1;
+            *display: inline;
+            *vertical-align: middle;
+        }
+        </style>
+
+        <div class="va link">
+            <div class="va-helper"></div>
+            <div class="va_con">哥乃多行文字垂直居中～哥乃多行文字垂直居中～哥乃多行文字垂直居中～哥乃多行文字垂直居中～哥乃多行文字垂直居中～哥乃多行文字垂直居中～哥乃多行文字垂直居中～哥乃多行文字垂直居中～</div>
+        </div>
+    </section>
+    <section>
+        
+    </section>
+    <div class="footman"></div>
 </div>
 <script>
-$('#snowstart').click(function() {
-    $(document).snowfall('clear');
-    $(document).snowfall({
-        round: true,
-        minSize: 4,
-        maxSize: 35,
-        text: '❄',
-        flakeColor: '',
-        flakeCount: 50
-    });
-})
-$('#snowstop').click(function() {
-    $(document).snowfall('clear');
-})
-$('pre').each(function() {
-    SyntaxHighlighter.highlight({
-        toolbar: false
-    }, this)
-})
+previewCode();
 </script>

@@ -1,0 +1,84 @@
+<div class="toolbar">
+    <b class="ac-back b info"><i class="f f-undo"></i> 返回</b>
+</div>
+<div class="row">
+    <div class="x w6">
+        <img src="{{=it.data.face||'../css/img/avanta.jpg'}}" class="m1 w5 ac-avanta">
+        <p>
+            <a class="b link w5"><i class="f f-lock"></i> 修改密码</a>
+        </p>
+    </div>
+    <div class="x xr w7 m4">
+        <h3>角色列表</h3>
+        <hr/>
+        <div class="ac-powers"></div>
+        <b class="b note m1 ac-power-save" style="display:block">保存更改</b>
+        
+
+    </div>
+    <div class="row">
+        <h3>基本信息</h3>
+        <hr/>
+        <table class="formtable">
+            <tr>
+                <td class="flabel w3">帐号</td>
+                <td>
+                    {{!it.data.loginName}}
+                </td>
+            </tr>
+            <tr>
+                <td class="flabel">姓名</td>
+                <td>
+                    <input class="text" value="{{!it.data.userName}}">
+                </td>
+            </tr>
+            <tr>
+                <td class="flabel">手机</td>
+                <td>
+                    <input class="text" value="{{!it.data.mobile}}">
+                </td>
+            </tr>
+            <tr>
+                <td class="flabel">Email</td>
+                <td>
+                    <input class="text" value="{{!it.data.email}}">
+                </td>
+            </tr>
+            <tr>
+                <td class="flabel">性别</td>
+                <td>
+                    <label class="m2">
+                        <input type="radio" name="sex" value="1" {{?it.data.sex==1}} checked{{?}}>男</label>
+                    <label>
+                        <input type="radio" name="sex" id="male" value="0" {{?it.data.sex===0}} checked{{?}}>女</label>
+                </td>
+            </tr>
+            <tr>
+                <td class="flabel">部门或组织</td>
+                <td>
+                    <a href="#"><i class="f f-org"></i> 选择组织</a>
+                </td>
+            </tr>
+            <tr>
+                <td class="flabel">生日</td>
+                <td>
+                    <input class="text" value="{{!it.data.birth}}">
+                </td>
+            </tr>
+            <tr>
+                <td class="flabel">身份证号</td>
+                <td>
+                    <input class="text" value="{{!it.data.cardId}}">
+                </td>
+            </tr>
+            <tr>
+                <td class="flabel">地址</td>
+                <td>
+                    <input class="text" value="{{!it.data.address}}">
+                </td>
+            </tr>
+        </table>
+
+    </div>
+</div>
+<div class="footman"></div>
