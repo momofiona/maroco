@@ -23,6 +23,12 @@
 .c-error {
     color: @errorColor !important;
 }
+.c-safe{
+    color: @safeColor !important;
+}
+.c-note{
+    color: @noteColor !important;
+}
 .user-select {
     -moz-user-select: none;
     -webkit-user-select: none;
@@ -225,6 +231,18 @@ input[type=checkbox] {
 .moon {
     border-radius: 1000px !important;
 }
+.moon1 {
+    border-radius: 0 0 @radius @radius !important;
+}
+.moon2 {
+    border-radius:@radius 0 0 @radius !important;
+}
+.moon3 {
+    border-radius:@radius @radius 0 0  !important;
+}
+.moon4 {
+    border-radius: 0 @radius @radius 0  !important;
+}
 a {
     text-decoration: none;
     color: #39f;
@@ -377,10 +395,13 @@ a:hover {
     _height: 100%;
     overflow: auto;
     overflow-x: hidden;
-    &:before {
+    //
+    -webkit-backface-visibility: hidden;
+    // -webkit-transform-style: preserve-3d;
+/*    &:before {
         content: ""; //解决chrome下子元素动画影响自身rgba的a
     }
-}
+*/}
 .glass {
     background: url(img/alpha-black-50.png);
     _background-repeat: no-repeat;
@@ -389,6 +410,7 @@ a:hover {
 .notify {
     box-shadow: 0 0 0 3px rgba(0, 0, 0, .1);
     padding: @distance*1.6 @distance*2;
+    cursor: default;
     // filter: progid:DXImageTransform.Microsoft.Shadow(color='#969696', Direction=135, Strength=4);
 }
 .notify-tool {
@@ -542,7 +564,26 @@ a:hover {
     }
 }
 
+.tip3 {
+    &:extend(.dropdown all);
+    &:before, &:after {
+        border-top: 0;
+    }
+    &:before {
+        top: -7px;
+        right: 10px;
+        border-bottom-color: #CCC;
+        border-bottom-color: rgba(0, 0, 0, 0.2);
+    }
+    &:after {
+        top: -6px;
+        right: 10px;
+        border-bottom: 6px solid #FFF;
+    }
+}
+
 .formtable{
+    width: 100%;
     .flabel{
         text-align: right;
         font-size: 14px;

@@ -37,7 +37,7 @@ if (jQuery) (function ($) {
 
         var trigger = event ? $(this) : object,
             attr=trigger.attr('data-dropdown'),
-            dropdown = attr!=='next'?$(attr):trigger.next(),
+            dropdown = attr?$(attr):trigger.next(),
             isOpen = trigger.hasClass('dropdown-open');
 
         // In some cases we don't want to show it
@@ -110,7 +110,7 @@ if (jQuery) (function ($) {
         var pos=dropdown.attr('position');
         pos=pos?pos.split(','):[];
         dropdown.position({
-                my: pos[0]||'left top',
+                my: pos[0]||'left top+10',
                 at: pos[1]||'left bottom',
                 of: trigger
             });

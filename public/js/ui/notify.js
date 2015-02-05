@@ -33,7 +33,7 @@ define(function(require, exports, module) {
                 }
             },
             position: {
-                at: 'center 10%',
+                at: 'center center-50',
                 my: 'center',
                 // collision :'fit',
                 using: function(poz) {

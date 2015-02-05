@@ -4,21 +4,6 @@
 <div class="row m4">
     <h1>图标库 <small>Icons</small></h1>
     <hr>
-    <div class="group group-v">
-        <div class="link">
-            <b class="i i-safe"></b>
-            <b class="i i-error "></b>
-            <b class="i i-info"></b>
-            <b class="i i-close"></b>
-            <img src="/css/img/loading.gif" class="f-rotate-90">
-        </div>
-        <div class="note">
-            <i class="i i-safe"></i>
-            <i class="i i-error "></i>
-            <i class="i i-info"></i>
-            <i class="i i-close"></i>
-        </div>
-    </div>
     <!-- Icomoon -->
     <h2>Icomoon <small>Font Icon</small></h2>
     <p>
@@ -34,16 +19,35 @@
     </p>
     <p>
         <i class="f m4 f-loop rotate"></i>.rotate
-        <mark class="warn"><i class="f f-warning"></i> 这个只有IE10+支持</mark>
+        <mark class="warn"><i class="f f-warn"></i> 这个只有IE10+支持</mark>
     </p>
+    
+    <div id="icomoon" class="note clear"></div>
     <p>优点：可变色、可缩放、一个css；缺点：体积大（下面50个图标有28K，IE67补丁5k）、显示效果差，有锯齿。</p>
     <p>总结：只选基本的，其余全部用png。可以尝试复杂但效果不错的<a href="http://io-meter.com/2014/07/20/replace-icon-fonts-with-svg/" target="new">SVG方案</a>
     </p>
     <p>实际使用时,如果客户IE6占大头，需要把字体文件直接合并到css文件中</p>
-    <div id="icomoon" class="note clear"></div>
     <p>每次导出文件必须同时导出配置，不然后果很严重。</p>
+
     <!-- $ Icomoon -->
 
+    <h2>背景图标 <small>Other Icon</small></h2>
+    <div class="group group-v">
+        <div class="link">
+            <b class="i i-safe"></b>
+            <b class="i i-error "></b>
+            <b class="i i-info"></b>
+            <b class="i i-close"></b>
+            <img src="/css/img/loading.gif" class="f-rotate-90">
+        </div>
+        <div class="note">
+            <i class="i i-safe"></i>
+            <i class="i i-error "></i>
+            <i class="i i-info"></i>
+            <i class="i i-close"></i>
+        </div>
+    </div>
+    <hr class="m1"></hr>
     <!-- fontawesome -->
     <h2>Fontawesome <small>Font Icon</small></h2>
     <p>FA体积比较大，仅供参考</p>
@@ -95,7 +99,7 @@
 <script>
 $(function() {
     //icomoon
-    var classes = ['grid', 'bell', 'more', 'down2', 'up', 'home', 'browse', 'user', 'star-empty', 'star', 'pencil', 'filter', 'warn', 'calendar', 'share', 'org', 'shutdown', 'menus', 'add', 'minus', 'multiply', 'checkmark', 'bin', 'search', 'eye', 'tool', 'gear', 'info', 'question', 'alert', 'location', 'buy', 'denied', 'loop', 'turnr', 'close', 'print', 'undo', 'lock', 'unlock', 'attachment', 'link', 'down', 'upload', 'list', 'arb', 'art', 'arbt'];
+    var classes = ['home','browse','user','star-empty','star','pencil','filter','warn','calendar','share','read','bell','more','save','grid','down','up','org','shutdown','menus','add','minus','multiply','checkmark','bin','search','eye','tool','gear','info','question','alert','location','buy','denied','loop','turnr','close','print','undo','lock','unlock','attachment','link','download','upload','list','arb','art','arbt'];
     $('#icomoon').html('<i class="m xl f f-' + classes.join('"></i><i class="m xl f f-') + '"></i>');
 
     //Fontawesome

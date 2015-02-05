@@ -2,7 +2,7 @@ define(function(require, exports, module) {
     var ctable = require('ui/ctable');
     var searchbox = require('ui/searchbox');
     var template = require('./main.html');
-    var buttonset = require('ui/buttonset');
+    // var buttonset = require('ui/buttonset');
     require('ztree');
     require('css/zTree/zTreeStyle.css');
 
@@ -65,7 +65,7 @@ define(function(require, exports, module) {
                     container: this.$('.ac-peoples'),
                     cols: [{
                         title: '姓名',
-                        width: 60
+                        width: 70
                     }, {
                         title: '性别',
                         width: 50
@@ -76,13 +76,10 @@ define(function(require, exports, module) {
                         title: '邮箱',
                         width: 160
                     }, {
-                        title: '职务'
+                        title: '部门'
                     }, {
                         title: '角色',
                         width: 100
-                    }, {
-                        title: '状态',
-                        width: 60
                     }, {
                         title: '操作',
                         width: 80
@@ -112,13 +109,7 @@ define(function(require, exports, module) {
                     //转换 
                     render: function(records) {
                         return $.map(records, function(record, i) {
-                            var status = {
-                                "0": "未激活",
-                                "1": "正常",
-                                "2": "冻结",
-                                "3": "已删除"
-                            }
-                            var title = "登录名:" + record.loginName;
+                            var title = record.loginName;
                             if (record.reserveB && record.idCard) {
                                 title += "\n" + _.escape(record.reserveB + ":" + record.idCard);
                             }
@@ -129,11 +120,13 @@ define(function(require, exports, module) {
                                     record.email,
                                     record.position,
                                     record.reserveA,
-                                    status[record.userStatus],
                                     '<a href="javascript:;" class="cpr action-person-freeze">' + (record.userStatus == 1 ? "冻结" : "解冻") + '</a>'
                                 ]
                             ];
                         });
+                    },
+                    onselect:function(cache){
+debugger;
                     },
                     itemsOnPage: UI.itemsOnPage,
                     url: '/json/getUserByOrgId',
@@ -159,13 +152,18 @@ define(function(require, exports, module) {
                 this.makePeopleTree();
                 //切换用户和角色
 
-                buttonset({
+/*                buttonset({
                     el: this.$('.ac-user-role'),
-                    onselect: function(e, config) {
-                        debugger;
+                    onselect: function(e, config,data) {
+                        if(data.label=="角色"){
+                            //角色下 增加角色列表
+                            //权限下增加权限列表，隐藏人员列表
+                        }else{
+
+                        }
                         // debugger;
                     }
-                });
+                });*/
                 //search
                 //no filter
                 this.$('.ac-search').searchbox({

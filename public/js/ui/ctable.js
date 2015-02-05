@@ -255,7 +255,10 @@ define(function(require, exports, module) {
                 });
                 table.find('thead').find('.ctable-checkall').each(function() {
                     this.checked = ck;
-                })
+                });
+                if(config.onselect){
+                    config.onselect.call(this,cache);
+                }
             });
             tbody.on('click', '.ctable-checkbox', function(e) {
                 //全选
@@ -268,6 +271,11 @@ define(function(require, exports, module) {
                     }
                 });
                 table.find('thead').find('.ctable-checkall')[0].checked = ckall;
+
+                if(config.onselect){
+                    var tr=$(this).closest('tr').attr('data-index');
+                    config.onselect.call(this,cache[tr]);
+                }
             })
         }
         var generateInputString = function(editconfig, data) {

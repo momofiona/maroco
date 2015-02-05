@@ -1,18 +1,3 @@
-.f-grid {
-	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf009;');
-}
-.f-bell {
-	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf0a2;');
-}
-.f-more {
-	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf141;');
-}
-.f-down2 {
-	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe604;');
-}
-.f-up {
-	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe605;');
-}
 .f-home {
 	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe002;');
 }
@@ -42,6 +27,27 @@
 }
 .f-share {
 	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe48c;');
+}
+.f-read {
+	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe606;');
+}
+.f-bell {
+	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf0a2;');
+}
+.f-more {
+	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf141;');
+}
+.f-save {
+	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf0c7;');
+}
+.f-grid {
+	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf009;');
+}
+.f-down {
+	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe604;');
+}
+.f-up {
+	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe605;');
 }
 .f-org {
 	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe9bc;');
@@ -124,7 +130,7 @@
 .f-link {
 	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf05c;');
 }
-.f-down {
+.f-download {
 	*zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe9c7;');
 }
 .f-upload {

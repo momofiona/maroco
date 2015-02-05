@@ -11,6 +11,12 @@
 .c-error {
   color: #ab2918 !important;
 }
+.c-safe {
+  color: #129324 !important;
+}
+.c-note {
+  color: #478af8 !important;
+}
 .user-select,
 .toolbar,
 .notify-con,
@@ -231,6 +237,18 @@ input[type=checkbox]:checked[disabled] {
 .moon {
   border-radius: 1000px !important;
 }
+.moon1 {
+  border-radius: 0 0 2px 2px !important;
+}
+.moon2 {
+  border-radius: 2px 0 0 2px !important;
+}
+.moon3 {
+  border-radius: 2px 2px 0 0 !important;
+}
+.moon4 {
+  border-radius: 0 2px 2px 0 !important;
+}
 a {
   text-decoration: none;
   color: #39f;
@@ -408,9 +426,11 @@ a:hover {
   _height: 100%;
   overflow: auto;
   overflow-x: hidden;
-}
-.mask:before {
-  content: "";
+  -webkit-backface-visibility: hidden;
+  /*    &:before {
+        content: ""; //解决chrome下子元素动画影响自身rgba的a
+    }
+*/
 }
 .glass {
   background: url(img/alpha-black-50.png);
@@ -421,6 +441,7 @@ a:hover {
 .dialog {
   box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
   padding: 16px 20px;
+  cursor: default;
 }
 .notify-tool,
 .notify-checkmark,
@@ -528,7 +549,8 @@ a:hover {
   cursor: pointer !important;
 }
 .dropdown,
-.tip1 {
+.tip1,
+.tip3 {
   position: absolute;
   display: none;
   border-radius: 6px;
@@ -540,7 +562,9 @@ a:hover {
 .dropdown:before,
 .dropdown:after,
 .tip1:before,
-.tip1:after {
+.tip1:after,
+.tip3:before,
+.tip3:after {
   border: solid 7px transparent;
   position: absolute;
   content: '';
@@ -560,6 +584,24 @@ a:hover {
   top: -6px;
   left: 10px;
   border-bottom: 6px solid #FFF;
+}
+.tip3:before,
+.tip3:after {
+  border-top: 0;
+}
+.tip3:before {
+  top: -7px;
+  right: 10px;
+  border-bottom-color: #CCC;
+  border-bottom-color: rgba(0, 0, 0, 0.2);
+}
+.tip3:after {
+  top: -6px;
+  right: 10px;
+  border-bottom: 6px solid #FFF;
+}
+.formtable {
+  width: 100%;
 }
 .formtable .flabel {
   text-align: right;
