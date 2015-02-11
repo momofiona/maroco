@@ -35,7 +35,6 @@
         left: 0;
         bottom: 0;
         overflow: hidden;
-        overflow-y: auto;
         background: #fff;
     }
     #sideMenu {
@@ -67,7 +66,7 @@
                 <span class="rock">toolbar</span>
             </div>
         </header>
-        <div class="w5 scroll" id="sideMenu">
+        <div class="w5 " id="sideMenu">
             <ul class="nav m9">
                 <li><a href="#!apps/user/main">♝ 用户管理</a>
                 </li>
@@ -103,13 +102,17 @@
                 </li>
                 <li><a href="#!standard"><i class="m2 f f-alert"></i>Standard</a>
                 </li>
+                <li><a href="#!standard"><i class="m2 f f-alert"></i>Datapicker</a>
+                </li>
+                <li><a href="#!standard"><i class="m2 f f-alert"></i>Validate</a>
+                </li>
             </ul>
         </div>
         <div class="scroll" id="mainbody"></div>
     </div>
     <script>
     // BL BC CR TL TC TR
-    seajs.use(['ui', 'ui/router'], function(UI, router) {
+    seajs.use(['ui', 'ui/router', 'ui/rollbar'], function(UI, router) {
         //Nav
         $('.nav').navgoco();
         var mainbody = $('#mainbody'),
@@ -119,7 +122,16 @@
                 memo.push(a.hash);
                 return memo;
             }, []);
-        //#
+
+        //给sidebar加上滚动条
+        if (!UI.browser.chrome) {
+            sideMenu.addClass('scroll');
+        }else{
+            sideMenu = sideMenu.rollbar({
+
+            }).find('.rollbar-content');
+        }
+        //#开始的匹配hash
         router({
             '#apps/*': function(mod) {
                 seajs.use('apps/' + mod, function(view) {
@@ -142,6 +154,7 @@
                     location.hash = legalMod[0];
                 }
             },
+            //不以#开头的不去匹配hash
             hashMap: function(mod) {
                 menus.parent().removeClass('active').end().filter('[href$="#!' + mod + '"]').parentsUntil('.nav').filter('li').addClass('active');
             }

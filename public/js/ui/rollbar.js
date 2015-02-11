@@ -30,8 +30,10 @@ define(function(require, exports, module) {
             'class': 'rollbar-path-horizontal'
         });
         this.sliders = this.vslider.add(this.hslider);
+        if(this.container.css('position')!=='absolute'){
+            this.container.css('position','relative');
+        }
         this.container.css({
-            'position': 'relative',
             'overflow': 'hidden'
         }).wrapInner('<div class="rollbar-content" id="' + contentId + '"></div>');
         this.content = this.container.children('.rollbar-content').css({
@@ -118,6 +120,9 @@ define(function(require, exports, module) {
                 hdiff = 0;
                 this.left = 0;
                 this.content.css('left', this.left = 0);
+            } else if (-this.left > hdiff) {
+                //超载
+                this.content.css('left', this.left = -hdiff);
             }
             this.hdiff = hdiff;
             this.hslider.width(100 * cw / w + '%');
@@ -223,7 +228,6 @@ define(function(require, exports, module) {
                 a = (keycode == 37) ? -keyScroll : a;
                 a = (keycode == 39) ? keyScroll : a;
                 if (vkey || a) {
-                    console.log(e.keyCode, -_rollbar.top + vkey, -_rollbar.left + a);
                     _rollbar.scroll(-_rollbar.top + vkey, -_rollbar.left + a);
                 }
             })
@@ -280,6 +284,11 @@ define(function(require, exports, module) {
                 v = $.isNumeric(v) ? v : -this.top;
                 h = $.isNumeric(h) ? h : -this.left;
                 _rollbar.scroll(v, h)
+            })
+            .on('mouseenter',function(){
+                _rollbar.sliders.css('opacity',_rollbar.settings.sliderOpacity);
+            }).on('mouseleave',function(){
+                _rollbar.sliders.css('opacity',.05);
             });
     };
 
@@ -289,16 +298,10 @@ define(function(require, exports, module) {
         blockGlobalScroll: false, //阻止mousewheel向上冒泡
         sliderSize: '30%',
         sliderOpacity: 0.3,
-        // sliderActiveOpacity: 0.8,
-        // sliderOpacityTime: 200,
-        // sliderOpacityDelay: 1000,
         keyScroll: 100, //每次按键滚动距离
         wheelSpeed: 100, //每次滚动的高度/宽度
         touchSpeed: 0.3,
         pathPadding: '3px', //滚动条边界距离两头的距离
-        scrollTime: 500,
-        scrollInterval: 15,
-        scrollEasing: 'swing',
         zIndex: 100,
         onscroll: $.noop
     };

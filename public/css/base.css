@@ -215,7 +215,6 @@ input[type=checkbox]:checked[disabled] {
 /* scroll */
 .scroll {
   overflow: auto !important;
-  _overflow: scroll !important;
 }
 .scroll::-webkit-scrollbar {
   -webkit-appearance: none;
@@ -233,7 +232,7 @@ input[type=checkbox]:checked[disabled] {
   display: none;
 }
 .scroll::-webkit-scrollbar-corner {
-  background: inherit;
+  background: transparent;
 }
 .linear {
   background: #f3f4f5 !important;
@@ -463,7 +462,7 @@ a:hover {
 .dialog-tool,
 .dialog-close,
 .dialog-close {
-  margin: -9px -10px -10px 16px;
+  margin: -8px -6px -10px 16px;
   cursor: pointer;
   padding: 10px;
 }
@@ -481,7 +480,6 @@ a:hover {
 }
 /* dialog */
 .dialog {
-  border-radius: 0;
   padding: 0;
   min-width: 250px;
   _width: 250px;

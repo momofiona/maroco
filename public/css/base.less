@@ -215,7 +215,6 @@ input[type=checkbox] {
 
 .scroll {
     overflow: auto !important;
-    _overflow: scroll !important;
 }
 .scroll::-webkit-scrollbar {
     -webkit-appearance: none;
@@ -233,7 +232,7 @@ input[type=checkbox] {
     display: none;
 }
 .scroll::-webkit-scrollbar-corner {
-    background: inherit;
+    background: transparent;
 }
 // .scroll::-webkit-scrollbar-track {}
 .linear {
@@ -428,7 +427,7 @@ a:hover {
     // filter: progid:DXImageTransform.Microsoft.Shadow(color='#969696', Direction=135, Strength=4);
 }
 .notify-tool {
-    margin: -@distance+1 -@distance -@distance @distance*1.6;
+    margin: -8px -6px -@distance @distance*1.6;
     // margin: -3px 0 0; 
     cursor: pointer;
     padding: @distance;
@@ -453,7 +452,7 @@ a:hover {
 
 .dialog {
     &:extend(.notify);
-    border-radius: 0;
+    // border-radius: 0;
     padding: 0;
     min-width: 250px;
     _width: 250px;

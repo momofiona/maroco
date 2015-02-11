@@ -61,7 +61,7 @@ define(function(require, exports, module) {
                 _t.el.addClass(_t.cls + ' ' + _t.type + ' ' + _t.anime).html(_t.template(_t)).data('_notify_', _t);
                 _t.contentEl = _t.$('>.' + _t.type + '-con');
                 _.each(['width','height','maxWidth','maxHeight','minHeight','minWidth'],function(o,i){
-                    if(_t[o]) _t.contentEl.css(o,_t[o]);
+                    if(_t[o]) _t.contentEl.css(o,_t[o]).addClass('scroll');
                 });
                 //button evenet
                 if (_t.buttons) {
@@ -89,12 +89,12 @@ define(function(require, exports, module) {
                         handle: isDialog ? ">.dialog-title" : ''
                     });
                 }
-                if (_t.resizable) {
+/*                if (_t.resizable) {
                     _t.contentEl.resizable({
                         minWidth: 250,
                         handles: "e" //只允许横向放大
                     });
-                }
+                }*/
             }
         }
         //创建元素
@@ -142,7 +142,7 @@ define(function(require, exports, module) {
                 cls: o,
                 icon: '<i class="m2 f-lg f f-' + notifyIcon[i] + '"></i>',
                 msg: msg,
-                timeout: timeout == undefined ? 3 : timeout
+                timeout: timeout == undefined ? 2 : timeout
             });
         }
     });

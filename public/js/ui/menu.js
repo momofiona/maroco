@@ -110,7 +110,7 @@ if (jQuery) (function ($) {
         var pos=dropdown.attr('position');
         pos=pos?pos.split(','):[];
         dropdown.position({
-                my: pos[0]||'left top+10',
+                my: pos[0]||'left top+6',
                 at: pos[1]||'left bottom',
                 of: trigger
             });

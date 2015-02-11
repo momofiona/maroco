@@ -7,25 +7,37 @@ define(function(require, exports, module) {
             dialog = notify({
                 title: '选择部门(按住 Ctrl 可多选)',
                 draggable: true,
-                resizable: true,
                 mask: true,
-                width:400,
-                maxHeight:300,
+                width: 400,
+                height: 300,
                 oncreate: function() {
-                    var _t=this;
-                    var ztree=$('<ul class="scroll ztree">').appendTo(this.contentEl.addClass('p0'));
+                    var _t = this;
+                    var ztree = $('<ul class="ztree">').appendTo(this.contentEl.addClass('p0'));
                     //ztree
                     var setting = {
-                        data: {
-                            simpleData: {
-                                enable: true,
-                                idKey: 'id',
-                                pIdKey: 'pid',
-                                RootPid: 'ROOT'
+                        async: {
+                            url: '/json/getTree',
+                            enable: true,
+                            autoParam: ["id"],
+                            dataFilter: function(treeId, parentNode, responseData) {
+                                return responseData.result;
+                            },
+                            dataType: 'json',
+                            type: 'get'
+                        },
+                        view: {
+                            selectedMulti: true
+                        },
+                        callback: {
+                            onClick: function(event, treeId, treeNode) {
+
+                                // userManeger.renderUser(treeNode);
                             }
                         }
                     };
-                    $.ajax({
+                    orgTree = $.fn.zTree.init(ztree, setting);
+                    _t.el.position(_t.position);
+/*                    $.ajax({
                         url: '/json/getTree',
                         dataType: 'json',
                         data: {
@@ -38,17 +50,19 @@ define(function(require, exports, module) {
                             });
                             orgTree = $.fn.zTree.init(ztree, setting, zNodes);
                             orgTree.expandAll(true);
-                            _t.el.position(_t.position);
                         }
-                    });
+                    });*/
                 },
                 buttons: [{
                     label: '确定',
                     cls: 'error',
                     click: function(e, config) {
                         var selected = orgTree.getSelectedNodes();
+                        if(selected.length==0){
+                            notify.warn('您还没有选择任何一个部门');
+                            return;
+                        }
                         option.onselected && option.onselected(selected);
-                        debugger;
                         config.close();
                     }
                 }, {

@@ -4,7 +4,7 @@ define(function(require, exports, module) {
     var template = require('./main.html');
     //滚动条
     require('js/vendor/jquery.mousewheel');
-    require('js/vendor/jquery.rollbar');
+    require('ui/rollbar');
     //ztree
     require('ztree');
     require('css/zTree/zTreeStyle.css');
