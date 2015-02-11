@@ -12,15 +12,15 @@
         <b class="b error"><i class="m2 f f-bin"></i>删除</b>
         <b class="b link"><i class="m2 f f-link"></i>link</b>
     </p>
-    <pre class="brush: html;">
-    &lt;b class="b">b&lt;i class="m4 f f-arb">&lt;/i>&lt;/b>
-    &lt;b class="b log">&lt;i class="f f-upload">&lt;/i>&lt;/b>
-    &lt;b class="b info">&lt;i class="f m2 f-add">&lt;/i>新建&lt;/b>
-    &lt;b class="b note">&lt;i class="m2 f f-undo">&lt;/i>返回&lt;/b>
-    &lt;b class="b warn">&lt;i class="m2 f f-buy">&lt;/i>购买&lt;/b>
-    &lt;b class="b error">&lt;i class="m2 f f-bin">&lt;/i>删除&lt;/b>
-    &lt;b class="b link">&lt;i class="m2 f f-link">&lt;/i>link&lt;/b>
-</pre>
+    <textarea class="codemirror">
+        <b class="b">b<i class="m4 f f-arb"></i></b>
+        <b class="b log"><i class="f f-upload"></i></b>
+        <b class="b info"><i class="f m2 f-add"></i>新建</b>
+        <b class="b note"><i class="m2 f f-undo"></i>返回</b>
+        <b class="b warn"><i class="m2 f f-buy"></i>购买</b>
+        <b class="b error"><i class="m2 f f-bin"></i>删除</b>
+        <b class="b link"><i class="m2 f f-link"></i>link</b>
+    </textarea>
     <h3>不同标签</h3>
     <ol>
         <li>IE67中 div 、 a:hover 、只包含图标的节点 元素后面不带空字符节点 所以没有后边距</li>
@@ -41,19 +41,19 @@
         <input class="b log" type="button" value="input">
         <input class="b log" type="submit" value="submit">
     </div>
-    <pre class="brush:html;">
-        &lt;b class="b log">b&lt;/b>
-        &lt;b class="b log">&lt;i class="f f-upload">&lt;/i>&lt;/b>
-        &lt;i class="b log">i&lt;/i>
-        &lt;div class="b log">div&lt;/div>
-        &lt;a class="b log">a&lt;/a>
-        &lt;a class="b note" href="javascript:;">a:href:note &lt;i class="i i-loading">&lt;/i>&lt;/a>
-        &lt;span class="b log">span&lt;/span>
-        &lt;span class="b log">span中文&lt;/span>
-        &lt;button class="b log">button&lt;/button>
-        &lt;input class="b log" type="button" value="input">
-        &lt;input class="b log" type="submit" value="submit">
-    </pre>
+    <textarea class="codemirror">
+        <b class="b log">b</b>
+        <b class="b log"><i class="f f-upload"></i></b>
+        <i class="b log">i</i>
+        <div class="b log">div</div>
+        <a class="b log">a</a>
+        <a class="b note" href="javascript:;">a:href:note <i class="i i-loading"></i></a>
+        <span class="b log">span</span>
+        <span class="b log">span中文</span>
+        <button class="b log">button</button>
+        <input class="b log" type="button" value="input">
+        <input class="b log" type="submit" value="submit">
+    </textarea>
 
     <p>PS：推荐使用b标签</p>
     <h2>toolbar</h2>
@@ -80,7 +80,7 @@
         <span class="group m2" id="demoBtnset">
         <button class="b link">button <i class="m4 f f-arb"></i></button>
         <span class="b link link-active">span  <i class="m4 f f-arb"></i></span>
-        <a class="b link" href="#btn">a  <i class="m4 f f-arb"></i></a>
+        <a class="b link" href="#btn2">a  <i class="m4 f f-arb"></i></a>
         </span>
         <span class="group m2" id="demoBtnset2"></span>
         <span class="group m4">
@@ -92,46 +92,7 @@
         <a class="b link" href="#btn"><i class="f f-search"></i></a>
     </span>
     </p>
-    <div class="log">
-        <pre class="brush:js;">
-seajs.use('ui/buttonset', function(buttonset) {
-    buttonset({
-        el: '#demoBtnset',
-        onselect: function(e, config, data) {
-            console.log(data);
-            debugger;
-        }
-    });
-    buttonset({
-        cls: 'error',
-        el: '#demoBtnset2',
-        data: [{
-            label: '高级'
-        }, {
-            label: '中级',
-            on: true //开启状态
-        }, {
-            label: '初级'
-        }],
-        multi: true,
-        onselect: function(e, config, data) {
-            console.log(data);
-            debugger;
-        }
-    });
-    $('#otherGroup').children().each(function() {
-        var _t = this;
-        buttonset({
-            el: _t,
-            init: function() {
-                this.cls = this.el.children()[0].className.replace('b ', '');
-            }
-        });
-    });
-
-});
-    </pre>
-    </div>
+    <pre class="codemirror" mode="javascript" source="#codemirror-buttonset"></pre>
     <p id="otherGroup">
         <span class="group m2">
     <a class="b log" href="#btn">a</a>
@@ -161,19 +122,12 @@ seajs.use('ui/buttonset', function(buttonset) {
     </p>
     <div class="footman"></div>
 </div>
-<script>
-previewCode();
-//IE6、7 link button avtive问题
-/*if (UI.browser.ie < 8) {
-    $(document).on('click', '.b', function() {
-        $(this).blur();
-    })
-}*/
+<script id="codemirror-buttonset">
 seajs.use('ui/buttonset', function(buttonset) {
     buttonset({
         el: '#demoBtnset',
         onselect: function(e, config, data) {
-            console.log(data,this);
+            console.log(data, this);
         }
     });
     buttonset({
@@ -189,7 +143,7 @@ seajs.use('ui/buttonset', function(buttonset) {
         }],
         multi: true,
         onselect: function(e, config, data) {
-            console.log(data,this);
+            console.log(data, this);
         }
     });
     $('#otherGroup').children().each(function() {
@@ -201,6 +155,5 @@ seajs.use('ui/buttonset', function(buttonset) {
             }
         });
     });
-
 });
 </script>

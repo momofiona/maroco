@@ -23,15 +23,14 @@ define(function(require, exports, module) {
         leaf: false,
         name: top.USER.orgName
     }]*/
-    Mock.mock('/json/getTree', 'get', {
-        "total|200": 12,
-        "result|2-10": [{
-            'id|+1': 12,
-            "isParent": true,
-            "leaf": false,
-            "name": '@NAME'
-        }]
-    });
+    Mock.mock(/\/json\/getTree(\?.*)?/, 'get', {
+            "total|200": 12,
+            "result|5-6": [{
+                'id|+1': 12,
+                "isParent": "@BOOLEAN",
+                "name": '@NAME'
+            }]
+        });
     ///json/getUserByOrgId 获取部门下人员
     Mock.mock('/json/getUserByOrgId', 'get', {
         "total|200": 12,
@@ -73,7 +72,7 @@ define(function(require, exports, module) {
     });
 
     //根据组织ID返回所有权限
-    Mock.mock(/\/json\/getRoleByOrgId(\?.*)?/, 'get',{
+    Mock.mock(/\/json\/getRoleByOrgId(\?.*)?/, 'get', {
         "result|2-5": [{
             "id": "@GUID",
             "name": "@WORD",
@@ -81,7 +80,7 @@ define(function(require, exports, module) {
             "description": '@WORD',
             "orgName": '部门:@WORD', //所属部门或者组织
             "orgId": 'org1'
-        },{
+        }, {
             "id": "@GUID",
             "name": "@WORD",
             "power": '@boolean',

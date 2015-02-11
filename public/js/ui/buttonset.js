@@ -22,6 +22,7 @@ define(function(require, exports, module) {
                     $(this).addClass(ac).siblings().removeClass(ac);
                 }
                 if (config.onselect) config.onselect.call(this, e, config, data);
+                return false;
             }
         },
         getSelected: function() {

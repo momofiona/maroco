@@ -22,7 +22,7 @@
     <h2>当dialog用</h2>
     <p>考虑IE6，dialog 必须有宽度,当存在buttons或者title参数的时候会被当成是dialog处理,明确指定type='dialog'时候也一样</p>
     <div class="dialog m note w8 am-popin" style="position:relative;float:left;">
-        <i class="f f-multiply dialog-close"></i>
+        <i class="f f-multiply dialog-close am-rotate"></i>
         <i class="f f-minus dialog-tool"></i>
         <div class="dialog-title">
             note dialog
@@ -37,7 +37,7 @@
     </div>
 
     <div class="dialog m log w8" style="position:relative;float:left;">
-        <i class="f f-multiply dialog-close"></i>
+        <i class="f f-multiply dialog-close am-rotate"></i>
         <div class="dialog-title">
             log dialog
         </div>
@@ -51,7 +51,7 @@
     </div>
 
     <div class="dialog m error w8 am-fadeup" style="position:relative;float:left;">
-        <i class="f f-multiply dialog-close"></i>
+        <i class="f f-multiply dialog-close am-rotate"></i>
         <div class="dialog-title">
             error dialog
         </div>
@@ -64,7 +64,7 @@
         </div>
     </div>
     <div class="dialog m safe w8" style="position:relative;float:left;">
-        <i class="f f-multiply dialog-close"></i>
+        <i class="f f-multiply dialog-close am-rotate"></i>
         <div class="dialog-title">
             safe dialog
         </div>
@@ -77,7 +77,7 @@
         </div>
     </div>
     <div class="dialog m silver w8" style="position:relative;float:left;">
-        <i class="f f-multiply dialog-close"></i>
+        <i class="f f-multiply dialog-close am-rotate"></i>
         <div class="dialog-title">
             silver dialog
         </div>
@@ -90,7 +90,7 @@
         </div>
     </div>
     <div class="dialog m info w8" style="position:relative;float:left;">
-        <i class="f f-multiply dialog-close"></i>
+        <i class="f f-multiply dialog-close am-rotate"></i>
         <div class="dialog-title">
             info dialog
         </div>
@@ -103,7 +103,7 @@
         </div>
     </div>
     <div class="dialog m link w8" style="position:relative;float:left;">
-        <i class="f f-multiply dialog-close"></i>
+        <i class="f f-multiply dialog-close am-rotate"></i>
         <div class="dialog-title">
             link dialog
         </div>
@@ -115,9 +115,11 @@
             <b class="b xr note">确定</b>
         </div>
     </div>
+    <div class="xc"></div>
+    <pre class="codemirror" mode="javascript" source="#codemirror-notify"></pre>
     <div class="footman"></div>
 </div>
-<script>
+<script id="codemirror-notify">
 seajs.use('ui/notify', function(notify) {
     UI.notify=notify;
     var loadingTip;

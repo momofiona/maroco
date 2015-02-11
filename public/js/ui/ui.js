@@ -7,7 +7,6 @@ seajs.config({
     paths: {
         'ui': 'js/ui'
     },
-    base: seajs.resolve('/'),
     vars: {
         'locale': 'cn'
     },
@@ -51,7 +50,7 @@ seajs.config({
                 var s = k.indexOf(' ');
                 config.el.on(k.slice(0, s), $.trim(k.slice(s + 1)), function(event) {
                     var _fn = (_.isString(v) ? config[v] : v);
-                    if (_fn) _fn.call(this, event, config);
+                    if (_fn) return _fn.call(this, event, config);
                 });
             });
             if (config.create) {
@@ -64,7 +63,8 @@ seajs.config({
         //非法字符，依据windows文件夹命名规则
         illegalCharacter: /[^\\\/:\*\?\"<>\|]/,
         //分页每页数量
-        itemsOnPage: 15
+        itemsOnPage: 15,
+        server:seajs.data.base
     });
     /**
      * 浏览器判断 主要判断IE6-10
@@ -85,7 +85,11 @@ seajs.config({
         };
     }
     UI.browser = browser;
-
+    var proto=Object.create || function(proto) {
+            function F() {};
+            F.prototype = proto;
+            return new F;
+        }
     //underscore mixin
     _.mixin({
         /**
@@ -101,10 +105,9 @@ seajs.config({
             return prefix ? prefix + n : n;
         },
         //原型链
-        proto: Object.create || function(proto) {
-            function F() {};
-            F.prototype = proto;
-            return new F;
+        proto: function(prototype,object){
+            var ret=proto(prototype);
+            return object?_.extend(ret,object):ret;
         },
         dot: doT.template,
         queryString: function(str, sep, eq) {
@@ -260,6 +263,10 @@ seajs.config({
                     _btn.addClass(cName + '-active');
                     $(document).one('mouseup', function(e) {
                         _btn.removeClass(cName + '-active');
+                        //解决IE67 button 黑边
+                        if(UI.browser.ie<8){
+                            _btn[0].blur();
+                        }
                     });
                 });
             }
@@ -273,7 +280,6 @@ seajs.config({
     }).on('click','a[href="#"]',function(){
         return false;
     });
-
     //设置seaID
     define('ui', function(require) {
         require('api'); //注掉此行来禁用假数据
@@ -289,7 +295,9 @@ seajs.config({
 $.ajaxSetup({
     //ie 都不缓存
     cache: !UI.browser.ie,
-    complete: function(jqXHR) {},
+    complete: function(jqXHR,b,c) {
+        "afsd"
+    },
     data: {},
     error: function(jqXHR, textStatus, errorThrown) {
 

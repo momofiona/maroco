@@ -2,7 +2,7 @@
  * jQuery Notify
  */
 define(function(require, exports, module) {
-    var template = _.dot('{{?it.type=="dialog"}}<i class="f f-multiply dialog-close"></i><div class="dialog-title">{{=it.icon}}{{=it.title}}</div><div class="dialog-con">{{=it.msg}}</div>{{?it.buttons}}<div class="dialog-foot">{{~it.buttons :v:i}}<b class="b xr m4 {{=v.cls||"log"}}"{{?v.click}} click="{{=i}}"{{?}}>{{=v.label}}</b>{{~}}</div>{{?}}{{??}}{{=it.icon}}<span class="notify-con">{{=it.msg}}</span>{{?it.closeable}}<i class="f f-multiply notify-close"></i>{{?}}{{?}}');
+    var template = _.dot('{{?it.type=="dialog"}}<i class="f f-multiply dialog-close am-rotate"></i><div class="dialog-title">{{=it.icon}}{{=it.title}}</div><div class="dialog-con">{{=it.msg}}</div>{{?it.buttons}}<div class="dialog-foot">{{~it.buttons :v:i}}<b class="b xr m4 {{=v.cls||"log"}}"{{?v.click}} click="{{=i}}"{{?}}>{{=v.label}}</b>{{~}}</div>{{?}}{{??}}{{=it.icon}}<span class="notify-con">{{=it.msg}}</span>{{?it.closeable}}<i class="f f-multiply notify-close am-rotate"></i>{{?}}{{?}}');
     var defaults = {
             cls: 'log',
             type: 'notify',
@@ -33,7 +33,7 @@ define(function(require, exports, module) {
                 }
             },
             position: {
-                at: 'center center-50',
+                at: 'center center-40',
                 my: 'center',
                 // collision :'fit',
                 using: function(poz) {
@@ -60,6 +60,9 @@ define(function(require, exports, module) {
                 _t.events[_ename] = _t.events[_ename] || 'close';
                 _t.el.addClass(_t.cls + ' ' + _t.type + ' ' + _t.anime).html(_t.template(_t)).data('_notify_', _t);
                 _t.contentEl = _t.$('>.' + _t.type + '-con');
+                _.each(['width','height','maxWidth','maxHeight','minHeight','minWidth'],function(o,i){
+                    if(_t[o]) _t.contentEl.css(o,_t[o]);
+                });
                 //button evenet
                 if (_t.buttons) {
                     _t.el.find('>.dialog-foot .b[click]').on('click', function(e) {

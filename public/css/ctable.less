@@ -3,7 +3,7 @@
 	background-color: #fff;
 	*zoom:1;
 	width: 100%;
-    overflow:hidden;
+    // overflow:hidden;
     line-height: 21px;
     table-layout: fixed;
     border-collapse: collapse;
@@ -293,118 +293,4 @@
     .ctable-hover .cicon-fx {
         visibility: visible;
     }
-}
-
-/*searchtext*/
-.search-text {
-    position: relative;
-    padding: 0 25px;
-    background: #ffffff url(img/search-text.png) no-repeat 6px center;
-    .i-cancel {
-        cursor: pointer;
-        position: absolute;
-        display: none;
-        right: 2px;
-        top: 5px;
-        margin: 0;
-        transition:-webkit-transform 0.3s;
-        &:hover{
-            -webkit-transform:rotate(180deg);
-        }
-    }
-    .search-filter {
-        position: absolute;
-        left: 25px;
-        line-height:29px;
-        top: -1px;
-        border-right:solid 1px #eee;
-        white-space: nowrap;
-        text-overflow:ellipsis;
-        cursor: pointer;
-        color: #6FB3E0;
-        box-shadow: 3px 0 6px -5px;
-    }
-}
-
-/* rollbar paths style */
-.rollbar-path-vertical, .rollbar-path-horizontal {
-    position: absolute;
-    background-color: #eee;
-    background-color: rgba(220, 220, 220, 0.5);
-    z-index: 100;
-}
-.rollbar-path-horizontal {
-    bottom: 0px;
-    left: 0;
-    width: 100%;
-    height: 10px;
-}
-.rollbar-path-vertical {
-    right: 0px;
-    top: 0;
-    height: 100%;
-    width: 10px;
-}
-/* rollbar paths inner shadow */
-.rollbar-path-vertical {
-    box-shadow: inset 1px 0px 1 rgba(0, 0, 0, 0.1);
-    -moz-box-shadow: inset 1px 0px 1 rgba(0, 0, 0, 0.1);
-    -webkit-box-shadow: inset 1px 0px 0 rgba(0, 0, 0, 0.1);
-}
-.rollbar-path-horizontal {
-    box-shadow: inset 0px 1px 1 rgba(0, 0, 0, 0.1);
-    -moz-box-shadow: inset 0px 1px 1 rgba(0, 0, 0, 0.1);
-    -webkit-box-shadow: inset 0px 1px 0 rgba(0, 0, 0, 0.1);
-}
-/* rollbar handle style */
-.rollbar-handle {
-    position: relative;
-    top: 0;
-    left: 0;
-    background-color: #58bcee;
-}
-/* prevent handle selection */
-.rollbar-handle {
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-.rollbar-path-vertical .rollbar-handle {
-    height: 20%;
-    width: 100%;
-}
-.rollbar-path-horizontal .rollbar-handle {
-    width: 20%;
-    height: 100%;
-}
-/* round corners for rollbar handle and paths */
-.rollbar-path-vertical, .rollbar-path-horizontal, .rollbar-handle {
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
-}
-/* rollbar themes: rollbar-blue*/
-.rollbar{
-    .rollbar-path-vertical,.rollbar-path-horizontal {
-
-        border-radius: 0px;
-        .rollbar-handle{
-            border-radius: 0px;
-            transition:height .3s, width .3s;
-        }
-    }
-    .rollbar-path-vertical {
-        width: 5px;
-    }
-    .rollbar-path-horizontal {
-        height: 5px;
-    }
-}
-.rollbar-content {
-    transition:top .2s;
-}
-.rollbar-pad{
-    padding-right: @distance;
 }

@@ -57,8 +57,8 @@
  */
 "use strict";
 define(function(require, exports, module) {
-    require('js/vendor/jquery.rollbar.min');
     require('js/vendor/jquery.mousewheel');
+    require('./rollbar');
     //分页
     require('js/vendor/simplePagination');
     var uuid = 0;
@@ -157,7 +157,7 @@ define(function(require, exports, module) {
             <td class="chandler"></td>\
         {{?}}\
         {{?it.checkbox}}\
-            <td><input type="checkbox" class=ctable-checkbox></td>\
+            <td><input type="checkbox" class="ctable-checkbox"{{?it.checkbox(trdata)}} checked{{?}}></td>\
         {{?}}\
         {{~it.cols :col:colindex}}\
             <td {{?col.align}}align="{{=col.align}}"{{?}} {{?col.cls}}class="{{=col.cls||""}}"{{?}} {{?col.style}}style="{{=col.style}}"{{?}}>{{=trdata[colindex]===undefined||trdata[colindex]===null?"":trdata[colindex]}}</td>\
@@ -197,6 +197,10 @@ define(function(require, exports, module) {
                 config._colgroup = true;
             }
         });
+        //checkbox参数
+        if(config.checkbox && !$.isFunction(config.checkbox)){
+            config.checkbox=$.noop;
+        }
         //(config.height || config.maxHeight) ? $(_table(config)) : $(_tableNormal(config))
         var table = $(_table(config)),
             scrollBody = table.find('>.ctable-body-scroller'),
@@ -257,7 +261,7 @@ define(function(require, exports, module) {
                     this.checked = ck;
                 });
                 if(config.onselect){
-                    config.onselect.call(this,cache);
+                    config.onselect.call(this,this.checked?cache:[]);
                 }
             });
             tbody.on('click', '.ctable-checkbox', function(e) {
@@ -274,7 +278,7 @@ define(function(require, exports, module) {
 
                 if(config.onselect){
                     var tr=$(this).closest('tr').attr('data-index');
-                    config.onselect.call(this,cache[tr]);
+                    config.onselect.call(this,api.getData('selected'),cache[tr]);
                 }
             })
         }
@@ -556,7 +560,7 @@ define(function(require, exports, module) {
             });
         }
         config.create && config.create.call(table, config);
-        return {
+        var api={
             config: config,
             load: load,
             getBody: function() {
@@ -573,13 +577,10 @@ define(function(require, exports, module) {
                     });
                     return result;
                 }
-                if (n === "vieworder") {
-                    tbody.children().each(function(i, o) {
-                        result.push(cache[$(o).attr('data-index')]);
-                    });
-                    return result;
-                }
-                return cache
+                tbody.children().each(function(i, o) {
+                    result.push(cache[$(o).attr('data-index')]);
+                });
+                return result;
             },
             update: update,
             append: function(datas) {
@@ -599,5 +600,6 @@ define(function(require, exports, module) {
                 return tr;
             }
         }
+        return api;
     }
 });

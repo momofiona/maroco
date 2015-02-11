@@ -2,7 +2,10 @@ define(function(require, exports, module) {
     var ctable = require('ui/ctable');
     var searchbox = require('ui/searchbox');
     var template = require('./main.html');
-    // var buttonset = require('ui/buttonset');
+    //滚动条
+    require('js/vendor/jquery.mousewheel');
+    require('js/vendor/jquery.rollbar');
+    //ztree
     require('ztree');
     require('css/zTree/zTreeStyle.css');
 
@@ -11,13 +14,15 @@ define(function(require, exports, module) {
         // 组织关系依赖enterpriseId
         var enterpriseId = "";
         var orgTreeSetting = {
-            data: {
-                simpleData: {
-                    enable: true,
-                    idKey: 'id',
-                    pIdKey: 'pid',
-                    RootPid: 'ROOT'
-                }
+            async: {
+                url: '/json/getTree',
+                enable: true,
+                autoParam: ["id"],
+                dataFilter: function(treeId, parentNode, responseData) {
+                    return responseData.result;
+                },
+                dataType: 'json',
+                type: 'get'
             },
             view: {
                 selectedMulti: false
@@ -32,6 +37,15 @@ define(function(require, exports, module) {
             orgTree: null,
             peopleListTable: null,
             catalog: null,
+            events: {
+                'click .ac-changeDepart': function(e, config) {
+                    seajs.use('apps/user/department', function(depart) {
+                        depart.show({
+
+                        });
+                    })
+                }
+            },
             makePeopleTree: function() {
                 var _t = this;
                 $.ajax({
@@ -45,7 +59,7 @@ define(function(require, exports, module) {
                         var _id = _.uniqueId('orgTree');
                         orgTreeDom = _t.$('.ac-orgtree').attr('id', _id);
                         _t.orgTree = $.fn.zTree.init(orgTreeDom, orgTreeSetting, zNodes);
-                        _t.orgTree.expandAll(true);
+                        // _t.orgTree.expandAll(true);
                         $('#' + _id + '_1_a').click();
                     }
 
@@ -93,7 +107,7 @@ define(function(require, exports, module) {
                             seajs.use('apps/user/user', function(user) {
                                 user.show({
                                     container: userManeger.openSub(),
-                                    data:data,
+                                    data: data,
                                     destroy: function() {
                                         userManeger.closeSub();
                                     }
@@ -125,8 +139,8 @@ define(function(require, exports, module) {
                             ];
                         });
                     },
-                    onselect:function(cache){
-debugger;
+                    onselect: function(selectedData, thisData) {
+                        userManeger.toolbar.find('.ac-onselect').toggleClass('hide', !selectedData.length)
                     },
                     itemsOnPage: UI.itemsOnPage,
                     url: '/json/getUserByOrgId',
@@ -147,23 +161,32 @@ debugger;
             },
             init: function() {
                 this.el.addClass('noscroll am-fadeinright').html(template).appendTo(opt.container);
-                this.catalog = this.$('.ac-orgname');
+                this.toolbar = this.$('.toolbar');
+                this.sidebar = this.$('.sidebar');
+                //给sidebar加上滚动条
+                if(UI.browser.chrome){
+                    this.sidebar.addClass('scroll');
+                }else{
+                    this.sidebar=this.sidebar.rollbar().find('.rollbar-content');
+                }
+
+                this.catalog = this.toolbar.find('.ac-orgname');
                 this.makePeopleListTable();
                 this.makePeopleTree();
                 //切换用户和角色
 
-/*                buttonset({
-                    el: this.$('.ac-user-role'),
-                    onselect: function(e, config,data) {
-                        if(data.label=="角色"){
-                            //角色下 增加角色列表
-                            //权限下增加权限列表，隐藏人员列表
-                        }else{
+                /*                buttonset({
+                                    el: this.$('.ac-user-role'),
+                                    onselect: function(e, config,data) {
+                                        if(data.label=="角色"){
+                                            //角色下 增加角色列表
+                                            //权限下增加权限列表，隐藏人员列表
+                                        }else{
 
-                        }
-                        // debugger;
-                    }
-                });*/
+                                        }
+                                        // debugger;
+                                    }
+                                });*/
                 //search
                 //no filter
                 this.$('.ac-search').searchbox({

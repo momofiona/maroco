@@ -2,10 +2,10 @@ define(function(require, exports, module) {
     var notify = require('ui/notify');
     var template = _.dot(require('./user.html'));
     var orgTemp = _.dot('{{~it :v:i}}\
-            <div class="info m1 moon3"><i class="f m2 f-down"></i><i class="f f-multiply notify-close xr ac-removeOrg"></i>{{=v.orgName}}\
+            <div class="info m1 r3"><i class="f m2 f-down"></i><i class="f f-multiply notify-close xr ac-removeOrg"></i>{{=v.orgName}}\
                 <input type="hidden" name="orgId" value="{{=v.orgId}}">\
             </div><div id="p{{=v.orgId}}" class="ac-powers"><i class="i i-loading m2"></i></div>{{~}}');
-    var powerTemp = _.dot('<ul style="border-top:0" class="menu moon1">{{~it :v:i}}\
+    var powerTemp = _.dot('<ul style="border-top:0" class="menu r1">{{~it :v:i}}\
             <li style="padding:5px 10px;"><label title="{{=v.description}}"{{?v.power}} class="c-safe"{{?}}><input type="checkbox" value="{{=v.id}}"{{?v.power}} checked{{?}}> {{=v.name}}</label></li>\
             {{~}}</ul>');
     exports.show = function(opt) {

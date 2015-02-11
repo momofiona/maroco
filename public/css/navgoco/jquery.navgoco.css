@@ -12,10 +12,10 @@
   padding: 4px;
   margin: 0px;
 }
-.nav > li {
+.nav li {
   margin: 4px 0;
 }
-.nav > li li {
+.nav li li {
   margin: 2px 0;
 }
 .nav a {
@@ -27,15 +27,18 @@
   border-radius: 4px;
   text-decoration: none;
 }
-.nav li > a > span {
+.nav a span {
   float: right;
   font-size: 19px;
+  width: 16px;
   font-weight: bolder;
+  *zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#x25be;');
 }
-.nav li > a:hover > span {
+.nav a:hover span {
   color: #fff;
+  cursor: pointer;
 }
-.nav li > a > span:after {
+.nav a span:after {
   content: '\25be';
 }
 .nav li.open > a > span:after {
@@ -50,12 +53,12 @@
   background-color: #4D90FE;
 }
 .nav li a {
-  font-size: 12px;
-  line-height: 18px;
-  padding: 2px 10px;
-}
-.nav > li > a {
   font-size: 14px;
   line-height: 20px;
   padding: 4px 10px;
+}
+.nav li li a {
+  font-size: 12px;
+  line-height: 18px;
+  padding: 2px 10px;
 }

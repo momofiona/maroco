@@ -59,9 +59,8 @@ b.i-close {
 /* font-icons */
 .f {
   display: inline-block;
-  font-size: 16px;
-  width: 16px;
-  height: 16px;
+  font-size: 1.2em;
+  min-width: 16px;
   vertical-align: text-bottom;
 }
 .f-lg {

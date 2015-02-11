@@ -34,7 +34,8 @@
     "mathjs": "~1.0.0",
     "dew": "https://github.com/lifesinger/dew.git",
     "underscore": "~1.7.0",
-    "navgoco": "~0.2.1"
+    "navgoco": "~0.2.1",
+    "codemirror": "~4.12.0"
   },
   "devDependencies": {
     "html5shiv": "~3.7.2"

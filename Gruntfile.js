@@ -53,12 +53,13 @@ module.exports = function(grunt) {
             },
             build: {
                 files: {
-                    'public/js/maroco.js': [
+                    'public/maroco.js': [
                         'public/js/vendor/json2.js',
                         'public/js/vendor/sea.js',
                         'public/js/vendor/seajs-text.js',
                         'public/js/vendor/seajs-css.js',
-                        'public/js/vendor/jquery.js',
+                        'public/js/seajs.config.js',
+                        'public/js/vendor/jquery.min.js',
                         'public/js/vendor/doT.min.js',
                         'public/js/vendor/underscore-min.js',
                         'public/js/ui/menu.js',
@@ -83,7 +84,7 @@ module.exports = function(grunt) {
             },
             build: {
                 files: {
-                    'public/js/_ui.js': 'public/js/ui/ui.js'
+                    'public/_ui.js': 'public/js/ui/ui.js'
                 }
             }
         },

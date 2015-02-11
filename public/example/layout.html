@@ -9,17 +9,17 @@
         <div class="xn x5 xr">x5 xr</div>
         <div class="xn row">row</div>
     </div>
-    <pre class="brush: html;">
-    &lt;div class="row">
-        &lt;div class="x w5 m2">x w5 m2&lt;/div>
-        &lt;div class="row">row&lt;/div>
-    &lt;/div>
-    &lt;div class="row">
-        &lt;div class="x3">x3&lt;/div>
-        &lt;div class="x5 xr">x5 xr&lt;/div>
-        &lt;div class="row">row&lt;/div>
-    &lt;/div>
-</pre>
+    <textarea class="codemirror">
+        <div class="row">
+            <div class="x w5 m2">x w5 m2</div>
+            <div class="row">row</div>
+        </div>
+        <div class="row">
+            <div class="x3">x3</div>
+            <div class="x5 xr">x5 xr</div>
+            <div class="row">row</div>
+        </div>
+    </textarea>
     <h2>外边距规则 <small>Margin</small>  </h2>
     <p>m0、m1、m2、m3、m4、m5、m6、m7、m8、m9、m10、m11、m12、m13、m14、m</p>
     <img src="./layout.png" class="xl">
@@ -73,8 +73,6 @@ $(function() {
         s += make(i);
     }
     $('#xrow').after(s);
-
-    previewCode();
 
     var s = '';
     for (var i = 0; i <= 15; i++) {
