@@ -32,6 +32,7 @@ define(function(require, exports, module) {
             }]
         });
     ///json/getUserByOrgId 获取部门下人员
+    //Random.image('200x100', '#ffcc33', '#FFF', 'png', '!')
     Mock.mock('/json/getUserByOrgId', 'get', {
         "total|200": 12,
         "result|20": [{
@@ -39,7 +40,7 @@ define(function(require, exports, module) {
             "sex|0-1": '@integer',
             "userName": '@WORD',
             "loginName": "@WORD",
-            "avanta": '@IMAGE',
+            "avanta": '@IMAGE(48,"#00405d","#fff","png","&#9787;")',
             "address": '@AREA @REGION',
             "cardId": '@ID',
             "orgs": [{
@@ -73,6 +74,7 @@ define(function(require, exports, module) {
 
     //根据组织ID返回所有权限
     Mock.mock(/\/json\/getRoleByOrgId(\?.*)?/, 'get', {
+        "total":12,
         "result|2-5": [{
             "id": "@GUID",
             "name": "@WORD",
@@ -89,5 +91,6 @@ define(function(require, exports, module) {
             "orgId": 'org2'
         }]
     });
+
 
 });

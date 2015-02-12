@@ -74,6 +74,56 @@ define(function(require, exports, module) {
                 });
             },
             //初始化user表格
+            makeRoleListTable: function() {
+                this.RoleListTable = ctable({
+                    container: this.$('.ac-roletable'),
+                    cols: [{
+                        title: '角色'
+                    }],
+                    // hidehead:true,
+                    checkbox: false,
+                    height: 'window',
+                    blankText: '当前部门没有角色',
+                    events: {
+                        'click .action-person-view': function(event, tr, data, config) {
+                            //传入一个容器和一个销毁方法
+                            seajs.use('apps/user/user', function(user) {
+                                user.show({
+                                    container: userManeger.openSub(),
+                                    data: data,
+                                    destroy: function() {
+                                        userManeger.closeSub();
+                                    }
+                                })
+                            })
+                            return false;
+                        },
+                        'click .action-person-remove': function(event, tr, data, config) { //查看人员
+                            debugger;
+                            return false;
+                        }
+                    },
+                    //转换 
+                    render: function(records) {
+                        return $.map(records, function(record, i) {
+                            var title = record.loginName;
+                            if (record.reserveB && record.idCard) {
+                                title += "\n" + _.escape(record.reserveB + ":" + record.idCard);
+                            }
+                            return [
+                                ['<a href="javascript:;" class="action-person-view" title="' + title + '">' + record.userName + '</a>',
+                                ]
+                            ];
+                        });
+                    },
+                    onselect: function(selectedData, thisData) {
+                        userManeger.toolbar.find('.ac-onselect').toggleClass('hide', !selectedData.length)
+                    },
+                    url: '/json/getUserByOrgId',
+                    baseparams: {}
+                });
+            },
+            //初始化user表格
             makePeopleListTable: function() {
                 this.peopleListTable = ctable({
                     container: this.$('.ac-peoples'),

@@ -63,14 +63,13 @@ define(function(require, exports, module) {
     require('js/vendor/simplePagination');
     var uuid = 0;
     var guid = function(guidPrefix, guidfix) {
-            var n = new Date().getTime().toString(32),
-                o;
-            for (o = 0; o < 5; o++) {
-                n += Math.floor(Math.random() * 65535).toString(32);
-            }
-            return (guidPrefix || "") + n + (uuid++).toString(32) + (guidfix || "");
+        var n = new Date().getTime().toString(32),
+            o;
+        for (o = 0; o < 5; o++) {
+            n += Math.floor(Math.random() * 65535).toString(32);
         }
-        // require('css/vendor/simplePagination.css');
+        return (guidPrefix || "") + n + (uuid++).toString(32) + (guidfix || "");
+    }
     var editOver = '<b class="cicon cicon-success" title="保存"></b><b class="cicon cicon-close" title="取消"></b>';
     var addIcon = '<b class="cicon cicon-add" title="增加一行"></b>';
     var inputs = 'input:not([type]),input[type="color"],input[type="date"],input[type="datetime"],input[type="datetime-local"],input[type="email"],input[type="file"],input[type="hidden"],input[type="month"],input[type="number"],input[type="password"],input[type="range"],input[type="search"],input[type="tel"],input[type="text"],input[type="time"],input[type="url"],input[type="week"],textarea, select, input[type="checkbox"],input[type="radio"]';
@@ -137,20 +136,20 @@ define(function(require, exports, module) {
         <div class="ctable-body-scroller rollbar" id="{{=it.cscrollId}}">\
         <table class="ctable-body">' + _colgroup + '<tbody></tbody></table>\
         </div>\
-        {{?it.itemsOnPage}}\
+        {{?it.itemsOnPage||it.status||it.blankText}}\
         <div class="ctable-foot">\
         <div class="ctable-status"></div>\
         <div class="simple-pagination"></div></div>\
         {{?}}\
-        </table></div>');
-    var _tableNormal = _.dot('<table class="ctable {{=it.skin||""}}" id="{{=it.id||""}}">' + _colgroup + '{{?!it.hidehead}}' + _thead + '{{?}}\
-        <tbody></tbody>\
-        {{?it.itemsOnPage}}\
-        <tfoot class="ctable-foot"><tr>\
-            <td colspan="{{=it.cols.length+it.skipIndex+(it.editable||it.addable||it.removeable?1:0)}}"><span class="ctable-status"></span><div class="simple-pagination"></div></td>\
-        </tr></tfoot>\
-        {{?}}\
-        </table>');
+        </div>');
+    /*    var _tableNormal = _.dot('<table class="ctable {{=it.skin||""}}" id="{{=it.id||""}}">' + _colgroup + '{{?!it.hidehead}}' + _thead + '{{?}}\
+            <tbody></tbody>\
+            {{?it.itemsOnPage}}\
+            <tfoot class="ctable-foot"><tr>\
+                <td colspan="{{=it.cols.length+it.skipIndex+(it.editable||it.addable||it.removeable?1:0)}}"><span class="ctable-status"></span><div class="simple-pagination"></div></td>\
+            </tr></tfoot>\
+            {{?}}\
+            </table>');*/
     var _tbody = _.dot('{{~it.data :trdata:index}}\
         <tr class="{{=index%2==0?"even":"odd"}}" data-index="{{=trdata.__index__||(it.__appendIndex__||0)+index}}">\
         {{?it.sortable}}\
@@ -171,12 +170,12 @@ define(function(require, exports, module) {
         {{?}}\
         </tr>\
         {{~}}');
-    var createObject = function(prototype) {
-        var a = function() {}
-        a.prototype = prototype;
-        return new a;
-    }
-    //$.support.boxSizing=false时候所有宽度减去td的padding
+    var createObject = Object.create || function(prototype) {
+            var a = function() {}
+            a.prototype = prototype;
+            return new a;
+        }
+        //$.support.boxSizing=false时候所有宽度减去td的padding
     return function(config) {
         var skipIndex = (config.checkbox ? 1 : 0) + (config.sortable ? 1 : 0);
         config.skipIndex = skipIndex;
@@ -184,9 +183,9 @@ define(function(require, exports, module) {
         //预处理表头分组
         config._colgroup = false;
         var _colgroupCache;
-        var _fullWidth=0;
+        var _fullWidth = 0;
         $.each(config.cols, function(i, o) {
-            _fullWidth+=o.width;
+            _fullWidth += o.width;
             if (o.colspan) delete o.colspan;
             if (o.colgroup) {
                 if (_colgroupCache && _colgroupCache.colgroup === o.colgroup) {
@@ -198,27 +197,26 @@ define(function(require, exports, module) {
             }
         });
         //checkbox参数
-        if(config.checkbox && !$.isFunction(config.checkbox)){
-            config.checkbox=$.noop;
+        if (config.checkbox && !$.isFunction(config.checkbox)) {
+            config.checkbox = $.noop;
         }
         //(config.height || config.maxHeight) ? $(_table(config)) : $(_tableNormal(config))
         var table = $(_table(config)),
             scrollBody = table.find('>.ctable-body-scroller'),
             thead = table.find('thead');
-            //IE7 fix - 去掉thead后面多出来的tbody
-            if(config.height || config.maxHeight) thead.next().remove();
-            var theadContainer=table.find('.ctable-head-wrap').css('overflow','hidden'),
+        //IE7 fix - 去掉thead后面多出来的tbody
+        if (config.height || config.maxHeight) thead.next().remove();
+        var theadContainer = table.find('.ctable-head-wrap').css('overflow', 'hidden'),
             tbody = table.find('tbody'),
             tfoot = table.find('>.ctable-foot'),
             statubar = tfoot.find('.ctable-status'),
             spaging = tfoot.find('.simple-pagination');
-        
         if (config.container) {
             $(config.container).append(table);
         } else if (config.replaceholder) {
             $(config.replaceholder).replaceWith(table);
         }
-        
+
         thead.on('click', '.csortable', function(e) {
             //排序
             //e.stopPropagation();
@@ -260,8 +258,8 @@ define(function(require, exports, module) {
                 table.find('thead').find('.ctable-checkall').each(function() {
                     this.checked = ck;
                 });
-                if(config.onselect){
-                    config.onselect.call(this,this.checked?cache:[]);
+                if (config.onselect) {
+                    config.onselect.call(this, this.checked ? cache : []);
                 }
             });
             tbody.on('click', '.ctable-checkbox', function(e) {
@@ -276,9 +274,9 @@ define(function(require, exports, module) {
                 });
                 table.find('thead').find('.ctable-checkall')[0].checked = ckall;
 
-                if(config.onselect){
-                    var tr=$(this).closest('tr').attr('data-index');
-                    config.onselect.call(this,api.getData('selected'),cache[tr]);
+                if (config.onselect) {
+                    var tr = $(this).closest('tr').attr('data-index');
+                    config.onselect.call(this, api.getData('selected'), cache[tr]);
                 }
             })
         }
@@ -405,16 +403,16 @@ define(function(require, exports, module) {
             $(this).removeClass('ctable-hover');
         });
         //监控tbody事件
-        if(config.events){
-            $.each(config.events,function(k,v){
-                var s=k.indexOf(' ');
-                if(s<2) return;
-                tbody.on(k.substr(0,s),k.substr(s+1),function(event){
-                    var tr=$(this).closest('tr');
-                    var index=tr.attr('data-index');
-                    var data=cache[index];
-                    if(v.call(this,event,tr,data,config)===false) return false;
-                }); 
+        if (config.events) {
+            $.each(config.events, function(k, v) {
+                var s = k.indexOf(' ');
+                if (s < 2) return;
+                tbody.on(k.substr(0, s), k.substr(s + 1), function(event) {
+                    var tr = $(this).closest('tr');
+                    var index = tr.attr('data-index');
+                    var data = cache[index];
+                    if (v.call(this, event, tr, data, config) === false) return false;
+                });
             })
         }
 
@@ -446,12 +444,12 @@ define(function(require, exports, module) {
                 height(config.height);
             }
             //是否cols全部设置了宽度
-            if(_fullWidth){
+            if (_fullWidth) {
                 thead.parent().width(_fullWidth);
                 tbody.parent().width(_fullWidth);
             }
             var rollbarState = "top";
-            var rollcontent=$('#' + config.cscrollId).rollbar({
+            var rollcontent = $('#' + config.cscrollId).rollbar({
                 //lazyCheckScroll:1000, 有此参数会开启定时监测
                 pathPadding: 0,
                 // sliderOpacity: .1,
@@ -463,8 +461,8 @@ define(function(require, exports, module) {
                         rollbarState = "top";
                         table.removeClass("ctable-scroll-top");
                     }
-                    if(h!==undefined){
-                        theadContainer[0].scrollLeft=-parseInt(rollcontent.css('left'));
+                    if (h !== undefined) {
+                        theadContainer[0].scrollLeft = -parseInt(rollcontent.css('left'));
                     }
                 }
             }).find('.rollbar-content');
@@ -473,16 +471,16 @@ define(function(require, exports, module) {
         //重新计算长宽
 
         function height(h) {
-            table.height(h);
-            if (!config.hidehead) {
-                h -= thead.height();
+                table.height(h);
+                if (!config.hidehead) {
+                    h -= thead.height();
+                }
+                if (config.itemsOnPage || config.status|| config.blankText) {
+                    h -= 30;
+                }
+                scrollBody.height(h);
             }
-            if (config.itemsOnPage) {
-                h -= 30;
-            }
-            scrollBody.height(h);
-        }
-        //局部更新
+            //局部更新
         var update = function(tr, newdata) {
                 var index = tr.attr('data-index');
                 cache[index] = newdata;
@@ -507,7 +505,7 @@ define(function(require, exports, module) {
                 paging && paging.pagination('drawPage', currentPage);
             }
             var finalData = $.extend({}, config.baseparams, {
-                page: config.itemsOnPage?currentPage:undefined, //当前页
+                page: config.itemsOnPage ? currentPage : undefined, //当前页
                 count: config.itemsOnPage //每页数量
             }, filter);
             // console.log(config.url, finalData);
@@ -527,14 +525,14 @@ define(function(require, exports, module) {
                     config.data = config.render(cache);
                     var tbodyHtml = _tbody(config);
                     tbody.html(tbodyHtml);
-                    if (!config.itemsOnPage||$.isNumeric(data.totalRecordNumber) && data.totalRecordNumber <= config.itemsOnPage) {
+                    if (!config.itemsOnPage || $.isNumeric(data.total) && data.total <= config.itemsOnPage) {
                         spaging.hide()
                     } else {
                         spaging.show()
                         if (!paging) {
                             if (config.itemsOnPage) {
                                 paging = spaging.pagination({
-                                    items: data.totalRecordNumber, //用来计算页数的项目总数 default:1
+                                    items: data.total, //用来计算页数的项目总数 default:1
                                     itemsOnPage: config.itemsOnPage, //每个页面显示的项目数 default:1
                                     displayedPages: config.displayedPages,
                                     edges: config.edges,
@@ -544,23 +542,32 @@ define(function(require, exports, module) {
                                     onPageClick: function(pageNumber, event) {
                                         currentPage = pageNumber;
                                         load();
+                                        return false;
                                     }
                                 });
                             }
                         } else {
-                            paging.pagination('updateItems', data.totalRecordNumber);
+                            paging.pagination('updateItems', data.total);
                         }
                     }
                     //如果返回了总数
-                    if(data.totalRecordNumber!==undefined){
-                        statubar.html(data.totalRecordNumber==0&&config.blankText?config.blankText:'共 ' + data.totalRecordNumber + ' 项');
+                    if (data.total !== undefined || config.status || config.blankText) {
+                        var sta = config.status,
+                            ornot = data.total == 0 && config.blankText ? config.blankText : '共 ' + data.total + ' 项';
+                        if (!sta) {
+                            config.status = $.noop;
+                        } else if (_.isString(sta)) {
+                            config.status = _.dot(sta);
+
+                        }
+                        statubar.html(config.status(data) || ornot);
                     }
                     config.afterLoad && config.afterLoad.call(table, data, cache);
                 }
             });
         }
         config.create && config.create.call(table, config);
-        var api={
+        var api = {
             config: config,
             load: load,
             getBody: function() {
@@ -598,6 +605,12 @@ define(function(require, exports, module) {
                 var tr = $(_tbody(config)).appendTo(tbody);
                 delete config.__appendIndex__;
                 return tr;
+            },
+            //清空数据
+            reset: function() {
+                cache = [];
+                tbody.empty();
+                debugger;
             }
         }
         return api;

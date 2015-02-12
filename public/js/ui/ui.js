@@ -36,7 +36,10 @@ seajs.config({
             LEFT: 37
         },
         //UI widget
-        UI = function(config) {
+        UI = function(config,wait) {
+            if(wait) return function(){
+                return UI(config);
+            }
             config.$ = function(arg) {
                 return $(arg, this.el);
             };

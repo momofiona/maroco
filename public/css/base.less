@@ -317,7 +317,7 @@ a:hover {
     &:extend(.user-select);
     clear: both;
     margin: 0 0 1px;
-    padding: .5em .4em .4em 0;
+    padding: .5em @distance .4em 0;
     height: @btnHeight;
     z-index: 20;
     position: relative;
@@ -329,6 +329,13 @@ a:hover {
         width: 1px;
         background: #d4e4f2;
         vertical-align: top;
+    }
+    .bridge{
+        font-size: 24px;
+        color: #eee;
+        line-height: 36px;
+        font-family: vedana;
+        margin-right: 0 @distance 0 @distance/2;
     }
     .caption, .rock {
         // float: left;

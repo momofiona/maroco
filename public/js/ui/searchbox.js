@@ -55,5 +55,6 @@ define(function(require, exports, module) {
                 option.search.call(input, this.value, filter);
             }
         });
+        return this;
     }
 });

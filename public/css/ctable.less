@@ -82,6 +82,9 @@
     		box-shadow: none;
     		border-color: #039ACC;
     	}
+        a{
+            color: #fff;
+        }
     	.dicon-arrow-right{
     		background-image: url(img/arrow-right-white.png)
     	}
@@ -274,6 +277,7 @@
 }
 .ctable-theme .current {
     background: #eee;
+    cursor: default;
 
 }
 .ctable-theme .ellipse {
@@ -283,14 +287,9 @@
 	border-bottom: 0;
 }
 /*报表*/
-.ctable{
-	.cicon-fx,.cicon-money{
-        margin-left: .5em;
-        vertical-align: top;
-        visibility: hidden;
-        cursor: pointer;
-    }
-    .ctable-hover .cicon-fx {
+.ctable-hide{
+    visibility: hidden;
+    .ctable-hover &{
         visibility: visible;
     }
 }

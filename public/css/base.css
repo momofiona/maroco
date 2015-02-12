@@ -347,7 +347,7 @@ a:hover {
 .toolbar {
   clear: both;
   margin: 0 0 1px;
-  padding: .5em .4em .4em 0;
+  padding: 0.5em 10px 0.4em 0;
   height: 36px;
   z-index: 20;
   position: relative;
@@ -359,6 +359,13 @@ a:hover {
   width: 1px;
   background: #d4e4f2;
   vertical-align: top;
+}
+.toolbar .bridge {
+  font-size: 24px;
+  color: #eee;
+  line-height: 36px;
+  font-family: vedana;
+  margin-right: 0 10px 0 5px;
 }
 .toolbar .caption,
 .toolbar .rock {
