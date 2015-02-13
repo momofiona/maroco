@@ -2,7 +2,7 @@ define(function(require, exports, module) {
     var ctable = require('ui/ctable');
     var searchbox = require('ui/searchbox');
     var template = require('./role.html');
-    var buttonset=require('ui/buttonset');
+    var buttonset = require('ui/buttonset');
     //滚动条
     require('js/vendor/jquery.mousewheel');
     require('ui/rollbar');
@@ -10,45 +10,47 @@ define(function(require, exports, module) {
     require('ztree');
     require('css/zTree/zTreeStyle.css');
 
-    // var url = _.queryString(location.search);
     exports.show = function(opt) {
-        // 组织关系依赖enterpriseId
-        var enterpriseId = "";
-        //整体
+        
+        //---------- manager----------
         var userManeger = UI({
             events: {
                 'click .ac-changeDepart': function(e, config) {
-                    
+
                 }
             },
-/*            //点击左边的角色列表，刷出右边的列表
-            renderUser: function(treeNode) {
-                this.rolename.html(treeNode.name).attr('title', treeNode.name);
-                //如果是单位，出现单位功能按钮
-                this.peopleListTable.load({
-                    orgId: treeNode.id
-                });
-            },
-            //点击左边的树节点，刷出右边的角色
-            renderRole: function(treeNode) {
-                //如果是单位，出现单位功能按钮
-                this.RoleListTable.load({
-                    orgId: treeNode.id
-                });
-            },*/
-            org:null,
-            setOrg:function(treeNode){
-                if(this.org===treeNode) return;
-                this.org=treeNode;
+
+            org: null,
+            setOrg: function(treeNode) {
+                if (this.org === treeNode) return;
+                this.org = treeNode;
                 this.catalog.html(treeNode.name).attr('title', treeNode.name);
                 roles.load(treeNode);
             },
-            role:null,
-            setRole:function(role){
-                if(this.role===role) return;
-                this.role=role;
+            role: null,
+            setRole: function(role) {
+                if (this.role === role) return;
+                this.role = role;
                 this.rolename.html(role.name);
-                users.load(role);
+                this.roleToggle();
+            },
+            //两个模块切换可以简单处理，更多模块切换时应约定模块内部定义show(展示初始化)、hide(隐藏)和destroy(销毁)方法
+            isUserMode: true, //是否当前在用户界面
+            roleToggle: function(b) {
+                if (b !== undefined) {
+                    this.isUserMode = b;
+                }
+                if (this.isUserMode) {
+                    powers.toggle();
+                    users.toggle(1);
+                    users.load(this.role);
+                } else {
+                    users.toggle();
+                    powers.toggle(1);
+                    powers.load(this.role);
+                }
+                //布局刷新
+                $(window).trigger('resize');
             },
             //打开子页面
             openSub: function() {
@@ -63,6 +65,7 @@ define(function(require, exports, module) {
                 }
             },
             init: function() {
+                var _t = this;
                 this.el.addClass('noscroll am-fadeinright').html(template).appendTo(opt.container);
                 this.toolbar = this.$('.toolbar');
                 this.sidebar = this.$('.sidebar');
@@ -79,27 +82,23 @@ define(function(require, exports, module) {
 
                 buttonset({
                     el: this.$('.ac-user-role'),
-                    data:[{
-                        label:'用户',
-                        on:true
-                    },{
-                        label:'权限'
+                    data: [{
+                        label: '用户',
+                        on: true
+                    }, {
+                        label: '权限'
                     }],
                     onselect: function(e, config, data) {
-                        if (data.label == "权限") {
-                            users.toggle();
-                        } else {
-                            users.toggle(1);
-                            users.load(userManeger.role);
-                        }
+                        _t.roleToggle(data.label == "用户");
                         // debugger;
                     }
                 });
 
             }
         });
+        //----------$ manager----------
 
-        //org tree
+        //----------org tree----------
         var orgTree = UI({
             el: userManeger.el.find('.ac-orgtree').attr('id', _.uniqueId('ztree')),
             settings: {
@@ -133,12 +132,14 @@ define(function(require, exports, module) {
                 this.tree = $.fn.zTree.init(this.el, this.settings);
             }
         });
-        //role list
+        //----------$ org tree----------
+
+        //----------role list----------
         var roles = UI({
             el: userManeger.$('.ac-roletable'),
-            load:function(treeNode){
+            load: function(treeNode) {
                 this.table.load({
-                    orgId:treeNode.id
+                    orgId: treeNode.id
                 });
             },
             init: function() {
@@ -178,7 +179,7 @@ define(function(require, exports, module) {
                             console.log(this.title);
                         });
                     },
-                    afterLoad:function(data,cache){
+                    afterLoad: function(data, cache) {
                         //选中第一个点击
                         this.find('tbody tr').first().trigger('click');
                         roles.roleNum.html(data.result.length);
@@ -186,52 +187,59 @@ define(function(require, exports, module) {
                     url: '/json/getRoleByOrgId',
                     baseparams: {}
                 });
-                this.roleNum=this.$('.ac-role-num');
+                this.roleNum = this.$('.ac-role-num');
             }
         });
-        //users list
+        //---------- $ role list----------
+        
+        //---------- users list 用户模块----------
         var users = UI({
             el: userManeger.$('.ac-peoples'),
-            load:function(role){
+            load: function(role) {
                 this.table.load({
-                    roleId:role.id
+                    roleId: role.id
                 });
             },
-            toggle:function(state){
+            toggle: function(state) {
+                state = !!state;
                 this.seachbox.toggle(state);
                 this.el.toggle(state);
             },
             init: function() {
+                var _user = this;
                 //search
-                //no filter
-                this.seachbox=userManeger.$('.ac-search').searchbox({
+                this.seachbox = userManeger.$('.ac-search').searchbox({
                     placeholder: '在当部门和角色下查找',
                     value: '',
                     search: function(value, filter) {
                         //回车和点击清空按钮时触发
-                        console.log(value, filter)
                     },
                     input: function(value, filter) {
                         //键入内容时触发
-                        console.log(value, filter)
+                        _user.load({
+                            filter: value,
+                            roleId: userManeger.role.id
+                        });
                     }
                 });
                 this.table = ctable({
                     container: this.el,
                     cols: [{
-                        title: '<a class="ac-addrole xr" href="#" title="添加人员"><i class="f f-add"></i></a>当前角色下人员'
-                    }/*, {
-                        title: '性别',
-                        width: 50
-                    }, {
-                        title: '手机',
-                        width: 100
-                    }, {
-                        title: '邮箱',
-                        width: 160
-                    }, {
-                        title: '<a class="ac-addrole xr" href="#" title="添加人员"><i class="f f-add"></i></a>部门'
-                    }*/],
+                            title: '<a class="ac-addrole xr" href="#" title="添加人员"><i class="f f-add"></i></a>当前角色下人员'
+                        }
+                        /*, {
+                                                title: '性别',
+                                                width: 50
+                                            }, {
+                                                title: '手机',
+                                                width: 100
+                                            }, {
+                                                title: '邮箱',
+                                                width: 160
+                                            }, {
+                                                title: '<a class="ac-addrole xr" href="#" title="添加人员"><i class="f f-add"></i></a>部门'
+                                            }*/
+                    ],
                     checkbox: true,
                     height: 'window',
                     blankText: '当前部门没有成员',
@@ -253,10 +261,10 @@ define(function(require, exports, module) {
                             return false;
                         }
                     },
-                    status:function(data){
-                        return '共'+data.total+'人';
+                    status: function(data) {
+                        return '共' + data.total + '人';
                     },
-                    template:_.dot('<img src="{{=it.avanta}}" class="xl">\
+                    template: _.dot('<img src="{{=it.avanta}}" class="xl">\
                         <div style="margin-left:60px">\
                         <div><a href="javascript:;" class="ac-person-view f-lg">{{=it.userName}}</a> <small>({{=it.loginName}})</small></div>\
                         <div class="xr text-right"> {{~it.orgs :v:i}}{{?i>0}}、{{?}}{{=v.orgName}}{{~}}<i class="f f-org m10"></i><br> {{~it.roles :v:i}}{{?i>0}}、{{?}}{{=v.name}}{{~}}<i class="f f-user m10"></i></div>\
@@ -264,16 +272,10 @@ define(function(require, exports, module) {
                         </div>'),
                     //转换 
                     render: function(records) {
-                        var tmp=this.template;
+                        var tmp = this.template;
                         return _.map(records, function(record, i) {
                             return [
                                 tmp(record)
-/*                                '<img src="'+record.avanta+'" style="display:block">',
-                                '<a href="javascript:;" class="action-person-view" title="' + title + '">' + record.userName + '</a>',
-                                    record.sex == 0 ? '男' : '女',
-                                    record.mobile,
-                                    record.email,
-                                    record.position*/
                             ];
                         });
                     },
@@ -286,9 +288,69 @@ define(function(require, exports, module) {
                 });
             }
         });
-        //powers list
-        var powers = UI({}, true);
+        //---------- $ user list ----------
 
+        //---------- powers list 权限模块----------
+        var powers = UI({
+            el: userManeger.$('.ac-powers'),
+            load: function(role) {
+                var _powers = this;
+                if (!this.loader) {
+                    //初始化
+                    var id=_.uniqueId('powers'),el=this.el.attr('id',id);
+                    var _throttle=_.throttle(function(){
+                        if(!document.getElementById(id)){
+                            $(window).off('resize',_throttle);
+                        }else{
+                            var h=$(this).height()-el.offset().top;
+                            h&&el.height(h);
+                        }
+                    });
+                    $(window).on('resize',_throttle);
+                    _throttle();
 
+                    this.el=this.el.rollbar().find('.rollbar-content');
+                    this.loader = UI.loader({
+                        url: '/json/getPowers',
+                        afterLoad: function(data) {
+                            _powers.render(data.result);
+                        }
+                    });
+                }
+                this.loader.load({
+                    roleId: role.id
+                });
+            },
+            events:{
+                'click .ac-check-app':function(){
+                    var checked=this.checked;
+                    $(this).closest('tbody').find('input').each(function(){
+                        this.checked=checked;
+                    })
+                },
+                'click .ac-check-model':function(){
+                    var checked=this.checked;
+                    $(this).closest('tr').find('.ac-check-fun').each(function(){
+                        this.checked=checked;
+                    })
+                }
+            },
+            template: _.dot('<form><table class="ctable"><thead><th width="144">应用</th><th width="144">模块</th><th>功能</th>\
+            {{~it :app:i}}{{?app.len=app.models.length}}{{?}}<tbody>{{~app.models :model:m}}<tr>\
+            {{?!app.used}}<td rowspan="{{=app.len}}"><label class="log xl m5"><input type="checkbox" class="ac-check-app va-tb"> {{=app.used=app.name}}</label></td>{{?}}\
+            <td><label class="log xl m5"><input type="checkbox" class="ac-check-model va-tb"> {{=model.name}}</label></td>\
+            <td class="p11">{{~model.funs :fun:n}}<label class="xl m5{{?fun.power}} c-safe{{?}}"><input type="checkbox" value="{{=fun.id}}"{{?fun.power}} checked{{?}} class="ac-check-fun va-tb"> {{=fun.name}}</label>{{~}}</td>\
+            </tr>{{~}}</tbody>{{~}}</table>\
+            <p class="p text-right"><b class="b note ac-save w6 m2"><i class="f f-save"></i>  保存更改</b> <input type="reset" class="b log m4" value="重置"> </p></form>'),
+            render: function(data) {
+                this.el.html(this.template(data));
+            },
+            toggle: function(b) {
+                this.el.toggle(!!b);
+            },
+            init: function() {
+            }
+        });
+        //----------$ power list----------
     }
 });

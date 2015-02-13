@@ -432,14 +432,15 @@ define(function(require, exports, module) {
         if (config.height || config.maxHeight) {
             //TODO support function & '#selector - 100'
             if (config.height === "window") {
-                $(window).on('resize.' + config.cscrollId, function() {
+                var _throttle=_.throttle(function(){
                     if ($('#' + config.cscrollId).length === 0) {
-                        $(window).off('resize.' + config.cscrollId);
+                        $(window).off('resize',_throttle);
                     } else {
                         height($(window).height() - $(table).offset().top);
                     }
-                });
-                $(window).resize();
+                },100,{leading:false});
+                $(window).on('resize', _throttle);
+                _throttle();
             } else if (config.height) {
                 height(config.height);
             }
@@ -552,15 +553,11 @@ define(function(require, exports, module) {
                     }
                     //如果返回了总数
                     if (data.total !== undefined || config.status || config.blankText) {
-                        var sta = config.status,
-                            ornot = data.total == 0 && config.blankText ? config.blankText : '共 ' + data.total + ' 项';
-                        if (!sta) {
-                            config.status = $.noop;
-                        } else if (_.isString(sta)) {
+                        var ornot = data.total == 0 && config.blankText ? config.blankText : '共 ' + data.total + ' 项';
+                        if (_.isString(config.status)) {
                             config.status = _.dot(sta);
-
                         }
-                        statubar.html(config.status(data) || ornot);
+                        statubar.html(config.status?config.status(data) : ornot);
                     }
                     config.afterLoad && config.afterLoad.call(table, data, cache);
                 }

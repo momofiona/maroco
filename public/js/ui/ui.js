@@ -209,14 +209,14 @@ seajs.config({
      */
     var loader = function(config) {
         config = $.extend({
-            baseparms: {},
+            baseparams: {},
             beforeLoad: $.noop,
             afterLoad: $.noop
         }, config);
         var filter = config.filter,
-            baseparms = config.baseparms;
+            baseparams = config.baseparams;
         //分页
-        if (baseparms.count && !baseparms.page) baseparms.page = 1;
+        if (baseparams.count && !baseparams.page) baseparams.page = 1;
         return {
             config: config,
             load: function(_filter) {

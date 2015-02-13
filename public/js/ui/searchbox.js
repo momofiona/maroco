@@ -37,7 +37,7 @@ define(function(require, exports, module) {
                 $(this).hide();
                 input.val('').focus();
                 input.trigger('input');
-                input.trigger('search');
+                option.search.call(input, this.value, filter);
             });
         if (oldValue=option.value) cancel.show();
         var callInput=_.throttle(function(input,value, filter){

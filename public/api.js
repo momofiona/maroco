@@ -91,6 +91,23 @@ define(function(require, exports, module) {
             "orgId": 'org2'
         }]
     });
+    //根据角色ID返回所有权限 app  model fun
+    Mock.mock(/\/json\/getPowers(\?.*)?/, 'get', {
+        "total":12,
+        "result|1-2": [{
+            "id": "@GUID",
+            "name": "@WORD",
+            "models|3-9":[{
+                "id": "@GUID",
+                "name": "@WORD",
+                "funs|4-8":[{
+                    "id": "@GUID",
+                    "name": "@WORD",
+                    "power": '@boolean'//是否具有权限
+                }]
+            }]
+        }]
+    });
 
 
 });
