@@ -30,8 +30,8 @@ define(function(require, exports, module) {
             'class': 'rollbar-path-horizontal'
         });
         this.sliders = this.vslider.add(this.hslider);
-        if(this.container.css('position')!=='absolute'){
-            this.container.css('position','relative');
+        if (this.container.css('position') !== 'absolute') {
+            this.container.css('position', 'relative');
         }
         this.container.css({
             'overflow': 'hidden'
@@ -102,7 +102,6 @@ define(function(require, exports, module) {
         if (vdiff != this.vdiff) {
             this.vpath.toggle(vdiff > 0);
             if (vdiff <= 0) {
-                vdiff = 0;
                 this.top = 0;
                 this.content.css('top', this.top = 0);
             } else if (-this.top > vdiff) {
@@ -111,13 +110,13 @@ define(function(require, exports, module) {
             }
             this.vdiff = vdiff;
             this.vslider.height(100 * ch / h + '%');
-            this.vtrack = this.vpath.height() - this.vslider.height();
         }
+        if (vdiff > 0) this.vtrack = this.vpath.height() - this.vslider.height();
         //hdiff
         if (hdiff != this.hdiff) {
             this.hpath.toggle(hdiff > 0);
             if (hdiff <= 0) {
-                hdiff = 0;
+                // hdiff = 0;
                 this.left = 0;
                 this.content.css('left', this.left = 0);
             } else if (-this.left > hdiff) {
@@ -126,8 +125,8 @@ define(function(require, exports, module) {
             }
             this.hdiff = hdiff;
             this.hslider.width(100 * cw / w + '%');
-            this.htrack = this.hpath.width() - this.hslider.width();
         }
+        if (hdiff > 0) this.htrack = this.hpath.width() - this.hslider.width();
     };
     //设置vpath高度
     RollBar.prototype.pathSize = function() {
@@ -214,6 +213,7 @@ define(function(require, exports, module) {
         });
         this.container.on('keydown' + this.namespace, function(e) {
                 var keycode = e.keyCode;
+                    debugger;
                 if (keycode == 9) {
                     //防止tab键引起的scroll卷入
                     setTimeout(function() {
@@ -222,11 +222,11 @@ define(function(require, exports, module) {
                 }
                 var a = 0,
                     vkey = 0,
-                    keyScroll = _rollbar.settings.keyScroll;
-                vkey = (keycode == 38) ? -keyScroll : vkey;
-                vkey = (keycode == 40) ? keyScroll : vkey;
-                a = (keycode == 37) ? -keyScroll : a;
-                a = (keycode == 39) ? keyScroll : a;
+                    scrollamount = _rollbar.settings.scrollamount;
+                vkey = (keycode == 38) ? -scrollamount : vkey;
+                vkey = (keycode == 40) ? scrollamount : vkey;
+                a = (keycode == 37) ? -scrollamount : a;
+                a = (keycode == 39) ? scrollamount : a;
                 if (vkey || a) {
                     _rollbar.scroll(-_rollbar.top + vkey, -_rollbar.left + a);
                 }
@@ -268,7 +268,7 @@ define(function(require, exports, module) {
                     return
                 }
                 if (_rollbar.vdiff > 0 || _rollbar.hdiff > 0) {
-                    _rollbar.scroll(-_rollbar.top - c * _rollbar.settings.wheelSpeed, -_rollbar.left - b * _rollbar.settings.wheelSpeed, e);
+                    _rollbar.scroll(-_rollbar.top - c * _rollbar.settings.scrollamount, -_rollbar.left - b * _rollbar.settings.scrollamount, e);
                 }
 
                 if (_rollbar.settings.blockGlobalScroll && (_rollbar.vdiff || _rollbar.hdiff)) {
@@ -285,10 +285,10 @@ define(function(require, exports, module) {
                 h = $.isNumeric(h) ? h : -this.left;
                 _rollbar.scroll(v, h)
             })
-            .on('mouseenter',function(){
-                _rollbar.sliders.css('opacity',_rollbar.settings.sliderOpacity);
-            }).on('mouseleave',function(){
-                _rollbar.sliders.css('opacity',.05);
+            .on('mouseenter', function() {
+                _rollbar.sliders.css('opacity', _rollbar.settings.sliderOpacity);
+            }).on('mouseleave', function() {
+                _rollbar.sliders.css('opacity', .05);
             });
     };
 
@@ -298,8 +298,7 @@ define(function(require, exports, module) {
         blockGlobalScroll: false, //阻止mousewheel向上冒泡
         sliderSize: '30%',
         sliderOpacity: 0.3,
-        keyScroll: 100, //每次按键滚动距离
-        wheelSpeed: 100, //每次滚动的高度/宽度
+        scrollamount: 100, //每次滚动的高度/宽度
         touchSpeed: 0.3,
         pathPadding: '3px', //滚动条边界距离两头的距离
         zIndex: 100,
@@ -308,7 +307,7 @@ define(function(require, exports, module) {
     $.fn.rollbar = function(options) {
         options = _.proto(defaults, options);
         return this.each(function() {
-            new RollBar(this, defaults)
+            new RollBar(this, options)
         })
     }
 });

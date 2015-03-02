@@ -240,6 +240,8 @@ define(function(require, exports, module) {
                                                 title: '<a class="ac-addrole xr" href="#" title="添加人员"><i class="f f-add"></i></a>部门'
                                             }*/
                     ],
+                    //每次滚动距离
+                    scrollamount:81,
                     checkbox: true,
                     height: 'window',
                     blankText: '当前部门没有成员',
@@ -337,9 +339,9 @@ define(function(require, exports, module) {
             },
             template: _.dot('<form><table class="ctable"><thead><th width="144">应用</th><th width="144">模块</th><th>功能</th>\
             {{~it :app:i}}{{?app.len=app.models.length}}{{?}}<tbody>{{~app.models :model:m}}<tr>\
-            {{?!app.used}}<td rowspan="{{=app.len}}"><label class="log xl m5"><input type="checkbox" class="ac-check-app va-tb"> {{=app.used=app.name}}</label></td>{{?}}\
-            <td><label class="log xl m5"><input type="checkbox" class="ac-check-model va-tb"> {{=model.name}}</label></td>\
-            <td class="p11">{{~model.funs :fun:n}}<label class="xl m5{{?fun.power}} c-safe{{?}}"><input type="checkbox" value="{{=fun.id}}"{{?fun.power}} checked{{?}} class="ac-check-fun va-tb"> {{=fun.name}}</label>{{~}}</td>\
+            {{?!app.used}}<td rowspan="{{=app.len}}"><label class="log xl"><input type="checkbox" class="ac-check-app va-tb"> {{=app.used=app.name}}</label></td>{{?}}\
+            <td><label class="log xl"><input type="checkbox" class="ac-check-model va-tb"> {{=model.name}}</label></td>\
+            <td class="p11">{{~model.funs :fun:n}}<label class="xl w4 m5{{?fun.power}} c-safe{{?}}"><input type="checkbox" value="{{=fun.id}}"{{?fun.power}} checked{{?}} class="ac-check-fun va-tb"> {{=fun.name}}</label>{{~}}</td>\
             </tr>{{~}}</tbody>{{~}}</table>\
             <p class="p text-right"><b class="b note ac-save w6 m2"><i class="f f-save"></i>  保存更改</b> <input type="reset" class="b log m4" value="重置"> </p></form>'),
             render: function(data) {

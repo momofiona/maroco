@@ -9,10 +9,7 @@ define(function(require, exports, module) {
     require('ztree');
     require('css/zTree/zTreeStyle.css');
 
-    // var url = _.queryString(location.search);
     exports.show = function(opt) {
-        // 组织关系依赖enterpriseId
-        var enterpriseId = "";
         var orgTreeSetting = {
             async: {
                 url: '/json/getTree',
@@ -30,10 +27,16 @@ define(function(require, exports, module) {
             callback: {
                 onClick: function(event, treeId, treeNode) {
                     userManeger.renderUser(treeNode);
+                },
+                onAsyncSuccess: function(event, treeId, treeNode, msg) {
+                    // 主动打开第一个节点
+                    if (!treeNode) {
+                        $('#' + treeId + '_1_a').trigger('click');
+                    }
                 }
             }
         };
-        var userManeger = window.userManager = UI({
+        var userManeger =  UI({
             orgTree: null,
             peopleListTable: null,
             catalog: null,
@@ -47,28 +50,17 @@ define(function(require, exports, module) {
                 }
             },
             makePeopleTree: function() {
-                var _t = this;
-                $.ajax({
-                    url: "/json/getTree",
-                    dataType: 'json',
-                    success: function(v) {
-                        var zNodes = v.result;
-                        $.each(zNodes, function(i, o) {
-                            o.icon = '../css/img/org-s.png';
-                        });
-                        var _id = _.uniqueId('orgTree');
-                        orgTreeDom = _t.$('.ac-orgtree').attr('id', _id);
-                        _t.orgTree = $.fn.zTree.init(orgTreeDom, orgTreeSetting, zNodes);
-                        // _t.orgTree.expandAll(true);
-                        $('#' + _id + '_1_a').click();
-                    }
-
-                });
+                var _id = _.uniqueId('orgTree'),
+                    orgTreeDom = this.$('.ac-orgtree').attr('id', _id);
+                this.orgTree = $.fn.zTree.init(orgTreeDom, orgTreeSetting);
             },
             //点击左边的树节点，刷出右边的列表
+            org:null,
             renderUser: function(treeNode) {
+                if(this.org==treeNode) return;
+                this.org=treeNode;
                 this.catalog.html(treeNode.name).attr('title', treeNode.name);
-                //如果是单位，出现单位功能按钮
+                //刷新人员列表
                 this.peopleListTable.load({
                     orgId: treeNode.id
                 });
@@ -111,8 +103,7 @@ define(function(require, exports, module) {
                                 title += "\n" + _.escape(record.reserveB + ":" + record.idCard);
                             }
                             return [
-                                ['<a href="javascript:;" class="action-person-view" title="' + title + '">' + record.userName + '</a>',
-                                ]
+                                ['<a href="javascript:;" class="action-person-view" title="' + title + '">' + record.userName + '</a>', ]
                             ];
                         });
                     },
@@ -144,9 +135,6 @@ define(function(require, exports, module) {
                     }, {
                         title: '角色',
                         width: 100
-                    }, {
-                        title: '操作',
-                        width: 80
                     }],
                     checkbox: true,
                     height: 'window',
@@ -183,8 +171,8 @@ define(function(require, exports, module) {
                                     record.mobile,
                                     record.email,
                                     record.position,
-                                    record.reserveA,
-                                    '<a href="javascript:;" class="cpr action-person-freeze">' + (record.userStatus == 1 ? "冻结" : "解冻") + '</a>'
+                                    record.reserveA
+                                    // '<a href="javascript:;" class="cpr action-person-freeze">' + (record.userStatus == 1 ? "冻结" : "解冻") + '</a>'
                                 ]
                             ];
                         });
@@ -214,29 +202,16 @@ define(function(require, exports, module) {
                 this.toolbar = this.$('.toolbar');
                 this.sidebar = this.$('.sidebar');
                 //给sidebar加上滚动条
-                if(UI.browser.chrome){
+                if (UI.browser.chrome) {
                     this.sidebar.addClass('scroll');
-                }else{
-                    this.sidebar=this.sidebar.rollbar().find('.rollbar-content');
+                } else {
+                    this.sidebar = this.sidebar.rollbar().find('.rollbar-content');
                 }
 
                 this.catalog = this.toolbar.find('.ac-orgname');
                 this.makePeopleListTable();
                 this.makePeopleTree();
-                //切换用户和角色
 
-                /*                buttonset({
-                                    el: this.$('.ac-user-role'),
-                                    onselect: function(e, config,data) {
-                                        if(data.label=="角色"){
-                                            //角色下 增加角色列表
-                                            //权限下增加权限列表，隐藏人员列表
-                                        }else{
-
-                                        }
-                                        // debugger;
-                                    }
-                                });*/
                 //search
                 //no filter
                 this.$('.ac-search').searchbox({

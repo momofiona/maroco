@@ -82,6 +82,7 @@ input, select, textarea {
         background-color: #eee;
     }
 }
+input::-ms-clear{display:none}
 form {
     margin: 0;
 }
@@ -211,10 +212,24 @@ input[type=checkbox] {
 .text-center {
     text-align: center;
 }
+
 /* scroll */
 
+.noscroll, .noscroll body {
+    height: 100%;
+    overflow: hidden;
+    .sidebar, .mainbody {
+        height: 100%;
+    }
+}
 .scroll {
     overflow: auto !important;
+}
+.noscrollX{
+    overflow-x: hidden !important;
+}
+.noscrollY{
+    overflow-y: hidden !important;
 }
 .scroll::-webkit-scrollbar {
     -webkit-appearance: none;
@@ -253,6 +268,36 @@ input[type=checkbox] {
 .r4 {
     border-radius: 0 @radius @radius 0  !important;
 }
+.va-t{
+    vertical-align: top;
+}
+.va-m{
+    vertical-align: middle;
+}
+.va-b{
+    vertical-align: bottom;
+}
+.va-tb{
+    vertical-align: text-bottom;
+}
+
+.vam {
+    vertical-align: middle;
+    display: table-cell;
+}
+.vam-helper {
+    display: none;
+    height: 100%;
+    width: 0;
+    *display: inline;
+    *vertical-align: middle;
+    *zoom: 1;
+}
+.vam-con {
+    *zoom: 1;
+    *display: inline;
+    *vertical-align: middle;
+}
 a {
     text-decoration: none;
     color: #39f;
@@ -265,13 +310,6 @@ a:hover {
 }
 .nobg {
     background: none !important;
-}
-.noscroll, .noscroll body {
-    height: 100%;
-    overflow: hidden;
-    .sidebar, .mainbody {
-        height: 100%;
-    }
 }
 /* 基本样式，不设置layout */
 
@@ -371,14 +409,12 @@ a:hover {
 }
 /* input text */
 
-.text, .text-auto {
+.text, .searchbox {
     border: solid 1px #bfbfbf;
     vertical-align: middle;
     border-radius: @radius;
-    padding: .5em 5px;
+    padding: 6.5px 5px;
     height: @btnHeight;
-    *height: @btnHeight/2+2;
-    *line-height: @btnHeight/2;
     color: @fontColor;
     box-sizing: border-box;
     outline: 0;
@@ -388,17 +424,63 @@ a:hover {
         border: 1px solid #8FB3E1;
     }
 }
+.text{
+    *height: @btnHeight - 15px;
+    *line-height: @btnHeight - 13px;
+}
 .text-auto {
-    height: 36px;
-    overflow: hidden;
     *zoom: 1;
+    *margin-right: 14px;
+    .text {
+        width: 100%;
+    }
+}
+.searchbox {
+    position: relative;
+    padding: 0 25px;
+    background: #ffffff url(img/search-text.png) no-repeat 6px center;
+    b {
+        cursor: pointer;
+        position: absolute;
+        display: none;
+        right: 2px;
+        top: 6px;
+        padding: 4px;
+    }
     .text {
         border: 0;
+        padding: 6.5px 0;
         width: 100%;
-        padding: .5em 0;
         margin-top: -1px;
         vertical-align: top;
+        background: none;
     }
+    .search-filter {
+        position: absolute;
+        left: 25px;
+        line-height:29px;
+        top: -1px;
+        border-right:solid 1px #eee;
+        white-space: nowrap;
+        text-overflow:ellipsis;
+        cursor: pointer;
+        color: #6FB3E0;
+        box-shadow: 3px 0 6px -5px;
+    }
+}
+.invalid{
+    border-color: @errorColor !important;
+    color: @errorColor !important;
+}
+.fi-req{
+    color: #f50;
+    vertical-align: middle;
+    font-family: vedana;
+    font-size: 18px;
+    font-style: normal;
+}
+.text[data-required]{
+    border-color: #bfaf9f;
 }
 /* notify */
 
@@ -618,36 +700,7 @@ a:hover {
 }
 
 
-/*searchtext*/
-.search-text {
-    position: relative;
-    padding: 0 25px;
-    background: #ffffff url(img/search-text.png) no-repeat 6px center;
-    .i-cancel {
-        cursor: pointer;
-        position: absolute;
-        display: none;
-        right: 2px;
-        top: 5px;
-        margin: 0;
-        transition:-webkit-transform 0.3s;
-        &:hover{
-            -webkit-transform:rotate(180deg);
-        }
-    }
-    .search-filter {
-        position: absolute;
-        left: 25px;
-        line-height:29px;
-        top: -1px;
-        border-right:solid 1px #eee;
-        white-space: nowrap;
-        text-overflow:ellipsis;
-        cursor: pointer;
-        color: #6FB3E0;
-        box-shadow: 3px 0 6px -5px;
-    }
-}
+/*rollbar*/
 
 .rollbar-noselect{
     /* prevent handle selection */

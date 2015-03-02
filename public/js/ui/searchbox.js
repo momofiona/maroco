@@ -9,8 +9,8 @@ define(function(require, exports, module) {
             search: $.noop,
             input: $.noop
         }, option);
-        var _self = this.addClass('search-text text-auto ' + option.cls).html('<div class=""><input value="' + option.value + '" class="text" placeholder="' + option.placeholder + '">\
-                </div><b class="i i-cancel"></b>');
+        var _self = this.addClass('searchbox' + option.cls).html('<input value="' + option.value + '" class="text" placeholder="' + option.placeholder + '">\
+                <b class="f f-multiply am-rotate"></b>');
         //如果带了分类选择
         var filter,oldValue;
         if (option.filter) {
@@ -33,7 +33,7 @@ define(function(require, exports, module) {
             });
         }
         var input = this.find('input'),
-            cancel = input.parent().next().click(function() {
+            cancel = input.next().click(function() {
                 $(this).hide();
                 input.val('').focus();
                 input.trigger('input');

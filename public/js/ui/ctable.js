@@ -451,9 +451,7 @@ define(function(require, exports, module) {
             }
             var rollbarState = "top";
             var rollcontent = $('#' + config.cscrollId).rollbar({
-                //lazyCheckScroll:1000, 有此参数会开启定时监测
-                pathPadding: 0,
-                // sliderOpacity: .1,
+                scrollamount:config.scrollamount||100,
                 onscroll: function(v, h) {
                     if (v > 0 && rollbarState === 'top') {
                         rollbarState = "middle";
@@ -509,7 +507,6 @@ define(function(require, exports, module) {
                 page: config.itemsOnPage ? currentPage : undefined, //当前页
                 count: config.itemsOnPage //每页数量
             }, filter);
-            // console.log(config.url, finalData);
             $.ajax({
                 url: config.url,
                 data: finalData,

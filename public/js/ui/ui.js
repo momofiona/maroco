@@ -36,8 +36,8 @@ seajs.config({
             LEFT: 37
         },
         //UI widget
-        UI = function(config,wait) {
-            if(wait) return function(){
+        UI = function(config, wait) {
+            if (wait) return function() {
                 return UI(config);
             }
             config.$ = function(arg) {
@@ -67,7 +67,7 @@ seajs.config({
         illegalCharacter: /[^\\\/:\*\?\"<>\|]/,
         //分页每页数量
         itemsOnPage: 15,
-        server:seajs.data.base
+        server: seajs.data.base
     });
     /**
      * 浏览器判断 主要判断IE6-10
@@ -88,12 +88,12 @@ seajs.config({
         };
     }
     UI.browser = browser;
-    var proto=Object.create || function(proto) {
+    var proto = Object.create || function(proto) {
             function F() {};
             F.prototype = proto;
             return new F;
         }
-    //underscore mixin
+        //underscore mixin
     _.mixin({
         /**
          * 全局唯一ID ，局部可用_.uniqueId(UI.guid)
@@ -108,9 +108,9 @@ seajs.config({
             return prefix ? prefix + n : n;
         },
         //原型链
-        proto: function(prototype,object){
-            var ret=proto(prototype);
-            return object?_.extend(ret,object):ret;
+        proto: function(prototype, object) {
+            var ret = proto(prototype);
+            return object ? _.extend(ret, object) : ret;
         },
         dot: doT.template,
         queryString: function(str, sep, eq) {
@@ -267,7 +267,7 @@ seajs.config({
                     $(document).one('mouseup', function(e) {
                         _btn.removeClass(cName + '-active');
                         //解决IE67 button 黑边
-                        if(UI.browser.ie<8){
+                        if (UI.browser.ie < 8) {
                             _btn[0].blur();
                         }
                     });
@@ -280,7 +280,7 @@ seajs.config({
     //被动触发
     $(document).on('mouseenter', '.b.' + btnClassNames.join(',.b.'), function() {
         button(this);
-    }).on('click','a[href="#"]',function(){
+    }).on('click', 'a[href="#"]', function() {
         return false;
     });
     //设置seaID
@@ -298,19 +298,33 @@ seajs.config({
 $.ajaxSetup({
     //ie 都不缓存
     cache: !UI.browser.ie,
-    complete: function(jqXHR,b,c) {
-        "afsd"
-    },
+    complete: function(jqXHR, b, c) {},
     data: {},
     error: function(jqXHR, textStatus, errorThrown) {
-
         //请求失败统一处理
     }
 });
-$(document).ajaxSuccess(function(event, XMLHttpRequest, ajaxOptions) {
+$(document).ajaxSend(function(event, XMLHttpRequest, ajaxOptions) {
+    //多次点击只发送一次ajax请求
+    var t = ajaxOptions.target;
+    if (t) {
+        if (t.data('_waiting_')) {
+            XMLHttpRequest.abort();
+            t.trigger('waiting',[null]);
+        } else {
+            t.data('_waiting_', 1).trigger('waiting',ajaxOptions);
+        }
+    }
+}).ajaxSuccess(function(event, XMLHttpRequest, ajaxOptions) {
     //TODO 过滤错误码
     if (XMLHttpRequest.responseJSON && XMLHttpRequest.responseJSON.errorCode == 10000001) {
         //没有登录 跳转到登录页面
+        return;
+    }
+}).ajaxComplete(function(event, XMLHttpRequest, ajaxOptions) {
+    var t = ajaxOptions.target;
+    if (t) {
+        t.removeData('_waiting_').trigger('waiting');
     }
 });
 

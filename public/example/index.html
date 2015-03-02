@@ -28,7 +28,7 @@
         border-bottom: 1px solid #d9d9d9;
         box-shadow: 0 0 5px rgba(100, 100, 100, .2);
     }
-    body{
+    body {
         background-color: #f9f9f9;
     }
     #sideMenu,
@@ -93,21 +93,29 @@
                         </li>
                         <li><a href="#!watch">☻ Watch(beta)</a>
                         </li>
-                        <li><a href="#!vm">♨ Vm</a>
-                        </li>
                         <li><a href="#!router">♆ Router</a>
+                        </li>
+                        <li><a href="#!girlfriend">♥ 工具规范</a>
                         </li>
                     </ul>
                 </li>
                 <li><a href="#!css3"><i class="m2 f f-star"></i>Animate</a>
                 </li>
-                <li><a href="#!charts"><i class="m2 f f-alert"></i>Chart</a>
-                </li>
-                <li><a href="#!standard"><i class="m2 f f-alert"></i>Standard</a>
-                </li>
-                <li><a href="#!standard"><i class="m2 f f-alert"></i>Datapicker</a>
-                </li>
-                <li><a href="#!standard"><i class="m2 f f-alert"></i>Validate</a>
+                <li><a href="#"><i class="m2 f f-alert"></i>Todo</a>
+                    <ul>
+                        <li><a href="#!validate"><i class="m2 f f-alert"></i>Validate</a>
+                        </li>
+                        <li><a href="#!vm">♨ Vm</a>
+                        </li>
+                        <li><a href="#!viewport"><i class="m2 f f-alert"></i>Viewport</a>
+                        </li>
+                        <li><a href="#!charts"><i class="m2 f f-alert"></i>Chart</a>
+                        </li>
+                        <li><a href="#!standard"><i class="m2 f f-alert"></i>Standard</a>
+                        </li>
+                        <li><a href="#!datepicker"><i class="m2 f f-alert"></i>Datepicker</a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
         </div>
@@ -129,7 +137,7 @@
         //给sidebar加上滚动条
         if (!UI.browser.chrome) {
             sideMenu.addClass('scroll');
-        }else{
+        } else {
             sideMenu = sideMenu.rollbar({
 
             }).find('.rollbar-content');
