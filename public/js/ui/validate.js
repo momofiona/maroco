@@ -1,5 +1,6 @@
 /* https://github.com/DiegoLopesLima/Validate */
 define(function(require, exports, module) {
+    var tips = require('ui/tips');
     var defaults = {
         // Send form if is valid?
         sendForm: false,
@@ -21,7 +22,6 @@ define(function(require, exports, module) {
         prepare: {},
         // Fields descriptions
         description: {},
-        defaultDescription: {},
         // Callback
         eachField: $.noop,
         // Callback
@@ -219,35 +219,27 @@ define(function(require, exports, module) {
                 }
             }
             //如果是#开头的则在全局查找，否则在form下查找
-            var defaultDescription = options.defaultDescription,
-                describedby,
-                log = fieldDescription.valid || defaultDescription.valid;
-
+            var describedby,
+                log, isValid;
             if (event.type != 'keyup') {
 
                 if (!status.required) {
-
-                    log = fieldDescription.required || defaultDescription.required;
+                    isValid=1;
+                    log = fieldDescription.required ;
                 } else if (!status.pattern) {
-
-                    log = fieldDescription.pattern || defaultDescription.pattern;
+                    isValid=1;
+                    log = fieldDescription.pattern ;
                 } else if (!status.conditional) {
-
-                    log = fieldDescription.conditional || defaultDescription.conditional;
+                    isValid=1;
+                    log = fieldDescription.conditional;
                 }
 
             }
             log = log || '';
-            if (!fieldDescribedby) {
-                //如果没有指定展示容器
-                if (log) {
-                    //使用UI.tooltip展示
-                } else {
-                    //销毁tooltip
-                }
-            } else {
+            if (fieldDescribedby) {
+                //fieldDescription.valid || defaultDescription.valid;
                 describedby = fieldDescribedby.indexOf('#') == 0 ? $(fieldDescribedby) : form.find(fieldDescribedby);
-                describedby.html(log);
+                describedby.html(isValid?(fieldDescription.valid || defaultDescription.valid):log);
             }
 
 
@@ -446,19 +438,27 @@ define(function(require, exports, module) {
     });
     return function(config) {
         config = $.extend({
-            onKeyup:true,
-            valid: function(event, status, options) {
-                debugger;
-            },
-            invalid: function(event, status, options) {
-                debugger;
-            },
+            onKeyup: true,
             eachValidField: function(event, status, options) {
                 this.removeClass('invalid');
+                var id=this.data('_tips_');
+                if(id) $('#'+id).hide();
             },
-            eachInvalidField: function(event, status, options) {
+            eachInvalidField: function(event, status, options, msg) {
+                if(event.type==='keyup') return;
                 this.addClass('invalid');
-                //UI.tooltip
+                if (msg){
+                    var id=this.data('_tips_');
+                    if(!id) this.data('_tips_',id=_.uniqueId('tips_'))
+                    tips({
+                        id:id,
+                        of: this,
+                        msg: '<i class="f m2 f-warn"></i>' + msg,
+                        cls: 'error',
+                        dir: this.attr('dir') || 'rc',
+                        within: options.form
+                    });
+                }
             }
         }, config);
         var ret = {

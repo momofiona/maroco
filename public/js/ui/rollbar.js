@@ -213,7 +213,6 @@ define(function(require, exports, module) {
         });
         this.container.on('keydown' + this.namespace, function(e) {
                 var keycode = e.keyCode;
-                    debugger;
                 if (keycode == 9) {
                     //防止tab键引起的scroll卷入
                     setTimeout(function() {

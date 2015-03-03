@@ -330,7 +330,8 @@ a:hover {
 .warn,
 .error,
 .safe,
-.link {
+.link,
+.dark {
   padding: .3em .5em;
   border-radius: 2px;
 }
@@ -381,6 +382,11 @@ a:hover {
   background-color: transparent;
   border: 1px solid #478af8;
   color: #478af8 !important;
+}
+.dark {
+  background-color: #000000;
+  border: 1px solid #000000;
+  color: #ffffff !important;
 }
 /*toolbar*/
 .toolbar {
@@ -510,9 +516,9 @@ a:hover {
   font-size: 18px;
   font-style: normal;
 }
-.text[data-required] {
-  border-color: #bfaf9f;
-}
+/*.text[data-required]{
+    background: url(img/req.png) no-repeat;
+}*/
 /* notify */
 .mask,
 .notify,
@@ -907,6 +913,11 @@ input.b {
   background-color: #478af8;
   color: #fff !important;
 }
+.dark-hover,
+.dark-active {
+  background-color: #000000;
+  color: #fff !important;
+}
 .b-active,
 .b:active,
 .log-active,
@@ -916,7 +927,8 @@ input.b {
 .warn-active,
 .error-active,
 .safe-active,
-.link-active {
+.link-active,
+.dark-active {
   box-shadow: inset 0 5px 10px -5px rgba(0, 0, 0, 0.5);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#55000000', endColorstr='#00000000',GradientType=0);
 }
@@ -931,7 +943,8 @@ input.b {
   .warn-active,
   .error-active,
   .safe-active,
-  .link-active {
+  .link-active,
+  .dark-active {
     filter: none\9\0;
   }
 }

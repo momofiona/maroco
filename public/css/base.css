@@ -329,7 +329,8 @@ a:hover {
 .warn,
 .error,
 .safe,
-.link {
+.link,
+.dark {
   padding: .3em .5em;
   border-radius: 2px;
 }
@@ -380,6 +381,11 @@ a:hover {
   background-color: transparent;
   border: 1px solid #478af8;
   color: #478af8 !important;
+}
+.dark {
+  background-color: #000000;
+  border: 1px solid #000000;
+  color: #ffffff !important;
 }
 /*toolbar*/
 .toolbar {
@@ -509,9 +515,9 @@ a:hover {
   font-size: 18px;
   font-style: normal;
 }
-.text[data-required] {
-  border-color: #bfaf9f;
-}
+/*.text[data-required]{
+    background: url(img/req.png) no-repeat;
+}*/
 /* notify */
 .mask,
 .notify,

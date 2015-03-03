@@ -1,0 +1,179 @@
+/*tooltip*/
+
+.tips {
+    position: relative;
+    z-index: 1000;
+    display: inline-block;
+    _display: inline;
+    *zoom: 1;
+    transition: top .3s,left .3s;
+    .tip {
+        position: absolute;
+        line-height: 0;
+        width: 0;
+        height: 0;
+        border: solid 5px transparent;
+        _border-color: tomato;
+        _filter: chroma(color=tomato);
+    }
+}
+.tip{
+    .log & {
+        border-color: #ddd;
+    }
+    .silver & {
+        border-color: #eee;
+    }
+    .note & {
+        border-color: @noteColor;
+    }
+    .info & {
+        border-color: @infoColor;
+    }
+    .warn & {
+        border-color: @warnColor;
+    }
+    .error & {
+        border-color: @errorColor;
+    }
+    .safe & {
+        border-color: @safeColor;
+    }
+    .link & {
+        border-color: @linkColor;
+    }
+    .dark & {
+        border-color: @darkColor;
+    }
+}
+.tips{
+    //top
+    .tip-t {
+        border-top-color: transparent;
+        border-right-color: transparent;
+        border-left-color: transparent;
+        _border-top-color: tomato;
+        _border-right-color: tomato;
+        _border-left-color: tomato;
+        top: -11px;
+        left: 50%;
+        margin-left: -5px;
+    }
+    .tip-tll,.tip-tl,.tip-tr,.tip-trr{
+        border-top-color: transparent;
+        _border-top-color: tomato;
+        top: -8px;
+        border-width: 4px; 
+    }
+    .tip-tl,.tip-tll{
+        left: -1px;
+    }
+    .tip-tr,.tip-trr{
+        right: -1px;
+    }
+    .tip-tl,.tip-trr {
+        border-right-color: transparent;
+        _border-right-color: tomato;
+    }
+    .tip-tr,.tip-tll {
+        border-left-color: transparent;
+        _border-left-color: tomato;
+    }
+    //right
+    .tip-r {
+        border-top-color: transparent;
+        border-bottom-color: transparent;
+        border-right-color: transparent;
+        _border-top-color: tomato;
+        _border-bottom-color: tomato;
+        _border-right-color: tomato;
+        right: -11px;
+        top: 50%;
+        margin-top: -5px;
+    }
+    .tip-rt,.tip-rtt,.tip-rb,.tip-rbb{
+        border-right-color: transparent;
+        _border-right-color: tomato;
+        right: -8px;
+        border-width: 4px; 
+    }
+    .tip-rt,.tip-rtt{
+        top: -1px;
+    }
+    .tip-rb,.tip-rbb{
+        bottom: -1px;
+    }
+    .tip-rt,.tip-rbb {
+        border-bottom-color: transparent;
+        _border-bottom-color: tomato;
+    }
+    .tip-rb,.tip-rtt {
+        border-top-color: transparent;
+        _border-top-color: tomato;
+    }
+    //bottom
+    .tip-b {
+        border-bottom-color: transparent;
+        border-right-color: transparent;
+        border-left-color: transparent;
+        _border-bottom-color: tomato;
+        _border-right-color: tomato;
+        _border-left-color: tomato;
+        bottom: -11px;
+        left: 50%;
+        margin-left: -5px;
+    }
+    .tip-bll,.tip-bl,.tip-br,.tip-brr{
+        border-bottom-color: transparent;
+        _border-bottom-color: tomato;
+        bottom: -8px;
+        border-width: 4px; 
+    }
+    .tip-bl,.tip-bll{
+        left: -1px;
+    }
+    .tip-br,.tip-brr{
+        right: -1px;
+    }
+    .tip-bl,.tip-brr {
+        border-right-color: transparent;
+        _border-right-color: tomato;
+    }
+    .tip-br,.tip-bll {
+        border-left-color: transparent;
+        _border-left-color: tomato;
+    }
+    //left
+    .tip-l {
+        border-top-color: transparent;
+        border-bottom-color: transparent;
+        border-left-color: transparent;
+        _border-top-color: tomato;
+        _border-bottom-color: tomato;
+        _border-left-color: tomato;
+        left: -11px;
+        top: 50%;
+        margin-top: -5px;
+    }
+    .tip-lt,.tip-ltt,.tip-lb,.tip-lbb{
+        border-left-color: transparent;
+        _border-left-color: tomato;
+        left: -8px;
+        border-width: 4px; 
+    }
+    .tip-lt,.tip-ltt{
+        top: -1px;
+    }
+    .tip-lb,.tip-lbb{
+        bottom: -1px;
+    }
+    .tip-lt,.tip-lbb {
+        border-bottom-color: transparent;
+        _border-bottom-color: tomato;
+    }
+    .tip-lb,.tip-ltt {
+        border-top-color: transparent;
+        _border-top-color: tomato;
+    }
+
+}

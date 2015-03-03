@@ -1,0 +1,127 @@
+<div class="row m10">
+    <h1>Tips <small>Tooltip</small></h1>
+    <hr>
+    <div>
+        <div class="log tips m">
+            <i class="tip tip-tl"></i>
+            <i class="tip tip-tll"></i>
+            <i class="tip tip-t"></i>
+            <i class="tip tip-tr"></i>
+            <i class="tip tip-trr"></i>
+            <i class="tip tip-rt"></i>
+            <i class="tip tip-rtt"></i>
+            <i class="tip tip-r"></i>
+            <i class="tip tip-rb"></i>
+            <i class="tip tip-rbb"></i>
+            <i class="tip tip-br"></i>
+            <i class="tip tip-brr"></i>
+            <i class="tip tip-b"></i>
+            <i class="tip tip-bl"></i>
+            <i class="tip tip-bll"></i>
+            <i class="tip tip-lb"></i>
+            <i class="tip tip-lbb"></i>
+            <i class="tip tip-l"></i>
+            <i class="tip tip-lt"></i>
+            <i class="tip tip-ltt"></i> tips
+        </div>
+        <div class="silver tips m5"><i class="tip tip-tl"></i>tips .tip-tl</div>
+        <div class="silver tips m5"><i class="tip tip-tll"></i>tips .tip-tll</div>
+        <div class="info tips m5"> <i class="tip tip-t"></i>tips .tip-t</div>
+        <div class="note tips m5"> <i class="tip tip-tr"></i>tips .tip-tr</div>
+        <div class="note tips m5"> <i class="tip tip-trr"></i>tips .tip-trr</div>
+        <div class="link tips m5"> <i class="tip tip-rt"></i>tips .tip-rt</div>
+        <div class="link tips m5"> <i class="tip tip-rtt"></i>tips .tip-rtt</div>
+        <div class="dark tips m5"> <i class="tip tip-r"></i>tips .tip-r</div>
+        <div class="silver tips m5"> <i class="tip tip-rb"></i>tips .tip-rb</div>
+        <div class="silver tips m5"> <i class="tip tip-rbb"></i>tips .tip-rbb</div>
+        <div class="info tips m5"> <i class="tip tip-br"></i>tips .tip-br</div>
+        <div class="info tips m5"> <i class="tip tip-brr"></i>tips .tip-brr</div>
+        <div class="note tips m5"> <i class="tip tip-b"></i>tips .tip-b</div>
+        <div class="warn tips m5"> <i class="tip tip-bl"></i>tips .tip-bl</div>
+        <div class="warn tips m5"> <i class="tip tip-bll"></i>tips .tip-bll</div>
+        <div class="error tips m5"> <i class="tip tip-lb"></i>tips .tip-lb</div>
+        <div class="error tips m5"> <i class="tip tip-lbb"></i>tips .tip-lbb</div>
+        <div class="safe tips m5"> <i class="tip tip-l"></i>tips .tip-l</div>
+        <div class="link tips m5"> <i class="tip tip-lt"></i>tips .tip-lt</div>
+        <div class="link tips m5"> <i class="tip tip-ltt"></i>tips .tip-ltt</div>
+    </div>
+    <div class="log xl" style="margin:80px">
+        <select id="tipsTipDemo" class="text w8">
+            <option>tll</option>
+            <option>tl</option>
+            <option>tc</option>
+            <option>tr</option>
+            <option>trr</option>
+
+            <option>rtt</option>
+            <option>rt</option>
+            <option>rc</option>
+            <option>rb</option>
+            <option>rbb</option>
+
+            <option>brr</option>
+            <option>br</option>
+            <option>bc</option>
+            <option>bl</option>
+            <option>bll</option>
+
+            <option>lbb</option>
+            <option>lb</option>
+            <option>lc</option>
+            <option>lt</option>
+            <option>ltt</option>
+
+        </select>
+    </div>
+    <div class="xc"></div>
+    <textarea class="codemirror" mode="javascript">
+        seajs.use('ui/tips', function(tips) {
+            var select = $('#tipsTipDemo').change(function() {
+                    var va = this.options[this.selectedIndex].text;
+                    currentTip = tips({
+                        msg: 'dir:".' + va + '"',
+                        dir: va,
+                        of: of,
+                        cls: 'note',
+                        within:within,
+                        id: currentTipId
+                    });
+                }),
+                of = select.parent(),
+                within=of.parent(),
+                currentTipId=_.uniqueId('tips_');
+            select.trigger('change').focus();
+        });
+    </textarea>
+    <div class="footman"></div>
+</div>
+<script>
+seajs.use('ui/tips', function(tips) {
+    var select = $('#tipsTipDemo').change(function() {
+            var va = this.options[this.selectedIndex].text;
+            tips({
+                msg: 'dir:".' + va + '"',
+                dir: va,
+                of: of,
+                cls: 'note',
+                within:within,
+                id: currentTipId
+            });
+        }).keydown(function(e) {
+            if (e.keyCode == 40 && this.selectedIndex == 19) {
+                this.selectedIndex = 0;
+                e.preventDefault();
+                select.trigger('change');
+            } else if (e.keyCode == 38 && this.selectedIndex == 0) {
+                this.selectedIndex = 19;
+                e.preventDefault();
+                select.trigger('change');
+            }
+            e.stopPropagation();
+        }),
+        of = select.parent(),
+        within=of.parent(),
+        currentTipId=_.uniqueId('tips_');
+    select.trigger('change').focus();
+});
+</script>

@@ -1,17 +1,16 @@
 <div class="row m10">
     <h1>验证 <small>Validate</small></h1>
     <hr>
-    <a href="https://github.com/DiegoLopesLima/Validate"><i class="f f-link"></i> https://github.com/DiegoLopesLima/Validate</a>
+    <div class="text-auto m1">
+        <input class="text" dir="bl" form="validateForm" data-required placeholder="form外边的元素" data-description="platformName">
+    </div>
     <form id="validateForm">
-        <div class="text-auto m1">
-            <input class="text" data-required placeholder="input自适应宽度" data-description="platformName">
-        </div>
-        <h3>Autocomplete</h3>
+        <h2>Form</h2>
         <table class="formtable">
             <tr>
                 <td class="flabel w3">帐号</td>
                 <td>
-                    <input class="text" data-required required2 name="account"> <i class="fi-req">*</i>
+                    <input class="text" data-required data-validate="charsafe" data-description="account" name="account"> <i class="fi-req">*</i>
                 </td>
             </tr>
             <tr>
@@ -35,7 +34,7 @@
             <tr>
                 <td class="flabel">Email</td>
                 <td>
-                    <input class="text" name="email">
+                    <input data-required data-validate="email" data-description="email" class="text" name="email">
                 </td>
             </tr>
             <tr>
@@ -56,24 +55,152 @@
             <input type="hidden" name="autoComplete">
         </p> -->
     </form>
+    <section>
+        <h2>Attributes</h2>
+        <table class="ctable">
+            <thead>
+                <tr>
+                    <th width="110">Attribute</th>
+                    <th>Description</th>
+                    <th width="75">Default</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>data-conditional</td>
+                    <td>Accepts one or more indexes separated by spaces from the `conditional` object that should contain a the boolean return function.</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>data-ignore-case</td>
+                    <td>Accepts a boolean value to specify if field is case-insensitive.</td>
+                    <td>true</td>
+                </tr>
+                <tr>
+                    <td>data-mask</td>
+                    <td>`data-pattern`</a>&nbsp;attribute.</td>
+                    <td>${0}</td>
+                </tr>
+                <tr>
+                    <td>data-pattern</td>
+                    <td>Accepts a regular expression to test the field value.</td>
+                    <td>/(?:)/</td>
+                </tr>
+                <tr>
+                    <td>data-prepare</td>
+                    <td>Accepts a index from the `prepare` object that should contain a function to receive the field value and returns a new value treated.</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>data-required</td>
+                    <td>Accepts a boolean value to specify if field is required.</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>data-trim</td>
+                    <td>Accepts a boolean value. If true, removes the spaces from the ends in the field value. (The field value is not changed)</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>data-validate</td>
+                    <td>You can use the `data-validate` to calling extensions.</td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+        <h2></a>Parameters</h2>
+        <table class="ctable">
+            <thead>
+                <tr>
+                    <th width="110">Parameter</th>
+                    <th>Description</th>
+                    <th width="75">Default</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>conditional</td>
+                    <td>Accepts a object to store functions from validation.</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>filter</td>
+                    <td>Accepts a selector string or function to filter the validated fields.</td>
+                    <td>*</td>
+                </tr>
+                <tr>
+                    <td>nameSpace</td>
+                    <td>A namespace used in all delegates events.</td>
+                    <td>validate</td>
+                </tr>
+                <tr>
+                    <td>onBlur</td>
+                    <td>Accepts a boolean value. If true, triggers the validation when blur the field.</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>onChange</td>
+                    <td>Accepts a boolean value. If true, triggers the validation when change the field value.</td>
+                    <td>true</td>
+                </tr>
+                <tr>
+                    <td>onKeyup</td>
+                    <td>Accepts a boolean value. If true, triggers the validation when press any key.</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>onSubmit</td>
+                    <td>Accepts a boolean value. If true, triggers the validation when submit the form.</td>
+                    <td>true</td>
+                </tr>
+                <tr>
+                    <td>prepare</td>
+                    <td>Accepts a object to store functions to prepare the field values.</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>sendForm</td>
+                    <td>AJAX</a>).</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>waiAria</td>
+                    <td>WAI-ARIA</a>.</td>
+                    <td>true</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>
+            源码已改，参考：<a href="https://github.com/DiegoLopesLima/Validate"><i class="f f-link"></i> https://github.com/DiegoLopesLima/Validate</a>
+        </p>
+    </section>
+
     <div class="footman"></div>
 </div>
 <script>
 seajs.use('ui/validate', function(validate) {
-    validate({
-        form:'#validateForm',
-        //自定义
-        descript:{
-            required:'请填写完整',
-            pattern:'请正确填写',
-            conditional:'请正确填写'
+    var validForm = validate({
+        form: $('#validateForm'),
+        valid: function(event, status, options) {
+            console.log('valid');
+        },
+        invalid: function(event, status, options) {
+            console.log('invalid');
         },
         description: {
+            platformName:{
+                required:'biang~'
+            },
+            account:{
+                required: '请填写帐号',
+                pattern: '包含非法字符'
+            },
             email: {
                 required: '请填写邮箱',
                 pattern: '邮箱格式不正确'
             }
         }
     });
+    validForm.form;
 });
 </script>

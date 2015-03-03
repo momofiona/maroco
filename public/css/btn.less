@@ -86,6 +86,10 @@ vertical-align:middle;
     background-color: @linkColor;
     color: #fff !important;
 }
+.dark-hover {
+    background-color: @darkColor;
+    color: #fff !important;
+}
 //active
 .b-active {
     //any but IE6-8
@@ -124,6 +128,9 @@ vertical-align:middle;
 }
 .link-active {
     &:extend(.link-hover, .b-active);
+}
+.dark-active {
+    &:extend(.dark-hover, .b-active);
 }
 .b-lg {
     font-size: 1.5em;
