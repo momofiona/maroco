@@ -61,6 +61,10 @@ define(function(require, exports, module) {
             'width': this.settings.sliderSize,
             'opacity': this.settings.sliderOpacity
         });
+        //插入顶部阴影
+        if(setting.shadow){
+            this.shadow=$('<div class="rollbar-shadow">').hide().appendTo(this.container);
+        }
         this.init();
         this.pathSize();
         //文档加载结束以后触发
@@ -154,6 +158,9 @@ define(function(require, exports, module) {
             if (e && (v && v != this.vdiff)) {
                 e.stopPropagation();
                 e.preventDefault()
+            }
+            if(this.shadow){
+                this.shadow.toggle(v>0);
             }
         }
 

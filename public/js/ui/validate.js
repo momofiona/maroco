@@ -61,7 +61,7 @@ define(function(require, exports, module) {
                 // An index of extend
                 fieldValidate = field.data('validate'),
                 // A validation object (jQuery.fn.validateExtend)
-                validation = fieldValidate !== undefined ? extend[fieldValidate] : {},
+                validation = extend[fieldValidate] || {},
                 // One index or more separated for spaces to prepare the field value
                 fieldPrepare = field.data('prepare') || validation.prepare,
                 // A regular expression to validate field value
@@ -73,18 +73,16 @@ define(function(require, exports, module) {
                 // A index in the conditional object containing a function to validate the field value
                 fieldConditional = field.data('conditional') || validation.conditional,
                 // Is required?
-                fieldRequired = field.attr('required') !== undefined || field.data('required'),
-                // The description element id
-                fieldDescribedby = field.data('describedby') || validation.describedby,
+                fieldRequired = field.data('required'),
                 // An index of description object
-                fieldDescription = field.data('description') || validation.description,
+                fieldDescription = field.data('description') || field.attr('name'),
                 // Trim spaces? 
                 fieldTrim = field.data('trim'),
                 reTrue = /^(true|)$/i,
                 reFalse = /^false$/i,
 
-                // The description object
-                fieldDescription = $.isPlainObject(fieldDescription) ? fieldDescription : (options.description[fieldDescription] || {}),
+                // The description object 
+                fieldDescription=options.description[fieldDescription]||validation.description||{};
 
                 name = 'validate';
 
@@ -218,38 +216,26 @@ define(function(require, exports, module) {
                     }
                 }
             }
-            //如果是#开头的则在全局查找，否则在form下查找
-            var describedby,
-                log, isValid;
+            var log = fieldDescription.valid;
             if (event.type != 'keyup') {
-
                 if (!status.required) {
-                    isValid=1;
-                    log = fieldDescription.required ;
+                    log = fieldDescription.required;
                 } else if (!status.pattern) {
-                    isValid=1;
-                    log = fieldDescription.pattern ;
+                    log = fieldDescription.pattern;
                 } else if (!status.conditional) {
-                    isValid=1;
                     log = fieldDescription.conditional;
                 }
 
             }
             log = log || '';
-            if (fieldDescribedby) {
-                //fieldDescription.valid || defaultDescription.valid;
-                describedby = fieldDescribedby.indexOf('#') == 0 ? $(fieldDescribedby) : form.find(fieldDescribedby);
-                describedby.html(isValid?(fieldDescription.valid || defaultDescription.valid):log);
-            }
-
 
             if (typeof(validation.each) == 'function') {
 
-                validation.each.call(field, event, status, options);
+                validation.each.call(field, event, status, options, log);
             }
 
             // Call the eachField callback
-            options.eachField.call(field, event, status, options);
+            options.eachField.call(field, event, status, options, log);
 
             // If the field is valid
             if (status.required && status.pattern && status.conditional) {
@@ -262,11 +248,11 @@ define(function(require, exports, module) {
 
                 if (typeof(validation.valid) == 'function') {
 
-                    validation.valid.call(field, event, status, options);
+                    validation.valid.call(field, event, status, options, log);
                 }
 
                 // Call the eachValidField callback
-                options.eachValidField.call(field, event, status, options);
+                options.eachValidField.call(field, event, status, options, log);
             } else {
 
                 // If WAI-ARIA is enabled
@@ -277,7 +263,7 @@ define(function(require, exports, module) {
 
                 if (typeof(validation.invalid) == 'function') {
 
-                    validation.invalid.call(field, event, status, options);
+                    validation.invalid.call(field, event, status, options, log);
                 }
 
                 // Call the eachInvalidField callback
@@ -426,7 +412,11 @@ define(function(require, exports, module) {
     //扩展
     $.validateExtend({
         email: {
-            pattern: /^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/
+            pattern: /^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/,
+            description:{
+                required:'请填写邮箱',
+                pattern: '邮箱格式不正确'
+            }
         },
         //过滤非法字符HTML等
         charsafe: {
@@ -436,24 +426,36 @@ define(function(require, exports, module) {
 
         }
     });
+    var describ = function(field, options, msg, cls) {
+        var tip = field.data('describedby');
+        if (tip) {
+            //如果是#开头的则在全局查找，否则在form下查找
+            tip = tip.indexOf('#') == 0 ? $(tip) : options.form.find(tip);
+            tip.html(msg);
+            return true;
+        }
+    }
     return function(config) {
         config = $.extend({
             onKeyup: true,
-            eachValidField: function(event, status, options) {
+            eachValidField: function(event, status, options, msg) {
                 this.removeClass('invalid');
-                var id=this.data('_tips_');
-                if(id) $('#'+id).hide();
+                if (describ(this, options, msg ? '<span class="c-safe"><i class="f f-checkmark"></i> ' + msg + '</span>' : '')) return;
+                var id = this.data('_tips_');
+                if (id) $('#' + id).hide();
             },
             eachInvalidField: function(event, status, options, msg) {
-                if(event.type==='keyup') return;
+                if (event.type === 'keyup') return;
                 this.addClass('invalid');
-                if (msg){
-                    var id=this.data('_tips_');
-                    if(!id) this.data('_tips_',id=_.uniqueId('tips_'))
+                if (msg) {
+                    msg = '<i class="f f-warn"></i> ' + msg;
+                    if (describ(this, options, '<span class="c-error">' + msg + '</span>')) return;
+                    var id = this.data('_tips_');
+                    if (!id) this.data('_tips_', id = _.uniqueId('tips_'))
                     tips({
-                        id:id,
+                        id: id,
                         of: this,
-                        msg: '<i class="f m2 f-warn"></i>' + msg,
+                        msg: msg,
                         cls: 'error',
                         dir: this.attr('dir') || 'rc',
                         within: options.form
@@ -464,7 +466,7 @@ define(function(require, exports, module) {
         var ret = {
             form: $(config.form),
             reset: function() {
-                this.form.validate(config);
+                this.form.validate(config).find('.tips').remove();
                 return this;
             }
         }

@@ -22,7 +22,7 @@
         font-size: 13px;
         th {
             background-color: #f5f5f5;
-            &:extend(.linear all);
+            // &:extend(.linear all);
             font-weight: normal;
             text-shadow: 1px 1px 0px #FFF;
         	box-shadow: inset 1px 1px 0px #FFF;
@@ -100,13 +100,10 @@
         font-family: 'Microsoft Yahei';
     }
 }
-.ctable-head{
-	position: relative;
-	z-index: 1;
-	transition:box-shadow .2s;
-	.ctable-scroll-top &{
-		box-shadow: 0 3px 3px rgba(0, 0, 0, 0.1);
-	}
+.ctable-head-wrap{
+    position: relative;
+    z-index: 1;
+    overflow:hidden;
 }
 .ctable-body-scroller{
 	margin-top: -1px;
@@ -117,45 +114,36 @@
     }
 }
 .ctable-foot{
-	height: 20px;
+	height: 30px;
     overflow:hidden;
-	line-height: 20px;
+	line-height: 30px;
 	border-top: solid 1px #ddd;
 	margin-top: -1px;
 	position: relative;
 	z-index: 10;
-	padding: 5px 0;
 	.simple-pagination{
-		padding: 0;
-		margin: 0;
+		float: right;
 	}
 }
 
 .ctable-status{
 	float: left;
 	padding: 0 5px;
-	line-height: 28px;
 }
-.ctable-edgemod {
-    .ctable-edge {
-        border:none;
-        background: #fff;
-        box-shadow:none;
-    }
-}
+
 .chandler {
+    &:extend(.user-select);
     background:#f5f5f5 url(img/handler.png) repeat-y;
     cursor: move;
     padding: 0;
     font-size: 0;
-    .user-select;
 }
 .csortable {
+    &:extend(.user-select);
     background-position: 95% center;
     background-repeat: no-repeat;
     background-image: url(img/dropdown_arrow.png);
     cursor: default;
-    .user-select;
 }
 .csortable-asc {
     background-image: url(img/dropdown_arrow_up.png);
@@ -163,28 +151,7 @@
 .csortable-desc {
     background-image: url(img/dropdown_arrow_down.png);
 }
-.ctable-skin-blank {
-	border-top:solid 1px #ccc;
-    td {
-        border:none;
-        border-bottom: solid 1px #eee;
-    }
-}
-.ctable-skin-form {
-	border:none;
-	background:none;
-    tr.odd {
-        background:#fcfcfc;
-    }
-    td, th {
-        border:none;
-    }
-    tbody {
-        tr:hover {
-            background: none;
-        }
-    }
-}
+
 .ctable-checkall, .ctable-checkbox {
     vertical-align: middle;
 }
@@ -195,97 +162,96 @@
 * Author: Flavius Matis - http://flaviusmatis.github.com/
 * URL: https://github.com/flaviusmatis/simplePagination.js
 */
- ul.simple-pagination {
-    list-style: none;
-}
 .simple-pagination {
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
+    &:extend(.user-select);
+    list-style: none;
     overflow: hidden;
     padding: 0 5px 5px 0;
     margin: 0;
-    ul {
+    ul,li{
         list-style: none;
         padding: 0;
         margin: 0;
         text-align: center;
         overflow: hidden;
         white-space: nowrap;
+        vertical-align: top;
     }
     li {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        float: none;
         display: inline;
     }
-}
-.ctable-theme {
     a, span {
         display: inline-block;
         text-decoration: none;
         color: #333;
-        font-size: 12px;
-        line-height: 20px;
-        font-weight: normal;
-        text-align: center;
-        border: 1px solid #AAA;
-        border-right: none;
-        padding: 3px 10px;
+        font-size: 13px;
+        line-height: 30px;
+        min-width: 30px;
+        _width: 30px;
+        color: #4472A2;
+    }
+    a:hover {
         background: #efefef;
-        /* Old browsers */
-        background: -moz-linear-gradient(top, #ffffff 0%, #efefef 100%);
-        /* FF3.6+ */
-        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(100%, #efefef));
-        /* Chrome,Safari4+ */
-        background: -webkit-linear-gradient(top, #ffffff 0%, #efefef 100%);
-        /* Chrome10+,Safari5.1+ */
-        background: -o-linear-gradient(top, #ffffff 0%, #efefef 100%);
-        /* Opera11.10+ */
-        background: -ms-linear-gradient(top, #ffffff 0%, #efefef 100%);
-        /* IE10+ */
-        background: linear-gradient(top, #ffffff 0%, #efefef 100%);
-        /* W3C */
-        text-shadow: 0 1px rgba(255, 255, 255, 0.8);
-        color: #454545
+    }
+    .current {
+        background: #4472A2;
+        color: #fff;
+        cursor: default;
+    }
+    .ellipse {
+        cursor: default;
+        background: none;
+    }
+    .active .prev,.active .next{
+        background: none;
+        color: #ccc
+    }
+    .next{
+        padding:0 20px;
     }
 }
-.ctable-theme a:hover {
-    text-decoration: none;
-    background: #efefef;
-    /* Old browsers */
-    background: -moz-linear-gradient(top, #efefef 0%, #bbbbbb 100%);
-    /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #efefef), color-stop(100%, #bbbbbb));
-    /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top, #efefef 0%, #bbbbbb 100%);
-    /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top, #efefef 0%, #bbbbbb 100%);
-    /* Opera11.10+ */
-    background: -ms-linear-gradient(top, #efefef 0%, #bbbbbb 100%);
-    /* IE10+ */
-    background: linear-gradient(top, #efefef 0%, #bbbbbb 100%);
-    /* W3C */
-}
-.ctable-theme .prev {
-    border-radius: 3px 0 0 3px;
-}
-.ctable-theme .next {
-    border-right: 1px solid #AAA;
-    border-radius: 0 3px 3px 0;
-}
-.ctable-theme .current {
-    background: #eee;
-    cursor: default;
 
+.pager {
+    &:extend(.user-select);
+    overflow: hidden;
+    a, span {
+        display: inline-block;
+        text-decoration: none;
+        text-align: center;
+        color: #333;
+        font-size: 13px;
+        line-height: 30px;
+        min-width: 30px;
+        _width: 30px;
+        color: #4472A2;
+    }
+    a:hover {
+        background: #efefef;
+    }
+    .current {
+        background: #4472A2;
+        color: #fff;
+        cursor: default;
+    }
+    a.loading{
+        background:url(img/loadingr.gif) center center no-repeat;
+        text-indent: -9999px;
+    }
+    span{
+        color: #ccc;
+    }
+    .prev{
+        border-radius: 20px 0 0 20px;
+    }
+    .next{
+        padding:0 1em;
+        border-radius: 0 20px 20px 0;
+    }
+    .prev,.next{
+        background-color: #f8f8f8;
+    }
 }
-.ctable-theme .ellipse {
-    cursor: default;
-    background: #fff;
-	border-top: 0;
-	border-bottom: 0;
-}
+
 /*报表*/
 .ctable-hide{
     visibility: hidden;

@@ -57,27 +57,23 @@
  */
 "use strict";
 define(function(require, exports, module) {
-    var dot = require('dot'),
-        $ = require('jquery');
-    require('js/plugin/jquery.rollbar.min');
-    /*    require('js/plugin/jquery.mousewheel');
-    require('js/vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js');*/
+    require('js/vendor/jquery.mousewheel');
+    require('./rollbar');
     //分页
     require('js/vendor/simplePagination');
     var uuid = 0;
     var guid = function(guidPrefix, guidfix) {
-            var n = new Date().getTime().toString(32),
-                o;
-            for (o = 0; o < 5; o++) {
-                n += Math.floor(Math.random() * 65535).toString(32);
-            }
-            return (guidPrefix || "") + n + (uuid++).toString(32) + (guidfix || "");
+        var n = new Date().getTime().toString(32),
+            o;
+        for (o = 0; o < 5; o++) {
+            n += Math.floor(Math.random() * 65535).toString(32);
         }
-        // require('css/vendor/simplePagination.css');
+        return (guidPrefix || "") + n + (uuid++).toString(32) + (guidfix || "");
+    }
     var editOver = '<b class="cicon cicon-success" title="保存"></b><b class="cicon cicon-close" title="取消"></b>';
     var addIcon = '<b class="cicon cicon-add" title="增加一行"></b>';
     var inputs = 'input:not([type]),input[type="color"],input[type="date"],input[type="datetime"],input[type="datetime-local"],input[type="email"],input[type="file"],input[type="hidden"],input[type="month"],input[type="number"],input[type="password"],input[type="range"],input[type="search"],input[type="tel"],input[type="text"],input[type="time"],input[type="url"],input[type="week"],textarea, select, input[type="checkbox"],input[type="radio"]';
-    var editInput = dot.template('<div class="text-auto-wrap"><input name="{{=it.name}}" value="{{=it.value}}" data-trim="true" data-describedby="tooltip" type="text" class="text-auto" {{=it.attr}}></div>');
+    var editInput = _.dot('<div class="text-auto-wrap"><input name="{{=it.name}}" value="{{=it.value}}" data-trim="true" data-describedby="tooltip" type="text" class="text-auto" {{=it.attr}}></div>');
     var _colgroup = '{{?it.sortable}}\
             <col width="10">\
         {{?}}\
@@ -133,34 +129,34 @@ define(function(require, exports, module) {
         </tr>\
         {{?}}\
         </thead>';
-    var _table = dot.template('<div class="ctable {{=it.skin||""}}" id="{{=it.id||""}}">\
+    var _table = _.dot('<div class="ctable {{=it.skin||""}}" id="{{=it.id||""}}">\
         {{?!it.hidehead}}\
         <div class="ctable-head-wrap"><table class="ctable-head">' + _colgroup + _thead + '</table></div>\
         {{?}}\
-        <div class="ctable-body-scroller rollbar" id="{{=it.cscrollId}}">\
+        <div class="ctable-body-scroller" id="{{=it.cscrollId}}">\
         <table class="ctable-body">' + _colgroup + '<tbody></tbody></table>\
         </div>\
-        {{?it.itemsOnPage}}\
+        {{?it.itemsOnPage||it.status||it.blankText}}\
         <div class="ctable-foot">\
         <div class="ctable-status"></div>\
         <div class="simple-pagination"></div></div>\
         {{?}}\
-        </table></div>');
-    var _tableNormal = dot.template('<table class="ctable {{=it.skin||""}}" id="{{=it.id||""}}">' + _colgroup + '{{?!it.hidehead}}' + _thead + '{{?}}\
-        <tbody></tbody>\
-        {{?it.itemsOnPage}}\
-        <tfoot class="ctable-foot"><tr>\
-            <td colspan="{{=it.cols.length+it.skipIndex+(it.editable||it.addable||it.removeable?1:0)}}"><span class="ctable-status"></span><div class="simple-pagination"></div></td>\
-        </tr></tfoot>\
-        {{?}}\
-        </table>');
-    var _tbody = dot.template('{{~it.data :trdata:index}}\
+        </div>');
+    /*    var _tableNormal = _.dot('<table class="ctable {{=it.skin||""}}" id="{{=it.id||""}}">' + _colgroup + '{{?!it.hidehead}}' + _thead + '{{?}}\
+            <tbody></tbody>\
+            {{?it.itemsOnPage}}\
+            <tfoot class="ctable-foot"><tr>\
+                <td colspan="{{=it.cols.length+it.skipIndex+(it.editable||it.addable||it.removeable?1:0)}}"><span class="ctable-status"></span><div class="simple-pagination"></div></td>\
+            </tr></tfoot>\
+            {{?}}\
+            </table>');*/
+    var _tbody = _.dot('{{~it.data :trdata:index}}\
         <tr class="{{=index%2==0?"even":"odd"}}" data-index="{{=trdata.__index__||(it.__appendIndex__||0)+index}}">\
         {{?it.sortable}}\
             <td class="chandler"></td>\
         {{?}}\
         {{?it.checkbox}}\
-            <td><input type="checkbox" class=ctable-checkbox></td>\
+            <td><input type="checkbox" class="ctable-checkbox"{{?it.checkbox(trdata)}} checked{{?}}></td>\
         {{?}}\
         {{~it.cols :col:colindex}}\
             <td {{?col.align}}align="{{=col.align}}"{{?}} {{?col.cls}}class="{{=col.cls||""}}"{{?}} {{?col.style}}style="{{=col.style}}"{{?}}>{{=trdata[colindex]===undefined||trdata[colindex]===null?"":trdata[colindex]}}</td>\
@@ -174,22 +170,25 @@ define(function(require, exports, module) {
         {{?}}\
         </tr>\
         {{~}}');
-    var createObject = function(prototype) {
-        var a = function() {}
-        a.prototype = prototype;
-        return new a;
-    }
-    //$.support.boxSizing=false时候所有宽度减去td的padding
+    var defaults = {
+            checked:false,
+            sortable:false,
+            parseData:function(data){
+                return data.result;
+            }
+        }
+        //$.support.boxSizing=false时候所有宽度减去td的padding
     return function(config) {
+        config=_.proto(defaults,config);
         var skipIndex = (config.checkbox ? 1 : 0) + (config.sortable ? 1 : 0);
         config.skipIndex = skipIndex;
-        config.cscrollId = guid('c');
+        config.cscrollId = _.guid('c');
         //预处理表头分组
         config._colgroup = false;
         var _colgroupCache;
-        var _fullWidth=0;
+        var _fullWidth = 0;
         $.each(config.cols, function(i, o) {
-            _fullWidth+=o.width;
+            _fullWidth += o.width;
             if (o.colspan) delete o.colspan;
             if (o.colgroup) {
                 if (_colgroupCache && _colgroupCache.colgroup === o.colgroup) {
@@ -200,24 +199,27 @@ define(function(require, exports, module) {
                 config._colgroup = true;
             }
         });
-
-        var table = (config.height || config.maxHeight) ? $(_table(config)) : $(_tableNormal(config)),
+        //checkbox参数
+        if (config.checkbox && !$.isFunction(config.checkbox)) {
+            config.checkbox = $.noop;
+        }
+        //(config.height || config.maxHeight) ? $(_table(config)) : $(_tableNormal(config))
+        var table = $(_table(config)),
             scrollBody = table.find('>.ctable-body-scroller'),
             thead = table.find('thead');
-            //IE7 fix - 去掉thead后面多出来的tbody
-            if(config.height || config.maxHeight) thead.next().remove();
-            var theadContainer=table.find('.ctable-head-wrap').css('overflow','hidden'),
+        //IE7 fix - 去掉thead后面多出来的tbody
+        if (config.height || config.maxHeight) thead.next().remove();
+        var theadContainer = table.find('.ctable-head-wrap'),
             tbody = table.find('tbody'),
             tfoot = table.find('>.ctable-foot'),
             statubar = tfoot.find('.ctable-status'),
             spaging = tfoot.find('.simple-pagination');
-        
         if (config.container) {
             $(config.container).append(table);
         } else if (config.replaceholder) {
             $(config.replaceholder).replaceWith(table);
         }
-        
+
         thead.on('click', '.csortable', function(e) {
             //排序
             //e.stopPropagation();
@@ -258,7 +260,10 @@ define(function(require, exports, module) {
                 });
                 table.find('thead').find('.ctable-checkall').each(function() {
                     this.checked = ck;
-                })
+                });
+                if (config.onselect) {
+                    config.onselect.call(this, this.checked ? cache : []);
+                }
             });
             tbody.on('click', '.ctable-checkbox', function(e) {
                 //全选
@@ -271,6 +276,11 @@ define(function(require, exports, module) {
                     }
                 });
                 table.find('thead').find('.ctable-checkall')[0].checked = ckall;
+
+                if (config.onselect) {
+                    var tr = $(this).closest('tr').attr('data-index');
+                    config.onselect.call(this, api.getData('selected'), cache[tr]);
+                }
             })
         }
         var generateInputString = function(editconfig, data) {
@@ -301,7 +311,7 @@ define(function(require, exports, module) {
                     if (config.editable.beforeEdit.call(tr, tbody) === false) return false;
                 }
                 var data = cache[tr.attr('data-index')];
-                var _data = createObject(data);
+                var _data = _.proto(data);
                 var tds = tr.find('>td');
                 //保存模板用于取消编辑
                 data.__html__ = tr.html();
@@ -396,16 +406,16 @@ define(function(require, exports, module) {
             $(this).removeClass('ctable-hover');
         });
         //监控tbody事件
-        if(config.events){
-            $.each(config.events,function(k,v){
-                var s=k.indexOf(' ');
-                if(s<2) return;
-                tbody.on(k.substr(0,s),k.substr(s+1),function(event){
-                    var tr=$(this).closest('tr');
-                    var index=tr.attr('data-index');
-                    var data=cache[index];
-                    if(v.call(this,event,tr,data,config)===false) return false;
-                }); 
+        if (config.events) {
+            $.each(config.events, function(k, v) {
+                var s = k.indexOf(' ');
+                if (s < 2) return;
+                tbody.on(k.substr(0, s), k.substr(s + 1), function(event) {
+                    var tr = $(this).closest('tr');
+                    var index = tr.attr('data-index');
+                    var data = cache[index];
+                    if (v.call(this, event, tr, data, config) === false) return false;
+                });
             })
         }
 
@@ -425,55 +435,49 @@ define(function(require, exports, module) {
         if (config.height || config.maxHeight) {
             //TODO support function & '#selector - 100'
             if (config.height === "window") {
-                $(window).on('resize.' + config.cscrollId, function() {
+                var _throttle = _.throttle(function() {
                     if ($('#' + config.cscrollId).length === 0) {
-                        $(window).off('resize.' + config.cscrollId);
+                        $(window).off('resize', _throttle);
                     } else {
                         height($(window).height() - $(table).offset().top);
                     }
+                }, 500, {
+                    leading: false
                 });
-                $(window).resize();
+                $(window).on('resize', _throttle);
+                _throttle();
             } else if (config.height) {
                 height(config.height);
             }
             //是否cols全部设置了宽度
-            if(_fullWidth){
+            if (_fullWidth) {
                 thead.parent().width(_fullWidth);
                 tbody.parent().width(_fullWidth);
             }
-            var rollbarState = "top";
-            var rollcontent=$('#' + config.cscrollId).rollbar({
-                //lazyCheckScroll:1000, 有此参数会开启定时监测
-                pathPadding: 0,
-                // sliderOpacity: .1,
+            $('#' + config.cscrollId).rollbar({
+                scrollamount: config.scrollamount || 100,
+                shadow: true,
                 onscroll: function(v, h) {
-                    if (v > 0 && rollbarState === 'top') {
-                        rollbarState = "middle";
-                        table.addClass("ctable-scroll-top");
-                    } else if (v === 0 && rollbarState !== 'top') {
-                        rollbarState = "top";
-                        table.removeClass("ctable-scroll-top");
-                    }
-                    if(h!==undefined){
-                        theadContainer[0].scrollLeft=-parseInt(rollcontent.css('left'));
+                    if (h !== undefined) {
+                        theadContainer[0].scrollLeft = h;
                     }
                 }
-            }).find('.rollbar-content');
+            });//.find('>.rollbar-content');
 
         }
         //重新计算长宽
 
         function height(h) {
-            table.height(h);
-            if (!config.hidehead) {
-                h -= thead.height();
+                table.height(h);
+                if (!config.hidehead) {
+                    h -= thead.height();
+                }
+                if (config.itemsOnPage || config.status || config.blankText) {
+                    h -= 30;
+                }
+                scrollBody.height(h);
             }
-            if (config.itemsOnPage) {
-                h -= 30;
-            }
-            scrollBody.height(h);
-        }
-        //局部更新
+            //局部更新
         var update = function(tr, newdata) {
                 var index = tr.attr('data-index');
                 cache[index] = newdata;
@@ -498,17 +502,16 @@ define(function(require, exports, module) {
                 paging && paging.pagination('drawPage', currentPage);
             }
             var finalData = $.extend({}, config.baseparams, {
-                page: config.itemsOnPage?currentPage:undefined, //当前页
+                page: config.itemsOnPage ? currentPage : undefined, //当前页
                 count: config.itemsOnPage //每页数量
             }, filter);
-            // console.log(config.url, finalData);
             $.ajax({
                 url: config.url,
                 data: finalData,
                 cache: false,
                 dataType: 'JSON',
                 success: function(data) {
-                    cache = (config.parseData ? config.parseData(data) : data.result) || [];
+                    cache = config.parseData(data) || [];
                     //如果page不是第一页但是返回数据为0，则自动刷新到前一页
                     if (cache.length === 0 && currentPage > 1) {
                         currentPage--;
@@ -518,40 +521,45 @@ define(function(require, exports, module) {
                     config.data = config.render(cache);
                     var tbodyHtml = _tbody(config);
                     tbody.html(tbodyHtml);
-                    if (!config.itemsOnPage||$.isNumeric(data.totalRecordNumber) && data.totalRecordNumber <= config.itemsOnPage) {
+                    if (!config.itemsOnPage || $.isNumeric(data.total) && data.total <= config.itemsOnPage) {
                         spaging.hide()
                     } else {
                         spaging.show()
                         if (!paging) {
                             if (config.itemsOnPage) {
                                 paging = spaging.pagination({
-                                    items: data.totalRecordNumber, //用来计算页数的项目总数 default:1
+                                    items: data.total, //用来计算页数的项目总数 default:1
                                     itemsOnPage: config.itemsOnPage, //每个页面显示的项目数 default:1
                                     displayedPages: config.displayedPages,
                                     edges: config.edges,
                                     cssStyle: 'ctable-theme',
                                     prevText: '&lt;',
-                                    nextText: '&nbsp;&nbsp;&nbsp;&nbsp;&gt;&nbsp;&nbsp;&nbsp;&nbsp;',
+                                    nextText: '&gt;',
                                     onPageClick: function(pageNumber, event) {
                                         currentPage = pageNumber;
                                         load();
+                                        return false;
                                     }
                                 });
                             }
                         } else {
-                            paging.pagination('updateItems', data.totalRecordNumber);
+                            paging.pagination('updateItems', data.total);
                         }
                     }
                     //如果返回了总数
-                    if(data.totalRecordNumber!==undefined){
-                        statubar.html(data.totalRecordNumber==0&&config.blankText?config.blankText:'共 ' + data.totalRecordNumber + ' 项');
+                    if (data.total !== undefined || config.status || config.blankText) {
+                        var ornot = data.total == 0 && config.blankText ? config.blankText : '共 ' + data.total + ' 项';
+                        if (_.isString(config.status)) {
+                            config.status = _.dot(sta);
+                        }
+                        statubar.html(config.status ? config.status(data) : ornot);
                     }
                     config.afterLoad && config.afterLoad.call(table, data, cache);
                 }
             });
         }
         config.create && config.create.call(table, config);
-        return {
+        var api = {
             config: config,
             load: load,
             getBody: function() {
@@ -568,13 +576,10 @@ define(function(require, exports, module) {
                     });
                     return result;
                 }
-                if (n === "vieworder") {
-                    tbody.children().each(function(i, o) {
-                        result.push(cache[$(o).attr('data-index')]);
-                    });
-                    return result;
-                }
-                return cache
+                tbody.children().each(function(i, o) {
+                    result.push(cache[$(o).attr('data-index')]);
+                });
+                return result;
             },
             update: update,
             append: function(datas) {
@@ -592,7 +597,14 @@ define(function(require, exports, module) {
                 var tr = $(_tbody(config)).appendTo(tbody);
                 delete config.__appendIndex__;
                 return tr;
+            },
+            //清空数据
+            reset: function() {
+                cache = [];
+                tbody.empty();
+                debugger;
             }
         }
+        return api;
     }
 });

@@ -129,6 +129,6 @@ define(function(require, exports, module) {
                 'style': 'position:absolute;top:50%;left:50%;'
             }).appendTo(config.within || 'body');
         }
-        return tips.html(config.msg + '<span class="tip tip-' + poz.tip + '">').show().position(poz);
+        return tips.html(config.msg + '<b class="tip tip-' + poz.tip + '"></b>').show().position(poz);
     }
 });

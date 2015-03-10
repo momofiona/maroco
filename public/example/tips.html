@@ -44,8 +44,19 @@
         <div class="safe tips m5"> <i class="tip tip-l"></i>tips .tip-l</div>
         <div class="link tips m5"> <i class="tip tip-lt"></i>tips .tip-lt</div>
         <div class="link tips m5"> <i class="tip tip-ltt"></i>tips .tip-ltt</div>
+        <!-- star -->
+        <span class="star m2 log">1</span>
+        <span class="star m2 silver">2</span>
+        <span class="star m2 info">3</span>
+        <span class="star m2 note">4</span>
+        <span class="star m2 warn">5</span>
+        <span class="star m2 error">16</span>
+        <span class="star m2 link">7</span>
+        <span class="star m2 safe">118</span>
+        <span class="star m2 dark">9</span>
+        <!-- /star -->
     </div>
-    <div class="log xl" style="margin:80px">
+    <div class="log xl p" style="margin:60px 100px 50px">
         <select id="tipsTipDemo" class="text w8">
             <option>tll</option>
             <option>tl</option>
@@ -79,7 +90,7 @@
             var select = $('#tipsTipDemo').change(function() {
                     var va = this.options[this.selectedIndex].text;
                     currentTip = tips({
-                        msg: 'dir:".' + va + '"',
+                        msg: 'dir:"' + va + '"',
                         dir: va,
                         of: of,
                         cls: 'note',
@@ -100,10 +111,10 @@ seajs.use('ui/tips', function(tips) {
     var select = $('#tipsTipDemo').change(function() {
             var va = this.options[this.selectedIndex].text;
             tips({
-                msg: 'dir:".' + va + '"',
+                msg: 'dir: ' + va,
                 dir: va,
                 of: of,
-                cls: 'note',
+                cls: 'note p',
                 within:within,
                 id: currentTipId
             });

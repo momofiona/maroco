@@ -133,7 +133,7 @@ define(function(require, exports, module) {
         {{?!it.hidehead}}\
         <div class="ctable-head-wrap"><table class="ctable-head">' + _colgroup + _thead + '</table></div>\
         {{?}}\
-        <div class="ctable-body-scroller rollbar" id="{{=it.cscrollId}}">\
+        <div class="ctable-body-scroller" id="{{=it.cscrollId}}">\
         <table class="ctable-body">' + _colgroup + '<tbody></tbody></table>\
         </div>\
         {{?it.itemsOnPage||it.status||it.blankText}}\
@@ -170,16 +170,19 @@ define(function(require, exports, module) {
         {{?}}\
         </tr>\
         {{~}}');
-    var createObject = Object.create || function(prototype) {
-            var a = function() {}
-            a.prototype = prototype;
-            return new a;
+    var defaults = {
+            checked:false,
+            sortable:false,
+            parseData:function(data){
+                return data.result;
+            }
         }
         //$.support.boxSizing=false时候所有宽度减去td的padding
     return function(config) {
+        config=_.proto(defaults,config);
         var skipIndex = (config.checkbox ? 1 : 0) + (config.sortable ? 1 : 0);
         config.skipIndex = skipIndex;
-        config.cscrollId = guid('c');
+        config.cscrollId = _.guid('c');
         //预处理表头分组
         config._colgroup = false;
         var _colgroupCache;
@@ -206,7 +209,7 @@ define(function(require, exports, module) {
             thead = table.find('thead');
         //IE7 fix - 去掉thead后面多出来的tbody
         if (config.height || config.maxHeight) thead.next().remove();
-        var theadContainer = table.find('.ctable-head-wrap').css('overflow', 'hidden'),
+        var theadContainer = table.find('.ctable-head-wrap'),
             tbody = table.find('tbody'),
             tfoot = table.find('>.ctable-foot'),
             statubar = tfoot.find('.ctable-status'),
@@ -308,7 +311,7 @@ define(function(require, exports, module) {
                     if (config.editable.beforeEdit.call(tr, tbody) === false) return false;
                 }
                 var data = cache[tr.attr('data-index')];
-                var _data = createObject(data);
+                var _data = _.proto(data);
                 var tds = tr.find('>td');
                 //保存模板用于取消编辑
                 data.__html__ = tr.html();
@@ -432,13 +435,15 @@ define(function(require, exports, module) {
         if (config.height || config.maxHeight) {
             //TODO support function & '#selector - 100'
             if (config.height === "window") {
-                var _throttle=_.throttle(function(){
+                var _throttle = _.throttle(function() {
                     if ($('#' + config.cscrollId).length === 0) {
-                        $(window).off('resize',_throttle);
+                        $(window).off('resize', _throttle);
                     } else {
                         height($(window).height() - $(table).offset().top);
                     }
-                },100,{leading:false});
+                }, 500, {
+                    leading: false
+                });
                 $(window).on('resize', _throttle);
                 _throttle();
             } else if (config.height) {
@@ -449,22 +454,15 @@ define(function(require, exports, module) {
                 thead.parent().width(_fullWidth);
                 tbody.parent().width(_fullWidth);
             }
-            var rollbarState = "top";
-            var rollcontent = $('#' + config.cscrollId).rollbar({
-                scrollamount:config.scrollamount||100,
+            $('#' + config.cscrollId).rollbar({
+                scrollamount: config.scrollamount || 100,
+                shadow: true,
                 onscroll: function(v, h) {
-                    if (v > 0 && rollbarState === 'top') {
-                        rollbarState = "middle";
-                        table.addClass("ctable-scroll-top");
-                    } else if (v === 0 && rollbarState !== 'top') {
-                        rollbarState = "top";
-                        table.removeClass("ctable-scroll-top");
-                    }
                     if (h !== undefined) {
-                        theadContainer[0].scrollLeft = -parseInt(rollcontent.css('left'));
+                        theadContainer[0].scrollLeft = h;
                     }
                 }
-            }).find('.rollbar-content');
+            });//.find('>.rollbar-content');
 
         }
         //重新计算长宽
@@ -474,7 +472,7 @@ define(function(require, exports, module) {
                 if (!config.hidehead) {
                     h -= thead.height();
                 }
-                if (config.itemsOnPage || config.status|| config.blankText) {
+                if (config.itemsOnPage || config.status || config.blankText) {
                     h -= 30;
                 }
                 scrollBody.height(h);
@@ -513,7 +511,7 @@ define(function(require, exports, module) {
                 cache: false,
                 dataType: 'JSON',
                 success: function(data) {
-                    cache = (config.parseData ? config.parseData(data) : data.result) || [];
+                    cache = config.parseData(data) || [];
                     //如果page不是第一页但是返回数据为0，则自动刷新到前一页
                     if (cache.length === 0 && currentPage > 1) {
                         currentPage--;
@@ -536,7 +534,7 @@ define(function(require, exports, module) {
                                     edges: config.edges,
                                     cssStyle: 'ctable-theme',
                                     prevText: '&lt;',
-                                    nextText: '&nbsp;&nbsp;&nbsp;&nbsp;&gt;&nbsp;&nbsp;&nbsp;&nbsp;',
+                                    nextText: '&gt;',
                                     onPageClick: function(pageNumber, event) {
                                         currentPage = pageNumber;
                                         load();
@@ -554,7 +552,7 @@ define(function(require, exports, module) {
                         if (_.isString(config.status)) {
                             config.status = _.dot(sta);
                         }
-                        statubar.html(config.status?config.status(data) : ornot);
+                        statubar.html(config.status ? config.status(data) : ornot);
                     }
                     config.afterLoad && config.afterLoad.call(table, data, cache);
                 }

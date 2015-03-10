@@ -1,5 +1,5 @@
 define(function(require, exports, module) {
-    var ctable = require('ui/ctable');
+    var ctable = require('ui/table');
     var searchbox = require('ui/searchbox');
     var template = require('./main.html');
     //滚动条
@@ -41,12 +41,21 @@ define(function(require, exports, module) {
             peopleListTable: null,
             catalog: null,
             events: {
+                'click .ac-editDepart':function(e, config) {
+                    seajs.use('apps/user/editDepartment', function(depart) {
+                        depart.show({
+                            callback:function(depart){
+                                
+                            }
+                        });
+                    });
+                },
                 'click .ac-changeDepart': function(e, config) {
                     seajs.use('apps/user/department', function(depart) {
                         depart.show({
 
                         });
-                    })
+                    });
                 }
             },
             makePeopleTree: function() {

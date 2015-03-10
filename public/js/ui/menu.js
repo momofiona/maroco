@@ -118,6 +118,6 @@ if (jQuery) (function ($) {
 
     $(document).on('click.dropdown', '[data-dropdown]', show);
     $(document).on('click.dropdown', hide);
-    $(window).on('resize', position);
+    $(window).on('resize.dropdown', position);
 
 })(jQuery);

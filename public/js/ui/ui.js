@@ -36,17 +36,14 @@ seajs.config({
             LEFT: 37
         },
         //UI widget
-        UI = function(config, wait) {
-            if (wait) return function() {
-                return UI(config);
-            }
+        UI = function(config) {
             config.$ = function(arg) {
                 return $(arg, this.el);
             };
             //el init
             config.el = $(config.el || '<div/>');
             if (config.init) {
-                config.init.apply(config);
+                config.init();
             }
             //绑定事件
             _.each(config.events, function(v, k) {
@@ -57,7 +54,7 @@ seajs.config({
                 });
             });
             if (config.create) {
-                config.create.apply(config);
+                config.create();
             }
             return config;
         };
@@ -204,6 +201,7 @@ seajs.config({
 
     /**
      * 基础加载器
+     * 分页： page count total
      * @param  {[type]} config [description]
      * @return {[type]}        [description]
      */
@@ -214,25 +212,31 @@ seajs.config({
             afterLoad: $.noop
         }, config);
         var filter = config.filter,
-            baseparams = config.baseparams;
+            baseparams = config.baseparams,
+            xhr;
         //分页
-        if (baseparams.count && !baseparams.page) baseparams.page = 1;
+        if (config.count && !config.page) config.page = 1;
         return {
             config: config,
             load: function(_filter) {
-                config.beforeLoad.call(config, _filter);
+                if(!config.url) return;
+                if (xhr) xhr.abort();
+                config.beforeLoad(_filter);
                 //开启筛选
                 if (_filter) {
                     filter = _filter;
+                    config.page = filter.page || 1;
                 }
-                var finalData = $.extend({}, baseparams, filter);
-                $.ajax({
+                xhr = $.ajax({
                     url: config.url,
-                    data: finalData,
+                    data: $.extend({}, baseparams, {
+                        page: config.page,
+                        count: config.count
+                    }, filter),
                     cache: config.cache,
                     dataType: 'JSON',
                     success: function(data) {
-                        config.afterLoad.call(config, data);
+                        config.afterLoad(data);
                     }
                 });
             }
@@ -310,14 +314,14 @@ $(document).ajaxSend(function(event, XMLHttpRequest, ajaxOptions) {
     if (t) {
         if (t.data('_waiting_')) {
             XMLHttpRequest.abort();
-            t.trigger('waiting',[null]);
+            t.trigger('waiting', [null]);
         } else {
-            t.data('_waiting_', 1).trigger('waiting',ajaxOptions);
+            t.data('_waiting_', 1).trigger('waiting', ajaxOptions);
         }
     }
 }).ajaxSuccess(function(event, XMLHttpRequest, ajaxOptions) {
     //TODO 过滤错误码
-    if (XMLHttpRequest.responseJSON && XMLHttpRequest.responseJSON.errorCode == 10000001) {
+    if (XMLHttpRequest.responseJSON && XMLHttpRequest.responseJSON.errorCode == 999) {
         //没有登录 跳转到登录页面
         return;
     }
