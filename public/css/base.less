@@ -281,6 +281,7 @@ input[type=checkbox] {
 .r4 {
     border-radius: 0 @radius @radius 0 !important;
 }
+
 .va-t {
     vertical-align: top;
 }
@@ -293,6 +294,7 @@ input[type=checkbox] {
 .va-tb {
     vertical-align: text-bottom;
 }
+
 .vam {
     vertical-align: middle;
     display: table-cell;
@@ -322,6 +324,9 @@ a:hover {
 }
 .nobg {
     background: none !important;
+}
+.noshadow{
+    box-shadow: none !important;
 }
 /* 基本样式，不设置layout */
 
@@ -498,7 +503,7 @@ a:hover {
 }*/
 /* notify */
 
-.mask, .notify {
+.mask, .notify, .tips {
     z-index: 1000;
     position: absolute;
 }
@@ -526,6 +531,7 @@ a:hover {
 }
 .notify {
     box-shadow: 0 0 0 3px rgba(0, 0, 0, .04);
+    // box-shadow: 0 0 5px rgba(0, 0, 0, .1),0 2px 3px rgba(0, 0, 0, .1); 
     padding: @distance*1.6 @distance*2;
     cursor: default;
     // filter: progid:DXImageTransform.Microsoft.Shadow(color='#969696', Direction=135, Strength=4);
@@ -778,4 +784,46 @@ a:hover {
 }
 .rollbar-pad {
     padding-right: @distance;
+}
+/* 分页 */
+.pager {
+    &:extend(.user-select);
+    overflow: hidden;
+    a{
+        cursor: pointer;
+    }
+    a, span {
+        display: inline-block;
+        text-decoration: none;
+        text-align: center;
+        color: #333;
+        font-size: 13px;
+        line-height: 30px;
+        min-width: 30px;
+        _width: 30px;
+        color: #4472A2;
+        vertical-align: top;
+    }
+    a:hover {
+        background: #efefef;
+    }
+    .current {
+        background: #4472A2;
+        color: #fff;
+        cursor: default;
+    }
+    a.loading{
+        background:url(img/loadingr.gif) center center no-repeat;
+        text-indent: -9999px;
+    }
+    span{
+        color: #ccc;
+    }
+    .next{
+        padding:0 1em;
+    }
+    .prev,.next{
+        background-color: #f8f8f8;
+        font-family: vedana;
+    }
 }

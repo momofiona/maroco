@@ -189,7 +189,7 @@ define(function(require, exports, module) {
                     onselect: function(selectedData, thisData) {
                         userManeger.toolbar.find('.ac-onselect').toggleClass('hide', !selectedData.length)
                     },
-                    itemsOnPage: UI.itemsOnPage,
+                    count: UI.count,
                     url: '/json/getUserByOrgId',
                     baseparams: {}
                 });

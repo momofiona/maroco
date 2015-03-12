@@ -1,8 +1,8 @@
 define(function(require, exports, module) {
     require('js/vendor/jquery.mousewheel');
-    //依赖jquery underscore UI.js
 
     function RollBar(outContainer, setting) {
+        if ($(outContainer).find('>.rollbar-content').length) return;
         var _rollbar = this,
             contentId = _.uniqueId('rollbar');
         this.namespace = '.' + contentId;
@@ -62,8 +62,8 @@ define(function(require, exports, module) {
             'opacity': this.settings.sliderOpacity
         });
         //插入顶部阴影
-        if(setting.shadow){
-            this.shadow=$('<div class="rollbar-shadow">').hide().appendTo(this.container);
+        if (setting.shadow) {
+            this.shadow = $('<div class="rollbar-shadow">').hide().appendTo(this.container);
         }
         this.init();
         this.pathSize();
@@ -73,25 +73,27 @@ define(function(require, exports, module) {
                 _rollbar.checkScroll()
             }, 10)
         });
-
-        if (this.settings.lazyCheckScroll) {
-            //增加监控，当从文档移除的时候，去掉定时器等
+        var _resize = function() {
             //当判断content不在dom上的时候移除定时器
-            this.lazytimer = setInterval(function() {
-                if ($('#' + contentId).length === 0) {
-                    //去掉定时器
-                    clearInterval(_rollbar.lazytimer);
-                    $(document).off(_rollbar.namespace);
-                    _rollbar.container.off(_rollbar.namespace);
-                    _rollbar.container = null;
-                    //避免意外情况下让界面不可选择
-                    $('body').removeClass('rollbar-noselect');
-                    //去掉事件
-                    return;
-                }
-                _rollbar.pathSize();
-                _rollbar.checkScroll();
-            }, this.settings.lazyCheckScroll)
+            if (!document.getElementById(contentId)) {
+                //去掉定时器
+                clearInterval(_rollbar.lazytimer);
+                $(document).off(_rollbar.namespace);
+                $(window).off('resize',_resize);
+                _rollbar.container.off(_rollbar.namespace);
+                _rollbar.container = null;
+                //避免意外情况下让界面不可选择
+                $('body').removeClass('rollbar-noselect');
+                //去掉事件
+                return;
+            }
+            _rollbar.pathSize();
+            _rollbar.checkScroll();
+        }
+        if (this.settings.checkTimer) {
+            this.lazytimer = setInterval(_resize, this.settings.checkTimer)
+        } else {
+            $(window).on('resize', _resize=_.throttle(_resize,500,{leading:false}));
         }
     }
 
@@ -159,8 +161,8 @@ define(function(require, exports, module) {
                 e.stopPropagation();
                 e.preventDefault()
             }
-            if(this.shadow){
-                this.shadow.toggle(v>0);
+            if (this.shadow) {
+                this.shadow.toggle(v > 0);
             }
         }
 
@@ -237,7 +239,7 @@ define(function(require, exports, module) {
                     _rollbar.scroll(-_rollbar.top + vkey, -_rollbar.left + a);
                 }
             })
-            .on('touchstart', function(e) {
+            .on('touchstart' + this.namespace, function(e) {
                 var a = e.originalEvent;
                 var b = a.changedTouches[0];
                 _rollbar.touch.sx = b.pageX;
@@ -249,7 +251,7 @@ define(function(require, exports, module) {
                     a.stopPropagation()
                 }
             })
-            .on('touchmove', function(e) {
+            .on('touchmove' + this.namespace, function(e) {
                 var a = e.originalEvent;
                 var b = a.targetTouches[0];
                 _rollbar.scroll(_rollbar.touch.sv + (_rollbar.touch.sy - b.pageY) * _rollbar.settings.touchSpeed, _rollbar.touch.sh + (_rollbar.touch.sx - b.pageX) * _rollbar.settings.touchSpeed, e);
@@ -258,7 +260,7 @@ define(function(require, exports, module) {
                     a.stopPropagation()
                 }
             })
-            .on('touchend touchcancel', function(e) {
+            .on('touchend' + this.namespace + ' touchcancel' + this.namespace, function(e) {
                 var a = e.originalEvent;
                 var b = a.changedTouches[0];
                 // _rollbar.sliders.stop().fadeTo(_rollbar.settings.sliderOpacityTime, _rollbar.settings.sliderOpacity);
@@ -266,7 +268,7 @@ define(function(require, exports, module) {
                     a.stopPropagation()
                 }
             })
-            .on('mousewheel', function(e, a, b, c) {
+            .on('mousewheel' + this.namespace, function(e, a, b, c) {
                 //event, delta, deltaX, deltaY
                 var d = e.target.nodeName;
                 if (d == 'TEXTAREA' || (d == 'SELECT' || d == 'OPTION')) {
@@ -282,25 +284,31 @@ define(function(require, exports, module) {
                     e.stopPropagation()
                 }
             })
-            .on("dragstart", function(e) {
+            .on("dragstart" + this.namespace, function(e) {
                 e.preventDefault()
             })
-            .on('rollbar', function(e, v, h) {
+            .on('rollbar' + this.namespace, function(e, v, h) {
                 e.stopPropagation();
-                v = $.isNumeric(v) ? v : -this.top;
-                h = $.isNumeric(h) ? h : -this.left;
-                _rollbar.scroll(v, h)
+                if (v === undefined) {
+                    //手动触发
+                    _rollbar.pathSize();
+                    _rollbar.checkScroll();
+                } else {
+                    v = $.isNumeric(v) ? v : -this.top;
+                    h = $.isNumeric(h) ? h : -this.left;
+                    _rollbar.scroll(v, h)
+                }
             })
-            .on('mouseenter', function() {
+            .on('mouseenter' + this.namespace, function() {
                 _rollbar.sliders.css('opacity', _rollbar.settings.sliderOpacity);
-            }).on('mouseleave', function() {
+            }).on('mouseleave' + this.namespace, function() {
                 _rollbar.sliders.css('opacity', .05);
             });
     };
 
     var defaults = {
         scroll: 'both',
-        lazyCheckScroll: 500, //检查频率
+        checkTimer: 500, //检查频率
         blockGlobalScroll: false, //阻止mousewheel向上冒泡
         sliderSize: '30%',
         sliderOpacity: 0.3,
@@ -314,6 +322,6 @@ define(function(require, exports, module) {
         options = _.proto(defaults, options);
         return this.each(function() {
             new RollBar(this, options)
-        })
+        });
     }
 });

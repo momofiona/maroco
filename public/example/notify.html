@@ -11,6 +11,7 @@
         </span>
         <span class="group">
             <b class="b silver ac-loading2">带关闭</b>
+            <b class="b silver ac-tips">带tips</b>
             <b class="b silver ac-loading3">自动关闭</b>
         </span>
         <b class="b note ac-confirm">confirm</b>
@@ -120,7 +121,7 @@
     <div class="footman"></div>
 </div>
 <script id="codemirror-notify">
-seajs.use('ui/notify', function(notify) {
+seajs.use(['ui/notify','ui/tips'], function(notify,tips) {
     var loadingTip;
     UI({
         el: '#demoNotify',
@@ -141,6 +142,30 @@ seajs.use('ui/notify', function(notify) {
                         notify.note('onclose trigger',1);
                     }
                 });
+            },
+            'click .ac-tips': function(e, config) {
+                notify.note({
+                    msg:'notify tips 参数具体查看tips文档',
+                    timeout:10,
+                    shadow:false,
+                    id:'notify_solon',//如果窗口中已经有此ID，不会弹出新notify提示
+                    closeable: true,
+                    tips:{
+                        dir:'bc',
+                        of:this
+                    }
+                });
+
+                tips({
+                    msg:'tips模块更加精细，贴近元素',
+                    id:'notify_solon_tip',//如果窗口中已经有此ID，不会弹出新notify提示
+                    dir: 'tl',
+                    closeable:true,
+                    of: this,
+                    cls: 'safe',
+                    within:this.parentNode
+                });
+
             },
             'click .ac-loading3': function(e, config) {
                 notify.loading({

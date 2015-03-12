@@ -1,10 +1,9 @@
 /*tooltip*/
-
+@borderwidth:6px;
+@borderegdewidth:4px;
 .tips {
-    position: relative;
-    z-index: 1000;
     display: inline-block;
-    _display: inline;
+    *display: inline;
     *zoom: 1;
     transition: top .3s,left .3s;
     .tip {
@@ -12,7 +11,7 @@
         line-height: 0;
         width: 0;
         height: 0;
-        border: solid 5px transparent;
+        border: solid @borderwidth transparent;
         _border-color: tomato;
         _filter: chroma(color=tomato);
     }
@@ -58,15 +57,15 @@
         _border-top-color: tomato;
         _border-right-color: tomato;
         _border-left-color: tomato;
-        top: -11px;
+        top: -@borderwidth*2 - 1px;
         left: 50%;
-        margin-left: -5px;
+        margin-left: -@borderwidth;
     }
     .tip-tll,.tip-tl,.tip-tr,.tip-trr{
         border-top-color: transparent;
         _border-top-color: tomato;
-        top: -8px;
-        border-width: 4px; 
+        top: -@borderegdewidth*2;
+        border-width: @borderegdewidth; 
     }
     .tip-tl,.tip-tll{
         left: -1px;
@@ -90,15 +89,15 @@
         _border-top-color: tomato;
         _border-bottom-color: tomato;
         _border-right-color: tomato;
-        right: -11px;
+        right: -@borderwidth*2 - 1px;
         top: 50%;
-        margin-top: -5px;
+        margin-top: -@borderwidth
     }
     .tip-rt,.tip-rtt,.tip-rb,.tip-rbb{
         border-right-color: transparent;
         _border-right-color: tomato;
-        right: -8px;
-        border-width: 4px; 
+        right: -@borderegdewidth*2;
+        border-width: @borderegdewidth; 
     }
     .tip-rt,.tip-rtt{
         top: -1px;
@@ -122,15 +121,15 @@
         _border-bottom-color: tomato;
         _border-right-color: tomato;
         _border-left-color: tomato;
-        bottom: -11px;
+        bottom: -@borderwidth*2 - 1px;
         left: 50%;
-        margin-left: -5px;
+        margin-left: -@borderwidth
     }
     .tip-bll,.tip-bl,.tip-br,.tip-brr{
         border-bottom-color: transparent;
         _border-bottom-color: tomato;
-        bottom: -8px;
-        border-width: 4px; 
+        bottom: -@borderegdewidth*2;
+        border-width: @borderegdewidth; 
     }
     .tip-bl,.tip-bll{
         left: -1px;
@@ -154,15 +153,15 @@
         _border-top-color: tomato;
         _border-bottom-color: tomato;
         _border-left-color: tomato;
-        left: -11px;
+        left: -@borderwidth*2 - 1px;
         top: 50%;
-        margin-top: -5px;
+        margin-top: -@borderwidth
     }
     .tip-lt,.tip-ltt,.tip-lb,.tip-lbb{
         border-left-color: transparent;
         _border-left-color: tomato;
-        left: -8px;
-        border-width: 4px; 
+        left: -@borderegdewidth*2;
+        border-width: @borderegdewidth; 
     }
     .tip-lt,.tip-ltt{
         top: -1px;

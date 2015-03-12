@@ -1,5 +1,4 @@
 define(function(require, exports, module) {
-    var notify = require('ui/notify');
     var defaults = {
             msg: '',
             cls: 'dark'
@@ -110,25 +109,32 @@ define(function(require, exports, module) {
                 at: 'left-7 bottom',
                 tip: 'rt'
             }
+        },
+        tips = function(config) {
+            config = _.proto(defaults, config);
+            //必须要有of参数
+            config.id = config.id || _.uniqueId('tips_');
+            var tips = $('#' + config.id),
+                poz = _.proto(positions[config.dir || 'tll'], {
+                    id: config.id,
+                    of: config.of,
+                    collision: 'none',
+                    within: config.within
+                });
+            if (!tips.length) {
+                tips = $('<div>', {
+                    id: config.id,
+                    'class': 'tips ' + config.cls,
+                    'style': 'position:absolute;top:50%;left:50%;'
+                }).appendTo(config.within || 'body');
+            }
+            if (config.timeout) {
+                setTimeout(function() {
+                    tips.remove();
+                }, config.timeout * 1000);
+            }
+            return tips.html(config.msg + '<b class="tip tip-' + poz.tip + '"></b>'+(config.closeable?'<i class="f f-multiply m4 am-rotate" onclick="$(this).parent().remove();"></i>':'')).show().position(poz);
         }
-
-    return function(config) {
-        config = _.proto(defaults, config);
-        //必须要有of参数
-        var tips = $('#'+config.id),
-            poz = _.proto(positions[config.dir || 'tll'], {
-                id:config.id,
-                of: config.of,
-                collision: 'none',
-                within: config.within
-            });
-        if (!tips.length) {
-            tips = $('<div>', {
-                id:config.id,
-                'class': 'tips ' + config.cls,
-                'style': 'position:absolute;top:50%;left:50%;'
-            }).appendTo(config.within || 'body');
-        }
-        return tips.html(config.msg + '<b class="tip tip-' + poz.tip + '"></b>').show().position(poz);
-    }
+    tips.positions = positions;
+    return tips;
 });

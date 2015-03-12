@@ -85,6 +85,7 @@
         <p>点击按钮太快的时候可能会执行多次click，这里不对click进行throttle处理，而是直接控制ajax请求流程，使得在请求结束前忽略相同请求(target参数相同),同时可通过监控on('waiting')[ajaxOptions|undefined]执行自定义动作 </p>
         <pre class="codemirror" source="#ajaxThrottleTestScript" mode="javascript"></pre>
         <script id="ajaxThrottleTestScript">
+        //_.extend  _.extednOwn  $.extend() $.extend(true)
         $(function() {
             var target = $('#ajaxThrottleTestBtn').on('waiting', function(e, options) {
                 if (options) {
@@ -106,48 +107,41 @@
     </section>
     <section>
         <h2>分页 <small>UI.loader</small></h2>
-        <div id="pagerViewr" class="pager"></div>
-        <p id="pagerViewrWithoutLoader" class="pager"></p>
+        <p id="pagerViewr" class="pager"></p>
+        <p id="pagerViewr2" class="pager"></p>
         <pre class="codemirror" source="#pageViewrScript" mode="javascript"></pre>
         <script id="pageViewrScript">
-        /*
-        pager第一个参数是UI.loader的参数
-        第二个参数
-        {
-            edges: 2, //边缘
-            displayedPages: 5, //中间个数
-            prevText: '&lt;',
-            nextText: '&gt;',
-            ellipseText: '&hellip;',
-            onInit: $.noop
-        }
-         */
         seajs.use('ui/pager', function(pager) {
-            //自带UI.loader
+            //独立存在
             var pageControl =  pager({
-                count: 10, //每页10个数据
-                page: 2,
-                url: '/json/getUserByOrgId'
-            }, {
                 el: $('#pagerViewr'),
-                onPageClick:function(loaderOptions){
-                    console.log(loaderOptions,this);
-                }
-            });
-            pageControl.load();
-            //不带UI.loader
-            var pageControlWithoutLoader =  pager({
                 count: 10, //每页10个数据
-                page: 2
-            }, {
-                el: $('#pagerViewrWithoutLoader'),
-                onPageClick:function(loaderOptions){
-                    console.log(loaderOptions,this);
-                    loaderOptions.ui.render(500);
+                page: 10,
+                onPageClick:function(e,page){
+                    console.log(page,this);
+                    this.render(215);
                 }
             });
-            pageControlWithoutLoader.config.page=12;
-            pageControlWithoutLoader.config.ui.render(500);
+            pageControl.render(205);
+
+            //和loader 配合
+            var pageControl2 =  pager({
+                el: $('#pagerViewr2'),
+                onPageClick:function(e,page){
+                    loader.page=page;
+                    loader.load();
+                }
+            });
+            var loader=UI.loader({
+                count:10,//每页10条
+                url: '/json/getUserByOrgId',
+                afterLoad:function(data){
+                    console.log(data);
+                    pageControl2.render(data.total,this.page,this.count);
+                }
+            });
+            loader.load();
+                
             
         });
         </script>

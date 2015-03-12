@@ -1,7 +1,12 @@
 <div class="row m10">
     <h1>Tips <small>Tooltip</small></h1>
     <hr>
-    <div>
+    <div class="demo-tips">
+    <style>
+    .demo-tips .tips{
+        position: relative;
+    }
+    </style>
         <div class="log tips m">
             <i class="tip tip-tl"></i>
             <i class="tip tip-tll"></i>
@@ -89,7 +94,7 @@
         seajs.use('ui/tips', function(tips) {
             var select = $('#tipsTipDemo').change(function() {
                     var va = this.options[this.selectedIndex].text;
-                    currentTip = tips({
+                    tips({
                         msg: 'dir:"' + va + '"',
                         dir: va,
                         of: of,

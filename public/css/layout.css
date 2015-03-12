@@ -21,7 +21,8 @@
 .toolbar,
 .notify-con,
 .dialog-title,
-.rollbar-noselect {
+.rollbar-noselect,
+.pager {
   -webkit-user-select: none;
   -khtml-user-select: none;
   -moz-user-select: none;
@@ -333,6 +334,9 @@ a:hover {
 .nobg {
   background: none !important;
 }
+.noshadow {
+  box-shadow: none !important;
+}
 /* 基本样式，不设置layout */
 .log,
 .silver,
@@ -533,6 +537,7 @@ a:hover {
 /* notify */
 .mask,
 .notify,
+.tips,
 .dialog {
   z-index: 1000;
   position: absolute;
@@ -793,6 +798,49 @@ a:hover {
 }
 .rollbar-pad {
   padding-right: 10px;
+}
+/* 分页 */
+.pager {
+  overflow: hidden;
+}
+.pager a {
+  cursor: pointer;
+}
+.pager a,
+.pager span {
+  display: inline-block;
+  text-decoration: none;
+  text-align: center;
+  color: #333;
+  font-size: 13px;
+  line-height: 30px;
+  min-width: 30px;
+  _width: 30px;
+  color: #4472A2;
+  vertical-align: top;
+}
+.pager a:hover {
+  background: #efefef;
+}
+.pager .current {
+  background: #4472A2;
+  color: #fff;
+  cursor: default;
+}
+.pager a.loading {
+  background: url(img/loadingr.gif) center center no-repeat;
+  text-indent: -9999px;
+}
+.pager span {
+  color: #ccc;
+}
+.pager .next {
+  padding: 0 1em;
+}
+.pager .prev,
+.pager .next {
+  background-color: #f8f8f8;
+  font-family: vedana;
 }
 .row {
   *zoom: 1;

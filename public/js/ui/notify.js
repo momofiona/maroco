@@ -2,14 +2,17 @@
  * jQuery Notify
  */
 define(function(require, exports, module) {
-    var template = _.dot('{{?it.type=="dialog"}}<i class="f f-multiply dialog-close am-rotate"></i><div class="dialog-title">{{=it.icon}}{{=it.title}}</div><div class="dialog-con">{{=it.msg}}</div>{{?it.buttons}}<div class="dialog-foot">{{~it.buttons :v:i}}<b class="b xr m4 {{=v.cls||"log"}}"{{?v.click}} click="{{=i}}"{{?}}>{{=v.label}}</b>{{~}}</div>{{?}}{{??}}{{=it.icon}}<span class="notify-con">{{=it.msg}}</span>{{?it.closeable}}<i class="f f-multiply notify-close am-rotate"></i>{{?}}{{?}}');
-    var defaults = {
+    var tips = require('ui/tips'),
+        positions = tips.positions,
+        template = _.dot('{{?it.type=="dialog"}}<i class="f f-multiply dialog-close am-rotate"></i><div class="dialog-title">{{=it.icon}}{{=it.title}}</div><div class="dialog-con">{{=it.msg}}</div>{{?it.buttons}}<div class="dialog-foot">{{~it.buttons :v:i}}<b class="b xr m4 {{=v.cls||"log"}}"{{?v.click}} click="{{=i}}"{{?}}>{{=v.label}}</b>{{~}}</div>{{?}}{{??}}{{=it.icon}}<span class="notify-con">{{=it.msg}}</span>{{?it.closeable}}<i class="f f-multiply notify-close am-rotate"></i>{{?}}{{?}}'),
+        defaults = {
             cls: 'log',
             type: 'notify',
             icon: '',
             title: '',
             msg: '', //内容
             timeout: 0,
+            shadow: true, //box-shadow
             template: template,
             events: {},
             draggable: false,
@@ -54,14 +57,16 @@ define(function(require, exports, module) {
                     _t.type = 'dialog';
                     isDialog = true;
                 }
-                _t.anime = _t.anime ? _t.anime : isDialog ? 'am-fadeup' : 'am-popin';
+                _t.anime = _t.anime ? _t.anime : 'am-fadeup';
                 //close event
                 var _ename = 'click .' + _t.type + '-close';
                 _t.events[_ename] = _t.events[_ename] || 'close';
+                if (_t.shadow === false) _t.cls += ' noshadow';
+                if (_t.id) _t.el.attr('id', _t.id);
                 _t.el.addClass(_t.cls + ' ' + _t.type + ' ' + _t.anime).html(_t.template(_t)).data('_notify_', _t);
                 _t.contentEl = _t.$('>.' + _t.type + '-con');
-                _.each(['width','height','maxWidth','maxHeight','minHeight','minWidth'],function(o,i){
-                    if(_t[o]) _t.contentEl.css(o,_t[o]).addClass('scroll');
+                _.each(['width', 'height', 'maxWidth', 'maxHeight', 'minHeight', 'minWidth'], function(o, i) {
+                    if (_t[o]) _t.contentEl.css(o, _t[o]).addClass('scroll');
                 });
                 //button evenet
                 if (_t.buttons) {
@@ -70,11 +75,6 @@ define(function(require, exports, module) {
                         _t.buttons[index].click.call(this, e, _t);
                     });
                 }
-                if (_t.timeout) {
-                    setTimeout(function() {
-                        _t.close();
-                    }, _t.timeout * 1000);
-                }
                 //mask
                 var _msk = _t.mask;
                 if (_msk || isDialog) {
@@ -82,26 +82,57 @@ define(function(require, exports, module) {
                 }
                 _t.el.appendTo(_t.mask || 'body');
                 _t.oncreate.apply(_t);
-                _t.el.position(_t.position);
+                //tips
+                var position = _t.position;
+                if (_t.tips) {
+                    if (_.isString(_t.tips)) {
+                        _t.tips = {
+                            dir: _t.tips
+                        }
+                    }
+                    var poz = positions[_t.tips.dir];
+                    if (poz) {
+                        if (_t.tips.of) {
+                            position = _.extend(_t.tips, poz,{collision: 'none'});
+                        }
+                        if (!_t.tips.el) {
+                            _t.tips.el = $('<b class="tip tip-' + poz.tip + '"></b>').appendTo(_t.el.addClass('tips'));
+                        } else {
+                            _t.tips.el.attr('class', 'tip tip-' + poz.tip);
+                        }
+                    }
+                }
+                _t.el.position(position);
+                
+                if (_t.timeout) {
+                    _t.timer=setTimeout(function() {
+                        _t.close();
+                    }, _t.timeout * 1000);
+                }
                 //drag & resize
                 if (_t.draggable) {
                     _t.el.draggable({
                         handle: isDialog ? ">.dialog-title" : ''
                     });
                 }
-/*                if (_t.resizable) {
-                    _t.contentEl.resizable({
-                        minWidth: 250,
-                        handles: "e" //只允许横向放大
-                    });
-                }*/
+                /*                if (_t.resizable) {
+                                    _t.contentEl.resizable({
+                                        minWidth: 250,
+                                        handles: "e" //只允许横向放大
+                                    });
+                                }*/
             }
-        }
-        //创建元素
+        };
+    //创建元素
     var dialog = function(option) {
+        if(option.id){
+            var d=$('#'+option.id);
+            if(d.length) return d.data('_notify_');
+        }
         option = _.extend(_.proto(defaults), option);
         return UI(option);
     }
+    window.dialog = dialog;
     _.extend(dialog, {
         loading: function(config) {
             return this(_.extend({
@@ -110,12 +141,16 @@ define(function(require, exports, module) {
             }, config));
         },
         confirm: function(config) {
+            if (config.test) {
+                config.callback && config.callback(true);
+            }
             return this(_.extend({
                 cls: 'note',
                 icon: '<i class="m2 f-lg f f-warn"></i>',
                 closeable: true,
+                mask: true,
                 oninit: function() {
-                    this.msg += '<i class="f f-checkmark notify-checkmark"></i>';
+                    this.msg += '<i class="f f-checkmark notify-checkmark" title="确定"></i>';
                     this.events = {
                         'click .notify-checkmark': 'doConfirm',
                         'click .notify-close': 'doConfirm'
@@ -138,12 +173,16 @@ define(function(require, exports, module) {
     var notifyIcon = 'info bell warn tool checkmark'.split(' ');
     _.each(['info', 'note', 'warn', 'error', 'safe'], function(o, i) {
         dialog[o] = function(msg, timeout) {
-            return this({
+            if (_.isString(msg)) {
+                msg = {
+                    msg: msg
+                }
+            }
+            return this(_.extend({
                 cls: o,
                 icon: '<i class="m2 f-lg f f-' + notifyIcon[i] + '"></i>',
-                msg: msg,
-                timeout: timeout == undefined ? 2 : timeout
-            });
+                timeout: timeout || 2
+            }, msg));
         }
     });
     return dialog;

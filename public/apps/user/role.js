@@ -1,5 +1,5 @@
 define(function(require, exports, module) {
-    var ctable = require('ui/ctable');
+    var ctable = require('ui/table');
     var searchbox = require('ui/searchbox');
     var template = require('./role.html');
     var buttonset = require('ui/buttonset');
@@ -266,7 +266,7 @@ define(function(require, exports, module) {
                     status: function(data) {
                         return '共' + data.total + '人';
                     },
-                    template: _.dot('<img src="{{=it.avanta}}" class="xl">\
+                    template: _.dot('<img src="{{=it.avanta}}" width="48" height="48" class="xl">\
                         <div style="margin-left:60px">\
                         <div><a href="javascript:;" class="ac-person-view f-lg">{{=it.userName}}</a> <small>({{=it.loginName}})</small></div>\
                         <div class="xr text-right"> {{~it.orgs :v:i}}{{?i>0}}、{{?}}{{=v.orgName}}{{~}}<i class="f f-org m10"></i><br> {{~it.roles :v:i}}{{?i>0}}、{{?}}{{=v.name}}{{~}}<i class="f f-user m10"></i></div>\
@@ -284,7 +284,7 @@ define(function(require, exports, module) {
                     onselect: function(selectedData, thisData) {
                         userManeger.toolbar.find('.ac-onselect').toggleClass('hide', !selectedData.length)
                     },
-                    itemsOnPage: UI.itemsOnPage,
+                    count: UI.count,
                     url: '/json/getUserByOrgId',
                     baseparams: {}
                 });

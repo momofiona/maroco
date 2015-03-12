@@ -7,13 +7,13 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="../css/maroco.css">
-    <link rel="stylesheet" href="../css/jqueryui/jquery-ui.css">
+    <link rel="stylesheet" href="css/maroco.css">
+    <link rel="stylesheet" href="css/jqueryui/jquery-ui.css">
     <!--[if lt IE 8]>
-    <link rel="stylesheet" href="../css/icomoon/ie7/ie7.css">
+    <link rel="stylesheet" href="css/icomoon/ie7/ie7.css">
     <![endif]-->
-    <script src="../maroco.js"></script>
-    <script src="../js/ui/ui.js"></script>
+    <script src="maroco.js"></script>
+    <script src="js/ui/ui.js"></script>
     <style type="text/css">
     /* IE8 +*/
     
@@ -91,7 +91,7 @@
                         </li>
                         <li><a href="#!tips">✦ Tips</a>
                         </li>
-                        <li><a href="#!table">▦ Table</a>
+                        <li><a href="#!ctable">▦ Table</a>
                         </li>
                         <li><a href="#!watch">☻ Watch(beta)</a>
                         </li>
@@ -143,13 +143,12 @@
             }, []);
 
         //给sidebar加上滚动条
-        if (UI.browser.chrome) {
+        if (!UI.browser.chrome) {
             sideMenu.addClass('scroll');
         } else {
             sideMenu.rollbar({
-                //关闭定时器,由window.resize接管
-                //可通过sideMenu.trigger('rollbar') 主动校准
-                checkTimer:0
+                checkTimer:0,//关闭定时器
+                bottomBlank:10//内容底部留白，防止被chrome左下角链接条挡住
             });
         }
         //#开始的匹配hash
@@ -198,48 +197,7 @@
         }
 
     });
-
-    var previewCode = function() {
-        $('#mainbody .codemirror').each(function() {
-            var win = $('<div class="m1">').insertAfter(this),
-                that = $(this).remove(),
-                source = that.attr('source'),
-                mode = that.attr('mode') || 'text/html',
-                value = "";
-            if (source) {
-                value = $(source).html();
-            } else {
-                value = this.value || this.innerHTML;
-            }
-            value = value.replace(/^(\n+\s*)+|(\n+\s*)+$/, '');
-            var pt = value.match(/^\s+/);
-            if (pt) {
-                pt = new RegExp('\n' + pt[0], 'g');
-                value = $.trim(value).replace(pt, '\n');
-            }
-
-            CodeMirror(win[0], {
-                value: value,
-                mode: mode,
-                indentUnit: 4,
-                lineNumbers: true,
-                styleActiveLine: true,
-                indentWithTabs: true
-            });
-        });
-    }
     </script>
-
-    <!--  js 代码高亮 -->
-    <link rel="stylesheet" href="../js/codemirror/codemirror.css">
-    <script src="../js/codemirror/codemirror.js"></script>
-    <script src="../js/codemirror/mode/xml/xml.js"></script>
-    <script src="../js/codemirror/mode/javascript/javascript.js"></script>
-    <script src="../js/codemirror/mode/css/css.js"></script>
-    <script src="../js/codemirror/mode/vbscript/vbscript.js"></script>
-    <script src="../js/codemirror/mode/htmlmixed/htmlmixed.js"></script>
-    <script src="../js/codemirror/addon/selection/active-line.js"></script>
-    <!-- / js 代码高亮 -->
 </body>
 
 </html>

@@ -53,9 +53,9 @@ define(function(require, exports, module) {
                     conditional: true,
                     required: true
                 },
-
                 // Current field
                 field = $(this),
+                rulename=field.attr('rule')||field.attr('name'),
                 // Current field value
                 fieldValue = field.val() || '',
                 // An index of extend
@@ -75,14 +75,14 @@ define(function(require, exports, module) {
                 // Is required?
                 fieldRequired = field.data('required'),
                 // An index of description object
-                fieldDescription = field.data('description') || field.attr('name'),
+                fieldDescription = field.data('description') || rulename,
                 // Trim spaces? 
                 fieldTrim = field.data('trim'),
                 reTrue = /^(true|)$/i,
                 reFalse = /^false$/i,
 
                 // The description object 
-                fieldDescription=options.description[fieldDescription]||validation.description||{};
+                fieldDescription=$.extend({},validation.description,options.description[fieldDescription]),
 
                 name = 'validate';
 
@@ -110,7 +110,6 @@ define(function(require, exports, module) {
                     fieldValue = String(options.prepare[fieldPrepare].call(field, fieldValue));
                 }
             }
-
             // Is not RegExp?
             if ($.type(fieldPattern) != 'regexp') {
 
@@ -131,7 +130,7 @@ define(function(require, exports, module) {
 
                     var
 
-                    // Splits the conditionals in an array
+                        // Splits the conditionals in an array
                         conditionals = fieldConditional.split(/[\s\t]+/);
 
                     // Each conditional
@@ -146,7 +145,6 @@ define(function(require, exports, module) {
             }
 
             fieldRequired = reTrue.test(fieldRequired);
-
             // Is required?
             if (fieldRequired) {
 
@@ -216,7 +214,7 @@ define(function(require, exports, module) {
                     }
                 }
             }
-            var log = fieldDescription.valid;
+            var log=fieldDescription.valid;
             if (event.type != 'keyup') {
                 if (!status.required) {
                     log = fieldDescription.required;
@@ -248,11 +246,11 @@ define(function(require, exports, module) {
 
                 if (typeof(validation.valid) == 'function') {
 
-                    validation.valid.call(field, event, status, options, log);
+                    validation.valid.call(field, event, status, options);
                 }
 
                 // Call the eachValidField callback
-                options.eachValidField.call(field, event, status, options, log);
+                options.eachValidField.call(field, event, status, options);
             } else {
 
                 // If WAI-ARIA is enabled
@@ -420,10 +418,18 @@ define(function(require, exports, module) {
         },
         //过滤非法字符HTML等
         charsafe: {
-            pattern: /^[^\\\/:\*\?\"<>\|]*$/
+            pattern: /^[^\\\/:\*\?\"<>\|]*$/,
+            description:{
+                required:'请填写邮箱',
+                pattern: '不能包含\/:*?"<>|等字符'
+            }
         },
         mobile: {
-
+            pattern: /^1\d{10}$/,
+            description:{
+                required:'请填写手机',
+                pattern: '请检查号码是否是11位'
+            }
         }
     });
     var describ = function(field, options, msg, cls) {

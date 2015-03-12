@@ -151,7 +151,7 @@ if (!Date.now)
                 }
 
                 $(flakeMarkup).attr({
-                    'class': 'snowfall-flakes', 
+                    'class': 'snowfall-flakes'
                 }).css({
                     'width' : this.size, 
                     'height' : this.size, 

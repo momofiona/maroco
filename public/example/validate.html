@@ -16,7 +16,7 @@
             <tr>
                 <td class="flabel">密码</td>
                 <td>
-                    <input type="password" class="text" data-required data-pattern="^.{6-20}$" data-describedby=".ac-passlabel" name="password"> <i class="fi-req">*</i> <span class="ac-passlabel"></span>
+                    <input type="password" class="text" data-required data-pattern="^.{6,20}$" data-describedby=".ac-passlabel" name="password"> <i class="fi-req">*</i> <span class="ac-passlabel"></span>
                 </td>
             </tr>
             <tr>
@@ -28,7 +28,7 @@
             <tr>
                 <td class="flabel">手机</td>
                 <td>
-                    <input class="text" data-pattern="^1\d{10}$" name="mobile">
+                    <input class="text" data-pattern="^1\d{10}$" name="mobile" data-validate="mobile">
                 </td>
             </tr>
             <tr>
@@ -174,14 +174,23 @@ seajs.use('ui/validate', function(validate) {
         form: $('#validateForm'),
         valid: function(event, status, options) {
             console.log('valid');
+            var sb=this.find(':submit').attr('disabled',true);
+            setTimeout(function(){
+                sb.removeAttr('disabled');
+            },3000);
         },
-        /*        invalid: function(event, status, options) {
-                    console.log('invalid');
-                },*/
+        invalid: function(event, status, options) {
+            console.log('invalid');
+        },
+        //条件
         conditional: {
             confirmpass: function(value, options) {
                 return value === options.form[0]['password'].value
             }
+        },
+        //预处理数据
+        prepare:{
+
         },
         description: {
             platformName: {
@@ -191,16 +200,11 @@ seajs.use('ui/validate', function(validate) {
                 conditional: '两次输入密码不一样'
             },
             account: {
-                required: '请填写帐号',
-                pattern: '不能包含\/:*?"<>|等字符'
+                required: '请填写帐号'
             },
             password: {
                 required: '请填写密码',
-                pattern: '密码需要填写6-20位',
-                valid: 'ok'
-            },
-            mobile:{
-                pattern:'手机号码输入有误'
+                pattern: '密码需要填写6-20位'
             }
         }
     });

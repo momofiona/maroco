@@ -63,7 +63,7 @@ seajs.config({
         //非法字符，依据windows文件夹命名规则
         illegalCharacter: /[^\\\/:\*\?\"<>\|]/,
         //分页每页数量
-        itemsOnPage: 15,
+        count: 15,
         server: seajs.data.base
     });
     /**
@@ -209,38 +209,33 @@ seajs.config({
         config = $.extend({
             baseparams: {},
             beforeLoad: $.noop,
-            afterLoad: $.noop
-        }, config);
-        var filter = config.filter,
-            baseparams = config.baseparams,
-            xhr;
-        //分页
-        if (config.count && !config.page) config.page = 1;
-        return {
-            config: config,
+            afterLoad: $.noop,
             load: function(_filter) {
-                if(!config.url) return;
-                if (xhr) xhr.abort();
-                config.beforeLoad(_filter);
+                if(!this.url) return;
+                if (this.xhr) this.xhr.abort();
+                this.beforeLoad(_filter);
                 //开启筛选
                 if (_filter) {
-                    filter = _filter;
-                    config.page = filter.page || 1;
+                    this.filter = _filter;
+                    this.page = _filter.page || 1;
                 }
-                xhr = $.ajax({
-                    url: config.url,
-                    data: $.extend({}, baseparams, {
-                        page: config.page,
-                        count: config.count
-                    }, filter),
-                    cache: config.cache,
+                this.xhr = $.ajax({
+                    url: this.url,
+                    data: $.extend({}, this.baseparams, {
+                        page: this.page,
+                        count: this.count
+                    }, this.filter),
+                    cache: this.cache,
                     dataType: 'JSON',
                     success: function(data) {
                         config.afterLoad(data);
                     }
                 });
             }
-        }
+        }, config);
+        //分页
+        if (config.count && !config.page) config.page = 1;
+        return config
     }
     UI.loader = loader;
 
