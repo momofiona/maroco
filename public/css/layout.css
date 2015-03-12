@@ -409,7 +409,6 @@ a:hover {
   margin: 0 0 1px;
   padding: 0.5em 10px 0.4em 0;
   height: 36px;
-  z-index: 20;
   position: relative;
 }
 .toolbar .wall {

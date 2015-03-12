@@ -14,7 +14,21 @@ define(function(require, exports, module) {
             events: {
                 'click .ac-back': 'destroy',
                 'click .ac-reset': 'reset',
-                'click .ac-removeOrg': 'removeOrg'
+                'click .ac-removeOrg': 'removeOrg',
+                'click .ac-join-department':function(e,config){
+                    seajs.use('apps/user/department', function(depart) {
+                        depart.show({
+                            onselected: function(departs) {
+                                // console.log(departs);
+                                _.each(departs,function(o){
+                                    o.orgId=o.id;
+                                    o.orgName=o.name;
+                                });
+                                config.addOrg(departs);
+                            }
+                        });
+                    });
+                }
             },
             //当前人员的角色ID
             roles: {},

@@ -28,6 +28,7 @@ define(function(require, exports, module) {
             "result|5-6": [{
                 'id|+1': 12,
                 "isParent": "@BOOLEAN",
+                "type":"@BOOLEAN",//是否是公司
                 "name": '@NAME'
             }]
         });
@@ -73,7 +74,7 @@ define(function(require, exports, module) {
     });
 
     //根据组织ID返回所有权限
-    Mock.mock(/\/json\/getRoleByOrgId(\?.*)?/, 'get', {
+    Mock.mock(/\/json\/getRoleByOrgIds(\?.*)?/, 'get', {
         "total":12,
         "result|2-5": [{
             "id": "@GUID",

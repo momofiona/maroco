@@ -36,20 +36,65 @@ define(function(require, exports, module) {
                 }
             }
         };
-        var userManeger =  UI({
+        var userManeger = UI({
             orgTree: null,
             peopleListTable: null,
             catalog: null,
             events: {
-                'click .ac-editDepart':function(e, config) {
-                    seajs.use('apps/user/editDepartment', function(depart) {
-                        depart.show({
-                            callback:function(depart){
-                                
+                //添加子公司
+                'click .ac-addCompany': function(e, config) {
+                    seajs.use('apps/user/company', function(company) {
+                        company.add({
+                            container: config.openSub(),
+                            data: config.org,
+                            destroy: function() {
+                                config.closeSub();
                             }
                         });
                     });
                 },
+                //编辑当前公司
+                'click .ac-editCompany': function(e, config) {
+                    //treeNode
+                    seajs.use('apps/user/company', function(company) {
+                        company.edit({
+                            container: config.openSub(),
+                            data: config.org,
+                            destroy: function() {
+                                config.closeSub();
+                            }
+                        });
+                    });
+                },
+                //删除当前公司
+                'click .ac-delCompany': function(e, config) {
+                    seajs.use(['apps/user/company', 'ui/notify'], function(company, notify) {
+                        notify.confirm({
+                            msg: '确定删除 ' + config.org.name + '?',
+                            callback: function(b) {
+                                if (b) {
+                                    company.remove(config.org);
+                                }
+                            }
+                        });
+                    });
+                },
+
+                //编辑当前部门
+                'click .ac-editDepart': function(e, config) {
+                    seajs.use('apps/user/editDepartment', function(depart) {
+                        depart.show({
+                            callback: function(depart) {
+
+                            }
+                        });
+                    });
+                },
+                //添加子公司
+                'click .ac-addDepart': function(e, config) {},
+                //删除当前公司
+                'click .ac-delDepart': function(e, config) {},
+                //给选中的人员更换部门
                 'click .ac-changeDepart': function(e, config) {
                     seajs.use('apps/user/department', function(depart) {
                         depart.show({
@@ -64,10 +109,12 @@ define(function(require, exports, module) {
                 this.orgTree = $.fn.zTree.init(orgTreeDom, orgTreeSetting);
             },
             //点击左边的树节点，刷出右边的列表
-            org:null,
+            org: null,
             renderUser: function(treeNode) {
-                if(this.org==treeNode) return;
-                this.org=treeNode;
+                if (this.org == treeNode) return;
+                //如果是公司，显示公司编辑按钮 type=1时候为公司
+                this.companyMenu.toggle(treeNode.type == 1);
+                this.org = treeNode;
                 this.catalog.html(treeNode.name).attr('title', treeNode.name);
                 //刷新人员列表
                 this.peopleListTable.load({
@@ -210,6 +257,8 @@ define(function(require, exports, module) {
                 this.el.addClass('noscroll am-fadeinright').html(template).appendTo(opt.container);
                 this.toolbar = this.$('.toolbar');
                 this.sidebar = this.$('.sidebar');
+                //公司编辑按钮
+                this.companyMenu = this.$('.ac-company-menu').hide();
                 //给sidebar加上滚动条
                 if (UI.browser.chrome) {
                     this.sidebar.addClass('scroll');

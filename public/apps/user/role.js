@@ -184,7 +184,7 @@ define(function(require, exports, module) {
                         this.find('tbody tr').first().trigger('click');
                         roles.roleNum.html(data.result.length);
                     },
-                    url: '/json/getRoleByOrgId',
+                    url: '/json/getRoleByOrgIds',
                     baseparams: {}
                 });
                 this.roleNum = this.$('.ac-role-num');

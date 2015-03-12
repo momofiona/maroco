@@ -5,7 +5,7 @@ define(function(require, exports, module) {
     exports.show = function(option) {
         var orgTree,
             dialog = notify({
-                title: '选择部门(按住 Ctrl 可多选)',
+                title: option.selectedSingle?'选择部门(单选)':'选择部门(按住 Ctrl 可多选)',
                 draggable: true,
                 mask: true,
                 width: 400,
@@ -26,7 +26,7 @@ define(function(require, exports, module) {
                             type: 'get'
                         },
                         view: {
-                            selectedMulti: true
+                            selectedMulti: option.selectedSingle
                         },
                         callback: {
                             onClick: function(event, treeId, treeNode) {
