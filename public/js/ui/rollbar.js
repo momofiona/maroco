@@ -42,24 +42,24 @@ define(function(require, exports, module) {
             'left': 0
         });
         //插入滚动条
-        if (this.settings.scroll == 'horizontal') {
+        if (setting.scroll == 'horizontal') {
             this.container.prepend(this.hpath.append(this.hslider))
-        } else if (this.settings.scroll == 'vertical') {
+        } else if (setting.scroll == 'vertical') {
             this.container.prepend(this.vpath.append(this.vslider))
         } else {
             this.container.prepend(this.vpath.append(this.vslider), this.hpath.append(this.hslider))
         }
         this.vpath.add(this.hpath).css({
-            'z-index': this.settings.zIndex,
+            'z-index': setting.zIndex,
             'display': 'none'
         });
         this.vslider.css({
-            'height': this.settings.sliderSize,
-            'opacity': this.settings.sliderOpacity
+            'height': setting.sliderSize,
+            'opacity': setting.sliderOpacity
         });
         this.hslider.css({
-            'width': this.settings.sliderSize,
-            'opacity': this.settings.sliderOpacity
+            'width': setting.sliderSize,
+            'opacity': setting.sliderOpacity
         });
         //插入顶部阴影
         if (setting.shadow) {
@@ -67,19 +67,14 @@ define(function(require, exports, module) {
         }
         this.init();
         this.pathSize();
-        //文档加载结束以后触发
-        $(function() {
-            setTimeout(function() {
-                _rollbar.checkScroll()
-            }, 10)
-        });
+        
         var _resize = function() {
             //当判断content不在dom上的时候移除定时器
             if (!document.getElementById(contentId)) {
                 //去掉定时器
                 clearInterval(_rollbar.lazytimer);
                 $(document).off(_rollbar.namespace);
-                $(window).off('resize',_resize);
+                $(window).off('resize', _resize);
                 _rollbar.container.off(_rollbar.namespace);
                 _rollbar.container = null;
                 //避免意外情况下让界面不可选择
@@ -90,10 +85,15 @@ define(function(require, exports, module) {
             _rollbar.pathSize();
             _rollbar.checkScroll();
         }
-        if (this.settings.checkTimer) {
-            this.lazytimer = setInterval(_resize, this.settings.checkTimer)
-        } else {
-            $(window).on('resize', _resize=_.throttle(_resize,500,{leading:false}));
+        if (setting.checkTimer) {
+            this.lazytimer = setInterval(_resize, setting.checkTimer)
+        } else if (setting.checkWhenResize) {
+            $(window).on('resize', _resize = _.throttle(_resize, 500, {
+                leading: false
+            }));
+            _.delay(function() {
+                _resize();
+            }, 500);
         }
     }
 
@@ -177,11 +177,11 @@ define(function(require, exports, module) {
             this.hslider.css('left', Math.round(h / this.hdiff * this.htrack));
             if (e && (h && h != this.hdiff)) {
                 e.stopPropagation();
-                e.preventDefault()
+                e.preventDefault();
             }
         }
         if (this.before.v != v || this.before.h != h) {
-            if (typeof this.settings.onscroll == 'function') {
+            if (_.isFunction(this.settings.onscroll)) {
                 this.settings.onscroll.call(this.container.get(0), v, h)
             }
             this.before.v = v;

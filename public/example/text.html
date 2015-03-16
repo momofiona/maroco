@@ -31,12 +31,25 @@
         </p>
     </section>
     <section>
+        <h2>Label</h2>
+        <label class="log"><i class="f f-question f-lg"></i> log</label>
+        <label class="silver">silver</label>
+        <label class="info">info</label>
+        <label class="note">note</label>
+        <label class="warn">warn</label>
+        <label class="safe">safe</label>
+        <label class="error">error</label>
+        <label class="link">link</label>
+        <label class="dark">dark</label>
+    </section>
+    <section>
         <h2>基础样式 <small>Base Types</small></h2>
         <p class="log"><i class="f f-question f-lg"></i> log…</p>
+        <p class="silver"><i class="f f-question f-lg"></i> silver</p>
         <p class="info moon"><i class="f f-multiply notify-close am-rotate xr" onclick="$(this).parent().remove();"></i><i class="f f-info f-lg"></i> info…我以为，我逗你笑你就会喜欢我，我却没想到，我输给了让你哭的人…</p>
         <p class="note"><i class="f f-lg f-bell"></i> note…我以为，我逗你笑你就会喜欢我，我却没想到，我输给了让你哭的人…</p>
         <p class="warn"><i class="f f-warn f-lg"></i> warn…别人都说我长得丑，憋了这几年，我终于忍不住到整容店整容。tmd我刚到门口就看见护士往里面边跑边喊：师傅，来大生意了。</p>
-        <p class="error"><i class="f f-lg f-close xr"></i><i class="f f-lg f-tool"></i> error…老师问学生道：要怎么解释“与人分担痛苦，会 使痛苦减半”呢？小伦回答说：“如果我爸爸打我，我就随即揍我弟弟！”</p>
+        <p class="error"><i class="f f-lg f-tool"></i> error…老师问学生道：要怎么解释“与人分担痛苦，会 使痛苦减半”呢？小伦回答说：“如果我爸爸打我，我就随即揍我弟弟！”</p>
         <p class="safe"><i class="f f-checkmark f-lg"></i> safe…刚看到一句很好的名言：我们无法拉伸生命的长度，但是我们可以拓展生命的宽度。 我觉得这句话太有道理了！ 意思就是：虽然我们无法再长高了，但是我们还可以继续长胖。</p>
         <p class="link">‹ link◁呵呵。›</p>
         <h2>基础色板 <small>Colors</small></h2>
@@ -47,7 +60,7 @@
     </section>
 </div>
 <script>
-/*$(function() {
+$(function() {
     //rgba , 0.65098
     var colors = ['249, 200, 50', '32, 78, 200', '208, 231, 70', '112, 162, 96', '255, 28, 39', '29, 206, 181', '54, 89, 214', '146, 236, 78', '54, 132, 54', '116, 106, 76', '124, 107, 149', '128, 226, 80', '255, 140, 42', '47, 226, 78', '236, 125, 116', '191, 216, 108', '218, 203, 196', '67, 90, 84', '167, 159, 126', '82, 214, 196', '67, 246, 230', '74, 191, 252'];
     var to16 = function(colors) {
@@ -57,12 +70,12 @@
         }, '#');
     }
     var bs = _.reduce(colors, function(memo, v) {
-        return memo + '<span class="xl" style="width:16%;padding:2%;background:rgb(' + v + ')">' + to16(v) + '<br>rgb(' + v + ')</span>';
+        return memo + '<span class="xl" style="width:16%;padding:10px 2%;background:rgb(' + v + ')">' + to16(v) + '<br>rgb(' + v + ')</span>';
     }, '');
     $('#classicolor').css({
         'font-size': 12,
         'color': '#fff',
         'font-family': 'arial'
     }).html(bs);
-});*/
+});
 </script>

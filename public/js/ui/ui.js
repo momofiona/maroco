@@ -243,7 +243,7 @@ seajs.config({
      * button 给页面上所有btn绑定事件
      * @type {Array}
      */
-    var btnClassNames = ['log', 'silver', 'note', 'info', 'warn', 'error', 'link'];
+    var btnClassNames = ['log', 'silver', 'note', 'info', 'safe', 'warn', 'error', 'link', 'dark'];
     var button = UI.button = function(dom, cName) {
         //主动触发
         var _t = $(dom);

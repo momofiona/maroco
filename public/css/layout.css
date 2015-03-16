@@ -219,6 +219,11 @@ input[type=checkbox]:checked[disabled] {
 .text-center {
   text-align: center;
 }
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 /* scroll */
 .noscroll,
 .noscroll body {
@@ -394,7 +399,7 @@ a:hover {
   color: #ffffff !important;
 }
 .link {
-  background-color: transparent;
+  background-color: #ffffff;
   border: 1px solid #478af8;
   color: #478af8 !important;
 }
@@ -559,7 +564,7 @@ a:hover {
 .glass {
   background: url(img/alpha-black-50.png);
   _background-repeat: no-repeat;
-  background: rgba(0, 0, 0, 0.02);
+  background: rgba(0, 0, 0, 0.2);
 }
 .notify,
 .dialog {
@@ -840,6 +845,22 @@ a:hover {
 .pager .next {
   background-color: #f8f8f8;
   font-family: vedana;
+}
+/* 进度条 */
+.progress {
+  background-color: #eee;
+  height: 3px;
+  position: relative;
+}
+.progress .bar {
+  width: 0;
+  border: 0;
+  padding: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  transition: width 0.45s cubic-bezier(0.23, 1, 0.32, 1), background-color 1s;
 }
 .row {
   *zoom: 1;

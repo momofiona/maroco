@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../css/maroco.css">
-    <link rel="stylesheet" href="../css/jqueryui/jquery-ui.css">
+    <!-- <link rel="stylesheet" href="../css/jqueryui/jquery-ui.css"> -->
     <!--[if lt IE 8]>
     <link rel="stylesheet" href="../css/icomoon/ie7/ie7.css">
     <![endif]-->
@@ -99,6 +99,8 @@
                         </li>
                         <li><a href="#!validate">✓ Validate</a>
                         </li>
+                        <li><a href="#!upload">⤴ Upload</a>
+                        </li>
                         <li><a href="#!girlfriend">♥ 工具规范</a>
                         </li>
                     </ul>
@@ -149,7 +151,8 @@
             sideMenu.rollbar({
                 //关闭定时器,由window.resize接管
                 //可通过sideMenu.trigger('rollbar') 主动校准
-                checkTimer:0
+                checkTimer:0,
+                checkWhenResize:true
             });
         }
         //#开始的匹配hash

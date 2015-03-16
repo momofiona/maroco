@@ -132,7 +132,6 @@ define(function(require, exports, module) {
         option = _.extend(_.proto(defaults), option);
         return UI(option);
     }
-    window.dialog = dialog;
     _.extend(dialog, {
         loading: function(config) {
             return this(_.extend({

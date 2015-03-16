@@ -13,13 +13,14 @@
 @fontColor: #434749;
 @logColor: #fafafa;
 @infoColor: #4abffc;
-@noteColor: #478af8;
+@noteColor: #478af8;//#016EB1;
 @warnColor: #f9c832;
 @errorColor: #ab2918;
 @safeColor: #129324;
 @linkColor: @noteColor;
 @darkColor: #000;
 @btnHeight: 36px;
+@cubic:cubic-bezier(.23,1,.32,1);
 @radius: 2px; //log b-log text
 .c-error {
     color: @errorColor !important;
@@ -218,6 +219,11 @@ input[type=checkbox] {
 .text-center {
     text-align: center;
 }
+.ellipsis{
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+}
 /* scroll */
 
 .noscroll, .noscroll body {
@@ -362,7 +368,7 @@ a:hover {
     .baseFactory(@safeColor, @safeColor);
 }
 .link {
-    .baseFactory(transparent, @linkColor, @linkColor);
+    .baseFactory(#fff, @linkColor, @linkColor);
 }
 .dark {
     .baseFactory(@darkColor, @darkColor);
@@ -527,7 +533,7 @@ a:hover {
 .glass {
     background: url(img/alpha-black-50.png);
     _background-repeat: no-repeat;
-    background: rgba(0, 0, 0, 0.02);
+    background: rgba(0, 0, 0, 0.2);
 }
 .notify {
     box-shadow: 0 0 0 3px rgba(0, 0, 0, .04);
@@ -825,5 +831,21 @@ a:hover {
     .prev,.next{
         background-color: #f8f8f8;
         font-family: vedana;
+    }
+}
+/* 进度条 */
+.progress{
+    background-color: #eee;
+    height: 3px;
+    position: relative;
+    .bar{
+        width:0;
+        border:0;
+        padding:0;
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        transition:width .45s @cubic,background-color 1s;
     }
 }
