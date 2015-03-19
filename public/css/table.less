@@ -108,23 +108,32 @@
 	float: left;
 	padding: 0 5px;
 }
-
-.csortable {
-    &:extend(.user-select);
-    background-position: 95% center;
-    background-repeat: no-repeat;
-    background-image: url(img/dropdown_arrow.png);
-    cursor: default;
-}
-.csortable-asc {
-    background-image: url(img/dropdown_arrow_up.png);
-}
-.csortable-desc {
-    background-image: url(img/dropdown_arrow_down.png);
-}
-
 .ctable-checkall, .ctable-checkbox {
     vertical-align: middle;
 }
+
+//orderby grid也用到了
+.orderby {
+    &:extend(.user-select);
+    background-repeat: no-repeat;
+    cursor: default;
+    .order-tip{
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        margin: 0 0 0 6px;
+        background: url(img/dropdown_arrow.png) no-repeat;
+        vertical-align: text-top;
+    }
+}
+.asc .order-tip{
+    height: 8px;
+}
+.desc .order-tip{
+    height: 8px;
+    background-position: left bottom;
+    vertical-align: text-bottom;
+}
+
 
 

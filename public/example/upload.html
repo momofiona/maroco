@@ -1,48 +1,54 @@
 <div class="row m10">
     <h1>文件上传 <small>Upload</small></h1>
     <hr>
-        <div class="progress m3">
-            <div style="width:30%" class="note bar"></div>
-        </div>
-        <div id="filelist"></div>
-        <br />
-        <div id="container">
-            <a class="upbtn b note" id="uploadBtn1" href="javascript:;"><i class="f f-upload m2"></i>文件上传</a>
-            <a class="upbtn" id="uploadBtn2" href="javascript:;">[Select files]</a>
-        </div>
+    <div class="progress m3">
+        <div style="width:30%" class="note bar"></div>
+    </div>
+    <div id="filelist"></div>
+    <br />
+    <div id="container">
+        <a class="upbtn b note" id="uploadBtn1" href="javascript:;"><i class="f f-upload m2"></i>文件上传</a>
+        <a class="upbtn" id="uploadBtn2" href="javascript:;">[Select files]</a>
+    </div>
 
     <pre class="codemirror" source="#demo_upload_script" mode="javascript"></pre>
     <script id="demo_upload_script">
     seajs.use('ui/upload', function(upload) {
         // Custom example logic
         upload({
-            browse_button: $('.upbtn').toArray(),//这里可以是 "uploadBtn1" 或 document.getElementById("uploadBtn1") 或 ["uploadBtn1","uploadBtn2"] 或["uploadBtn1",document.getElementById("uploadBtn2")]
-            container:document.getElementById('container'),//存放file控件的容器，一般是按钮的父元素，默认document.body
-            url: '/upload',//上传路径
-            FilesAdded:function(up,files){
+            browse_button: $('.upbtn').toArray(), //这里可以是 "uploadBtn1" 或 document.getElementById("uploadBtn1") 或 ["uploadBtn1","uploadBtn2"] 或["uploadBtn1",document.getElementById("uploadBtn2")]
+            container: document.getElementById('container'), //存放file控件的容器，一般是按钮的父元素，默认document.body
+            url: '/upload', //上传路径
+            filters: {
+                max_file_size: '1mb',
+                mime_types: [{
+                    title: "Image files",
+                    extensions: "jpg,gif,png"
+                }]
+            },
+            FilesAdded: function(up, files) {
                 $('#filelist').empty();
-                $.each(files,function(i,o){
-                    o.url='/upload';//可为每个批上传设置不同的上传路径
+                $.each(files, function(i, o) {
+                    o.url = '/upload'; //可为每个批上传设置不同的上传路径
                 })
             },
-            BeforeUpload:function(up,file){
-                up.settings.url=file.url;//配合FilesAdded 更改上传路径
+            BeforeUpload: function(up, file) {
+                up.settings.url = file.url; //配合FilesAdded 更改上传路径
             },
-            FileUploaded:function(up,file,data){
+            FileUploaded: function(up, file, data) {
                 var s;
-                if($.inArray(data.ext,['png','jpg','gif'])!=-1){
-                    s='<a target="_blank" href="../temp/'+data.name+'"><img height="100" src="../temp/'+data.name+'" alt="'+data.filename+'"></a>';
-                }else{
-                    s='<a target="_blank" href="../temp/'+data.name+'">'+data.filename+'"</a>'
+                if ($.inArray(data.ext, ['png', 'jpg', 'gif']) != -1) {
+                    s = '<a target="_blank" href="../temp/' + data.name + '"><img height="100" src="../temp/' + data.name + '" alt="' + data.filename + '"></a>';
+                } else {
+                    s = '<a target="_blank" href="../temp/' + data.name + '">' + data.filename + '"</a>'
                 }
                 $('#filelist').append(s);
-            },
-            max_file_size: '10mb'
+            }
         });
     });
     </script>
     <style type="text/css">
-    .ctable{
+    .ctable {
         text-align: left;
     }
     </style>

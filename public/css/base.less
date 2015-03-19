@@ -264,16 +264,19 @@ input[type=checkbox] {
 .linear {
     .linear-gradient() !important;
 }
-.moon,.star {
+.moon {
     border-radius: 1000px !important;
 }
 .star{
     padding:1px !important;
     font-size: .825em;
-    width: 1.5em;
-    height: 1.5em;
+    min-width: 1em;
+    _width: 1em;
+    height: 1em;
+    line-height: 1;
     text-align: center;
     display: inline-block;
+    vertical-align: text-bottom;
 }
 .r1 {
     border-radius: 0 0 @radius @radius !important;
@@ -511,6 +514,7 @@ a:hover {
 
 .mask, .notify, .tips {
     z-index: 1000;
+    _zoom:1;
     position: absolute;
 }
 .mask {
@@ -658,6 +662,9 @@ a:hover {
     border-bottom: solid 1px rgba(255, 255, 255, 0.2);
     margin:4px 0;
 }
+
+@import "tips.less";
+
 //dropdown
 [data-dropdown] {
     cursor: pointer !important;
@@ -842,6 +849,7 @@ a:hover {
         width:0;
         border:0;
         padding:0;
+        font-size: 0;
         position: absolute;
         left: 0;
         top: 0;
@@ -849,3 +857,40 @@ a:hover {
         transition:width .45s @cubic,background-color 1s;
     }
 }
+/* tabs */
+.tabs{
+
+}
+.tab{
+    &:extend(.clear all);
+    border-bottom: solid 1px #ddd;
+    padding: 2px 0 0;
+    margin:0;
+    list-style: none;
+    li{
+        float: left;
+        margin-bottom: -1px;
+        position: relative;
+    }
+    a{
+        padding: 10px 15px;
+        border:solid 1px transparent;
+        _border-width:0;
+        border-radius: @radius @radius 0 0;
+        float: left;
+        line-height: 16px;
+        margin-right: 2px;
+    }
+    a:hover{
+        background: #eee;
+    }
+    .active a{
+        border-color:#ddd;
+        border-bottom-color: transparent;
+        _border-width:1px 1px 0;
+        _padding: 9px 14px 11px;
+        background: #fff;
+        color: #444;
+    }
+}
+

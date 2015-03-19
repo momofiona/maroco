@@ -51,9 +51,9 @@
 "use strict";
 define(function(require, exports, module) {
     require('js/vendor/jquery.mousewheel');
-    require('./rollbar');
+    require('ui/rollbar');
     //分页
-    var pager = require('js/ui/pager');
+    var pager = require('ui/pager');
     var editOver = '<b class="i i-safe ac-tr-save m2" title="保存"></b><b class="i i-close ac-tr-cancel" title="取消"></b>';
     // var addIcon = '';
     var inputs = 'input:not([type]),input[type="color"],input[type="date"],input[type="datetime"],input[type="datetime-local"],input[type="email"],input[type="file"],input[type="hidden"],input[type="month"],input[type="number"],input[type="password"],input[type="range"],input[type="search"],input[type="tel"],input[type="text"],input[type="time"],input[type="url"],input[type="week"],textarea, select, input[type="checkbox"],input[type="radio"]';
@@ -79,7 +79,7 @@ define(function(require, exports, module) {
             <th align=left><input type="checkbox" class="ctable-checkall"></th>\
             {{?}}\
             {{~it.cols :col:index}}\
-            <th align="{{=col.align||"left"}}" class="{{=col.cls||""}} {{=col.sortable?"csortable":""}}" {{?col.sortable}}data-sortable="{{=col.sortable}}"{{?}} {{?col.style}}style="{{=col.style}}"{{?}}>{{=col.title||""}}</th>\
+            <th align="{{=col.align||"left"}}" class="{{=col.cls||""}} {{=col.orderby?"orderby":""}}"{{?col.orderby}} orderby="{{=col.sortable}}"{{?}}{{?col.style}} style="{{=col.style}}"{{?}}>{{=col.title||""}}{{?col.orderby}}<i class="order-tip" orderby="{{=col.orderby}}"></i>{{?}}</th>\
             {{~}}\
             {{?it.editable}}\
             <th class="text-center"><b class="f f-add ac-tr-add"></b></th>\
@@ -97,7 +97,7 @@ define(function(require, exports, module) {
                 {{?col.colspan}}\
                 <th index="{{=index+=col.colspan-1}}" colspan="{{=col.colspan}}" class="ctable-colgroup" align="center">{{=col.colgroup}}</th>\
                 {{??}}\
-                <th rowspan="2" align="{{=col.align||"left"}}" class="{{=col.cls||""}} {{=col.sortable?"csortable":""}}" {{?col.sortable}}data-sortable="{{=col.sortable}}"{{?}} {{?col.style}}style="{{=col.style}}"{{?}}>{{=col.title||""}}</th>\
+                <th rowspan="2" align="{{=col.align||"left"}}" class="{{=col.cls||""}} {{=col.sortable?"orderby":""}}" {{?col.sortable}}data-sortable="{{=col.sortable}}"{{?}} {{?col.style}}style="{{=col.style}}"{{?}}>{{=col.title||""}}</th>\
                 {{?}}\
             {{~}}\
             {{?it.editable}}\
@@ -107,7 +107,7 @@ define(function(require, exports, module) {
         <tr>\
             {{~it.cols :col:index}}\
             {{?col.colgroup}}\
-            <th align="{{=col.align||"left"}}" class="ctable-colgroup {{=col.cls||""}} {{=col.sortable?"csortable":""}}" {{?col.sortable}}data-sortable="{{=col.sortable}}"{{?}} {{?col.style}}style="{{=col.style}}"{{?}}>{{=col.title||""}}</th>\
+            <th align="{{=col.align||"left"}}" class="ctable-colgroup {{=col.cls||""}} {{=col.sortable?"orderby":""}}" {{?col.sortable}}data-sortable="{{=col.sortable}}"{{?}} {{?col.style}}style="{{=col.style}}"{{?}}>{{=col.title||""}}</th>\
             {{?}}\
             {{~}}\
         </tr>\
@@ -205,23 +205,24 @@ define(function(require, exports, module) {
             spaging = tfoot.find('.pager');
         $(config.container).append(table);
 
-        thead.on('click', '.csortable', function(e) {
+        thead.on('click', '.orderby', function(e) {
             //排序
             e.stopPropagation();
-            var order = 'asc';
-            if ($(this).hasClass('csortable-asc')) {
-                $(this).removeClass('csortable-asc').addClass('csortable-desc');
-                order = 'desc';
-            } else if ($(this).hasClass('csortable-desc')) {
-                $(this).removeClass('csortable-desc').addClass('csortable-asc');
-            } else {
-                $(this).addClass('csortable-asc');
-            }
-            thead.find('th').not(this).removeClass('csortable-asc').removeClass('csortable-desc');
-            $.extend(config.baseparams, {
-                orderby: $(this).data('sortable'),
-                order: order
-            });
+            var order = 'asc',t=$(this);
+        	if(t.hasClass('desc')){
+        		t.removeClass('desc');
+        	}else if(t.hasClass('asc')){
+        		order='desc';
+        		t.addClass('desc');
+        	}else{
+        		t.addClass('asc');
+        	}
+        	//去除其余列图标
+        	t.siblings().removeClass('asc desc');
+        	_.extend(config.baseparams,{
+        		orderby:t.attr('orderby'),
+        		order:order
+        	});
             loader.load();
         });
         //排序
@@ -382,14 +383,14 @@ define(function(require, exports, module) {
         //缓存
         var cache = [];
         //是否设置了宽高
-        if (config.height || config.maxHeight) {
+        if (config.height) {
             //TODO support function & '#selector - 100'
-            if (config.height === "window") {
+            if (_.isFunction(config.height)) {
                 var _throttle = _.throttle(function() {
                     if (!document.getElementById(config.cscrollId)) {
                         $(window).off('resize', _throttle);
                     } else {
-                        height($(window).height() - $(table).offset().top);
+                        height(config.height(table));
                     }
                 }, 500, {
                     leading: false

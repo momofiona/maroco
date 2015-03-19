@@ -211,7 +211,7 @@ seajs.config({
             beforeLoad: $.noop,
             afterLoad: $.noop,
             load: function(_filter) {
-                if(!this.url) return;
+                if (!this.url) return;
                 if (this.xhr) this.xhr.abort();
                 this.beforeLoad(_filter);
                 //开启筛选
@@ -282,6 +282,66 @@ seajs.config({
     }).on('click', 'a[href="#"]', function() {
         return false;
     });
+
+    //tabs
+    UI.tabs = function(config) {
+        return UI($.extend(true, {
+            active: function(n) {
+                this.$('a:eq(' + n + ')').trigger('click');
+            },
+            onActive: $.noop,
+            cache:{},
+            getPanel: function(o) {
+                //IE67对于js插入的a标签，取.attr('href')会带上location.href
+                //对于IE678，取 o.panel 会返回.attr('panel')
+                //如果是#开头的，就全局找，否则在当前下找
+                var id = o.getAttribute('panel'),cache=this.cache,ret;
+                if (id) {
+                    if(cache[id]){
+                        return cache[id]
+                    }else if (id.indexOf('#') == 0) {
+                        ret=$(id);
+                    } else {
+                        ret=this.$(id);
+                    }
+                    //如果存在则返回并缓存
+                    if(ret.length){
+                        return cache[id]=ret;
+                    }
+                }
+            },
+            events: {
+                'click a': function(e, config) {
+                    var t = this,
+                        tab = $(t),
+                        panel = tab.attr('panel');
+                    if(this==config.tab) return;
+                    if (panel) {
+                        //隐藏其他容器
+                        config.tabs.find('a').each(function(i, o) {
+                            //hide other panels
+                            if (o === t) return;
+                            var box = config.getPanel(o);
+                            box && box.hide();
+                        });
+                        //show current panel
+                        tab.parent().addClass('active').siblings().removeClass('active');
+                        var panel = $(panel).show();
+                        config.onActive(t, panel);
+                        config.tab = t;
+                        config.panel = panel;
+                        return false;
+                    }
+                }
+            },
+            init: function() {
+                this.tabs = this.el.children('.tab');
+            },
+            create: function() {
+                this.active(0);
+            }
+        }, config));
+    };
     //设置seaID
     define('ui', function(require) {
         require('api'); //注掉此行来禁用假数据

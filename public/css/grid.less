@@ -1,0 +1,73 @@
+/* grid */
+
+.grid {}
+
+.grid-head {
+    &:extend(.user-select);
+    background: #f8f8f8;
+    height: 36px;
+    line-height: 36px;
+}
+
+.grid-body {
+    line-height: 36px;
+    .grid-hover {
+        background: #F3F6FC;
+        border-color: #DCE6F2;
+    }
+    .grid-selected {
+        background: darken(#F3F6FC, 2%);
+        border-color: darken(#DCE6F2, 2%);
+    }
+}
+
+.grid-col {
+    &:extend(.ellipsis);
+    float: left;
+    padding: 0 5px;
+    height: 100%;
+}
+
+.grid-row {
+    &:extend(.user-select);
+    clear: both;
+    height: 36px;
+    border: solid 1px transparent;
+    border-width: 1px 0;
+    border-bottom-color: #EDF2F8;
+    margin: 0 0 -1px;
+    position: relative;
+}
+
+.grid-check {
+    padding: 0 10px;
+    width: 15px;
+    i {
+        background: url(img/check.png) no-repeat;
+        display: inline-block;
+        width: 15px;
+        height: 15px;
+        margin-bottom: 2px;
+        vertical-align: middle;
+        .grid-hover & {
+            background-position: 0 -25px;
+        }
+        .grid-selected & {
+            background-position: 0 -52px;
+        }
+    }
+}
+
+.grid-foot {
+    clear: both;
+    padding: 0 0 0 8px;
+    height: 30px;
+    line-height: 30px;
+    .pager {
+        float: right;
+    }
+}
+
+.grid-statu {
+    float: left;
+}

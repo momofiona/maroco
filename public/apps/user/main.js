@@ -176,7 +176,7 @@ define(function(require, exports, module) {
                     container: this.$('.ac-peoples'),
                     cols: [{
                         title: '姓名',
-                        width: 70
+                        width: 90
                     }, {
                         title: '性别',
                         width: 50
