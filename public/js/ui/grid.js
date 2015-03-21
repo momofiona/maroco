@@ -20,8 +20,8 @@ define(function(require, exports, module) {
             //一些回调
             onSelected: $.noop,
             afterLoad: $.noop,
-            onOrderChange:$.noop,
-            baseparams:{},
+            onOrderChange: $.noop,
+            baseparams: {},
             events: {
                 //hover
                 'mouseenter .grid-row': function(e, config) {
@@ -34,7 +34,7 @@ define(function(require, exports, module) {
                 'click .grid-row': function(e, config) {
                     var others;
                     if (!event.ctrlKey) {
-                        var tar = $(event.target||event.srcElement);
+                        var tar = $(event.target || event.srcElement);
                         //IE10- event.target=undefined
                         if (!tar.hasClass('grid-check') && !tar.parent().hasClass('grid-check')) {
                             others = $(this).siblings('.grid-selected').removeClass('grid-selected').length > 0;
@@ -44,11 +44,26 @@ define(function(require, exports, module) {
                     config.isSelectAll(others ? false : undefined);
                     config.onSelected(config.getSelected());
                 },
+                //选择行
+                'mouseup .grid-row': function(e, conf) {
+                    if (e.which == 3) {
+                        if (!$(this).hasClass('grid-selected')) {
+                            $(this).addClass('grid-selected').siblings().removeClass('grid-selected');
+                            conf.onSelected(conf.getSelected());
+                        }
+                        //右键菜单
+                        if (conf.contextmenu) {
+                            conf.contextmenu.render(e.pageX, e.pageY);
+                        }
+                    }
+
+                },
                 //全选
                 'click .grid-check-all': function(e, config) {
-                    var parent = $(this).parent().toggleClass('grid-selected'),isAll=parent.hasClass('grid-selected');
+                    var parent = $(this).parent().toggleClass('grid-selected'),
+                        isAll = parent.hasClass('grid-selected');
                     config.body.children().toggleClass('grid-selected', isAll);
-                    config.onSelected(isAll?config.cache:[]);
+                    config.onSelected(isAll ? config.cache : []);
                 },
                 //排序 orderby-asc 升序 orderby-desc 降序
                 'click .orderby': function(e, config) {
@@ -207,6 +222,47 @@ define(function(require, exports, module) {
                         this.layout();
                     }
                 }
+
+                //右键菜单
+                if (this.contextmenu) {
+                    //禁止body右键菜单
+                    this.contextmenu = UI(_.defaults({
+                        el: $('<div class="dropdown">'),
+                        mask: $('<div class="mask"/>'),
+                        render: function(x, y) {
+                            var lis = '';
+                            _.each(this.menus, function(o, i) {
+                                if (o == '') {
+                                    lis += '<li class="devider"></li>';
+                                } else if (!o.test || _.isFunction(o.test) && o.test() === true) {
+                                    lis += '<li><a' + (o.cls ? ' class="' + o.cls + '"' : '') + ' href="' + (_.isFunction(o.href) ? o.href() : o.href || '#') + '">' + o.label + '</a></li>';
+                                }
+                            });
+                            this.mask.show().appendTo('body');
+                            this.el.html('<ul class="menu">' + lis + '</ul>').show().appendTo('body').position({
+                                at: 'left+' + x + ' top+' + y,
+                                my: 'left top',
+                                collision: 'flipfit',
+                                of: window
+                            });
+                        },
+                        init: function() {
+                            var mask = this.mask.on('mousedown', function(e) {
+                                    e.stopPropagation();
+                                    all.detach();
+                                }),
+                                el = this.el.on('click', 'a', function(e) {
+                                    e.stopPropagation();
+                                    all.detach();
+                                }),
+                                all = mask.add(el);
+                            all.add(config.body).on('contextmenu', function() {
+                                return false;
+                            });
+                        }
+                    }, this.contextmenu));
+                }
+
             }
         }, config));
     };

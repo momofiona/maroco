@@ -117,7 +117,7 @@
   width: 16px;
   height: 16px;
   font-size: 0;
-  background: url(img/dropdown_arrow.png) no-repeat;
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAA3NCSVQICAjb4U/gAAAAD1BMVEWZmZn5+fm/v7+srKz///++OcdhAAAABXRSTlP/////APu2DlMAAAAJcEhZcwAACusAAArrAYKLDVoAAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzbovLKMAAAAFnRFWHRDcmVhdGlvbiBUaW1lADEwLzIzLzEyTRdLHQAAAEBJREFUCJljcIECBmSGkwqUocAEYTgxGaiAGQoqwkwghhOTiyNQiAGLdidmEaAysGJDJyaIdmYFFVQDEVagagcAUUYdjs4cdm8AAAAASUVORK5CYII=) no-repeat;
   vertical-align: text-top;
   _position: absolute;
 }

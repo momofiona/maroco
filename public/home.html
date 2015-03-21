@@ -23,9 +23,10 @@
         background-color: #fff;
         min-width: 980px;
         overflow-x: auto;
+        font-size: 12px;
     }
     #aside {
-        background: #1b5b99;
+        background: #113B63;
         color: #fff;
         width: 130px;
         position: absolute;
@@ -99,24 +100,16 @@
         display: block;
         padding: 10px 0 10px 20px;
         color: #fff;
+
     }
     .mainmenu a:hover {
         background: #2c77bb;
         color: #fff;
     }
     .mainmenu .active a {
-        background: #33aff5;
-        _background: #33aff5 url(cloud/img/aro-l.gif) right center no-repeat;
+        /*cloud/img/aro-l.gif*/
+        background: #33aff5 url(data:image/gif;base64,R0lGODlhBwAOAIAAAO3t7f///yH5BAEHAAEALAAAAAAHAA4AAAIUjA9nkMj+Apty2osTXhY2/nHKUgAAOw==) right center no-repeat;
     }
-    .mainmenu .active a:before {
-        content:'';
-        border: solid 8px;
-        border-color: transparent #eee transparent transparent;
-        position: absolute;
-        top: 13px;
-        right: 0;
-    }
-    
     
     #state {
         position: absolute;
@@ -150,14 +143,13 @@
     </div>
     <div id="bside">
         <div id="guider" class="toolbar p0">
-            <b class="b xr"><i class="f f-star"></i> 退出</b>
+            <b class="b xr"><i class="f f-shutdown"></i> 退出</b>
             <b class="wall xr"></b>
-            <b class="b xr"><i class="f f-bell"></i> 消息 <span class="star error" style="">12</span></b>
+            <b class="b xr"><i class="f f-msg"></i> 消息 <span class="star error" style="">12</span></b>
             <b class="wall xr"></b>
-            <b class="b xr"><i class="f f-bell"></i> 即时通讯</b>
-            <b class="wall xr"></b>
-            <b class="b xr ac-setting"><i class="f f-gear"></i> 个人设置</b>
-            <span class="caption"></span>
+            <b class="b xl"><i class="f f-chat"></i> 即时通讯</b>
+            <!-- <b class="b xr ac-profile"><i class="f f-gear"></i> 个人设置</b>
+            <span class="caption xr"></span> -->
         </div>
         <!-- mainbody -->
         <div id="mainbody"></div>
@@ -196,7 +188,7 @@
             var guider = UI({
                 el: $('#guider'),
                 events: {
-                    'click .ac-setting': function(e, config) {
+                    'click .ac-profile': function(e, config) {
                         seajs.use('ui/notify', function(notify) {
                             notify({
                                 title: '个人设置',
@@ -208,7 +200,7 @@
                     }
                 },
                 init: function() {
-                    this.$('.caption').html('<img class="m2 xl" src="' + v.avanta + '" height=36 width=36>' + v.name);
+                    this.el.append('<span class="b xr" title="个人设置">' + v.name +' <i class="f f-arb"></i> <img class="va-m" style="margin:-6px -12px -6px 6px;" src="' + v.avanta + '" height=36 width=36></span>');
                 }
             });
             //输出菜单

@@ -18,6 +18,7 @@
 }
 .user-select,
 .toolbar,
+.cutebar,
 .notify-con,
 .dialog-title,
 .rollbar-noselect,
@@ -167,6 +168,7 @@ abbr[title] {
 }
 .clear,
 .toolbar,
+.cutebar,
 .dialog-foot,
 .dialog-con,
 .dialog-title,
@@ -175,6 +177,7 @@ abbr[title] {
 }
 .clear:after,
 .toolbar:after,
+.cutebar:after,
 .dialog-foot:after,
 .dialog-con:after,
 .dialog-title:after,
@@ -239,12 +242,6 @@ input[type=checkbox]:checked[disabled] {
 }
 .scroll {
   overflow: auto !important;
-}
-.noscrollX {
-  overflow-x: hidden !important;
-}
-.noscrollY {
-  overflow-y: hidden !important;
 }
 .scroll::-webkit-scrollbar {
   -webkit-appearance: none;
@@ -331,10 +328,10 @@ input[type=checkbox]:checked[disabled] {
 }
 a {
   text-decoration: none;
-  color: #39f;
+  color: #337ab7;
 }
 a:hover {
-  color: #236bb2;
+  color: #23527c;
 }
 .hide {
   display: none !important;
@@ -415,14 +412,17 @@ a:hover {
   color: #ffffff !important;
 }
 /*toolbar*/
-.toolbar {
+.toolbar,
+.cutebar {
   clear: both;
   margin: 0 0 1px;
   padding: 0.5em 10px 0.4em 0;
   height: 36px;
+  line-height: 36px;
   position: relative;
 }
-.toolbar .wall {
+.toolbar .wall,
+.cutebar .wall {
   height: 36px;
   margin: 0 .6em 0 .5em;
   display: inline-block;
@@ -430,20 +430,22 @@ a:hover {
   background: #d4e4f2;
   vertical-align: top;
 }
-.toolbar .bridge {
+.toolbar .bridge,
+.cutebar .bridge {
   font-size: 24px;
   color: #eee;
-  line-height: 36px;
   font-family: vedana;
   margin-right: 0 10px 0 5px;
 }
 .toolbar .caption,
-.toolbar .rock {
-  line-height: 36px;
+.cutebar .caption,
+.toolbar .rock,
+.cutebar .rock {
   margin: 0 .2em 0 0;
   vertical-align: top;
 }
-.toolbar .caption {
+.toolbar .caption,
+.cutebar .caption {
   float: left;
   color: #4472A2;
   padding-left: .5em;
@@ -454,7 +456,8 @@ a:hover {
   white-space: nowrap;
   cursor: default;
 }
-.toolbar .cap {
+.toolbar .cap,
+.cutebar .cap {
   float: left;
   padding: 0 1em;
   margin: 0 -1px 0 0;
@@ -468,11 +471,22 @@ a:hover {
   color: #888;
   text-shadow: 0 1px #fff;
 }
+.cutebar {
+  height: 30px;
+  line-height: 30px;
+}
+.cutebar .wall {
+  height: 26px;
+  margin: 2px .6em 0 .5em;
+  display: inline-block;
+  width: 1px;
+  background: #eee;
+  vertical-align: top;
+}
 /* input text */
 .text,
 .searchbox {
   border: solid 1px #bfbfbf;
-  vertical-align: middle;
   border-radius: 2px;
   padding: 6.5px 5px;
   height: 36px;
@@ -563,6 +577,7 @@ a:hover {
   _height: 100%;
   overflow: auto;
   overflow-x: hidden;
+  background: url(img/alpha-black-50.png) no-repeat -10px -10px;
   -webkit-backface-visibility: hidden;
   /*    &:before {
         content: ""; //解决chrome下子元素动画影响自身rgba的a
@@ -570,8 +585,7 @@ a:hover {
 */
 }
 .glass {
-  background: url(img/alpha-black-50.png);
-  _background-repeat: no-repeat;
+  background-repeat: repeat;
   background: rgba(0, 0, 0, 0.2);
 }
 .notify,
@@ -683,7 +697,7 @@ a:hover {
   border-top: solid 1px #E5E5E5;
   border-top: solid 1px rgba(0, 0, 0, 0.2);
   border-bottom: solid 1px rgba(255, 255, 255, 0.2);
-  margin: 4px 0;
+  margin: 3px 0;
 }
 /*tooltip*/
 .tips {
@@ -894,6 +908,7 @@ a:hover {
   border: solid 1px #DDD;
   border: solid 1px rgba(0, 0, 0, 0.3);
   box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.02);
+  z-index: 1000;
 }
 .formtable {
   width: 100%;

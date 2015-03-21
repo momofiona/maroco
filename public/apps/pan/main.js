@@ -5,7 +5,8 @@ define(function(require, exports, module) {
         grid = require('ui/grid'),
         FILE = require('apps/pan/file'),
         buttonset = require('ui/buttonset'),
-        searchbox = require('ui/searchbox');
+        searchbox = require('ui/searchbox'),
+        notify = require('ui/notify');
 
     exports.show = function(opt) {
         var HTML = $(template),
@@ -95,7 +96,7 @@ define(function(require, exports, module) {
                     if (k == orderby) return;
                     s += '<li><a href="#" orderby="' + k + '"><i class="f f-up"></i>' + v + '</a></li>';
                 });
-                this.el.html(cur + '<div class="dropdown text-left" style="top:0px;left:10px;"><ul class="menu orderby"><li>' + cur + '</li>' + s + '</ul></div>').find('>a').css('color', '#454647');
+                this.el.html(cur + '<div class="dropdown text-left" style="top:-1px;left:-10px;"><ul class="menu orderby"><li>' + cur + '</li>' + s + '</ul></div>').find('>a').css('color', '#454647');
             },
             //重置内容
             reset: function(conf) {
@@ -108,7 +109,7 @@ define(function(require, exports, module) {
 
         //上传,异步加载
         require.async(['ui/upload', 'ui/notify'], function(upload, notify) {
-            var btn=HTML.find('.ac-upload')[0];
+            var btn = HTML.find('.ac-upload')[0];
             upload({
                 browse_button: btn,
                 container: btn.parentNode,
@@ -149,11 +150,42 @@ define(function(require, exports, module) {
                 cls: 'grid-date',
                 orderby: 'date'
             }],
+            events: {},
             url: '/json/members',
             count: 10,
+            //高度值如果是函数，函数会绑定到window.resize上
             height: function(grid) {
                 return $(window).height() - $(grid).offset().top;
             },
+            //contextmenu 右键菜单
+            contextmenu: {
+                events: {
+                    'click .ac-pig': function(e, conf) {
+                        alert('老猪来娶你了');
+                        //获取选中数据
+                        console.log(fileList.getSelected());
+                    }
+                },
+                menus: [{
+                    label: '猪八戒',
+                    cls: 'ac-pig',
+                    //当test返回true的时候显示
+                    test: function() {
+                        return _.uniqueId() % 2 == 0
+                    }
+                }, {
+                    label: '蜘蛛精',
+                    //添加新页面打开外链的方法，注意总共有3个双引号
+                    href: 'http://baidu.com/s?wd=蜘蛛精" target="_blank"'
+                },'', {
+                    label: '<i class="f f-location"></i>蜘猪精',
+                    //动态添加链接也是可以的
+                    href: function() {
+                        return 'https://github.com/momofiona/maroco" target="_blank"';
+                    }
+                }]
+            },
+            //把ajax请求回来的数据转换成数据矩阵返回[['1.1(表示1行1列)','1.2'],['2.1',2.2]]
             render: function(data) {
                 var cls;
                 return _.map(data, function(o, i) {
@@ -161,7 +193,7 @@ define(function(require, exports, module) {
                         fileName: o.cname
                     });
                     return [
-                        '<i class="fcon fcon_' + cls + '"'+(cls=='jpg'?' url="'+o.path+'"':'')+'></i>' + '<span class="filename">' + o.cname + '</span>',
+                        '<i class="fcon fcon_' + cls + '"' + (cls == 'jpg' ? ' url="' + o.path + '"' : '') + '></i>' + '<span class="filename">' + o.cname + '</span>',
                         o.size,
                         o.sendtime
                     ];
@@ -204,10 +236,10 @@ define(function(require, exports, module) {
             el: HTML.find('.tabs'),
             caption: HTML.find('.caption'),
             onActive: function(tab, panel) {
-                var s=''
-                for(var i in tab) s+=i+'\t';
+                var s = ''
+                for (var i in tab) s += i + '\t';
                 //面包屑栏目
-                this.caption.html('<i class="f f-home"></i>&nbsp;' + tab.innerHTML);
+                this.caption.html(tab.innerHTML);
                 //刷新文件列表
                 fileList.load();
             }

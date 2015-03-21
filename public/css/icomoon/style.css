@@ -1,10 +1,10 @@
 @font-face {
 	font-family: 'icomoon';
-	src:url('fonts/icomoon.eot?trwxar');
-	src:url('fonts/icomoon.eot?#iefixtrwxar') format('embedded-opentype'),
-		url('fonts/icomoon.woff?trwxar') format('woff'),
-		url('fonts/icomoon.ttf?trwxar') format('truetype'),
-		url('fonts/icomoon.svg?trwxar#icomoon') format('svg');
+	src:url('fonts/icomoon.eot?-84ayiv');
+	src:url('fonts/icomoon.eot?#iefix-84ayiv') format('embedded-opentype'),
+		url('fonts/icomoon.woff?-84ayiv') format('woff'),
+		url('fonts/icomoon.ttf?-84ayiv') format('truetype'),
+		url('fonts/icomoon.svg?-84ayiv#icomoon') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -21,6 +21,10 @@
 	/* Better Font Rendering =========== */
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+}
+
+.f-location:before {
+	content: "\e608";
 }
 
 .f-home:before {
@@ -63,32 +67,56 @@
 	content: "\e48c";
 }
 
-.f-read:before {
-	content: "\e606";
+.f-export:before {
+	content: "\e609";
 }
 
-.f-bell:before {
-	content: "\f0a2";
+.f-gear:before {
+	content: "\e60a";
+}
+
+.f-history:before {
+	content: "\e60b";
+}
+
+.f-see:before {
+	content: "\e60d";
+}
+
+.f-unsee:before {
+	content: "\e60e";
+}
+
+.f-chart:before {
+	content: "\e60f";
+}
+
+.f-chat:before {
+	content: "\e610";
+}
+
+.f-msg:before {
+	content: "\e611";
+}
+
+.f-block:before {
+	content: "\e612";
+}
+
+.f-tag:before {
+	content: "\e614";
 }
 
 .f-more:before {
-	content: "\f141";
+	content: "\e615";
 }
 
-.f-save:before {
-	content: "\f0c7";
+.f-bell:before {
+	content: "\e616";
 }
 
-.f-grid:before {
-	content: "\f009";
-}
-
-.f-down:before {
-	content: "\e604";
-}
-
-.f-up:before {
-	content: "\e605";
+.f-read:before {
+	content: "\e606";
 }
 
 .f-org:before {
@@ -127,16 +155,8 @@
 	content: "\e607";
 }
 
-.f-eye:before {
-	content: "\f06e";
-}
-
 .f-tool:before {
 	content: "\e991";
-}
-
-.f-gear:before {
-	content: "\f013";
 }
 
 .f-info:before {
@@ -149,10 +169,6 @@
 
 .f-alert:before {
 	content: "\e950";
-}
-
-.f-location:before {
-	content: "\e948";
 }
 
 .f-buy:before {
@@ -169,10 +185,6 @@
 
 .f-turnr:before {
 	content: "\e613";
-}
-
-.f-close:before {
-	content: "\ea0d";
 }
 
 .f-print:before {
@@ -219,7 +231,19 @@
 	content: "\f0d8";
 }
 
-.f-arbt:before {
-	content: "\f0dc";
+.f-save:before {
+	content: "\f0c7";
+}
+
+.f-grid:before {
+	content: "\f009";
+}
+
+.f-down:before {
+	content: "\e604";
+}
+
+.f-up:before {
+	content: "\e605";
 }
 

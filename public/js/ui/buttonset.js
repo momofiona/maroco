@@ -24,7 +24,7 @@ define(function(require, exports, module) {
                 return false;
             }
         },
-        tmp:_.dot('{{~it.data :v:i}}<b index="{{=i}}"{{?v.title}} title="{{=v.title}}"{{?}} class="b {{=v.cls||""}} {{=it.cls}}{{?v.on}} {{=it.cls}}-active{{?}}">{{=v.label}}</b>{{~}}'),
+        tmp:_.dot('{{~it.data :v:i}}<b index="{{=i}}"{{?v.title}} title="{{=v.title}}"{{?}} class="b {{=v.cls||""}} {{=it.cls}}{{?v.on}} {{=it.cls}}-active active{{?}}">{{=v.label}}</b>{{~}}'),
         init: function() {
             this.el.addClass('group');
             if (this.data) {
