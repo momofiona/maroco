@@ -39,3 +39,4 @@ node_modules/
 jsdoc/
 bower_components/
 .idea/
+public/temp/*
