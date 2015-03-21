@@ -107,10 +107,10 @@ if (jQuery) (function ($) {
         var dropdown = $('.dropdown:visible').eq(0),
             trigger = dropdown.data('dropdown-trigger');
         if (dropdown.length === 0 || !trigger) return;
-        var pos=dropdown.attr('position');
+        var pos=dropdown.attr('position'),top=dropdown.hasClass('tips')?'+6':'-1';
         pos=pos?pos.split(','):[];
         dropdown.position({
-                my: pos[0]||'left top+6',
+                my: pos[0]||'left top'+top,
                 at: pos[1]||'left bottom',
                 of: trigger
             });

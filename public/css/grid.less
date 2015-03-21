@@ -11,6 +11,7 @@
 
 .grid-body {
     line-height: 36px;
+    position: relative;//解决IE7滚动内容从容器溢出，无法滚动的问题
     .grid-hover {
         background: #F3F6FC;
         border-color: #DCE6F2;
@@ -24,7 +25,6 @@
 .grid-col {
     &:extend(.ellipsis);
     float: left;
-    padding: 0 5px;
     height: 100%;
 }
 
@@ -37,18 +37,20 @@
     border-bottom-color: #EDF2F8;
     margin: 0 0 -1px;
     position: relative;
+    _border-color: #EDF2F8;;
+/*    _border-color: tomato;
+    _filter: chroma(color=tomato);*/
 }
 
 .grid-check {
-    padding: 0 10px;
+    padding: 0 8px;
     width: 15px;
     i {
         background: url(img/check.png) no-repeat;
         display: inline-block;
         width: 15px;
         height: 15px;
-        margin-bottom: 2px;
-        vertical-align: middle;
+        margin-top: 11px;
         .grid-hover & {
             background-position: 0 -25px;
         }
@@ -56,6 +58,10 @@
             background-position: 0 -52px;
         }
     }
+}
+
+.grid-hover .vhide{
+    visibility: visible;
 }
 
 .grid-foot {
@@ -70,4 +76,212 @@
 
 .grid-statu {
     float: left;
+}
+//fcon
+.fcon {
+    display: inline-block;
+    background: url(img/fcon20.png) no-repeat;
+    width: 20px;
+    height: 20px;
+    margin: 8px 8px 0 0;
+    vertical-align: top;
+}
+.grid-row{
+  .filename{
+    _zoom:1;
+  }
+}
+.grid-name {
+  width: 65%;
+}
+.grid-size{
+  width:13%;
+}
+.grid-date{
+  width:15%
+}
+
+/* 20 small */
+.fcon_doc {
+    background-position: -0px -0px;
+}
+
+.fcon_node {
+    background-position: -0px -20px;
+}
+
+.fcon_folder {
+    background-position: -0px -40px;
+}
+
+.fcon_group {
+    background-position: -0px -60px;
+}
+
+.fcon_groupuser {
+    background-position: -0px -80px;
+}
+
+.fcon_jpg {
+    background-position: -0px -100px;
+}
+
+.fcon_mp3 {
+    background-position: -0px -120px;
+}
+
+.fcon_mp4 {
+    background-position: -0px -140px;
+}
+
+.fcon_myshare {
+    background-position: -0px -160px;
+}
+
+.fcon_departmentShare {
+    background-position: -0px -180px;
+}
+
+.fcon_othershare {
+    background-position: -0px -200px;
+}
+
+.fcon_pdf {
+    background-position: -0px -220px;
+}
+
+.fcon_personalSyn {
+    background-position: -0px -240px;
+}
+
+.fcon_ppt {
+    background-position: -0px -260px;
+}
+
+.fcon_rar {
+    background-position: -0px -280px;
+}
+
+.fcon_txt {
+    background-position: -0px -300px;
+}
+
+.fcon_unknow {
+    background-position: -0px -320px;
+}
+
+.fcon_xls {
+    background-position: -0px -340px;
+}
+/* 64 big*/
+
+.thumb-view {
+    .fcon {
+        background: url(img/fcon80.png) no-repeat;
+        _background-image: url(img/fcon80.8.png);
+        width: 80px;
+        height: 80px;
+        margin:10px auto;
+        display: block;
+    }
+    .fcon_doc {
+        background-position: -0px -0px;
+    }
+    .fcon_node {
+        background-position: -0px -80px;
+    }
+    .fcon_folder {
+        background-position: -0px -160px;
+    }
+    .fcon_group {
+        background-position: -0px -240px;
+    }
+    .fcon_groupuser {
+        background-position: -0px -320px;
+    }
+    .fcon_jpg {
+        background-position: -0px -400px;
+    }
+    .fcon_mp3 {
+        background-position: -0px -480px;
+    }
+    .fcon_mp4 {
+        background-position: -0px -560px;
+    }
+    .fcon_myshare {
+        background-position: -0px -640px;
+    }
+    .fcon_departmentShare {
+        background-position: -0px -720px;
+    }
+    .fcon_othershare {
+        background-position: -0px -800px;
+    }
+    .fcon_pdf {
+        background-position: -0px -880px;
+    }
+    .fcon_personalSyn {
+        background-position: -0px -960px;
+    }
+    .fcon_ppt {
+        background-position: -0px -1040px;
+    }
+    .fcon_rar {
+        background-position: -0px -1120px;
+    }
+    .fcon_txt {
+        background-position: -0px -1200px;
+    }
+    .fcon_unknow {
+        background-position: -0px -1280px;
+    }
+    .fcon_xls {
+        background-position: -0px -1360px;
+    }
+    //===================================
+    .grid-head,
+    .grid-col {
+        display: none;
+        height: auto;
+        float: none;
+    }
+    .grid-name {
+        display: block;
+        width: auto;
+    }
+    .grid-check {
+        position: absolute;
+        padding: 5px;
+        height: auto;
+        line-height: 1;
+        i{
+            margin-top: 0;
+        }
+    }
+    .grid-row {
+        float: left;
+        border-width: 1px;
+        border-radius: 3px;
+        margin: 0 5px 10px 0;
+        clear: none;
+        height: auto;
+        width: 112px;
+        height: 120px;
+        border-bottom-color: transparent;
+        _border-color: #fff;
+    }
+    .grid-hover,
+    .grid-selected {
+        border-color: #DCE6F2;
+        .grid-check {
+            display: block;
+        }
+    }
+    .filename {
+        width: 100px;
+        text-align: center;
+        position: absolute;
+        bottom: 0;
+        left: 5px;
+    }
 }

@@ -155,8 +155,8 @@ define(function(require, exports, module) {
                     options.FileUploaded && options.FileUploaded(up, file, data);
                     up.removeFile(file);
                 },
-                UploadComplete: function(up, file) {
-                    options.UploadComplete && options.UploadComplete(up, file, data);
+                UploadComplete: function(up, files) {
+                    options.UploadComplete && options.UploadComplete(up, files);
                 },
                 Error: function(up, err) {
                     var file = err.file;

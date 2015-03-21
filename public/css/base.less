@@ -331,6 +331,9 @@ a:hover {
 .hide {
     display: none !important;
 }
+.vhide{
+    visibility: hidden;
+}
 .nobg {
     background: none !important;
 }
@@ -453,7 +456,7 @@ a:hover {
     }
 }
 .text {
-    *height: @btnHeight - 15px;
+    *height: @btnHeight - 14px;
     *line-height: @btnHeight - 13px;
 }
 .text-auto {
@@ -465,21 +468,22 @@ a:hover {
 }
 .searchbox {
     position: relative;
-    padding: 0 25px;
-    background: #ffffff url(img/search-text.png) no-repeat 6px center;
-    b {
+    padding: 0 25px 0 28px;
+    *height: @btnHeight - 2px;
+    background: #ffffff url(img/search.png) no-repeat 6px center;
+    _background-image: url(img/search.8.png);
+    .i-cancel {
         cursor: pointer;
         position: absolute;
         display: none;
         right: 2px;
-        top: 6px;
-        padding: 4px;
+        top: 5px;
     }
     .text {
         border: 0;
         padding: 6.5px 0;
         width: 100%;
-        margin-top: -1px;
+        margin: -1px 0;
         vertical-align: top;
         background: none;
     }
@@ -617,8 +621,8 @@ a:hover {
 .menu {
     border-radius: @radius;
     background: #FFF;
-    min-width: 160px;
-    max-width: 360px;
+    min-width: 100px;
+    // max-width: 360px;
     list-style: none;
     overflow: visible;
     padding: 1px 0;
@@ -867,30 +871,32 @@ a:hover {
     padding: 2px 0 0;
     margin:0;
     list-style: none;
+    _zoom:1;
     li{
         float: left;
-        margin-bottom: -1px;
         position: relative;
     }
     a{
         padding: 10px 15px;
-        border:solid 1px transparent;
-        _border-width:0;
+/*        border:solid 1px transparent;
+        _border-width:0;*/
         border-radius: @radius @radius 0 0;
         float: left;
         line-height: 16px;
         margin-right: 2px;
     }
     a:hover{
-        background: #eee;
+        background: #f8f8f8;
     }
-    .active a{
-        border-color:#ddd;
-        border-bottom-color: transparent;
-        _border-width:1px 1px 0;
-        _padding: 9px 14px 11px;
-        background: #fff;
-        color: #444;
+    .active{
+        margin-bottom: -1px;
+        a{
+            border:solid 1px #ddd;
+            border-bottom:solid 1px #fff;
+            padding: 9px 14px 11px;
+            background: #fff;
+            color: #444;
+        }
     }
 }
 

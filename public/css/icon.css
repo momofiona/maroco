@@ -54,7 +54,7 @@ b.i-close {
   width: 24px;
   height: 24px;
   vertical-align: middle;
-  background: url(img/cancel.png) no-repeat;
+  background: url(img/cancel.png) no-repeat center;
 }
 /* font-icons */
 .f {
@@ -65,6 +65,13 @@ b.i-close {
 }
 .f-lg {
   font-size: 1.33333333em;
+}
+.f-lg,
+.f-2x,
+.f-3x,
+.f-4x,
+.f-5x {
+  line-height: 1;
 }
 .f-2x {
   font-size: 2em;

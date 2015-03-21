@@ -40,10 +40,13 @@ define(function(require, exports, module) {
      * node.png?
      */
     exports.getFileIcon = function(file) {
-        if (file.fileType == "0") return 'fcon_folder';
+        //如果带otherType参数
+        if(file.otherType!==undefined&&useType!==undefined) return this.getShareFolderIcon(file);
+        
+        if (file.fileType == "0") return 'folder';
         var ext = this.getExt(file.fileName);
         ext = extMap[ext] ? extMap[ext] : 'unknow';
-        return 'fcon_' + ext;
+        return ext;
     }
 
     /**
@@ -60,7 +63,7 @@ define(function(require, exports, module) {
      */
     var shareFolderIconMap = ['myshare', 'departmentShare', 'personalSyn'];
     exports.getShareFolderIcon = function(file) {
-        return 'fcon_' + (file.otherType ? 'othershare' : shareFolderIconMap[file.useType]);
+        return (file.otherType ? 'othershare' : shareFolderIconMap[file.useType]);
     }
 
 });

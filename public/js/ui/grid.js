@@ -20,6 +20,8 @@ define(function(require, exports, module) {
             //一些回调
             onSelected: $.noop,
             afterLoad: $.noop,
+            onOrderChange:$.noop,
+            baseparams:{},
             events: {
                 //hover
                 'mouseenter .grid-row': function(e, config) {
@@ -32,39 +34,59 @@ define(function(require, exports, module) {
                 'click .grid-row': function(e, config) {
                     var others;
                     if (!event.ctrlKey) {
-                        var tar = $(event.target);
+                        var tar = $(event.target||event.srcElement);
+                        //IE10- event.target=undefined
                         if (!tar.hasClass('grid-check') && !tar.parent().hasClass('grid-check')) {
                             others = $(this).siblings('.grid-selected').removeClass('grid-selected').length > 0;
                         }
                     }
                     $(this).toggleClass('grid-selected', others || undefined);
                     config.isSelectAll(others ? false : undefined);
+                    config.onSelected(config.getSelected());
                 },
                 //全选
                 'click .grid-check-all': function(e, config) {
-                    var parent = $(this).parent().toggleClass('grid-selected');
-                    config.body.children().toggleClass('grid-selected', parent.hasClass('grid-selected'));
-                    config.onSelected();
+                    var parent = $(this).parent().toggleClass('grid-selected'),isAll=parent.hasClass('grid-selected');
+                    config.body.children().toggleClass('grid-selected', isAll);
+                    config.onSelected(isAll?config.cache:[]);
                 },
                 //排序 orderby-asc 升序 orderby-desc 降序
-                'click .orderby':function(e,config){
-                	var t=$(this),order='asc';
-                	if(t.hasClass('desc')){
-                		t.removeClass('desc');
-                	}else if(t.hasClass('asc')){
-                		order='desc';
-                		t.addClass('desc');
-                	}else{
-                		t.addClass('asc');
-                	}
-                	//去除其余列图标
-                	t.siblings().removeClass('asc desc');
-                	_.extend(config.baseparams,{
-                		orderby:t.attr('orderby'),
-                		order:order
-                	});
-                	config.load();
+                'click .orderby': function(e, config) {
+                    var t = $(this),
+                        order = 'asc';
+                    if (t.hasClass('desc')) {
+                        t.removeClass('desc');
+                    } else if (t.hasClass('asc')) {
+                        order = 'desc';
+                        t.addClass('desc');
+                    } else {
+                        t.addClass('asc');
+                    }
+                    //去除其余列图标
+                    t.siblings().removeClass('asc desc');
+                    _.extend(config.baseparams, {
+                        orderby: t.attr('orderby'),
+                        order: order
+                    });
+                    config.onOrderChange();
+                    config.load();
                 }
+            },
+            resetOrder: function(conf) {
+                var orderClass, baseparams = this.baseparams;
+                baseparams.orderby = conf.orderby;
+                if (conf.order === undefined) {
+                    baseparams.order = conf.order;
+                } else if (conf.order === 'desc') {
+                    orderClass = 'asc desc';
+                    baseparams.order = 'desc';
+                } else {
+                    baseparams.order = orderClass = 'asc';
+                }
+                this.loader.page = 1;
+                var sort = this.head.children('.orderby').removeClass('asc desc');
+                orderClass && sort.filter('[orderby=' + conf.orderby + ']').addClass(orderClass);
+                this.load();
             },
             //检查是否全选了
             isSelectAll: function(sta) {
@@ -97,7 +119,7 @@ define(function(require, exports, module) {
                 head: _.dot('<div class="grid-head">\
         			{{?it.checkbox}}<div class="grid-col grid-check grid-check-all"><i></i></div>{{?}}\
         			{{~it.cols :col:i}}\
-        			<div class="grid-col c{{=i}} {{=col.cls||""}} {{=col.orderby?"orderby":""}}"{{?col.orderby}} orderby="{{=col.orderby}}"{{?}}{{?col.style}} style="{{=col.style}}"{{?}}>{{=col.title||"&nbsp;"}}{{?col.orderby}}<i class="order-tip" orderby="{{=col.orderby}}"></i>{{?}}</div>\
+        			<div class="grid-col c{{=i}} {{=col.cls||""}} {{=col.orderby?"orderby":""}}"{{?col.orderby}} orderby="{{=col.orderby}}"{{?}}{{?col.style}} style="{{=col.style}}"{{?}}>{{=col.title||"&nbsp;"}}{{?col.orderby}} <i class="order-tip" orderby="{{=col.orderby}}"></i>{{?}}</div>\
         			{{~}}\
         			</div>'),
                 items: _.dot('{{~it.data :trdata:index}}\
@@ -160,6 +182,7 @@ define(function(require, exports, module) {
                         config.isScrolling();
                         //grid 回调
                         config.afterLoad(data, cache);
+                        config.onSelected([]);
                     }
                 });
                 //build

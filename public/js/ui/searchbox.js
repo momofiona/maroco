@@ -10,7 +10,7 @@ define(function(require, exports, module) {
             input: $.noop
         }, option);
         var _self = this.addClass('searchbox' + option.cls).html('<input value="' + option.value + '" class="text" placeholder="' + option.placeholder + '">\
-                <b class="f f-multiply am-rotate"></b>');
+                <i class="i i-cancel am-rotate"></i>');
         //如果带了分类选择
         var filter,oldValue;
         if (option.filter) {

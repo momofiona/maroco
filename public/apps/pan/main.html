@@ -1,24 +1,29 @@
 <div class="m4">
-    <div class="toolbar" style="padding-bottom:0">
-        <span class="group xr">
-            <b class="b bi log r4 xr ac-seachmore" data-dropdown><i class="f f-arb"></i></b>
-            <div class="dropdown tips">
-                <b class="tip tip-trr"></b>
-                <ul class="menu ac-company-menu">
-                    <li><a class="ac-editCompany"><i class="f f-pencil"></i>编辑当前公司</a></li>
-                    <li><a class="ac-addCompany"><i class="f f-add"></i>创建子公司</a></li>
-                    <li><a class="ac-delCompany menu-error"><i class="f f-bin"></i>删除当前公司</a></li>
-                    <li class="devider"></li>
-                </ul>
-            </div>
+    <!-- sortable and thumb view -->
+    <div class="ac-tools toolbar" style="position:absolute;top:48px;right:0;padding:0;z-index:99;">
+        <span class="xr ac-listorthumb"></span>
+        <div style="margin:0 10px 0 0; position:relative;cursor:pointer;padding:6px 25px 0 20px;" class="xr ac-sortableswitch"></div>
+        <span class="wall xr"></span>
+        <!-- <b class="b b-cute xr ac-upload c-note" title="上传文件"><i class="f f-upload"></i></b> -->
+        <b class="b b-cute xr c-note vhide ac-download ac-sel-show" title="下载文件"><i class="f f-download"></i></b>
+    </div>
+    <!-- /sortable and thumb view -->
+    <div class="toolbar" style="padding-bottom:0;z-index:100">
 
-            <span class="ac-search xr"></span>
-        </span>
+            <!-- <b class="b bi log r4 xr ac-seachmore" data-dropdown><i class="f f-arb"></i></b> 
+            <div class="dropdown w10 noshadow">
+                <ul class="menu">
+                    <li><a class="ac-addCompany"><i class="f f-add"></i>创建</a></li>
+                    <li class="devider"></li>
+                    <li><a class="ac-delCompany menu-error"><i class="f f-bin"></i>删除</a></li>
+                </ul>
+            </div>-->
+        <span class="ac-search xr w6"></span>
         <span class="caption"></span>
         <span class="rock ac-guider"></span>
     </div>
+    <!-- tabs -->
     <div class="tabs">
-        <span class="xr ac-listorthumb"></span>
         <ul class="tab">
             <li>
                 <a panel='.ac-tabcon' href="#">我的文档</a>
@@ -29,7 +34,11 @@
             <li>
                 <a panel=".ac-tabcon" href="#">标签</a>
             </li>
+            <li>
+                <a class="ac-upload" href="#" title="上传文件"><i class="f f-upload"></i></a>
+            </li>
         </ul>
         <div class="ac-tabcon m1">tags</div>
     </div>
+    <!-- /tabs -->
 </div>

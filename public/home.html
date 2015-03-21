@@ -8,7 +8,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/maroco.css">
-    <link rel="stylesheet" href="cloud/img/fcon.css">
     <!--[if lt IE 8]>
     <link rel="stylesheet" href="css/icomoon/ie7/ie7.css">
     <![endif]-->
@@ -25,7 +24,6 @@
         min-width: 980px;
         overflow-x: auto;
     }
-    
     #aside {
         background: #1b5b99;
         color: #fff;
@@ -36,24 +34,20 @@
         bottom: 0;
         height: 100%;
     }
-    
     #bside {
         height: 100%;
         margin-left: 130px;
         position: relative;
     }
-    
     #guider {
         position: relative;
         z-index: 100;
         height: 36px;
         background: #eee;
     }
-    
     #guider .caption {
         padding-left: 0;
     }
-    
     #guider .wall {
         background: #ddd;
         border-right: solid 1px #fff;
@@ -69,12 +63,15 @@
     }
     #guider .searchbox b {
         top:0;
-    }*/
-    
+    }
     #guider .ac-seachmore {
         margin-left: -1px;
-    }
+    }*/
     
+    #logo {
+        background: url(cloud/img/logo.png) center center no-repeat;
+        height: 80px;
+    }
     #sideMenu {
         position: absolute;
         left: 0;
@@ -83,7 +80,6 @@
         top: 80px;
         bottom: 40px;
     }
-    
     #mainbody {
         position: absolute;
         left: 0;
@@ -93,36 +89,34 @@
         _width: 100%;
     }
     
-    #logo {
-        background: url(cloud/img/logo.png) center center no-repeat;
-        height: 80px;
-    }
     
     .mainmenu {
         list-style: none;
         margin: 0;
         padding: 0;
     }
-    
     .mainmenu a {
         display: block;
         padding: 10px 0 10px 20px;
         color: #fff;
     }
-    
     .mainmenu a:hover {
         background: #2c77bb;
         color: #fff;
     }
-    
     .mainmenu .active a {
-        background: #33aff5 url(cloud/img/menu-active.png) right center no-repeat !important;
+        background: #33aff5;
+        _background: #33aff5 url(cloud/img/aro-l.gif) right center no-repeat;
+    }
+    .mainmenu .active a:before {
+        content:'';
+        border: solid 8px;
+        border-color: transparent #eee transparent transparent;
+        position: absolute;
+        top: 13px;
+        right: 0;
     }
     
-    #state .progress {
-        border: solid 2px #fff;
-        border-radius: 10px;
-    }
     
     #state {
         position: absolute;
@@ -132,6 +126,10 @@
         height: 40px;
         width: 110px;
         margin: 0 10px;
+    }
+    #state .progress {
+        border: solid 2px #fff;
+        border-radius: 10px;
     }
     </style>
 </head>
@@ -166,7 +164,7 @@
         <!-- /mainbody -->
     </div>
     <script>
-    seajs.use(['ui', 'ui/rollbar'], function(UI) {
+    seajs.use(['ui', 'ui/rollbar'], function(UI) {    
         var mainbody = $('#mainbody'),
             sideMenu = $('#sideMenu');
 

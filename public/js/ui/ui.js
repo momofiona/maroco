@@ -48,7 +48,7 @@ seajs.config({
             //绑定事件
             _.each(config.events, function(v, k) {
                 var s = k.indexOf(' ');
-                config.el.on(k.slice(0, s), $.trim(k.slice(s + 1)), function(event) {
+                config.el.on(s==-1?k:k.slice(0, s), s==-1?'':$.trim(k.slice(s + 1)), function(event) {
                     var _fn = (_.isString(v) ? config[v] : v);
                     if (_fn) return _fn.call(this, event, config);
                 });
@@ -287,7 +287,7 @@ seajs.config({
     UI.tabs = function(config) {
         return UI($.extend(true, {
             active: function(n) {
-                this.$('a:eq(' + n + ')').trigger('click');
+                this.tabs.find('a:eq(' + n + ')').trigger('click');
             },
             onActive: $.noop,
             cache:{},

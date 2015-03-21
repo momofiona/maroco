@@ -116,15 +116,17 @@
   display: inline-block;
   width: 16px;
   height: 16px;
-  margin: 0 0 0 6px;
+  font-size: 0;
   background: url(img/dropdown_arrow.png) no-repeat;
   vertical-align: text-top;
+  _position: absolute;
 }
 .asc .order-tip {
   height: 8px;
+  margin-top: 4px;
 }
 .desc .order-tip {
   height: 8px;
+  margin-top: 8px;
   background-position: left bottom;
-  vertical-align: text-bottom;
 }

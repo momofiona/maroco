@@ -79,7 +79,7 @@ define(function(require, exports, module) {
             <th align=left><input type="checkbox" class="ctable-checkall"></th>\
             {{?}}\
             {{~it.cols :col:index}}\
-            <th align="{{=col.align||"left"}}" class="{{=col.cls||""}} {{=col.orderby?"orderby":""}}"{{?col.orderby}} orderby="{{=col.sortable}}"{{?}}{{?col.style}} style="{{=col.style}}"{{?}}>{{=col.title||""}}{{?col.orderby}}<i class="order-tip" orderby="{{=col.orderby}}"></i>{{?}}</th>\
+            <th align="{{=col.align||"left"}}" class="{{=col.cls||""}} {{=col.orderby?"orderby":""}}"{{?col.orderby}} orderby="{{=col.orderby}}"{{?}}{{?col.style}} style="{{=col.style}}"{{?}}>{{=col.title||""}}{{?col.orderby}} <i class="order-tip" orderby="{{=col.orderby}}"></i>{{?}}</th>\
             {{~}}\
             {{?it.editable}}\
             <th class="text-center"><b class="f f-add ac-tr-add"></b></th>\
@@ -97,7 +97,7 @@ define(function(require, exports, module) {
                 {{?col.colspan}}\
                 <th index="{{=index+=col.colspan-1}}" colspan="{{=col.colspan}}" class="ctable-colgroup" align="center">{{=col.colgroup}}</th>\
                 {{??}}\
-                <th rowspan="2" align="{{=col.align||"left"}}" class="{{=col.cls||""}} {{=col.sortable?"orderby":""}}" {{?col.sortable}}data-sortable="{{=col.sortable}}"{{?}} {{?col.style}}style="{{=col.style}}"{{?}}>{{=col.title||""}}</th>\
+                <th rowspan="2" align="{{=col.align||"left"}}" class="{{=col.cls||""}} {{=col.orderby?"orderby":""}}"{{?col.orderby}} orderby="{{=col.orderby}}"{{?}}{{?col.style}} style="{{=col.style}}"{{?}}>{{=col.title||""}}{{?col.orderby}} <i class="order-tip" orderby="{{=col.orderby}}"></i>{{?}}</th>\
                 {{?}}\
             {{~}}\
             {{?it.editable}}\
@@ -107,7 +107,7 @@ define(function(require, exports, module) {
         <tr>\
             {{~it.cols :col:index}}\
             {{?col.colgroup}}\
-            <th align="{{=col.align||"left"}}" class="ctable-colgroup {{=col.cls||""}} {{=col.sortable?"orderby":""}}" {{?col.sortable}}data-sortable="{{=col.sortable}}"{{?}} {{?col.style}}style="{{=col.style}}"{{?}}>{{=col.title||""}}</th>\
+            <th align="{{=col.align||"left"}}" class="ctable-colgroup {{=col.cls||""}} {{=col.orderby?"orderby":""}}"{{?col.orderby}} orderby="{{=col.orderby}}"{{?}}{{?col.style}} style="{{=col.style}}"{{?}}>{{=col.title||""}}{{?col.orderby}} <i class="order-tip" orderby="{{=col.orderby}}"></i>{{?}}</th>\
             {{?}}\
             {{~}}\
         </tr>\
