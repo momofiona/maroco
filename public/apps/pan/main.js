@@ -3,7 +3,7 @@ define(function(require, exports, module) {
 
     var template = require('./main.html'),
         grid = require('ui/grid'),
-        FILE = require('apps/pan/file'),
+        FILE = require('cloud/file'),
         buttonset = require('ui/buttonset'),
         searchbox = require('ui/searchbox'),
         notify = require('ui/notify');
@@ -177,8 +177,8 @@ define(function(require, exports, module) {
                         return data.length == 1;
                     }
                 },{
-                    label: '<i class="f f-checkmark c-safe"></i>白骨精',
-                    cls: 'ac-kulo" title="选择多项时出现"',
+                    label: '<i class="f f-checkmark c-safe"></i>白骨精 （选择多项时出现）',
+                    cls: 'ac-kulo',
                     //当test返回true的时候显示
                     test: function(data) {
                         //这里禁止对data进行修改

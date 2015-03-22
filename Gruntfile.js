@@ -65,7 +65,15 @@ module.exports = function(grunt) {
                         //组件只用到了position dragable 
                         //datepicker autocomplete，逐渐淘汰jquery UI
                         //position drag drop sortable继续留用或找其他方案
-                        'public/js/vendor/jqueryui/jquery-ui.min.js',
+                        // 'public/js/vendor/jqueryui/jquery-ui.min.js',
+                        'public/js/vendor/jqueryui/jquery.ui.core.min.js',
+                        'public/js/vendor/jqueryui/jquery.ui.widget.min.js',
+                        'public/js/vendor/jqueryui/jquery.ui.mouse.min.js',
+                        'public/js/vendor/jqueryui/jquery.ui.position.min.js',
+                        'public/js/vendor/jqueryui/jquery.ui.draggable.min.js',//notify.js 使用，19K 可精简
+                        'public/js/vendor/jqueryui/jquery.ui.sortable.min.js',//table.js 使用，这货居然24K，算法肯定不咋的
+
+                        //navgoco 这个可以去除
                         'public/js/vendor/jquery.cookie.min.js',
                         'public/js/vendor/navgoco/jquery.navgoco.min.js'
                         
