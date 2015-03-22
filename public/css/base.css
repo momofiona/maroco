@@ -674,7 +674,7 @@ a:hover {
   cursor: pointer;
   color: #555;
   text-decoration: none;
-  padding: 4px 15px 4px 30px;
+  padding: 5px 15px 5px 30px;
   white-space: nowrap;
 }
 .menu a i {

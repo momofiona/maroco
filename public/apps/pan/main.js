@@ -161,17 +161,28 @@ define(function(require, exports, module) {
             contextmenu: {
                 events: {
                     'click .ac-pig': function(e, conf) {
-                        alert('老猪来娶你了');
-                        //获取选中数据
-                        console.log(fileList.getSelected());
+                        alert('老猪来娶你了~'+conf.data[0].cname);
+                        console.log(conf.data);
+                    },
+                    'click .ac-kulo': function(e, conf) {
+                        console.log(conf.data);
                     }
                 },
                 menus: [{
-                    label: '猪八戒',
+                    label: '猪八戒 (选择多项时隐藏)',
                     cls: 'ac-pig',
                     //当test返回true的时候显示
-                    test: function() {
-                        return _.uniqueId() % 2 == 0
+                    test: function(data) {
+                        //这里禁止对data进行修改
+                        return data.length == 1;
+                    }
+                },{
+                    label: '<i class="f f-checkmark c-safe"></i>白骨精',
+                    cls: 'ac-kulo" title="选择多项时出现"',
+                    //当test返回true的时候显示
+                    test: function(data) {
+                        //这里禁止对data进行修改
+                        return data.length > 1;
                     }
                 }, {
                     label: '蜘蛛精',
@@ -179,8 +190,9 @@ define(function(require, exports, module) {
                     href: 'http://baidu.com/s?wd=蜘蛛精" target="_blank"'
                 },'', {
                     label: '<i class="f f-location"></i>蜘猪精',
+                    cls:'menu-error',
                     //动态添加链接也是可以的
-                    href: function() {
+                    href: function(data) {
                         return 'https://github.com/momofiona/maroco" target="_blank"';
                     }
                 }]
@@ -239,7 +251,7 @@ define(function(require, exports, module) {
                 var s = ''
                 for (var i in tab) s += i + '\t';
                 //面包屑栏目
-                this.caption.html(tab.innerHTML);
+                this.caption.html('<i class="f f-home"></i> '+tab.innerHTML);
                 //刷新文件列表
                 fileList.load();
             }

@@ -23,7 +23,6 @@
         background-color: #fff;
         min-width: 980px;
         overflow-x: auto;
-        font-size: 12px;
     }
     #aside {
         background: #113B63;
@@ -44,6 +43,7 @@
         position: relative;
         z-index: 100;
         height: 36px;
+        font-size: 12px;
         background: #eee;
     }
     #guider .caption {
@@ -192,6 +192,7 @@
                         seajs.use('ui/notify', function(notify) {
                             notify({
                                 title: '个人设置',
+                                mask:true,
                                 msg: '个人设置',
                                 cls: 'note',
                                 width: 500
@@ -200,7 +201,7 @@
                     }
                 },
                 init: function() {
-                    this.el.append('<span class="b xr" title="个人设置">' + v.name +' <i class="f f-arb"></i> <img class="va-m" style="margin:-6px -12px -6px 6px;" src="' + v.avanta + '" height=36 width=36></span>');
+                    this.el.append('<span class="ac-profile b xr" title="个人设置">' + v.name +' <i class="f f-arb"></i> <img class="va-m" style="margin:-6px -12px -6px 6px;" src="' + v.avanta + '" height=36 width=36></span>');
                 }
             });
             //输出菜单
