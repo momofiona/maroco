@@ -33,9 +33,8 @@ define(function(require, exports, module) {
                 //选择行
                 'click .grid-row': function(e, config) {
                     var others;
-                    if (!event.ctrlKey) {
-                        var tar = $(event.target || event.srcElement);
-                        //IE10- event.target=undefined
+                    if (!e.ctrlKey) {
+                        var tar = $(e.target);
                         if (!tar.hasClass('grid-check') && !tar.parent().hasClass('grid-check')) {
                             others = $(this).siblings('.grid-selected').removeClass('grid-selected').length > 0;
                         }
@@ -110,12 +109,12 @@ define(function(require, exports, module) {
                 }
                 this.head.toggleClass('grid-selected', sta);
             },
-            //检查滚动条
+            //检查是否存在滚动条
             isScrolling: function() {
                 var b = this.body[0];
                 this.head.css('margin-right', b.offsetWidth - b.scrollWidth);
             },
-            //获取数据
+            //获取已选数据
             getSelected: function() {
                 var ret = [],
                     cache = this.cache;
@@ -130,22 +129,24 @@ define(function(require, exports, module) {
                 this.body.height((_.isFunction(this.height) ? this.height(this.el) : this.height) - this.head[0].offsetHeight - this.foot.height());
                 this.isScrolling();
             },
+            //模版
             templates: {
                 head: _.dot('<div class="grid-head">\
-        			{{?it.checkbox}}<div class="grid-col grid-check grid-check-all"><i></i></div>{{?}}\
-        			{{~it.cols :col:i}}\
-        			<div class="grid-col c{{=i}} {{=col.cls||""}} {{=col.orderby?"orderby":""}}"{{?col.orderby}} orderby="{{=col.orderby}}"{{?}}{{?col.style}} style="{{=col.style}}"{{?}}>{{=col.title||"&nbsp;"}}{{?col.orderby}} <i class="order-tip" orderby="{{=col.orderby}}"></i>{{?}}</div>\
-        			{{~}}\
-        			</div>'),
+                    {{?it.checkbox}}<div class="grid-col grid-check grid-check-all"><i></i></div>{{?}}\
+                    {{~it.cols :col:i}}\
+                    <div class="grid-col c{{=i}} {{=col.cls||""}} {{=col.orderby?"orderby":""}}"{{?col.orderby}} orderby="{{=col.orderby}}"{{?}}{{?col.style}} style="{{=col.style}}"{{?}}>{{=col.title||"&nbsp;"}}{{?col.orderby}} <i class="order-tip" orderby="{{=col.orderby}}"></i>{{?}}</div>\
+                    {{~}}\
+                    </div>'),
                 items: _.dot('{{~it.data :trdata:index}}\
-        			<div class="grid-row" index="{{=index}}">\
-        			{{?it.checkbox}}<div class="grid-col grid-check"><i></i></div>{{?}}\
-        			{{~it.cols :col:i}}\
-            		<div class="grid-col c{{=i}} {{=col.cls||""}}" {{?col.style}}style="{{=col.style}}"{{?}}>{{=trdata[i]===undefined||trdata[i]===null?"":trdata[i]}}</div>\
-        			{{~}}\
-        			</div>\
-        			{{~}}')
+                    <div class="grid-row" index="{{=index}}">\
+                    {{?it.checkbox}}<div class="grid-col grid-check"><i></i></div>{{?}}\
+                    {{~it.cols :col:i}}\
+                    <div class="grid-col c{{=i}} {{=col.cls||""}}" {{?col.style}}style="{{=col.style}}"{{?}}>{{=trdata[i]===undefined||trdata[i]===null?"":trdata[i]}}</div>\
+                    {{~}}\
+                    </div>\
+                    {{~}}')
             },
+            //loader暴露的接口
             load: function(filter) {
                 this.loader.load(filter);
             },
@@ -202,6 +203,7 @@ define(function(require, exports, module) {
                 });
                 //build
                 this.el.empty().append(this.head).append(this.body).append(this.foot);
+
                 //setHeight
                 if (config.height) {
                     this.body.addClass('scroll');
@@ -227,15 +229,16 @@ define(function(require, exports, module) {
                 if (this.contextmenu) {
                     //禁止body右键菜单
                     this.contextmenu = UI(_.defaults({
-                        el: $('<div class="dropdown">'),
+                        el: $('<div class="dropdown am-fadeup">'),
                         mask: $('<div class="mask"/>'),
                         render: function(x, y) {
-                            var lis = '';
+                            var lis = '',
+                                data = this.data = config.getSelected();
                             _.each(this.menus, function(o, i) {
                                 if (o == '') {
                                     lis += '<li class="devider"></li>';
-                                } else if (!o.test || _.isFunction(o.test) && o.test() === true) {
-                                    lis += '<li><a' + (o.cls ? ' class="' + o.cls + '"' : '') + ' href="' + (_.isFunction(o.href) ? o.href() : o.href || '#') + '">' + o.label + '</a></li>';
+                                } else if (!o.test || _.isFunction(o.test) && o.test(data) === true) {
+                                    lis += '<li><a' + (o.cls ? ' class="' + o.cls + '"' : '') + ' href="' + (_.isFunction(o.href) ? o.href(data) : o.href || '#') + '">' + o.label + '</a></li>';
                                 }
                             });
                             this.mask.show().appendTo('body');
@@ -247,7 +250,8 @@ define(function(require, exports, module) {
                             });
                         },
                         init: function() {
-                            var mask = this.mask.on('mousedown', function(e) {
+                            var t = this,
+                                mask = this.mask.on('mousedown', function(e) {
                                     e.stopPropagation();
                                     all.detach();
                                 }),
@@ -262,6 +266,70 @@ define(function(require, exports, module) {
                         }
                     }, this.contextmenu));
                 }
+
+                //框选拖动boxSelect点击拖动5像素以上启动框选
+                var box = $('<div class="grid-boxselector">'),
+                    //是否相交
+                    isCross = function(a, b) {
+                        return a.top < b.bottom && a.bottom > b.top && a.left < b.right && a.right > b.left;
+                    },
+                    //起点
+                    startEvent,
+                    //鼠标是否已经点下
+                    isMouseDown,
+                    //是否已经启动
+                    isWorking,
+                    doc = $(document),
+                    //需要框选的元素集合
+                    sheeps,
+                    moving = function(e) {
+                        if (isMouseDown) {
+                            e.preventDefault();
+                            var width = e.clientX - startEvent.clientX,
+                                height = e.clientY - startEvent.clientY;
+                            if (isWorking) {
+                                box.css({
+                                    width: Math.abs(width),
+                                    height: Math.abs(height),
+                                    left: startEvent.clientX + (width > 0 ? 0 : width),
+                                    top: startEvent.clientY + (height > 0 ? 0 : height)
+                                });
+                                //选择出在框内的元素
+                                var boxRect = box[0].getBoundingClientRect()
+                                sheeps.each(function(i, o) {
+                                    $(o).toggleClass('grid-selected', isCross(boxRect, o.getBoundingClientRect()));
+                                });
+                            } else if (Math.abs(width) > 10 || Math.abs(height) > 10) {
+                                isWorking = true;
+                                box.appendTo('body');
+                                sheeps = config.body.children();
+                            }
+                        }
+                    };
+                this.body.on('mousedown', function(e) {
+                    //左键点击，排除滚动条位置
+                    if (e.which == 1 && e.offsetX < this.clientWidth && e.offsetY < this.clientHeight) {
+                        startEvent = e;
+                        isMouseDown = true;
+                        doc.on('mousemove', moving).one('mouseup', function(e) {
+                            isMouseDown = startEvent = null;
+                            if (isWorking) {
+                                sheeps = isWorking = null;
+                                box.detach();
+                                config.onSelected(config.getSelected());
+                            }
+                            doc.off('mousedown', moving);
+                        });
+                    }
+                }).on('mousedown', function(e) {
+                    //判断如果点击的是自己,并且不是点的滚动条，全部解除选择
+                    if (e.target == this && e.offsetX < this.clientWidth && e.offsetY < this.clientHeight) {
+                        $(this).children().removeClass('grid-selected');
+                        config.onSelected([]);
+                    }
+                });
+
+                //over
 
             }
         }, config));
