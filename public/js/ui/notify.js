@@ -21,6 +21,7 @@ define(function(require, exports, module) {
             oninit: $.noop, //元素初始化前调用
             oncreate: $.noop, //元素dom创建完毕之后调用
             close: function(e, config) {
+                //如果支持动画，等fadedown后再干掉
                 config = config || this;
                 config.onclose.apply(config);
                 config.close = $.noop;

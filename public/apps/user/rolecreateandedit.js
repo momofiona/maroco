@@ -1,5 +1,4 @@
 define(function(require, exports, module) {
-    var searchbox = require('ui/searchbox');
     var tpl = _.dot(require('./rolecreateandedit.html'));
     var notify = require('ui/notify');
     var validate = require('ui/validate');
@@ -95,7 +94,7 @@ define(function(require, exports, module) {
                 if (!roles) return;
                 var s = "";
                 _.each(roles, function(o, i) {
-                    s += '<div class="link" style="margin-bottom:-1px"><i class="f f-multiply notify-close am-rotate xr" onclick="$(this).parent().remove();"></i><input name="extendId" type="hidden" value="' + o.id + '">' + o.name + '(' + o.orgName + ')</div>';
+                    s += '<div class="safe" style="margin-bottom:1px"><i class="f f-multiply notify-close am-rotate xr" onclick="$(this).parent().remove();"></i><input name="extendId" type="hidden" value="' + o.id + '">' + o.name + '(' + o.orgName + ')</div>';
                 });
                 this.extendEl.append(s);
             },
@@ -103,7 +102,7 @@ define(function(require, exports, module) {
                 if (!roles) return;
                 var s = "";
                 _.each(roles, function(o, i) {
-                    s += '<div class="link" style="margin-bottom:-1px"><i class="f f-multiply notify-close am-rotate xr" onclick="$(this).parent().remove();"></i><input name="extendId" type="hidden" value="' + o.id + '">' + o.name + '(' + o.orgName + ')</div>';
+                    s += '<div class="error" style="margin-bottom:1px"><i class="f f-multiply notify-close am-rotate xr" onclick="$(this).parent().remove();"></i><input name="extendId" type="hidden" value="' + o.id + '">' + o.name + '(' + o.orgName + ')</div>';
                 });
                 this.exclusionEl.append(s);
             },
