@@ -464,7 +464,7 @@ define(function(require, exports, module) {
                         msg: msg,
                         cls: 'error',
                         dir: this.attr('dir') || 'rc',
-                        within: options.form
+                        within: options.tipWithin||options.form
                     });
                 }
             }

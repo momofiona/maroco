@@ -73,8 +73,15 @@ define(function(require, exports, module) {
                 //button evenet
                 if (_t.buttons) {
                     _t.el.find('>.dialog-foot .b[click]').on('click', function(e) {
-                        var index = $(this).attr('click');
-                        _t.buttons[index].click.call(this, e, _t);
+                        var click = $(this).attr('click');
+                        click=_t.buttons[click].click;
+                        //如果是字符串，直接找属性执行
+                        if(_.isString(click)){
+                            _t[click]();
+                        }else{
+                           click.call(this, e, _t); 
+                        }
+                        
                     });
                 }
                 //mask

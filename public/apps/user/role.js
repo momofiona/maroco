@@ -11,7 +11,7 @@ define(function(require, exports, module) {
     require('css/zTree/zTreeStyle.css');
 
     exports.show = function(opt) {
-        
+
         //---------- manager----------
         var userManeger = UI({
             events: {
@@ -150,21 +150,29 @@ define(function(require, exports, module) {
                     }],
                     // hidehead:true,
                     checkbox: false,
-                    height: function(grid){
+                    height: function(grid) {
                         return $(window).height() - $(grid).offset().top;
                     },
                     /*status:function(data){
                         if(data.total==0) return '当前部门没有角色';
                     },*/
                     events: {
-                        'click tr': function(event, tr, data, config) {
+                        'click tr': function(e, tr, data, conf) {
                             tr.addClass('ctable-selected').siblings().removeClass('ctable-selected');
                             userManeger.setRole(data);
                         },
-                        'click .ac-roleedit': function(event, tr, data, config) {
-                            if (tr.hasClass('ctable-selected')) {
-                                event.stopPropagation();
-                            }
+                        //编辑权限
+                        'click .ac-roleedit': function(e, tr, data, conf) {
+                            e.stopPropagation();
+                            seajs.use(['apps/user/rolecreateandedit'], function(edit) {
+                                edit.show({
+                                    isEdit:true,
+                                    data:data,
+                                    callback:function(roles){
+                                        debugger;
+                                    }
+                                });
+                            });
                             return false;
                         }
                     },
@@ -193,7 +201,7 @@ define(function(require, exports, module) {
             }
         });
         //---------- $ role list----------
-        
+
         //---------- users list 用户模块----------
         var users = UI({
             el: userManeger.$('.ac-peoples'),
@@ -243,9 +251,9 @@ define(function(require, exports, module) {
                                             }*/
                     ],
                     //每次滚动距离
-                    scrollamount:81,
+                    scrollamount: 81,
                     checkbox: true,
-                    height: function(grid){
+                    height: function(grid) {
                         return $(window).height() - $(grid).offset().top;
                     },
                     blankText: '当前部门没有成员',
@@ -303,19 +311,20 @@ define(function(require, exports, module) {
                 var _powers = this;
                 if (!this.loader) {
                     //初始化
-                    var id=_.uniqueId('powers'),el=this.el.attr('id',id);
-                    var _throttle=_.throttle(function(){
-                        if(!document.getElementById(id)){
-                            $(window).off('resize',_throttle);
-                        }else{
-                            var h=$(this).height()-el.offset().top;
-                            h&&el.height(h);
+                    var id = _.uniqueId('powers'),
+                        el = this.el.attr('id', id);
+                    var _throttle = _.throttle(function() {
+                        if (!document.getElementById(id)) {
+                            $(window).off('resize', _throttle);
+                        } else {
+                            var h = $(this).height() - el.offset().top;
+                            h && el.height(h);
                         }
                     });
-                    $(window).on('resize',_throttle);
+                    $(window).on('resize', _throttle);
                     _throttle();
 
-                    this.el=this.el.rollbar().find('.rollbar-content');
+                    this.el = this.el.rollbar().find('.rollbar-content');
                     this.loader = UI.loader({
                         url: '/json/getPowers',
                         afterLoad: function(data) {
@@ -327,17 +336,17 @@ define(function(require, exports, module) {
                     roleId: role.id
                 });
             },
-            events:{
-                'click .ac-check-app':function(){
-                    var checked=this.checked;
-                    $(this).closest('tbody').find('input').each(function(){
-                        this.checked=checked;
+            events: {
+                'click .ac-check-app': function() {
+                    var checked = this.checked;
+                    $(this).closest('tbody').find('input').each(function() {
+                        this.checked = checked;
                     })
                 },
-                'click .ac-check-model':function(){
-                    var checked=this.checked;
-                    $(this).closest('tr').find('.ac-check-fun').each(function(){
-                        this.checked=checked;
+                'click .ac-check-model': function() {
+                    var checked = this.checked;
+                    $(this).closest('tr').find('.ac-check-fun').each(function() {
+                        this.checked = checked;
                     })
                 }
             },
@@ -354,8 +363,7 @@ define(function(require, exports, module) {
             toggle: function(b) {
                 this.el.toggle(!!b);
             },
-            init: function() {
-            }
+            init: function() {}
         });
         //----------$ power list----------
     }
