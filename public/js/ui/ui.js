@@ -399,7 +399,6 @@ $(document).ajaxSend(function(event, XMLHttpRequest, ajaxOptions) {
 if (UI.browser.ie < 9) _.each("abbr article aside audio bdi canvas data datalist details dialog figcaption figure footer header hgroup main mark meter nav output picture progress section summary template time video".split(' '), function(o) {
     document.createElement(o);
 });
-//更新cable2 增加col类配置render
 //金额计算
 //position
 //removeable

@@ -124,6 +124,11 @@ define(function(require, exports, module) {
                 });
                 return ret;
             },
+            //getRowDate
+            getRowData:function(dom){
+                var index=$(dom).closest('.grid-row').attr('index');
+                return this.cache[index];
+            },
             //调整高度以适应窗体
             layout: function() {
                 this.body.height((_.isFunction(this.height) ? this.height(this.el) : this.height) - this.head[0].offsetHeight - this.foot.height());
@@ -316,7 +321,9 @@ define(function(require, exports, module) {
                             if (isWorking) {
                                 sheeps = isWorking = null;
                                 box.detach();
-                                config.onSelected(config.getSelected());
+                                var sd=config.getSelected();
+                                config.onSelected(sd);
+                                config.isSelectAll(sd.length===config.cache.length);
                             }
                             doc.off('mousedown', moving);
                         });
@@ -326,6 +333,7 @@ define(function(require, exports, module) {
                     if (e.target == this && e.offsetX < this.clientWidth && e.offsetY < this.clientHeight) {
                         $(this).children().removeClass('grid-selected');
                         config.onSelected([]);
+                        config.isSelectAll(false);
                     }
                 });
 

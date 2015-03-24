@@ -94,8 +94,8 @@ b.i-close {
 }
 @font-face {
   font-family: 'icomoon';
-  src: url('icomoon/fonts/icomoon.eot?trwxar');
-  src: url('icomoon/fonts/icomoon.eot?#iefixtrwxar') format('embedded-opentype'), url('icomoon/fonts/icomoon.woff?trwxar') format('woff'), url('icomoon/fonts/icomoon.ttf?trwxar') format('truetype'), url('icomoon/fonts/icomoon.svg?trwxar#icomoon') format('svg');
+  src: url('icomoon/fonts/icomoon.eot?88uqre');
+  src: url('icomoon/fonts/icomoon.eot?#iefix88uqre') format('embedded-opentype'), url('icomoon/fonts/icomoon.woff?88uqre') format('woff'), url('icomoon/fonts/icomoon.ttf?88uqre') format('truetype'), url('icomoon/fonts/icomoon.svg?88uqre#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -111,38 +111,8 @@ b.i-close {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-.f-location:before {
-  content: "\e608";
-}
-.f-home:before {
-  content: "\e002";
-}
-.f-browse:before {
-  content: "\e0a2";
-}
-.f-user:before {
-  content: "\e199";
-}
-.f-star-empty:before {
-  content: "\e2ff";
-}
-.f-star:before {
-  content: "\e301";
-}
-.f-pencil:before {
-  content: "\e600";
-}
-.f-filter:before {
-  content: "\e443";
-}
-.f-warn:before {
-  content: "\e601";
-}
-.f-calendar:before {
-  content: "\e603";
-}
-.f-share:before {
-  content: "\e48c";
+.f-cut:before {
+  content: "\e617";
 }
 .f-export:before {
   content: "\e609";
@@ -182,6 +152,69 @@ b.i-close {
 }
 .f-read:before {
   content: "\e606";
+}
+.f-doc:before {
+  content: "\f1c2";
+}
+.f-xls:before {
+  content: "\f1c3";
+}
+.f-ppt:before {
+  content: "\f1c4";
+}
+.f-fly:before {
+  content: "\f1d9";
+}
+.f-save:before {
+  content: "\f0c7";
+}
+.f-grid:before {
+  content: "\f009";
+}
+.f-down:before {
+  content: "\e604";
+}
+.f-up:before {
+  content: "\e605";
+}
+.f-txt:before {
+  content: "\e086";
+}
+.f-copy:before {
+  content: "\e091";
+}
+.f-location:before {
+  content: "\e608";
+}
+.f-home:before {
+  content: "\e002";
+}
+.f-browse:before {
+  content: "\e0a2";
+}
+.f-user:before {
+  content: "\e199";
+}
+.f-star-empty:before {
+  content: "\e2ff";
+}
+.f-star:before {
+  content: "\e301";
+}
+.f-pencil:before {
+  content: "\e600";
+}
+.f-filter:before {
+  content: "\e443";
+}
+.f-warn:before {
+  content: "\e601";
+}
+.f-calendar:before {
+  content: "\e603";
+}
+.f-share:before {
+  content: "\e48c";
 }
 .f-org:before {
   content: "\e9bc";
@@ -266,16 +299,4 @@ b.i-close {
 }
 .f-art:before {
   content: "\f0d8";
-}
-.f-save:before {
-  content: "\f0c7";
-}
-.f-grid:before {
-  content: "\f009";
-}
-.f-down:before {
-  content: "\e604";
-}
-.f-up:before {
-  content: "\e605";
 }

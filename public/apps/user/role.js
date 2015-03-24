@@ -150,7 +150,9 @@ define(function(require, exports, module) {
                     }],
                     // hidehead:true,
                     checkbox: false,
-                    height: 'window',
+                    height: function(grid){
+                        return $(window).height() - $(grid).offset().top;
+                    },
                     /*status:function(data){
                         if(data.total==0) return '当前部门没有角色';
                     },*/
@@ -243,7 +245,9 @@ define(function(require, exports, module) {
                     //每次滚动距离
                     scrollamount:81,
                     checkbox: true,
-                    height: 'window',
+                    height: function(grid){
+                        return $(window).height() - $(grid).offset().top;
+                    },
                     blankText: '当前部门没有成员',
                     events: {
                         'click .ac-person-view': function(event, tr, data, config) {

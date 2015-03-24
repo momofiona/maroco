@@ -60,15 +60,15 @@
 .ctable-hover .ctable-hide {
   visibility: visible;
 }
-.ctable-selected {
+.ctable .ctable-selected {
   background-color: #039ACC;
   color: #fff;
 }
-.ctable-selected td {
+.ctable .ctable-selected td {
   box-shadow: none;
   border-color: #039ACC;
 }
-.ctable-selected a {
+.ctable .ctable-selected a {
   color: #fff;
 }
 .ctable-head {

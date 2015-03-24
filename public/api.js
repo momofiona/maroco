@@ -24,14 +24,14 @@ define(function(require, exports, module) {
         name: top.USER.orgName
     }]*/
     Mock.mock(/\/json\/getTree(\?.*)?/, 'get', {
-            "total|200": 12,
-            "result|5-6": [{
-                'id|+1': 12,
-                "isParent": "@BOOLEAN",
-                "type":"@BOOLEAN",//是否是公司
-                "name": '@NAME'
-            }]
-        });
+        "total|200": 12,
+        "result|5-6": [{
+            'id|+1': 12,
+            "isParent": "@BOOLEAN",
+            "type": "@BOOLEAN", //是否是公司
+            "name": '@NAME'
+        }]
+    });
     ///json/getUserByOrgId 获取部门下人员
     //Random.image('200x100', '#ffcc33', '#FFF', 'png', '!')
     Mock.mock('/json/getUserByOrgId', 'get', {
@@ -73,9 +73,9 @@ define(function(require, exports, module) {
         }]
     });
 
-    //根据组织ID返回所有权限
+    //根据组织ID返回所有权限(role.js用到)
     Mock.mock(/\/json\/getRoleByOrgIds(\?.*)?/, 'get', {
-        "total":12,
+        "total": 12,
         "result|2-5": [{
             "id": "@GUID",
             "name": "@WORD",
@@ -92,19 +92,53 @@ define(function(require, exports, module) {
             "orgId": 'org2'
         }]
     });
+    //根据组织ID返回所有权限(map形式返回)
+    Mock.mock(/\/json\/getRoleMapByOrgIds(\?.*)?/, 'get', {
+        "total": 12,
+        "result|2-5": [{
+            'orgId':'org1',
+            'orgName':'@WORD',
+            'roles|3-6':[{
+                "id": "@GUID",
+                "name": "@WORD",
+                "power": '@boolean',
+                "description": '@WORD',
+                "orgName": '部门:@WORD', //所属部门或者组织
+                "orgId": 'org1'
+            }]
+        },{
+            'orgId':'org2',
+            'orgName':'@WORD',
+            'roles|3-6':[{
+                "id": "@GUID",
+                "name": "@WORD",
+                "power": '@boolean',
+                "description": '@WORD',
+                "orgName": '部门:@WORD', //所属部门或者组织
+                "orgId": 'org2'
+            },{
+                "id": "@GUID",
+                "name": "@WORD",
+                "power": '@boolean',
+                "description": '@WORD',
+                "orgName": '部门:@WORD', //所属部门或者组织
+                "orgId": 'org3'
+            }]
+        }]
+    });
     //根据角色ID返回所有权限 app  model fun
     Mock.mock(/\/json\/getPowers(\?.*)?/, 'get', {
-        "total":12,
+        "total": 12,
         "result|1-2": [{
             "id": "@GUID",
             "name": "@WORD",
-            "models|3-9":[{
+            "models|3-9": [{
                 "id": "@GUID",
                 "name": "@WORD",
-                "funs|4-8":[{
+                "funs|4-8": [{
                     "id": "@GUID",
                     "name": "@WORD",
-                    "power": '@boolean'//是否具有权限
+                    "power": '@boolean' //是否具有权限
                 }]
             }]
         }]

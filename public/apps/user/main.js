@@ -121,7 +121,7 @@ define(function(require, exports, module) {
                     orgId: treeNode.id
                 });
             },
-            //初始化user表格
+            /*//初始化user表格
             makeRoleListTable: function() {
                 this.RoleListTable = ctable({
                     container: this.$('.ac-roletable'),
@@ -130,7 +130,9 @@ define(function(require, exports, module) {
                     }],
                     // hidehead:true,
                     checkbox: false,
-                    height: 'window',
+                    height: function(grid) {
+                        return $(window).height() - $(grid).offset().top;
+                    },
                     blankText: '当前部门没有角色',
                     events: {
                         'click .action-person-view': function(event, tr, data, config) {
@@ -169,7 +171,7 @@ define(function(require, exports, module) {
                     url: '/json/getUserByOrgId',
                     baseparams: {}
                 });
-            },
+            },*/
             //初始化user表格
             makePeopleListTable: function() {
                 this.peopleListTable = ctable({
@@ -193,7 +195,9 @@ define(function(require, exports, module) {
                         width: 100
                     }],
                     checkbox: true,
-                    height: 'window',
+                    height: function(grid) {
+                        return $(window).height() - $(grid).offset().top;
+                    },
                     blankText: '当前部门没有成员',
                     events: {
                         'click .action-person-view': function(event, tr, data, config) {

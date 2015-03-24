@@ -66,7 +66,7 @@ define(function(require, exports, module) {
                 _t.el.addClass(_t.cls + ' ' + _t.type + ' ' + _t.anime).html(_t.template(_t)).data('_notify_', _t);
                 _t.contentEl = _t.$('>.' + _t.type + '-con');
                 if(_t['width']) _t.el.css('width', _t['width']);
-                if(_t['height']) _t.contentEl.css('width', _t['height']).addClass('scroll');
+                if(_t['height']) _t.contentEl.css('height', _t['height']).addClass('scroll');
                 /*_.each(['width', 'height', 'maxWidth', 'maxHeight', 'minHeight', 'minWidth'], function(o, i) {
                     if (_t[o]) _t.contentEl.css(o, _t[o]).addClass('scroll');
                 });*/
