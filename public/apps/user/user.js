@@ -78,6 +78,7 @@ define(function(require, exports, module) {
                                 var id = o.id.slice(2);
                                 if (!tmpids[id]) $(this).remove();
                             });
+                            _t.getRoleLis();
                         }
                     }
                 });
