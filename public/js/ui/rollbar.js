@@ -18,13 +18,15 @@ define(function(require, exports, module) {
         this.touch = {};
         this.pressed = 0;
         this.vslider = $('<div/>', {
-            'class': 'rollbar-handle'
+            'class': 'rollbar-handle',
+            style: 'top:' + setting.pathPadding+'px'
         });
         this.vpath = $('<div/>', {
             'class': 'rollbar-path-vertical'
         });
         this.hslider = $('<div/>', {
-            'class': 'rollbar-handle'
+            'class': 'rollbar-handle',
+            style: 'left:' + setting.pathPadding+'px'
         });
         this.hpath = $('<div/>', {
             'class': 'rollbar-path-horizontal'
@@ -66,16 +68,19 @@ define(function(require, exports, module) {
             this.shadow = $('<div class="rollbar-shadow">').hide().appendTo(this.container);
         }
         this.init();
+        this.checkScroll();
         //ie6-9 onpropertychange
         //IE10 突变时间
         //IE11 突变观察者 var mutationObserver = new MutationObserver(callback);
         //anyway 还是定时器最好
-        var _resize = function() {
-            //当判断content不在dom上的时候移除定时器
+        var lazytimer, _resize = function() {
+            console.log('resize')
+                //当判断content不在dom上的时候移除定时器
             if (!document.getElementById(contentId)) {
                 //去掉定时器
-                clearInterval(_rollbar.lazytimer);
+                clearInterval(lazytimer);
                 $(document).off(_rollbar.namespace);
+                $(window).off('resize', _resize);
                 _rollbar.container.off(_rollbar.namespace);
                 _rollbar.container = null;
                 //避免意外情况下让界面不可选择
@@ -85,7 +90,11 @@ define(function(require, exports, module) {
             _rollbar.checkScroll();
         }
         if (setting.checkTimer) {
-            this.lazytimer = setInterval(_resize, setting.checkTimer)
+            lazytimer = setInterval(_resize, setting.checkTimer)
+        } else {
+            $(window).on('resize', _resize = _.throttle(_resize, 100, {
+                leading: false
+            }));
         }
     };
     //检查卷入高度变化
@@ -97,20 +106,20 @@ define(function(require, exports, module) {
             vdiff = h - ch,
             hdiff = w - cw,
             a = this.settings.pathPadding;
-        if (this.ch !== ch) {
-            this.ch = ch;
-            this.vpath.css({
-                'top': a + 'px',
-                'height': ch - 2 * a
-            });
-        }
-        if (this.cw !== cw) {
-            this.cw = cw;
-            this.hpath.css({
-                'top': a + 'px',
-                'height': cw - 2 * a
-            });
-        }
+        /*        if (this.ch !== ch) {
+                    this.ch = ch;
+                    this.vpath.css({
+                        'top': 0 + 'px',
+                        'height': ch
+                    });
+                }
+                if (this.cw !== cw) {
+                    this.cw = cw;
+                    this.hpath.css({
+                        'top': 0 + 'px',
+                        'height': cw 
+                    });
+                }*/
         if (vdiff != this.vdiff) {
             this.vpath.toggle(vdiff > 0);
             if (vdiff <= 0) {
@@ -123,7 +132,7 @@ define(function(require, exports, module) {
             this.vdiff = vdiff;
             this.vslider.height(100 * ch / h + '%');
         }
-        if (vdiff > 0) this.vtrack = this.vpath.height() - this.vslider.height();
+        if (vdiff > 0) this.vtrack = ch - 2 * a - this.vslider.height();
         //hdiff
         if (hdiff != this.hdiff) {
             this.hpath.toggle(hdiff > 0);
@@ -142,6 +151,7 @@ define(function(require, exports, module) {
     };
 
     RollBar.prototype.scroll = function(v, h, e) {
+        var a = this.settings.pathPadding;
         if (v < 0) {
             v = 0
         }
@@ -151,7 +161,7 @@ define(function(require, exports, module) {
         if (this.top !== -v) {
             this.content.css('top', this.top = -v);
             if (this.vdiff > 0) {
-                this.vslider.css('top', Math.round(v / this.vdiff * this.vtrack));
+                this.vslider.css('top', Math.round(v / this.vdiff * this.vtrack) + a);
                 if (e && (v && v != this.vdiff)) {
                     e.stopPropagation();
                     e.preventDefault()
@@ -172,7 +182,7 @@ define(function(require, exports, module) {
         if (this.left !== -h) {
             this.content.css('left', this.left = -h);
             if (this.hdiff > 0) {
-                this.hslider.css('left', Math.round(h / this.hdiff * this.htrack));
+                this.hslider.css('left', Math.round(h / this.hdiff * this.htrack) + a);
                 if (e && (h && h != this.hdiff)) {
                     e.stopPropagation();
                     e.preventDefault();

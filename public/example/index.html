@@ -159,12 +159,12 @@
             }, []);
 
         //给sidebar加上滚动条
-        if (!UI.browser.chrome) {
+        if (UI.browser.chrome) {
             sideMenu.addClass('scroll');
         } else {
             sideMenu.rollbar({
                 //可通过sideMenu.trigger('rollbar') 主动校准
-                // checkTimer: 0
+                checkTimer: 0
             });
         }
         //#开始的匹配hash
