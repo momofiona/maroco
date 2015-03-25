@@ -2,6 +2,7 @@ define(function(require, exports, module) {
     var notify = require('ui/notify');
     var template = _.dot(require('./user.html'));
     var searchbox = require('ui/searchbox');
+    var upload = require('ui/upload');
     exports.show = function(opt) {
         //人员信息
         var man = UI({
@@ -164,6 +165,33 @@ define(function(require, exports, module) {
                             t.roleLis.show();
                         }
 
+                    }
+                });
+                //头像UPLOAD
+                var avanta=this.avanta = this.$('.ac-avanta'),
+                changer=this.$('.ac-changeavanta');
+                upload({
+                    browse_button: changer[0], 
+                    container: changer.parent()[0],
+                    url: '/upload', 
+                    multi_selection:false,
+                    filters: {
+                        max_file_size: '1mb',
+                        mime_types: [{
+                            title: "Image files",
+                            extensions: "jpg,gif,png"
+                        }]
+                    },
+                    FilesAdded: function(up, files) {
+                        $.each(files, function(i, o) {
+                            o.url = '/upload'; 
+                        })
+                    },
+                    BeforeUpload: function(up, file) {
+                        up.settings.url = file.url; 
+                    },
+                    FileUploaded: function(up, file, data) {
+                        avanta.attr('src',seajs.data.base+'temp/'+data.name)
                     }
                 });
             }

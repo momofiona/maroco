@@ -66,37 +66,28 @@ define(function(require, exports, module) {
             this.shadow = $('<div class="rollbar-shadow">').hide().appendTo(this.container);
         }
         this.init();
-        this.pathSize();
-        
+        //ie6-9 onpropertychange
+        //IE10 突变时间
+        //IE11 突变观察者 var mutationObserver = new MutationObserver(callback);
+        //anyway 还是定时器最好
         var _resize = function() {
             //当判断content不在dom上的时候移除定时器
             if (!document.getElementById(contentId)) {
                 //去掉定时器
                 clearInterval(_rollbar.lazytimer);
                 $(document).off(_rollbar.namespace);
-                $(window).off('resize', _resize);
                 _rollbar.container.off(_rollbar.namespace);
                 _rollbar.container = null;
                 //避免意外情况下让界面不可选择
                 $('body').removeClass('rollbar-noselect');
-                //去掉事件
                 return;
             }
-            _rollbar.pathSize();
             _rollbar.checkScroll();
         }
         if (setting.checkTimer) {
             this.lazytimer = setInterval(_resize, setting.checkTimer)
-        } else if (setting.checkWhenResize) {
-            $(window).on('resize', _resize = _.throttle(_resize, 500, {
-                leading: false
-            }));
-            _.delay(function() {
-                _resize();
-            }, 500);
         }
-    }
-
+    };
     //检查卷入高度变化
     RollBar.prototype.checkScroll = function() {
         var h = this.content.height(),
@@ -104,7 +95,22 @@ define(function(require, exports, module) {
             w = this.content[0].scrollWidth,
             cw = this.container.width(),
             vdiff = h - ch,
-            hdiff = w - cw;
+            hdiff = w - cw,
+            a = this.settings.pathPadding;
+        if (this.ch !== ch) {
+            this.ch = ch;
+            this.vpath.css({
+                'top': a + 'px',
+                'height': ch - 2 * a
+            });
+        }
+        if (this.cw !== cw) {
+            this.cw = cw;
+            this.hpath.css({
+                'top': a + 'px',
+                'height': cw - 2 * a
+            });
+        }
         if (vdiff != this.vdiff) {
             this.vpath.toggle(vdiff > 0);
             if (vdiff <= 0) {
@@ -134,18 +140,6 @@ define(function(require, exports, module) {
         }
         if (hdiff > 0) this.htrack = this.hpath.width() - this.hslider.width();
     };
-    //设置vpath高度
-    RollBar.prototype.pathSize = function() {
-        var a = parseInt(this.settings.pathPadding, 10);
-        this.vpath.css({
-            'top': a + 'px',
-            'height': this.container.height() - 2 * a + 'px'
-        });
-        this.hpath.css({
-            'left': a + 'px',
-            'width': this.container.width() - 2 * a + 'px'
-        })
-    };
 
     RollBar.prototype.scroll = function(v, h, e) {
         if (v < 0) {
@@ -154,15 +148,17 @@ define(function(require, exports, module) {
         if (v > this.vdiff) {
             v = this.vdiff
         }
-        this.content.css('top', this.top = -v);
-        if (this.vdiff > 0) {
-            this.vslider.css('top', Math.round(v / this.vdiff * this.vtrack));
-            if (e && (v && v != this.vdiff)) {
-                e.stopPropagation();
-                e.preventDefault()
-            }
-            if (this.shadow) {
-                this.shadow.toggle(v > 0);
+        if (this.top !== -v) {
+            this.content.css('top', this.top = -v);
+            if (this.vdiff > 0) {
+                this.vslider.css('top', Math.round(v / this.vdiff * this.vtrack));
+                if (e && (v && v != this.vdiff)) {
+                    e.stopPropagation();
+                    e.preventDefault()
+                }
+                if (this.shadow) {
+                    this.shadow.toggle(v > 0);
+                }
             }
         }
 
@@ -172,18 +168,19 @@ define(function(require, exports, module) {
         if (h > this.hdiff) {
             h = this.hdiff
         }
-        this.content.css('left', this.left = -h);
-        if (this.hdiff > 0) {
-            this.hslider.css('left', Math.round(h / this.hdiff * this.htrack));
-            if (e && (h && h != this.hdiff)) {
-                e.stopPropagation();
-                e.preventDefault();
+        //先判断
+        if (this.left !== -h) {
+            this.content.css('left', this.left = -h);
+            if (this.hdiff > 0) {
+                this.hslider.css('left', Math.round(h / this.hdiff * this.htrack));
+                if (e && (h && h != this.hdiff)) {
+                    e.stopPropagation();
+                    e.preventDefault();
+                }
             }
         }
         if (this.before.v != v || this.before.h != h) {
-            if (_.isFunction(this.settings.onscroll)) {
-                this.settings.onscroll.call(this.container.get(0), v, h)
-            }
+            this.settings.onscroll.call(this.container, v, h)
             this.before.v = v;
             this.before.h = h
         }
@@ -212,7 +209,6 @@ define(function(require, exports, module) {
                 .on('selectstart' + this.namespace, function(e) {
                     e.preventDefault();
                 });
-
         });
         f.on('mouseup' + this.namespace, function(e) {
             _rollbar.pressed = 0;
@@ -222,6 +218,7 @@ define(function(require, exports, module) {
         });
         this.container.on('keydown' + this.namespace, function(e) {
                 var keycode = e.keyCode;
+                debugger;
                 if (keycode == 9) {
                     //防止tab键引起的scroll卷入
                     setTimeout(function() {
@@ -291,7 +288,6 @@ define(function(require, exports, module) {
                 e.stopPropagation();
                 if (v === undefined) {
                     //手动触发
-                    _rollbar.pathSize();
                     _rollbar.checkScroll();
                 } else {
                     v = $.isNumeric(v) ? v : -this.top;
@@ -314,7 +310,7 @@ define(function(require, exports, module) {
         sliderOpacity: 0.3,
         scrollamount: 100, //每次滚动的高度/宽度
         touchSpeed: 0.3,
-        pathPadding: '3px', //滚动条边界距离两头的距离
+        pathPadding: 3, //滚动条边界距离两头的距离
         zIndex: 100,
         onscroll: $.noop
     };

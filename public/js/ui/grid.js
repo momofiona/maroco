@@ -64,14 +64,14 @@ define(function(require, exports, module) {
                     config.body.children().toggleClass('grid-selected', isAll);
                     config.onSelected(isAll ? config.cache : []);
                 },
-                //排序 orderby-asc 升序 orderby-desc 降序
-                'click .orderby': function(e, config) {
+                //排序 order-asc 升序 order-desc 降序 
+                'click .order': function(e, config) {
                     var t = $(this),
-                        order = 'asc';
+                        asc = 'asc';
                     if (t.hasClass('desc')) {
                         t.removeClass('desc');
                     } else if (t.hasClass('asc')) {
-                        order = 'desc';
+                        asc = 'desc';
                         t.addClass('desc');
                     } else {
                         t.addClass('asc');
@@ -79,27 +79,26 @@ define(function(require, exports, module) {
                     //去除其余列图标
                     t.siblings().removeClass('asc desc');
                     _.extend(config.baseparams, {
-                        orderby: t.attr('orderby'),
-                        order: order
+                        order: t.attr('order'),
+                        asc: asc
                     });
                     config.onOrderChange();
                     config.load();
                 }
             },
             resetOrder: function(conf) {
-                var orderClass, baseparams = this.baseparams;
-                baseparams.orderby = conf.orderby;
-                if (conf.order === undefined) {
-                    baseparams.order = conf.order;
-                } else if (conf.order === 'desc') {
+                var orderClass,
+                    baseparams = this.baseparams;
+                baseparams.order = conf.order;
+                if (conf.asc === 'desc') {
                     orderClass = 'asc desc';
-                    baseparams.order = 'desc';
+                    baseparams.asc = 'desc';
                 } else {
-                    baseparams.order = orderClass = 'asc';
+                    baseparams.asc = orderClass = 'asc';
                 }
                 this.loader.page = 1;
-                var sort = this.head.children('.orderby').removeClass('asc desc');
-                orderClass && sort.filter('[orderby=' + conf.orderby + ']').addClass(orderClass);
+                var sort = this.head.children('.order').removeClass('asc desc');
+                sort.filter('[order=' + conf.order + ']').addClass(orderClass);
                 this.load();
             },
             //检查是否全选了
@@ -125,8 +124,8 @@ define(function(require, exports, module) {
                 return ret;
             },
             //getRowDate
-            getRowData:function(dom){
-                var index=$(dom).closest('.grid-row').attr('index');
+            getRowData: function(dom) {
+                var index = $(dom).closest('.grid-row').attr('index');
                 return this.cache[index];
             },
             //调整高度以适应窗体
@@ -139,7 +138,7 @@ define(function(require, exports, module) {
                 head: _.dot('<div class="grid-head">\
                     {{?it.checkbox}}<div class="grid-col grid-check grid-check-all"><i></i></div>{{?}}\
                     {{~it.cols :col:i}}\
-                    <div class="grid-col c{{=i}} {{=col.cls||""}} {{=col.orderby?"orderby":""}}"{{?col.orderby}} orderby="{{=col.orderby}}"{{?}}{{?col.style}} style="{{=col.style}}"{{?}}>{{=col.title||"&nbsp;"}}{{?col.orderby}} <i class="order-tip" orderby="{{=col.orderby}}"></i>{{?}}</div>\
+                    <div class="grid-col c{{=i}} {{=col.cls||""}} {{=col.order?"order":""}}"{{?col.order}} order="{{=col.order}}"{{?}}{{?col.style}} style="{{=col.style}}"{{?}}>{{=col.title||"&nbsp;"}}{{?col.order}} <i class="order-tip"></i>{{?}}</div>\
                     {{~}}\
                     </div>'),
                 items: _.dot('{{~it.data :trdata:index}}\
@@ -256,14 +255,13 @@ define(function(require, exports, module) {
                         },
                         init: function() {
                             var t = this,
-                                mask = this.mask.on('mousedown', function(e) {
+                                rmv = function(e) {
                                     e.stopPropagation();
                                     all.detach();
-                                }),
-                                el = this.el.on('click', 'a', function(e) {
-                                    e.stopPropagation();
-                                    all.detach();
-                                }),
+                                    el.css('left', '');
+                                },
+                                mask = this.mask.on('mousedown', rmv),
+                                el = this.el.on('click', 'a', rmv),
                                 all = mask.add(el);
                             all.add(config.body).on('contextmenu', function() {
                                 return false;
@@ -321,9 +319,9 @@ define(function(require, exports, module) {
                             if (isWorking) {
                                 sheeps = isWorking = null;
                                 box.detach();
-                                var sd=config.getSelected();
+                                var sd = config.getSelected();
                                 config.onSelected(sd);
-                                config.isSelectAll(sd.length===config.cache.length);
+                                config.isSelectAll(sd.length === config.cache.length);
                             }
                             doc.off('mousedown', moving);
                         });

@@ -1,8 +1,7 @@
 /**
  * API mock
  */
-define(function(require, exports, module) {
-    var Mock = require('js/vendor/mock-min.js');
+(function() {
     //test
     Mock.mock('/json/members', 'get', {
         "total|200": 12,
@@ -145,4 +144,4 @@ define(function(require, exports, module) {
     });
 
 
-});
+})();

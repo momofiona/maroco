@@ -8,12 +8,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../css/maroco.css">
-    <!-- <link rel="stylesheet" href="../css/jqueryui/jquery-ui.css"> -->
     <!--[if lt IE 8]>
     <link rel="stylesheet" href="../css/icomoon/ie7/ie7.css">
     <![endif]-->
     <script src="../maroco.js"></script>
     <script src="../js/ui/ui.js"></script>
+    <!-- 假数据 -->
+    <script src="../js/vendor/mock-min.js"></script>
+    <script src="../api.js"></script>
+    <!-- /假数据 -->
     <style type="text/css">
     /* IE8 +*/
     
@@ -28,9 +31,11 @@
         border-bottom: 1px solid #d9d9d9;
         box-shadow: 0 0 5px rgba(100, 100, 100, .2);
     }
+    
     body {
         background-color: #f9f9f9;
     }
+    
     #sideMenu,
     #mainbody {
         position: absolute;
@@ -40,22 +45,27 @@
         overflow: hidden;
         background: #fff;
     }
+    
     #sideMenu {
         border-right: 1px solid #e3e3e3;
         background-color: #f9f9f9;
     }
+    
     #mainbody {
         left: 152px;
         right: 0;
     }
+    
     .appframe {
         width: 100%;
         height: 100%;
         border: 0;
     }
+    
     .nav li {
         *zoom: 1;
     }
+    
     .nav a {}
     </style>
 </head>
@@ -79,6 +89,8 @@
                 </li>
                 <li><a href="../home.html">☁ 移动云</a>
                 </li>
+                <li><a href="#!girlfriend">♥ 工具规范</a>
+                </li>
                 <li><a href="#"><i class="m2 f f-star"></i>Maroco</a>
                     <ul>
                         <li><a href="#!layout">☵ Layout</a>
@@ -93,6 +105,8 @@
                         </li>
                         <li><a href="#!tips">✦ Tips</a>
                         </li>
+                        <li><a href="#!searchbox">▦ searchbox</a>
+                        </li>
                         <li><a href="#!table">▦ Table</a>
                         </li>
                         <li><a href="#!watch">☻ Watch(beta)</a>
@@ -102,8 +116,6 @@
                         <li><a href="#!validate">✓ Validate</a>
                         </li>
                         <li><a href="#!upload">⤴ Upload</a>
-                        </li>
-                        <li><a href="#!girlfriend">♥ 工具规范</a>
                         </li>
                     </ul>
                 </li>
@@ -135,7 +147,7 @@
     </div>
     <script>
     // BL BC CR TL TC TR
-    seajs.use(['ui', 'ui/router', 'ui/rollbar'], function(UI, router) {
+    seajs.use(['ui/router', 'ui/rollbar'], function(router) {
         //Nav
         $('.nav').navgoco();
         var mainbody = $('#mainbody'),
@@ -147,14 +159,12 @@
             }, []);
 
         //给sidebar加上滚动条
-        if (UI.browser.chrome) {
+        if (!UI.browser.chrome) {
             sideMenu.addClass('scroll');
         } else {
             sideMenu.rollbar({
-                //关闭定时器,由window.resize接管
                 //可通过sideMenu.trigger('rollbar') 主动校准
-                checkTimer:0,
-                checkWhenResize:true
+                // checkTimer: 0
             });
         }
         //#开始的匹配hash
@@ -187,11 +197,13 @@
         });
         //IE6 fix
         if (UI.browser.ie < 8) {
-            var resize=_.throttle(function() {
+            var resize = _.throttle(function() {
                 var h = $(this).height() - 48;
                 mainbody.height(h).width($(this).width() - sideMenu.width());
                 sideMenu.height(h);
-            },500,{leading:false});
+            }, 500, {
+                leading: false
+            });
             $(window).resize(resize);
             resize();
             //IE6 背景缓存
@@ -234,7 +246,6 @@
         });
     }
     </script>
-
     <!--  js 代码高亮 -->
     <link rel="stylesheet" href="../js/codemirror/codemirror.css">
     <script src="../js/codemirror/codemirror.js"></script>

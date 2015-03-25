@@ -3,6 +3,18 @@
     <h1>工具&规范 <small>Potatoes</small></h1>
     <hr>
     <p>所有文件编码全部UTF8</p>
+    <dl>
+        <dt>后端通信参数:</dt>
+        <dd>order ——order by 列名</dd>
+        <dd>asc ——'asc'|'desc'</dd>
+        <dd>page —— 页码</dd>
+        <dd>count —— 每页数量</dd>
+        <dt>后端返回：data</dt>
+        <dd>data.result —— 主要数据</dd>
+        <dd>data.error —— 错误码</dd>
+        <dd>data.msg —— 返回消息</dd>
+        <dd>data.total —— 请求的数据源总数量，一般用于分页计算总页数： totalPages=Math.ceil(total/count)</dd>
+    </dl>
     <section>
         <h2>IE条件注释 <small>Hack</small></h2>
         <textarea class="codemirror">

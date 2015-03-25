@@ -11,8 +11,8 @@
         <b class="b warn"><i class="m2 f f-buy"></i>购买</b>
         <b class="b error"><i class="m2 f f-bin"></i>删除</b>
         <b class="b link"><i class="m2 f f-link"></i>link</b>
-        <b class="b safe">safe</b>
-        <b class="b dark">dark</b>
+        <b class="b bs safe">safe | .bs</b>
+        <b class="b bl dark">dark | .bl</b>
     </p>
     <textarea class="codemirror">
         <b class="b">b<i class="m4 f f-arb"></i></b>
@@ -58,7 +58,6 @@
         <input class="b log" type="button" value="input">
         <input class="b log" type="submit" value="submit">
     </textarea>
-
     <p>PS：推荐使用b标签;不推荐带href的a标签</p>
     <h2>toolbar</h2>
     <div class="toolbar">
@@ -99,13 +98,13 @@
     <pre class="codemirror" mode="javascript" source="#codemirror-buttonset"></pre>
     <p id="otherGroup">
         <span class="group m2">
-    <a class="b log">a</a>
-        <span class="b log log-active">span</span>
+            <a class="b log">a</a>
+            <span class="b log log-active">span</span>
         <a class="b log">a</a>
         </span>
         <span class="group m2">
-    <a class="b info">a</a>
-        <span class="b info info-active">span</span>
+            <a class="b info">a</a>
+            <span class="b info info-active">span</span>
         <a class="b info">a</a>
         </span>
         <span class="group m2">
@@ -154,7 +153,8 @@ seajs.use('ui/buttonset', function(buttonset) {
         var _t = this;
         buttonset({
             el: _t,
-            init: function() {
+            //在初始化结束后设置cls
+            create: function() {
                 this.cls = this.el.children()[0].className.replace('b ', '');
             }
         });

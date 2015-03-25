@@ -13,6 +13,10 @@
     <![endif]-->
     <script src="maroco.js"></script>
     <script src="js/ui/ui.js"></script>
+    <!-- 假数据 -->
+    <script src="js/vendor/mock-min.js"></script>
+    <script src="api.js"></script>
+    <!-- /假数据 -->
     <style type="text/css">
     /* IE8 +*/
     
@@ -107,8 +111,7 @@
         color: #fff;
     }
     .mainmenu .active a {
-        /*cloud/img/aro-l.gif*/
-        background: #33aff5 url(data:image/gif;base64,R0lGODlhBwAOAIAAAO3t7f///yH5BAEHAAEALAAAAAAHAA4AAAIUjA9nkMj+Apty2osTXhY2/nHKUgAAOw==) right center no-repeat;
+        background: #33aff5 url(data:image/gif;base64,R0lGODlhBwAOAIAAAP///////yH5BAEHAAEALAAAAAAHAA4AAAIUjA9nkMj+Apty2osTXhY2/nHKUgAAOw==) right center no-repeat;
     }
     
     #state {
@@ -156,7 +159,7 @@
         <!-- /mainbody -->
     </div>
     <script>
-    seajs.use(['ui', 'ui/rollbar'], function(UI) {    
+    seajs.use(['ui/rollbar'], function() {    
         var mainbody = $('#mainbody'),
             sideMenu = $('#sideMenu');
 

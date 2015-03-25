@@ -20,21 +20,18 @@ define(function(require, exports, module) {
             data: [{
                 label: '<i class="f f-menus"></i> 列表',
                 title: '列表查看',
-                cls: 'b-cute',
+                cls: 'bs',
                 on: true //开启状态
             }, {
                 thumb: true,
                 label: '<i class="f f-grid"></i> 大图标',
                 title: '大图标查看',
-                cls: 'b-cute'
+                cls: 'bs'
             }],
             onselect: function(e, config, data) {
                 HTML.toggleClass('thumb-view', !!data.thumb);
                 //校准文件列表高度
                 fileList.layout();
-            },
-            create: function() {
-                this.el.css('margin', '0 10px 0 0');
             }
         });
 
@@ -73,34 +70,34 @@ define(function(require, exports, module) {
                 },
                 'click a': function(e, config) {
                     //判断点击的fileName是否和当前一样，如果一样，切换order，如果不一样 切换fileName 重置order
-                    var orderby = $(this).attr('orderby');
-                    if (orderby == config.orderby) {
-                        config.order = config.order == 'desc' ? 'asc' : 'desc';
+                    var order = $(this).attr('order');
+                    if (order == config.order) {
+                        config.asc = config.asc == 'desc' ? 'asc' : 'desc';
                     } else {
-                        config.orderby = orderby;
-                        config.order = 'asc';
+                        config.order = order;
+                        config.asc = 'asc';
                     }
                     config.render();
                     config.onclick();
                 }
             },
             map: null,
-            orderby: null,
-            order: 'asc', //默认
+            order: null,
+            asc: 'asc', //默认
             onclick: null,
             render: function() {
                 var s = "",
-                    orderby = this.orderby,
-                    cur = '<a href="#" orderby="' + this.orderby + '"><i class="f f-' + (this.order == 'desc' ? 'down' : 'up') + '" style="margin-right:5px;"></i>' + this.map[orderby] + '</a>';
+                    order = this.order,
+                    cur = '<a href="#" order="' + this.order + '"><i class="f f-' + (this.asc == 'desc' ? 'down' : 'up') + '" style="margin-right:5px;"></i>' + this.map[order] + '</a>';
                 _.each(this.map, function(v, k) {
-                    if (k == orderby) return;
-                    s += '<li><a href="#" orderby="' + k + '"><i class="f f-up"></i>' + v + '</a></li>';
+                    if (k == order) return;
+                    s += '<li><a href="#" order="' + k + '"><i class="f f-up"></i>' + v + '</a></li>';
                 });
-                this.el.html(cur + '<div class="dropdown text-left" style="top:-1px;left:-10px;"><ul class="menu orderby"><li>' + cur + '</li>' + s + '</ul></div>').find('>a').css('color', '#454647');
+                this.el.html(cur + '<div class="dropdown text-left" style="top:-1px;left:-10px;"><ul class="menu order"><li>' + cur + '</li>' + s + '</ul></div>').find('>a').css('color', '#454647');
             },
             //重置内容
             reset: function(conf) {
-                //必须覆盖 map orderby order 3个参数以及传出回调onclick
+                //必须覆盖 map order asc 3个参数以及传出回调onclick
                 $.extend(this, conf);
                 this.render();
             },
@@ -139,16 +136,16 @@ define(function(require, exports, module) {
             checkbox: true,
             cols: [{
                 title: '文件名',
-                orderby: 'fileName',
+                order: 'fileName',
                 cls: 'grid-name'
             }, {
                 title: '大小',
                 cls: 'grid-size',
-                orderby: 'size'
+                order: 'size'
             }, {
                 title: '修改日期',
                 cls: 'grid-date',
-                orderby: 'date'
+                order: 'date'
             }],
             events: {},
             url: '/json/members',
@@ -215,15 +212,15 @@ define(function(require, exports, module) {
             create: function() {
                 var t = this,
                     baseparams = t.loader.baseparams;
-                //清空前面模块的遗留，根据orderby和order决定内部html
+                //清空前面模块的遗留，根据order和asc决定内部html
                 sortableSwitch.reset({
                     map: {
                         fileName: '文件名',
                         size: '大小',
                         date: '修改日期'
                     },
-                    orderby: baseparams.orderby || 'fileName',
-                    order: baseparams.order,
+                    order: baseparams.order || 'fileName',
+                    asc: baseparams.asc,
                     onclick: function() {
                         //更改grid排序
                         t.resetOrder(this);
@@ -233,8 +230,8 @@ define(function(require, exports, module) {
             //点表头排序的回调函数
             onOrderChange: function() {
                 sortableSwitch.reset({
-                    orderby: this.baseparams.orderby,
-                    order: this.baseparams.order
+                    order: this.baseparams.order,
+                    asc: this.baseparams.asc
                 });
             },
             //当有数据选中的时候

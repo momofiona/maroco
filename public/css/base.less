@@ -473,9 +473,9 @@ a:hover {
 }
 .searchbox {
     position: relative;
-    padding: 0 25px 0 28px;
+    padding: 0 25px 0 30px;
     *height: @btnHeight - 2px;
-    background: #ffffff url(img/search.png) no-repeat 6px center;
+    background: #ffffff url(img/search.png) no-repeat 8px center;
     _background-image: url(img/search.8.png);
     .i-cancel {
         cursor: pointer;
@@ -495,8 +495,11 @@ a:hover {
     .search-filter {
         position: absolute;
         left: 25px;
-        line-height: 29px;
-        top: -1px;
+        padding: 0 10px;
+        top: 0px;
+        bottom: 0;
+        line-height: 34px;
+        height: 100%;
         border-right: solid 1px #eee;
         white-space: nowrap;
         text-overflow: ellipsis;
@@ -905,4 +908,28 @@ a:hover {
         }
     }
 }
-
+/*order table 和 grid 排序用到了*/
+.order {
+    &:extend(.user-select);
+    background-repeat: no-repeat;
+    cursor: default;
+    .order-tip{
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        font-size: 0;
+        //img/dropdown_arrow.8.png
+        background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAA3NCSVQICAjb4U/gAAAAD1BMVEWZmZn5+fm/v7+srKz///++OcdhAAAABXRSTlP/////APu2DlMAAAAJcEhZcwAACusAAArrAYKLDVoAAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzbovLKMAAAAFnRFWHRDcmVhdGlvbiBUaW1lADEwLzIzLzEyTRdLHQAAAEBJREFUCJljcIECBmSGkwqUocAEYTgxGaiAGQoqwkwghhOTiyNQiAGLdidmEaAysGJDJyaIdmYFFVQDEVagagcAUUYdjs4cdm8AAAAASUVORK5CYII=) no-repeat;
+        vertical-align: text-top;
+        _position: absolute;
+    }
+}
+.asc .order-tip{
+    height: 8px;
+    margin-top: 4px;
+}
+.desc .order-tip{
+    height: 8px;
+    margin-top: 8px;
+    background-position: left bottom;
+}

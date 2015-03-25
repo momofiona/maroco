@@ -48,7 +48,7 @@ seajs.config({
             //绑定事件
             _.each(config.events, function(v, k) {
                 var s = k.indexOf(' ');
-                config.el.on(s==-1?k:k.slice(0, s), s==-1?'':$.trim(k.slice(s + 1)), function(event) {
+                config.el.on(s == -1 ? k : k.slice(0, s), s == -1 ? '' : $.trim(k.slice(s + 1)), function(event) {
                     var _fn = (_.isString(v) ? config[v] : v);
                     if (_fn) return _fn.call(this, event, config);
                 });
@@ -78,6 +78,7 @@ seajs.config({
     } else {
         browser = {
             ie11: '-ms-scroll-limit' in document.documentElement.style && '-ms-ime-align' in document.documentElement.style,
+            //下面这些尽量不要使用
             chrome: !!window.chrome && window.chrome.webstore,
             firefox: !!window.sidebar && !window.sidebar.nodeName, //这是不严谨的
             safari: /constructor/i.test(window.HTMLElement),
@@ -144,8 +145,10 @@ seajs.config({
     /**
      * Input Event Fixed
      * jquery plugin
-     * IE6\7\8不支持input事件，'onpropertychange' in document
-     * IE9比较鸡肋
+     * IE6\7\8不支持input，用'onpropertychange' in document
+     * IE9比较鸡肋 无法监控backspace delete 和右键菜单的剪切 撤销 删除
+     * 感谢 toFishes 提醒IE9可以用selectionchange监控解决问题
+     * 剩余bug：当input只有一个字符的情况下，右键撤销不会触发selectionchange
      */
     if (browser.ie < 10) {
         // 检查是否为可输入元素
@@ -164,19 +167,12 @@ seajs.config({
                             $.event.trigger('input', null, elem);
                         };
                     };
-                oldValue = elem.value;
-
+                // oldValue = elem.value;
                 if (browser.ie == 9) {
-                    //删除
-                    $.event.add(elem, 'keyup._inputFixed', function(e) {
-                        var key = e.originalEvent.keyCode;
-                        if (key == 8 || key == 46) {
-                            setter();
-                        }
-                    });
-                    //剪切
-                    $.event.add(elem, 'cut._inputFixed', function(e) {
-                        setTimeout(setter);
+                    $(elem).on('focus._ie9inputFixed',function() {
+                        document.addEventListener('selectionchange', setter,false);
+                    }).on('blur._ie9inputFixed',function() {
+                        document.removeEventListener('selectionchange', setter,false);
                     });
                 }
                 //ie6-9
@@ -185,11 +181,10 @@ seajs.config({
                         setter();
                     }
                 }));
-
             },
             teardown: function() {
                 if (!isInput(this)) return false;
-                if (browser.ie == 9) $.event.remove(this, "._inputFixed");
+                if (browser.ie == 9) $.event.remove(this, "._ie9inputFixed");
                 this.detachEvent('onpropertychange', $.data(this, '@inputFixed'));
                 $.removeData(this, '@inputFixed');
             }
@@ -290,23 +285,25 @@ seajs.config({
                 this.tabs.find('a:eq(' + n + ')').trigger('click');
             },
             onActive: $.noop,
-            cache:{},
+            cache: {},
             getPanel: function(o) {
                 //IE67对于js插入的a标签，取.attr('href')会带上location.href
                 //对于IE678，取 o.panel 会返回.attr('panel')
                 //如果是#开头的，就全局找，否则在当前下找
-                var id = o.getAttribute('panel'),cache=this.cache,ret;
+                var id = o.getAttribute('panel'),
+                    cache = this.cache,
+                    ret;
                 if (id) {
-                    if(cache[id]){
+                    if (cache[id]) {
                         return cache[id]
-                    }else if (id.indexOf('#') == 0) {
-                        ret=$(id);
+                    } else if (id.indexOf('#') == 0) {
+                        ret = $(id);
                     } else {
-                        ret=this.$(id);
+                        ret = this.$(id);
                     }
                     //如果存在则返回并缓存
-                    if(ret.length){
-                        return cache[id]=ret;
+                    if (ret.length) {
+                        return cache[id] = ret;
                     }
                 }
             },
@@ -315,7 +312,7 @@ seajs.config({
                     var t = this,
                         tab = $(t),
                         panel = tab.attr('panel');
-                    if(this==config.tab) return;
+                    if (this == config.tab) return;
                     if (panel) {
                         //隐藏其他容器
                         config.tabs.find('a').each(function(i, o) {
@@ -342,11 +339,6 @@ seajs.config({
             }
         }, config));
     };
-    //设置seaID
-    define('ui', function(require) {
-        require('api'); //注掉此行来禁用假数据
-        return UI;
-    });
     //暴露全局调用
     window.UI = UI;
 })(jQuery);

@@ -79,7 +79,7 @@ define(function(require, exports, module) {
             <th align=left><input type="checkbox" class="ctable-checkall"></th>\
             {{?}}\
             {{~it.cols :col:index}}\
-            <th align="{{=col.align||"left"}}" class="{{=col.cls||""}} {{=col.orderby?"orderby":""}}"{{?col.orderby}} orderby="{{=col.orderby}}"{{?}}{{?col.style}} style="{{=col.style}}"{{?}}>{{=col.title||""}}{{?col.orderby}} <i class="order-tip" orderby="{{=col.orderby}}"></i>{{?}}</th>\
+            <th align="{{=col.align||"left"}}" class="{{=col.cls||""}} {{=col.order?"order":""}}"{{?col.order}} order="{{=col.order}}"{{?}}{{?col.style}} style="{{=col.style}}"{{?}}>{{=col.title||""}}{{?col.order}} <i class="order-tip"></i>{{?}}</th>\
             {{~}}\
             {{?it.editable}}\
             <th class="text-center"><b class="f f-add ac-tr-add"></b></th>\
@@ -97,7 +97,7 @@ define(function(require, exports, module) {
                 {{?col.colspan}}\
                 <th index="{{=index+=col.colspan-1}}" colspan="{{=col.colspan}}" class="ctable-colgroup" align="center">{{=col.colgroup}}</th>\
                 {{??}}\
-                <th rowspan="2" align="{{=col.align||"left"}}" class="{{=col.cls||""}} {{=col.orderby?"orderby":""}}"{{?col.orderby}} orderby="{{=col.orderby}}"{{?}}{{?col.style}} style="{{=col.style}}"{{?}}>{{=col.title||""}}{{?col.orderby}} <i class="order-tip" orderby="{{=col.orderby}}"></i>{{?}}</th>\
+                <th rowspan="2" align="{{=col.align||"left"}}" class="{{=col.cls||""}} {{=col.order?"order":""}}"{{?col.order}} order="{{=col.order}}"{{?}}{{?col.style}} style="{{=col.style}}"{{?}}>{{=col.title||""}}{{?col.order}} <i class="order-tip"></i>{{?}}</th>\
                 {{?}}\
             {{~}}\
             {{?it.editable}}\
@@ -107,7 +107,7 @@ define(function(require, exports, module) {
         <tr>\
             {{~it.cols :col:index}}\
             {{?col.colgroup}}\
-            <th align="{{=col.align||"left"}}" class="ctable-colgroup {{=col.cls||""}} {{=col.orderby?"orderby":""}}"{{?col.orderby}} orderby="{{=col.orderby}}"{{?}}{{?col.style}} style="{{=col.style}}"{{?}}>{{=col.title||""}}{{?col.orderby}} <i class="order-tip" orderby="{{=col.orderby}}"></i>{{?}}</th>\
+            <th align="{{=col.align||"left"}}" class="ctable-colgroup {{=col.cls||""}} {{=col.order?"order":""}}"{{?col.order}} order="{{=col.order}}"{{?}}{{?col.style}} style="{{=col.style}}"{{?}}>{{=col.title||""}}{{?col.order}} <i class="order-tip"></i>{{?}}</th>\
             {{?}}\
             {{~}}\
         </tr>\
@@ -205,14 +205,14 @@ define(function(require, exports, module) {
             spaging = tfoot.find('.pager');
         $(config.container).append(table);
 
-        thead.on('click', '.orderby', function(e) {
+        thead.on('click', '.order', function(e) {
             //排序
             e.stopPropagation();
-            var order = 'asc',t=$(this);
+            var asc = 'asc',t=$(this);
         	if(t.hasClass('desc')){
         		t.removeClass('desc');
         	}else if(t.hasClass('asc')){
-        		order='desc';
+        		asc='desc';
         		t.addClass('desc');
         	}else{
         		t.addClass('asc');
@@ -220,8 +220,8 @@ define(function(require, exports, module) {
         	//去除其余列图标
         	t.siblings().removeClass('asc desc');
         	_.extend(config.baseparams,{
-        		orderby:t.attr('orderby'),
-        		order:order
+        		order:t.attr('order'),
+        		asc:asc
         	});
             loader.load();
         });

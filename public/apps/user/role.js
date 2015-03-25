@@ -237,18 +237,6 @@ define(function(require, exports, module) {
                     cols: [{
                             title: '<a class="ac-addrole xr" href="#" title="添加人员"><i class="f f-add"></i></a>当前角色下人员'
                         }
-                        /*, {
-                                                title: '性别',
-                                                width: 50
-                                            }, {
-                                                title: '手机',
-                                                width: 100
-                                            }, {
-                                                title: '邮箱',
-                                                width: 160
-                                            }, {
-                                                title: '<a class="ac-addrole xr" href="#" title="添加人员"><i class="f f-add"></i></a>部门'
-                                            }*/
                     ],
                     //每次滚动距离
                     scrollamount: 81,
@@ -256,7 +244,6 @@ define(function(require, exports, module) {
                     height: function(grid) {
                         return $(window).height() - $(grid).offset().top;
                     },
-                    blankText: '当前部门没有成员',
                     events: {
                         'click .ac-person-view': function(event, tr, data, config) {
                             //传入一个容器和一个销毁方法
@@ -275,8 +262,8 @@ define(function(require, exports, module) {
                             return false;
                         }
                     },
-                    status: function(data) {
-                        return '共' + data.total + '人';
+                    status: function(total,page,count) {
+                        return '共' + total + '人';
                     },
                     template: _.dot('<img src="{{=it.avanta}}" width="48" height="48" class="xl">\
                         <div style="margin-left:60px">\

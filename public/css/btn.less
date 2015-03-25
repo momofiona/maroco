@@ -9,13 +9,14 @@
     display: inline-block;
     font-weight: 400;
     text-align: center;
-    // vertical-align: middle;
+    vertical-align: top;
     cursor: pointer;
     outline: 0;
     transition: background-color .3s @cubic, color .3s @cubic, border-color .3s @cubic;
     box-sizing: border-box;
-    *zoom: 1;
-    *display: inline;
+    padding: 8px 1em;
+    line-height: 20px;
+    height: 36px;
     &:extend(.user-select);
     &:active {
         &:extend(.b-active);
@@ -23,8 +24,6 @@
     .f, .i {
         vertical-align: text-bottom; //chrome
     }
-    padding: .5em 1em;
-    line-height: 21px !important;
     /*
     问题：在ie6中，当文字和img、input、textarea、select、object等对象在同一个容器中的时候，line-height属性失效。
 只有全文字时，line-height属性才有效。
@@ -33,10 +32,12 @@
 margin: (容器的line-height - 对象本身的高度)/2px 0;  
 vertical-align:middle;
      */
-    
-    *height: 20px; //ie7
-    _height: 22px; //ie6 必须加height,当b中带inline-block元素时line-height 丢失
-    _padding: .7em 1em .3em;
+    *zoom: 1;
+    *display: inline;
+    *height: 20px;
+    *padding:7px 1em;
+    //_height: 22px; //ie6 必须加height,当b中带inline-block元素时line-height 丢失
+    // _padding: .7em 1em .3em;
     //IE67中不计算padding;
     button&, input& {
         *height: 36px;
@@ -46,6 +47,27 @@ vertical-align:middle;
 .bi{
     padding-left: 5px;
     padding-right:5px;
+}
+.bs{
+    height: 30px;
+    *height: 20px;
+    padding:4px 6px;
+    button&, input& {
+        *height: 30px;
+        *padding: 0 6px;
+    }
+}
+.bl{
+    height: 50px;
+    padding: 10px 1.5em;
+    line-height: 30px;
+    *height: 28px;
+    *line-height: 28px;
+    font-size: 1.2em;
+    button&, input& {
+        *height: 50px;
+        *padding: 0 1.5em;
+    }
 }
 .b[disabled]{
     background: #f4f4f4 !important;
@@ -130,24 +152,9 @@ vertical-align:middle;
     &:extend(.link-hover, .b-active);
     background-color: @linkColor;
     color: #fff !important;
-
 }
 .dark-active {
     &:extend(.dark-hover, .b-active);
-}
-.b-lg {
-    font-size: 1.5em;
-    button& {
-        *height: 52px;
-    }
-}
-.b-cute {
-    padding:3px 6px;
-    height: 30px;
-    *height: 22px;
-    button& {
-        *height: 30px;
-    }
 }
 //button group
 .group {

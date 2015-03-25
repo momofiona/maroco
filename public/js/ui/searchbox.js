@@ -1,60 +1,70 @@
 define(function(require, exports, module) {
     $.fn.searchbox = function(option) {
         if (this.length != 1) return this;
-        option = $.extend({
+        var filter, oldValue;
+        UI($.extend({
             value: '',
-            cls: '',
+            el: this,
+            cls: 'searchbox',
             placeholder: '',
-            filterWidth: 88,
+            delay: 500,
+            events: {},
             search: $.noop,
-            input: $.noop
-        }, option);
-        var _self = this.addClass('searchbox' + option.cls).html('<input value="' + option.value + '" class="text" placeholder="' + option.placeholder + '">\
-                <i class="i i-cancel am-rotate"></i>');
-        //如果带了分类选择
-        var filter,oldValue;
-        if (option.filter) {
-            _self.css('padding-left', (option.filterWidth) + 5);
-            require.async('js/ui.cdropmenu', function() {
-                $('<span class="search-filter dicon-down"/>')
-                    .width((option.filterWidth) - 16 - 25)
-                    .prependTo(_self)
-                    .cdropmenu({
-                        data: option.filter,
-                        create: function(selected, triggerButton) {
-                            this.attr('style', 'min-width:' + option.filterWidth + 'px;_width:' + option.filterWidth + 'px').hide();
-                        },
-                        at: 'left-25 bottom-1',
-                        select: function(data, button, dropMenu) {
-                            button.text(data.text);
-                            filter = data;
-                        }
+            input: $.noop,
+            init: function() {
+                var t = this;
+                t.el.addClass(t.cls).html('<input value="' + t.value + '" class="text" placeholder="' + t.placeholder + '"><i class="i i-cancel am-rotate"></i>');
+
+                //如果带了分类选择
+                if (t.filter) {
+                    t.events['click .ac-filter'] = function(e, conf) {
+                        filter = conf.filter[$(this).attr('index')];
+                        t.tip.html(filter.label);
+                        conf.el.css('padding-left', t.tip.outerWidth() + 35);
+                        t.tip.dropdown('hide');
+                        return false;
+                    }
+                    var s = "";
+                    _.each(this.filter, function(o, i) {
+                        s += '<li><a index="' + i + '" href="#" class="ac-filter ' + o.cls + '">' + o.label + '</a></li>';
                     });
-            });
-        }
-        var input = this.find('input'),
-            cancel = input.next().click(function() {
-                $(this).hide();
-                input.val('').focus();
-                input.trigger('input');
-                option.search.call(input, this.value, filter);
-            });
-        if (oldValue=option.value) cancel.show();
-        var callInput=_.throttle(function(input,value, filter){
-            if(oldValue!==value){
-                option.input.call(input, value, filter);
-                oldValue=value;
+                    t.tip = $('<a href="#" class="search-filter" data-dropdown></a>').prependTo(t.el);
+                    t.dropdown = $('<div class="dropdown" position="left top,left-25 bottom"><ul class="menu">' + s + '</ul></div>').insertAfter(t.tip);
+                }
+
+                var input = t.el.find('input'),
+                    cancel = input.next().click(function() {
+                        $(this).hide();
+                        input.val('').focus();
+                        input.trigger('input');
+                        t.search.call(input, '', filter);
+                    });
+                if (oldValue = t.value) cancel.show();
+                var callInput = function(input, value, filter) {
+                    if (oldValue !== value) {
+                        t.input.call(input, value, filter);
+                        oldValue = value;
+                    }
+                };
+                if (t.delay) {
+                    callInput = _.throttle(callInput, t.delay, {
+                        leading: false
+                    });
+                }
+                input.on('input', function() {
+                    var value = $.trim(this.value);
+                    callInput(input, value, filter);
+                    cancel.toggle(!!value);
+                }).on('keyup', function(e) {
+                    if (e.keyCode == "13") {
+                        t.search.call(input, this.value, filter);
+                    }
+                });
+            },
+            create: function() {
+                this.filter && this.dropdown.find('a:eq(0)').click();
             }
-        },500,{leading: false});
-        input.on('input', function() {
-            var value=$.trim(this.value);
-            callInput(input,value, filter);
-            cancel.toggle(!!value);
-        }).on('keyup', function(e) {
-            if (e.keyCode == "13") {
-                option.search.call(input, this.value, filter);
-            }
-        });
+        }, option));
         return this;
     }
 });
