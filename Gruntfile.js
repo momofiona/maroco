@@ -21,33 +21,11 @@ module.exports = function(grunt) {
                         flatten: true,
                         filter: 'isFile'
                     }
-                },
-        less: {
-            dev: {
-                options: {
-                    paths: ["css"]
-                },
-                files: {
-                    "css/*.css": "css/*.less"
-                }
-            },
-            prod: {
-                options: {
-                    paths: ["assets/css"],
-                    cleancss: true,
-                    modifyVars: {
-                        imgPath: '"http://mycdn.com/path/to/images"',
-                        bgColor: 'red'
-                    }
-                },
-                files: {
-                    "path/to/result.css": "path/to/source.less"
-                }
-            }
-        },*/
+                },*/
+
         concat: {
             options: {
-                banner:'/*! <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %> */',
+                banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %> */',
                 // separator: ';',
                 stripBanners: true
             },
@@ -70,13 +48,13 @@ module.exports = function(grunt) {
                         'public/js/vendor/jqueryui/jquery.ui.widget.min.js',
                         'public/js/vendor/jqueryui/jquery.ui.mouse.min.js',
                         'public/js/vendor/jqueryui/jquery.ui.position.min.js',
-                        'public/js/vendor/jqueryui/jquery.ui.draggable.min.js',//notify.js 使用，19K 可精简
-                        'public/js/vendor/jqueryui/jquery.ui.sortable.min.js',//table.js 使用，这货居然24K，算法肯定不咋的
+                        'public/js/vendor/jqueryui/jquery.ui.draggable.min.js', //notify.js 使用，19K 可精简
+                        'public/js/vendor/jqueryui/jquery.ui.sortable.min.js', //table.js 使用，这货居然24K，算法肯定不咋的
 
                         //navgoco 这个可以去除
                         'public/js/vendor/jquery.cookie.min.js',
                         'public/js/vendor/navgoco/jquery.navgoco.min.js'
-                        
+
 
                     ]
                 }
@@ -88,10 +66,13 @@ module.exports = function(grunt) {
                     except: ['jQuery', 'define', 'require']
                 }
             },
-            build: {
-                files: {
-                    'public/_ui.js': 'public/js/ui/ui.js'
-                }
+            allui: {
+                files: [{
+                    expand: true,
+                    cwd: 'public/js/ui', //js目录下
+                    src: '*.js', //所有js文件
+                    dest: 'public/js/_ui' //输出到此目录下
+                }]
             }
         },
         jshint: {
@@ -99,13 +80,13 @@ module.exports = function(grunt) {
             afterconcat: []
         },
         watch: {
-/*            less: {
-                files: ['css/*.less'],
-                tasks: ['less']
-            },*/
+            /*            less: {
+                            files: ['css/*.less'],
+                            tasks: ['less']
+                        },*/
             livereload: {
                 options: {
-                    livereload: true//'<%= connect.options.livereload %>'
+                    livereload: true //'<%= connect.options.livereload %>'
                 },
                 files: ['public/css/*.css', 'public/js/*.js', 'public/*.html']
             }
@@ -131,18 +112,18 @@ module.exports = function(grunt) {
                 }
             }
         },
-        clean:{
-            build:['_config.js']
+        clean: {
+            build: ['public/js/_ui/*']
         }
     });
 
     //loadNpmTasks
-    for(var key in pkg.devDependencies){
+    for (var key in pkg.devDependencies) {
         grunt.loadNpmTasks(key);
-        console.log('loadNpmTasks:'+key);
+        console.log('loadNpmTasks:' + key);
     };
     //grunt.registerTask('default', ['copy', 'uglify', 'concat']);
-    grunt.registerTask('default', ['uglify:build','concat',"clean:build"]);
+    grunt.registerTask('default', ['concat']);
     grunt.registerTask('liveload', ['watch:livereload']);
     grunt.registerTask('less', ['less:dev']);
     grunt.registerTask('doc', ['jsdoc']);

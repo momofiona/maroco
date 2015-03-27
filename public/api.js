@@ -9,6 +9,8 @@
             'id|+1': 12,
             "cname": '@WORD',
             "address": "@TITLE",
+            "size|10000-10000000000.1-2":100,
+            "label|1-3": '★',
             "avanta": '@IMAGE',
             "from": '@STRING(3,8)',
             "sender": '@NAME',

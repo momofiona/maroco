@@ -527,6 +527,8 @@ define(function(require, exports, module) {
             reset: function() {
                 cache = [];
                 tbody.empty();
+                statubar.empty();
+                paging.render(0);
             }
         }
         return api;

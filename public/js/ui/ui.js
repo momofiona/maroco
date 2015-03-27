@@ -1,7 +1,6 @@
 //seajs config2
 seajs.config({
     alias: {
-        dot: 'js/vendor/doT.min',
         ztree: 'js/vendor/zTree/jquery.ztree.all-3.5.min.js'
     },
     paths: {

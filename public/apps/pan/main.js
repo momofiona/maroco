@@ -93,7 +93,7 @@ define(function(require, exports, module) {
                     if (k == order) return;
                     s += '<li><a href="#" order="' + k + '"><i class="f f-up"></i>' + v + '</a></li>';
                 });
-                this.el.html(cur + '<div class="dropdown text-left" style="top:-1px;left:-10px;"><ul class="menu order"><li>' + cur + '</li>' + s + '</ul></div>').find('>a').css('color', '#454647');
+                this.el.html(cur + '<div class="dropdown text-left" style="top:-2px;left:-10px;"><ul class="menu order"><li>' + cur + '</li>' + s + '</ul></div>').find('>a').css('color', '#454647');
             },
             //重置内容
             reset: function(conf) {

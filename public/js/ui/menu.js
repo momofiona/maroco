@@ -10,7 +10,6 @@ if (jQuery) (function ($) {
 
     $.extend($.fn, {
         dropdown: function (method, data) {
-
             switch (method) {
                 case 'show':
                     show(null, $(this));
@@ -29,17 +28,14 @@ if (jQuery) (function ($) {
                     hide();
                     return $(this).removeClass('dropdown-disabled');
             }
-
         }
     });
 
     function show(event, object) {
-
         var trigger = event ? $(this) : object,
             attr=trigger.attr('data-dropdown'),
             dropdown = attr?$(attr):trigger.next(),
             isOpen = trigger.hasClass('dropdown-open');
-
         // In some cases we don't want to show it
         if (event) {
             if ($(event.target).hasClass('dropdown-ignore')) return;
@@ -50,29 +46,20 @@ if (jQuery) (function ($) {
             if (trigger !== object.target && $(object.target).hasClass('dropdown-ignore')) return;
         }
         hide();
-
         if (isOpen || trigger.hasClass('dropdown-disabled')) return;
-
         // Show it
         trigger.addClass('dropdown-open');
-        dropdown
-            .data('dropdown-trigger', trigger)
-            .show();
-
+        dropdown.data('dropdown-trigger', trigger).show();
         // Position it
         position();
-
         // Trigger the show callback
-        dropdown
-            .trigger('show', {
+        dropdown.trigger('show', {
                 dropdown: dropdown,
                 trigger: trigger
             });
-
     }
 
     function hide(event) {
-
         // In some cases we don't hide them
         var targetGroup = event ? $(event.target).parents().addBack() : null;
 
@@ -87,7 +74,6 @@ if (jQuery) (function ($) {
                 return;
             }
         }
-
         // Hide any dropdown that may be showing
         $(document).find('.dropdown:visible').each(function () {
             var dropdown = $(this);
@@ -96,14 +82,11 @@ if (jQuery) (function ($) {
                 .removeData('dropdown-trigger')
                 .trigger('hide', { dropdown: dropdown });
         });
-
         // Remove all dropdown-open classes
         $(document).find('.dropdown-open').removeClass('dropdown-open');
-
     }
 
     function position() {
-
         var dropdown = $('.dropdown:visible').eq(0),
             trigger = dropdown.data('dropdown-trigger');
         if (dropdown.length === 0 || !trigger) return;
@@ -115,9 +98,7 @@ if (jQuery) (function ($) {
                 of: trigger
             });
     }
-
     $(document).on('click.dropdown', '[data-dropdown]', show);
     $(document).on('click.dropdown', hide);
     $(window).on('resize.dropdown', position);
-
 })(jQuery);

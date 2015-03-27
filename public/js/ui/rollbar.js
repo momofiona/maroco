@@ -74,7 +74,6 @@ define(function(require, exports, module) {
         //IE11 突变观察者 var mutationObserver = new MutationObserver(callback);
         //anyway 还是定时器最好
         var lazytimer, _resize = function() {
-            console.log('resize')
                 //当判断content不在dom上的时候移除定时器
             if (!document.getElementById(contentId)) {
                 //去掉定时器

@@ -10,7 +10,7 @@
 }
 
 .grid-body {
-    line-height: 36px;
+    line-height: 42px;
     position: relative;//解决IE7滚动内容从容器溢出，无法滚动的问题
     .grid-hover {
         background: #F3F6FC;
@@ -31,9 +31,10 @@
 .grid-row {
     &:extend(.user-select);
     clear: both;
-    height: 36px;
+    height: 42px;
     border: solid 1px transparent;
     border-width: 1px 0;
+    padding:1px 0;
     border-bottom-color: #EDF2F8;
     margin: 0 0 -1px;
     position: relative;
@@ -51,12 +52,15 @@
         display: inline-block;
         width: 15px;
         height: 15px;
-        margin-top: 11px;
-        .grid-hover & {
+        margin-top: 14px;
+/*        .grid-hover & {
             background-position: 0 -25px;
-        }
+        }*/
         .grid-selected & {
             background-position: 0 -52px;
+        }
+        .grid-head & {
+            margin-top: 11px;
         }
     }
 }
@@ -97,7 +101,7 @@
     background: url(img/fcon20.png) no-repeat;
     width: 20px;
     height: 20px;
-    margin: 8px 8px 0 0;
+    margin: 11px 8px 0 0;
     vertical-align: top;
 }
 .grid-row{
@@ -263,7 +267,7 @@
         display: block;
         width: auto !important;
     }
-    .grid-check {
+/*    .grid-check {
         position: absolute;
         padding: 5px;
         height: auto;
@@ -271,7 +275,7 @@
         i{
             margin-top: 0;
         }
-    }
+    }*/
     .grid-row {
         float: left;
         border-width: 1px;
@@ -287,9 +291,9 @@
     .grid-hover,
     .grid-selected {
         border-color: #DCE6F2;
-        .grid-check {
+/*        .grid-check {
             display: block;
-        }
+        }*/
     }
     .filename {
         width: 100px;
