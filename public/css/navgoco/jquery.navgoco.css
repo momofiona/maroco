@@ -32,7 +32,8 @@
   font-size: 19px;
   width: 16px;
   font-weight: bolder;
-  *zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#x25be;');
+  *font-size: 8px;
+  *zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#x25bc;');
 }
 .nav a:hover span {
   color: #fff;

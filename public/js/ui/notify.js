@@ -155,11 +155,11 @@ define(function(require, exports, module) {
             }
             return this(_.extend({
                 cls: 'note',
-                icon: '<i class="m2 f-lg f f-warn"></i>',
+                icon: '<i class="m2 f-lg f f-warn va-m"></i>',
                 closeable: true,
                 mask: true,
                 oninit: function() {
-                    this.msg += '<i class="f f-checkmark notify-checkmark" title="确定"></i>';
+                    this.msg = '<span class="va-m" style="display:inline-block">'+this.msg+'</span><i class="f f-lg f-checkmark notify-checkmark" title="确定"></i>';
                     this.events = {
                         'click .notify-checkmark': 'doConfirm',
                         'click .notify-close': 'doConfirm'

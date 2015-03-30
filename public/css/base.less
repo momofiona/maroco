@@ -25,11 +25,20 @@
 .c-error {
     color: @errorColor !important;
 }
+.c-info {
+    color: @infoColor !important;
+}
 .c-safe {
     color: @safeColor !important;
 }
 .c-note {
     color: @noteColor !important;
+}
+.c-warn {
+    color: @warnColor !important;
+}
+.c-gray {
+    color: #dedede !important;
 }
 .user-select {
     -webkit-user-select: none;
@@ -286,16 +295,16 @@ input[type=checkbox] {
 }
 
 .va-t {
-    vertical-align: top;
+    vertical-align: top !important;
 }
 .va-m {
-    vertical-align: middle;
+    vertical-align: middle !important;
 }
 .va-b {
-    vertical-align: bottom;
+    vertical-align: bottom !important;
 }
 .va-tb {
-    vertical-align: text-bottom;
+    vertical-align: text-bottom !important;
 }
 
 .vam {
@@ -567,9 +576,9 @@ a:hover {
     &:extend(.notify-tool);
     border-radius: 100px;
     transition: background-color .3s;
-    background: rgba(0, 0, 0, .1);
+    background: rgba(0, 0, 0, .05);
     &:hover {
-        background: rgba(0, 0, 0, .4);
+        background: rgba(0, 0, 0, .2);
     }
 }
 .notify-con {

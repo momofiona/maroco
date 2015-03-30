@@ -44,18 +44,16 @@ define(function(require, exports, module) {
                         title: '文件上传 <span class="ac-num m4"></span>',
                         cls: 'link',
                         draggable: true,
-                        mask:true,
+                        mask: true,
                         width: 500,
                         events: {
                             'click .ac-cancel': function(e, config) {
-                                var item=$(this).parent().fadeOut(function() {
-                                    config.el.position(config.position);
-                                    $(this).remove();
-                                }),file=up.getFile($(this).data('id'));
-                                file&&up.removeFile(file);
-                                if(item.siblings('.ac-error').length==0){
-                                    config.close();
-                                }
+                                var item = $(this).parent().fadeOut(function() {
+                                        config.el.position(config.position);
+                                        $(this).remove();
+                                    })/*,
+                                    file = up.getFile($(this).data('id'));
+                                file && up.removeFile(file);*/
                             }
                         },
                         close: function(e, config) {
@@ -65,23 +63,23 @@ define(function(require, exports, module) {
                             config.mask.hide();
                         }
                     });
-                    this.queue=this.dialog.el.find('.ac-num');
+                    this.queue = this.dialog.el.find('.ac-num');
                 } else {
                     this.dialog.el.show();
                     this.dialog.mask.show();
                 }
-                $.each(files,function(i,file){
+                $.each(files, function(i, file) {
                     file.dom = $('<div id="' + file.id + '" class="log" style="margin-bottom:-1px">' + '<b class="f f-multiply am-rotate xr ac-cancel" data-id="' + file.id + '"></b>' + '<span class="xr m2">' + plupload.formatSize(file.size) + '</span><div class="ellipsis w12">' + file.name + '</div><div class="progress"><div class="note bar"></div></div></div>');
-                    file.bar=file.dom.find('.bar');
+                    file.bar = file.dom.find('.bar');
                     dialog.dialog.contentEl.append(file.dom);
                 });
                 this.dialog.el.position(this.dialog.position);
             },
-            queueChanged:function(up){
-                if(!this.dialog) return;
-                var num=up.files.length;
-                this.queue.html(num?'正在上传 '+num+' 个文件...':'');
-                if(this.dialog.contentEl.children('.ac-error').length==0){
+            queueChanged: function(up) {
+                if (!this.dialog) return;
+                var num = up.files.length;
+                this.queue.html(num ? '正在上传 ' + num + ' 个文件...' : '');
+                if (num == 0 && this.dialog.contentEl.children('.ac-error').length == 0) {
                     this.dialog.close();
                 }
             },
@@ -92,7 +90,7 @@ define(function(require, exports, module) {
                 file.dom.find('.ac-cancel').trigger('click');
             },
             error: function(up, err) {
-                err.file.bar.parent().replaceWith('<div class="c-error">'+err.message+'</div>');
+                err.file.bar.parent().replaceWith('<div class="c-error">' + (err.code==-600?'文件大小不能超过'+up.settings.filters.max_file_size:err.message) + '</div>');
                 err.file.dom.addClass('ac-error');
             }
         };
@@ -150,7 +148,7 @@ define(function(require, exports, module) {
                     dialog.progress(up, file);
                 },
                 FileUploaded: function(up, file, data) {
-                    data=JSON.parse(data.response);
+                    data = JSON.parse(data.response);
                     dialog.success(up, file, data);
                     options.FileUploaded && options.FileUploaded(up, file, data);
                     up.removeFile(file);
@@ -163,6 +161,8 @@ define(function(require, exports, module) {
                     if (file) {
                         if (!file.dom) {
                             dialog.add(up, [file]);
+                        }else{
+                            up.removeFile(file);
                         }
                         dialog.error(up, err);
                     } else {

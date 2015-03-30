@@ -64,6 +64,9 @@ b.i-close {
   vertical-align: text-bottom;
   text-align: center;
 }
+.f-s {
+  font-size: 0.825em;
+}
 .f-lg {
   font-size: 1.33333333em;
 }

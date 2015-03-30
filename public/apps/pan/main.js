@@ -202,7 +202,7 @@ define(function(require, exports, module) {
                         fileName: o.cname
                     });
                     return [
-                        '<i class="fcon fcon_' + cls + '"' + (cls == 'jpg' ? ' url="' + o.path + '"' : '') + '></i>' + '<span class="filename">' + o.cname + '</span>',
+                        '<i class="fcon fcon_' + cls + '"' + (cls == 'jpg' ? ' url="' + o.path + '"' : '') + '></i>' + '<a class="filename">' + o.cname + '</a>',
                         o.size,
                         o.sendtime
                     ];
