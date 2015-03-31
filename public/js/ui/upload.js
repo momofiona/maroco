@@ -49,11 +49,11 @@ define(function(require, exports, module) {
                         events: {
                             'click .ac-cancel': function(e, config) {
                                 var item = $(this).parent().fadeOut(function() {
-                                        config.el.position(config.position);
-                                        $(this).remove();
-                                    })/*,
-                                    file = up.getFile($(this).data('id'));
-                                file && up.removeFile(file);*/
+                                    config.el.position(config.position);
+                                    $(this).remove();
+                                });
+                                file = up.getFile($(this).data('id'));
+                                file && up.removeFile(file);
                             }
                         },
                         close: function(e, config) {

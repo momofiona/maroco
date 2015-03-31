@@ -60,6 +60,45 @@
         </ol>
     </section>
     <section>
+        <h2>日期选择 <small>My97</small></h2>
+        <p>
+            <input class="text"  onFocus="WdatePicker({isShowWeek:true,dateFmt:'yyyy-MM'})">
+            <input class="text"  onFocus="WdatePicker({isShowWeek:true,dateFmt:'yyyy-MM-dd'})">
+        </p>
+        <script>
+        seajs.use('my97',function(laydate) {
+            
+        });
+        </script>
+    </section>
+    <section>
+        <h2>复制 <small>Zero Clipboard</small></h2>
+        <p>
+            <button class="b note m2" id="copy">复制</button>
+            <button class="b note" data-copy="data-copy">data-copy</button>
+        </p>
+        <script>
+        seajs.use(['ui/clipboard','ui/notify'],function(clip,notify) {
+            //函数拷贝
+            clip({
+                el:$('#copy'),
+                copy:function(){
+                    return _.uniqueId('Copy');
+                }
+            });
+            //属性拷贝
+            clip({
+                el:$('#copy').next()
+            });
+            //给元素或者元素祖先元素添加拷贝成功回调
+            $('#copy').parent().on('complete',function(e,copyText){
+                e.stopPropagation();
+                copyText&&notify.safe(copyText,1);
+            });
+        });
+        </script>
+    </section>
+    <section>
         <h2>Unicode 飘雪 <small>Snow Fall</small></h2>
         <p>
             <button id="snowing" class="b link w4">开始</button>

@@ -1,7 +1,8 @@
 //seajs config2
 seajs.config({
     alias: {
-        ztree: 'js/vendor/zTree/jquery.ztree.all-3.5.min.js'
+        ztree: 'js/vendor/zTree/jquery.ztree.all-3.5.min.js',
+        my97:'js/vendor/my97/WdatePicker.js'
     },
     paths: {
         'ui': 'js/ui'
