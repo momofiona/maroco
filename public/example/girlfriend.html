@@ -63,7 +63,8 @@
         <h2>日期选择 <small>My97</small></h2>
         <p>
             <input class="text"  onFocus="WdatePicker({isShowWeek:true,dateFmt:'yyyy-MM'})">
-            <input class="text"  onFocus="WdatePicker({isShowWeek:true,dateFmt:'yyyy-MM-dd'})">
+            <input class="text"  onFocus="WdatePicker({dateFmt:'yyyy-MM-dd'})">
+            <input class="text"  onFocus="WdatePicker({dateFmt:'yyyy-MM-dd hh:mm:ss'})">
         </p>
         <script>
         seajs.use('my97',function(laydate) {

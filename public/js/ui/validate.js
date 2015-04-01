@@ -1,4 +1,13 @@
-/* https://github.com/DiegoLopesLima/Validate */
+/* https://github.com/DiegoLopesLima/Validate
+ *
+ * 这些放在 data-valid="number(10.00,20.00) length(6,20) email url date(yyyy-MM-dd hh:mm:ss)"
+ * 
+ *
+ *
+ * 
+ * remote 
+ * 
+ */
 define(function(require, exports, module) {
     var tips = require('ui/tips');
     var defaults = {

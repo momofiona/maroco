@@ -2,7 +2,8 @@ define(function(require, exports, module) {
     var ctable = require('ui/table');
     var searchbox = require('ui/searchbox');
     var template = require('./role.html');
-    var buttonset = require('ui/buttonset');
+    var buttonset = require('ui/buttonset'),
+    notify=require('ui/notify');
     //滚动条
     require('js/vendor/jquery.mousewheel');
     require('ui/rollbar');
@@ -166,12 +167,29 @@ define(function(require, exports, module) {
                             e.stopPropagation();
                             seajs.use(['apps/user/rolecreateandedit'], function(edit) {
                                 edit.show({
-                                    isEdit:true,
-                                    data:data,
-                                    callback:function(roles){
+                                    isEdit: true,
+                                    data: data,
+                                    callback: function(roles) {
                                         debugger;
                                     }
                                 });
+                            });
+                            return false;
+                        },
+                        //删除权限
+                        'click .ac-roleremove': function(e, tr, data, conf) {
+                            e.stopPropagation();
+                            notify.confirm({
+                                msg:'确定要删除: '+data.name+' ?',
+                                callback:function(b){
+                                    if(b){
+                                        //如果是当前选中的
+                                        if(tr.hasClass('ctable-selected')){
+                                            tr.parent().children().eq(0).trigger('click');
+                                        }
+                                        tr.remove();
+                                    }
+                                }
                             });
                             return false;
                         }
@@ -180,7 +198,7 @@ define(function(require, exports, module) {
                     render: function(records) {
                         return $.map(records, function(record, i) {
                             return [
-                                ['<a href="#" class="f f-pencil xr ctable-hide ac-roleedit" title="' + _.escape(record.description) + '"></a>' + _.escape(record.name)]
+                                ['<a href="#" class="f f-multiply m4 c-error xr ctable-hide ac-roleremove" title="删除"></a>' + '<a href="#" class="f f-pencil xr ctable-hide ac-roleedit" title="编辑"></a>' + _.escape(record.name)]
                             ];
                         });
                     },
@@ -235,9 +253,8 @@ define(function(require, exports, module) {
                 this.table = ctable({
                     container: this.el,
                     cols: [{
-                            title: '<a class="ac-addrole xr" href="#" title="添加人员"><i class="f f-add"></i></a>当前角色下人员'
-                        }
-                    ],
+                        title: '<a class="ac-addrole xr" href="#" title="添加人员"><i class="f f-add"></i></a>当前角色下人员'
+                    }],
                     //每次滚动距离
                     scrollamount: 81,
                     checkbox: true,
@@ -262,7 +279,7 @@ define(function(require, exports, module) {
                             return false;
                         }
                     },
-                    status: function(total,page,count) {
+                    status: function(total, page, count) {
                         return '共' + total + '人';
                     },
                     template: _.dot('<img src="{{=it.avanta}}" width="48" height="48" class="xl">\

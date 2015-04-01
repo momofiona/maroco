@@ -514,6 +514,10 @@ a:hover {
   *height: 22px;
   *line-height: 23px;
 }
+.tiny {
+  padding: 3px 5px;
+  height: 30px;
+}
 .text-auto {
   *zoom: 1;
   *margin-right: 14px;
