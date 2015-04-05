@@ -325,7 +325,7 @@ define(function(require, exports, module) {
     $.fn.rollbar = function(options) {
         options = _.proto(defaults, options);
         return this.each(function() {
-            new RollBar(this, options)
+            new RollBar(this, options);
         });
     }
 });

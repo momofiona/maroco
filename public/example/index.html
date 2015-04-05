@@ -20,26 +20,51 @@
     <style type="text/css">
     /* IE8 +*/
     
-    header {
+    header.toolbar {
         position: fixed;
         position: absolute;
         top: 0;
         left: 0;
         right: 0;
-        width: 100%;
         z-index: 3;
+        background: #fff;
         border-bottom: 1px solid #d9d9d9;
         box-shadow: 0 0 5px rgba(100, 100, 100, .2);
+        z-index: 300;
+        padding:0;
+        height: 48px;
     }
     
     body {
-        background-color: #f9f9f9;
+        background-color: #fff;
+    }
+    header .rock,header .caption{
+        height: 48px;
+        line-height: 48px;
+        padding: 0 10px;
+    }
+    header.toolbar .wall{
+        height: 48px;
+    }
+    
+    .myAvanta img {
+        width: 36px;
+        margin-top: 4px;
+        height: 36px;
+    }
+    
+    header .dropdown-open {
+        background: #f5f5f5;
+    }
+    
+    header .dropdown {
+        border-top: solid 1px #f93;
     }
     
     #sideMenu,
     #mainbody {
         position: absolute;
-        top: 50px;
+        top: 49px;
         left: 0;
         bottom: 0;
         overflow: hidden;
@@ -47,124 +72,141 @@
     }
     
     #sideMenu {
+        width: 180px;
+        padding:0 1px;
         border-right: 1px solid #e3e3e3;
         background-color: #f9f9f9;
     }
     
     #mainbody {
-        left: 152px;
+        left: 184px;
         right: 0;
     }
-    
     .appframe {
         width: 100%;
         height: 100%;
         border: 0;
     }
-    
-    .nav li {
-        *zoom: 1;
-    }
-    
-    .nav a {}
     </style>
 </head>
 
 <body>
-    <div class="row">
-        <header class="linear">
-            <div class="toolbar">
-                <span class="caption">Maroco UI</span>
-                <span class="wall"></span>
-                <span class="rock">toolbar &#x25be; &#x25b4;</span>
-            </div>
-        </header>
-        <div class="w5 " id="sideMenu">
-            <ul class="nav m3">
-                <li><a href="#"><i class="f f-user m2"></i>用户管理</a>
-                    <ul>
-                        <li><a href="#!apps/user/main">☭ 组织管理</a>
-                        </li>
-                        <li><a href="#!apps/user/group">♝ 用户组管理</a>
-                        </li>
-                        <li><a href="#!apps/user/role">♞ 角色管理</a>
-                        </li>
-                        <li><a href="#!apps/user/resource">♜ 资源管理</a>
-                        </li>
-                    </ul>
-                </li>
-                <li><a href="../home.html" target="cloud"><i class="m2 f f-browse"></i>移动云</a>
-                </li>
-                <li><a href="#!girlfriend">♥ 工具规范</a>
-                </li>
-                <li><a href="#"><i class="m2 f f-star"></i>Maroco</a>
-                    <ul>
-                        <li><a href="#!layout">☵ Layout</a>
-                        </li>
-                        <li><a href="#!text">☷ Text</a>
-                        </li>
-                        <li><a href="#!icon">✌ Icon</a>
-                        </li>
-                        <li><a href="#!btn">☛ Button</a>
-                        </li>
-                        <li><a href="#!notify">✦ Notify</a>
-                        </li>
-                        <li><a href="#!tips">✦ Tips</a>
-                        </li>
-                        <li><a href="#!searchbox">▦ searchbox</a>
-                        </li>
-                        <li><a href="#!table">▦ Table</a>
-                        </li>
-                        <li><a href="#!nav">▦ nav</a>
-                        </li>
-                        <li><a href="#!watch">☻ Watch(beta)</a>
-                        </li>
-                        <li><a href="#!router">♆ Router</a>
-                        </li>
-                        <li><a href="#!validate">✓ Validate</a>
-                        </li>
-                        <li><a href="#!validate2">✓ Validate2</a>
-                        </li>
-                        <li><a href="#!upload">⤴ Upload</a>
-                        </li>
-                    </ul>
-                </li>
-                <li><a href="#!css3"><i class="m2 f f-star"></i>Animate</a>
-                </li>
-                <li><a href="#"><i class="m2 f f-alert"></i>Todo</a>
-                    <ul>
-                        <li><a href="#!navgoco">♨ navgoco改造</a>
-                        </li>
-                        <li><a href="#!selector">♨ selector</a>
-                        </li>
-                        <li><a href="#!autocomplete">♨ Autocomplete</a>
-                        </li>
-                        <li><a href="#!vm">♨ Vm</a>
-                        </li>
-                        <li><a href="#!viewport"><i class="m2 f f-alert"></i>Viewport</a>
-                        </li>
-                        <li><a href="#!charts"><i class="m2 f f-alert"></i>Chart</a>
-                        </li>
-                        <li><a href="#!standard"><i class="m2 f f-alert"></i>Standard</a>
-                        </li>
-                        <li><a href="#!datepicker"><i class="m2 f f-alert"></i>Datepicker</a>
-                        </li>
-                    </ul>
-                </li>
+    <header class="toolbar">
+        <!-- profile -->
+        <span href="#" class="xr myAvanta rock" data-dropdown>
+            天满流云
+            <img src="../css/img/zgs.jpg" class="moon va-t">
+            <i class="f f-arb"></i>
+        </span>
+        <div class="dropdown w4">
+            <ul class="menu">
+                <li><a href="#"><i class="f f-gear"></i>设置</a></li>
+                <li><a href="#"><i class="f f-user"></i>个人资料</a></li>
+                <li><a href="#"><i class="f f-msg"></i>消息</a></li>
+                <li class="devider"></li>
+                <li><a href="#"><i class="f f-warn"></i>帮助</a></li>
+                <li><a href="#"><i class="f f-shutdown"></i>登出</a></li>
             </ul>
         </div>
-        <div class="scroll" id="mainbody"></div>
+        <!-- /profile -->
+        <span class="b xr rock"><i class="f f-msg"></i><i class="star error" style="">12</i></span>
+        <span class="caption xl"><i class="m2 f f-star"></i>Maroco UI</span>
+        <span class="wall xl"></span>
+    </header>
+    <div id="sideMenu">
+        <ul class="nav m3">
+            <li><a href="#apps/user/main"><i>☭</i>组织管理</a>
+            </li>
+            <li><a href="#apps/user/group"><i>♝</i>用户组管理</a>
+            </li>
+            <li><a href="#apps/user/role"><i>♞</i>角色管理</a>
+            </li>
+            <li><a href="#apps/user/resource"><i>♜</i>资源管理</a>
+            </li>
+            <li><a href="../home.html" target="cloud"><i class="f f-browse"></i>移动云</a>
+            </li>
+            <li><a href="#!girlfriend"><i>♥</i>工具规范</a>
+            </li>
+            <li><a href="#"><i class="f f-star"></i>Maroco</a>
+                <ul>
+                    <li><a href="#!layout"><i>☵</i>Layout</a>
+                    </li>
+                    <li><a href="#!text"><i>☷</i>Text</a>
+                    </li>
+                    <li><a href="#!icon"><i>✌</i>Icon</a>
+                    </li>
+                    <li><a href="#!btn"><i>☛</i>Button</a>
+                    </li>
+                    <li><a href="#!notify"><i>✦</i>Notify</a>
+                    </li>
+                    <li><a href="#!tips"><i>✦</i>Tips</a>
+                    </li>
+                    <li><a href="#!searchbox"><i>▦</i>searchbox</a>
+                    </li>
+                    <li><a href="#!table"><i>▦</i>Table</a>
+                    </li>
+                    <li><a href="#!nav"><i>▦</i>nav</a>
+                    </li>
+                    <li><a href="#!watch"><i>☻</i>Watch(beta)</a>
+                    </li>
+                    <li><a href="#!router"><i>♆</i>Router</a>
+                    </li>
+                    <li><a href="#!validate"><i>✓</i>Validate</a>
+                    </li>
+                    <li><a href="#!validate2"><i>✓</i>Validate2</a>
+                    </li>
+                    <li><a href="#!upload"><i>⤴</i>Upload</a>
+                    </li>
+                </ul>
+            </li>
+            <li><a href="#!css3"><i class="f f-star"></i>Animate</a>
+            </li>
+            <li><a href="#!selector"><i class="f f-alert"></i>Todo</a>
+                <ul>
+                    <li><a href="#!selector"><i>♨</i>selector</a>
+                    </li>
+                    <li><a href="#!autocomplete"><i>♨</i>Autocomplete</a>
+                    </li>
+                    <li><a href="#!vm"><i>♨</i>Vm</a>
+                    </li>
+                    <li><a href="#!viewport"><i class="f f-alert"></i>Viewport</a>
+                    </li>
+                    <li><a href="#!charts"><i class="f f-alert"></i>Chart</a>
+                    </li>
+                    <li><a href="#!standard"><i class="f f-alert"></i>Standard</a>
+                    </li>
+                    <li><a href="#!datepicker"><i class="f f-alert"></i>Datepicker</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
     </div>
+    <div class="scroll" id="mainbody"></div>
     <script>
     // BL BC CR TL TC TR
     seajs.use(['ui/router', 'ui/rollbar'], function(router) {
         //Nav
-        $('.nav').navgoco();
+        var navs=UI.navs({
+            el:$('.nav'),
+            cls:'topnav',
+            onExpand:function(a){
+                console.log('onExpand',a);
+            },
+            onCollapse:function(a){
+                console.log('onCollapse',a);
+            },
+            curA:null,
+            onClick:function(a){
+                if(a===this.curA) return;
+                this.curA=a;
+                console.log('onClick',a);
+            }
+        });
         var mainbody = $('#mainbody'),
             sideMenu = $('#sideMenu'),
             menus = sideMenu.find('a'),
             legalMod = _.reduce(menus, function(memo, a) {
-                a.hash&&memo.push(a.hash);
+                a.hash && memo.push(a.hash);
                 return memo;
             }, []);
 
@@ -172,10 +214,7 @@
         if (UI.browser.chrome) {
             sideMenu.addClass('scroll');
         } else {
-            sideMenu.rollbar({
-                //可通过sideMenu.trigger('rollbar') 主动校准
-                checkTimer: 0
-            });
+            sideMenu.rollbar({});
         }
         //#开始的匹配hash
         router({
@@ -187,7 +226,7 @@
                 });
                 this.hashMap('apps/' + mod);
             },
-            "#*": function(mod) {
+            "#!*": function(mod) {
                 if (_.indexOf(legalMod, '#!' + mod) > -1) {
                     mainbody.empty().scrollTop(0).load(mod + '.html', function(res, state, xhr) {
                         if (state == 'error') {
@@ -200,9 +239,13 @@
                     location.hash = legalMod[0];
                 }
             },
+            '#*':function(mod){
+                //其他的东西;
+            },
             //不以#开头的不去匹配hash
             hashMap: function(mod) {
-                menus.parent().removeClass('active').end().filter('[href$="#!' + mod + '"]').parentsUntil('.nav').filter('li').addClass('active');
+                var as=navs.active('[href$="#!' + mod + '"]');
+                as.parentsUntil('.nav').filter('li').slice(1).find('>a').addClass('active');
             }
         });
         //IE6 fix

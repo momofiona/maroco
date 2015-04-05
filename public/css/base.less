@@ -355,10 +355,10 @@ a:hover {
     color: @baseFontColor !important;
 }
 .log {
-    .baseFactory(@logColor, #ddd, @fontColor);
+    .baseFactory(@logColor, #eee, @fontColor);
 }
 .silver {
-    .baseFactory(@logColor, #ddd, @fontColor);
+    .baseFactory(@logColor, #eee, @fontColor);
     .linear-gradient();
 }
 .info {
@@ -389,7 +389,7 @@ a:hover {
     &:extend(.user-select);
     clear: both;
     margin: 0 0 1px;
-    padding: .5em @distance .4em 0;
+    padding: 6px @distance 6px 0;
     height: @btnHeight;
     line-height: @btnHeight;
     // z-index: 20;
@@ -400,7 +400,7 @@ a:hover {
         margin: 0 .6em 0 .5em;
         display: inline-block;
         width: 1px;
-        background: #d4e4f2;
+        background: #f4f4f4;
         vertical-align: top;
     }
     .bridge {
@@ -679,11 +679,11 @@ a:hover {
         }
     }
 }
+
 .devider {
     font-size: 1px;
-    border-top: solid 1px #E5E5E5;
-    border-top: solid 1px rgba(0, 0, 0, 0.2);
-    border-bottom: solid 1px rgba(255, 255, 255, 0.2);
+    border-top: solid 1px #f4f4f4;
+    border-top: solid 1px rgba(60, 60, 60, 0.15);
     margin:3px 0;
 }
 
@@ -698,8 +698,8 @@ a:hover {
     display: none;
     border-radius: @radius;
     background: #FFF;
-    border: solid 1px #DDD;
-    border: solid 1px rgba(0, 0, 0, .3);
+    border: solid 1px #eee;
+    border-color:rgba(0, 0, 0, 0.15);
     box-shadow: 0 0 0 3px rgba(0, 0, 0, .02);
     z-index: 1000;
 }

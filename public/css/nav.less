@@ -1,0 +1,70 @@
+//nav
+.nav {
+    list-style: none;
+    overflow: visible;
+    padding: 0;
+    margin: 0;
+    line-height: 20px;
+    ul {
+        padding: 0 0 0 14px;
+        margin: 0;
+        display: none;
+        a {
+            padding: 3px 15px 3px 30px;
+        }
+    }
+    li {
+        margin: 1px 0;
+        list-style: none;
+        *zoom: 1;
+        *position: relative;
+    }
+    a {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        position: relative;
+        display: block;
+        cursor: pointer;
+        color: #555;
+        text-decoration: none;
+        padding: 5px 15px 5px 34px;
+        white-space: nowrap;
+        border-radius: 4px;
+        &:hover {
+            background-color: #5d5d5d;
+            color: #FFF;
+        }
+        &.active {
+            background-color: #08C;
+            color: #FFF;
+        }
+    }
+    .nav-cart,i {
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        text-align: center;
+        top: 50%;
+    }
+    i {
+        left: 6px;
+        margin-top: -8px;
+    }
+    .nav-open {
+        display: block;
+        .nav-cart {
+            &:extend(.rotate2);
+        }
+    }
+    .nav-cart {
+        padding: 5px;
+        margin-top: -13px;
+        right: 2px;
+        transition: -webkit-transform .3s;
+        &:hover {
+            text-shadow: 0 0 10px #fff;
+        }
+    }
+}
+//.navs 皮肤

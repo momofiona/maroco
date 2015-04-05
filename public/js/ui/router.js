@@ -15,16 +15,15 @@
  */
 define(function(require, exports, module) {
     var _oldHash,
-        hmark=/^#!?/,
         all = /\*.*$/,
         part = /([^\/]?)\:[^\/]*/g,
         escapeRegExp = /[\-{}\[\]\(\)+?.,\\\^$|#\s]/g,
         route = _.memoize(function(ru) {
-            return new RegExp('^' + ru.replace(hmark,'').replace(escapeRegExp, '\\$&').replace(all, '(.*)').replace(part, '$1([^\/]*)') + '$');
+            return new RegExp('^' + ru.slice(1).replace(escapeRegExp, '\\$&').replace(all, '(.*)').replace(part, '$1([^\/]*)') + '$');
         });
     return function(routeConfig) {
         $(window).on('hashchange', function() {
-            var hash = location.hash.replace(hmark,'');
+            var hash = location.hash.slice(1);
             //hash可能为空
             $.each(routeConfig, function(k, v) {
                 if(k.charAt(0)!=="#") return;

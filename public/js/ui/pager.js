@@ -17,11 +17,10 @@ define(function(require, exports, module) {
         el: null,
         events: {
             'click a': function(e, config) {
-                e.stopPropagation();
                 e.preventDefault();
                 $(this).addClass('loading');
                 config.onPageClick(event, config.page = parseInt(this.getAttribute('page')));
-                return false;
+                // return false;
             }
         },
         link: function(page, currentPage, text, cls, isSpan) {

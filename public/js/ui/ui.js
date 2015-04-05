@@ -2,7 +2,7 @@
 seajs.config({
     alias: {
         ztree: 'js/vendor/zTree/jquery.ztree.all-3.5.min.js',
-        my97:'js/vendor/my97/WdatePicker.js'
+        my97: 'js/vendor/my97/WdatePicker.js'
     },
     paths: {
         'ui': 'js/ui'
@@ -169,10 +169,10 @@ seajs.config({
                     };
                 // oldValue = elem.value;
                 if (browser.ie == 9) {
-                    $(elem).on('focus._ie9inputFixed',function() {
-                        document.addEventListener('selectionchange', setter,false);
-                    }).on('blur._ie9inputFixed',function() {
-                        document.removeEventListener('selectionchange', setter,false);
+                    $(elem).on('focus._ie9inputFixed', function() {
+                        document.addEventListener('selectionchange', setter, false);
+                    }).on('blur._ie9inputFixed', function() {
+                        document.removeEventListener('selectionchange', setter, false);
                     });
                 }
                 //ie6-9
@@ -279,7 +279,7 @@ seajs.config({
     });
 
     //tabs
-    UI.tabs = function(config) {
+    UI.tabs = function(conf) {
         return UI($.extend(true, {
             active: function(n) {
                 this.tabs.find('a:eq(' + n + ')').trigger('click');
@@ -308,25 +308,25 @@ seajs.config({
                 }
             },
             events: {
-                'click a': function(e, config) {
+                'click a': function(e, conf) {
                     var t = this,
                         tab = $(t),
                         panel = tab.attr('panel');
-                    if (this == config.tab) return;
+                    if (this == conf.tab) return;
                     if (panel) {
                         //隐藏其他容器
-                        config.tabs.find('a').each(function(i, o) {
+                        conf.tabs.find('a').each(function(i, o) {
                             //hide other panels
                             if (o === t) return;
-                            var box = config.getPanel(o);
+                            var box = conf.getPanel(o);
                             box && box.hide();
                         });
                         //show current panel
                         tab.parent().addClass('active').siblings().removeClass('active');
                         var panel = $(panel).show();
-                        config.onActive(t, panel);
-                        config.tab = t;
-                        config.panel = panel;
+                        conf.onActive(t, panel);
+                        conf.tab = t;
+                        conf.panel = panel;
                         return false;
                     }
                 }
@@ -337,7 +337,74 @@ seajs.config({
             create: function() {
                 this.active(0);
             }
-        }, config));
+        }, conf));
+    };
+    //navs
+    UI.navs = function(conf) {
+        return UI(_.extend({
+            events: {
+                'click a': function(e, conf) {
+                    var isCart = conf.isCart(e, this);
+                    if (isCart) {
+                        conf.toggle(this);
+                        return false;
+                    }
+                    if (conf.onClick(this) === false) return false;
+                },
+                'dblclick a': function(e, conf) {
+                    conf.isCart(e, this) || conf.toggle(this);
+                    return false;
+                }
+            },
+            //点击的是否是cart
+            isCart: function(e, a) {
+                var isCart = $(e.target).hasClass('nav-cart');
+                if (!isCart) {
+                    isCart = $(a).attr('href');
+                    isCart = isCart === undefined || isCart === '' || isCart === '#';
+                }
+                return isCart;
+            },
+            speed: 'fast',
+            //主动触发接口
+            active: function(a) {
+                if (!a.jquery) {
+                    a = this.$(a);
+                }
+                this.$('a').removeClass('active');
+                return a.addClass('active');
+            },
+            //open or close
+            toggle: function(a, force, speed) {
+                var t = $(a),
+                    op = this.openCls,
+                    speed = speed === undefined ? this.speed : speed,
+                    isOpen = t.hasClass(op);
+                //如果设置强制打开已经是打开状态
+                if (force === true && isOpen || t.next().length == 0) return;
+                if (isOpen || false == force) {
+                    t.removeClass(op).next().slideUp(speed);
+                    this.onCollapse(t);
+                } else {
+                    t.addClass(op).next().slideDown(speed);
+                    this.onExpand(t);
+                }
+            },
+            //链接打开时的class
+            openCls: 'nav-open',
+            cartCls: 'f f-down',
+            accouding: false,
+            //展开时回调
+            onExpand: $.noop,
+            //收缩时回调
+            onCollapse: $.noop,
+            //点击时触发
+            onClick: $.noop,
+            create: function() {
+                //添加toggle按钮
+                this.el.addClass(this.cls).find('a+ul').prev().prepend('<b class="nav-cart ' + this.cartCls + '"></b>');
+            }
+        }, conf));
     };
     //暴露全局调用
     window.UI = UI;

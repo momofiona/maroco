@@ -52,8 +52,7 @@ module.exports = function(grunt) {
                         'public/js/vendor/jqueryui/jquery.ui.sortable.min.js', //table.js 使用，这货居然24K，算法肯定不咋的
 
                         //navgoco 这个可以去除
-                        'public/js/vendor/jquery.cookie.min.js',
-                        'public/js/vendor/navgoco/jquery.navgoco.min.js'
+                        'public/js/vendor/jquery.cookie.min.js'
 
 
                     ]
@@ -65,6 +64,9 @@ module.exports = function(grunt) {
                 mangle: {
                     except: ['jQuery', 'define', 'require']
                 }
+            },
+            ui:{
+                'public/_ui.js':'public/js/ui/ui.js'
             },
             allui: {
                 files: [{
@@ -123,7 +125,7 @@ module.exports = function(grunt) {
         console.log('loadNpmTasks:' + key);
     };
     //grunt.registerTask('default', ['copy', 'uglify', 'concat']);
-    grunt.registerTask('default', ['concat']);
+    grunt.registerTask('default', ['concat','uglify:ui']);
     grunt.registerTask('liveload', ['watch:livereload']);
     grunt.registerTask('less', ['less:dev']);
     grunt.registerTask('doc', ['jsdoc']);

@@ -1,32 +1,141 @@
 <div class="row m10">
-    <h1>搜索框 <small>SearchBox</small></h1>
+    <h1>导航菜单<small>UI.navs</small></h1>
     <hr>
-    <div id="searchBox"></div>
+    <p>普通用法见左边的nav导航</p>
+    <h3>Win8 Explorer Menu</h3>
+    <ul id="navsDemo" class="nav"></ul>
     <textarea class="codemirror" mode="javascript" source="#searchBoxScript"></textarea>
     <div class="footman"></div>
 </div>
+<style type="text/css">
+.tcon{
+    display: inline-block;
+    background: url(../css/img/win8.8.png) center -48px no-repeat;
+}
+.tcon-computer{
+    background-position: center 0;
+}
+.tcon-folder{
+    background-position: center -16px;
+}
+.tcon-360{
+    background-position: center -32px;
+}
+
+.win8 a,
+.win8 ul a {
+    border: solid 1px #fff;
+    border-radius: 0;
+    padding: 4px 4px 4px 28px;
+}
+.win8 a:hover,.win8 a.active {
+    border-color: #70a0E7;
+    background: #E5F3FB;
+    color: #444;
+}
+.win8 ul {
+    padding:0;
+}
+.win8 li {
+    margin:0;
+}
+.win8 i {
+    position: static;
+    margin:0 4px 0 0;
+    vertical-align: text-bottom;
+}
+.win8 .nav-cart {
+    margin-left: -28px;
+    right: auto;
+}
+.win8 .nav-cart:hover {
+    text-shadow: 0 1px 10px #fff;
+    background-position: center -74px;
+}
+.win8 .nav-open .nav-cart {
+    background-position: center -100px;
+    filter: none;
+    -webkit-transform: none;
+    -moz-transform: none;
+    -ms-transform: none;
+    -o-transform: none;
+    transform: none;
+}
+.win8 .nav-open .nav-cart:hover {
+    background-position: center -126px;
+}
+</style>
 <script id="searchBoxScript">
-seajs.use('ui/searchbox', function() {
-    $('#searchBox').searchbox({
-        placeholder: '在当前部门下查找',
-        value: '',
-        delays:0,//默认500毫秒,0表示不启用延迟
-        //不带filter则不出现筛选
-        filter: [{
-            label: '基本信息',
-            cls: 'w2',
-            id: 'secret code'
-        }, {
-            label: '角色'
-        }],
-        search: function(value, filter) {
-            //回车和点击清空按钮时触发
-            console.log('search:',value, filter)
+$(function() {
+    var navs = UI.navs({
+        el: $('#navsDemo'),
+        //皮肤
+        cls: 'win8',
+        //小箭头样式
+        cartCls: 'tcon',
+        //当前活动链接标记，自定义的
+        curA:null,
+        //三个回调
+        onExpand: function(a) {
+            console.log('onExpand', a);
         },
-        input: function(value, filter) {
-            //键入内容时触发
-            console.log('input:',value, filter)
+        onCollapse: function(a) {
+            console.log('onCollapse', a);
+        },
+        onClick: function(a) {
+            //双击的时候会触发两次，所以加了curA避免重复触发
+            if(this.curA==a) return false;
+            this.curA=a;
+            console.log('onClick', a);
+            this.active(a);
+            return false;
+        },
+        /*
+        //Windows文件夹无法点击选中的两种解决方案：
+        //1. 给Windows的参数里面加上href，并且值不能是空或者#
+        //2. 重写isCart，抛弃原来对无意义href的屏蔽
+        isCart: function(e) {
+            return $(e.target).hasClass('nav-cart');
+        },*/
+        //data和template展示了如何使用dot模板引擎递归生成整个nav的html，包括左边距，和本插件无任何关系，不熟不建议使用。
+        data: [{
+            href: '#xxxxxxxxxxxxxx',
+            label: '<i class="tcon tcon-computer"></i>这台电脑',
+            children: [{
+                href: '#Desktop',
+                label: '<i class="tcon tcon-folder"></i>Desktop'
+            }, {
+                href: '#c',
+                label: '<i class="tcon tcon-folder"></i>本地磁盘(C:)',
+                children: [{
+                    href: '#360',
+                    label: '<i class="tcon tcon-360"></i>360'
+                }, {
+                    label: '<i class="tcon tcon-folder"></i>Windows'
+                }]
+            }, {
+                href: '#d',
+                label: '<i class="tcon tcon-folder"></i>新加卷(D:)'
+            }]
+        }],
+        template: _.dot('{{~it._data :v:i}}<li><a style="padding-left:{{=28+it._data.depth*14}}px"{{?v.href}} href="{{=v.href}}"{{?}}>{{=v.label}}</a>{{?v.children}}{{?v.children.depth=it._data.depth+1,it._data=v.children}}{{?}}<ul>{{=it.template(it)}}</ul>{{?}}</li>{{~}}'),
+        //初始化
+        init: function() {
+            //递归缓存
+            this._data = this.data;
+            //深度标记
+            this._data['depth']=0;
+
+            //生成html并插入
+            this.el.html(this.template(this));
+            //遍历校准左边距 28+14*depth
+            
         }
-    })
+    });
+    //选中第一个链接
+    var root=navs.active('a:eq(0)');
+    //打开第一个链接的儿子们
+    navs.toggle(root,true,0);
+
 });
 </script>
