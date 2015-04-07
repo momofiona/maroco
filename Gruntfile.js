@@ -66,7 +66,9 @@ module.exports = function(grunt) {
                 }
             },
             ui:{
-                'public/_ui.js':'public/js/ui/ui.js'
+                files:{
+                    'public/_ui.js':'public/js/ui/ui.js'
+                }
             },
             allui: {
                 files: [{

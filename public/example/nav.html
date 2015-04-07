@@ -1,5 +1,5 @@
 <div class="row m10">
-    <h1>导航菜单<small>UI.navs</small></h1>
+    <h1>导航菜单 <small>UI.navs</small></h1>
     <hr>
     <p>普通用法见左边的nav导航</p>
     <h3>Win8 Explorer Menu</h3>
@@ -108,28 +108,28 @@ $(function() {
                 href: '#c',
                 label: '<i class="tcon tcon-folder"></i>本地磁盘(C:)',
                 children: [{
-                    href: '#360',
-                    label: '<i class="tcon tcon-360"></i>360'
+                    href: '#profile',
+                    label: '<i class="tcon tcon-360"></i>Program files'
                 }, {
                     label: '<i class="tcon tcon-folder"></i>Windows'
                 }]
             }, {
                 href: '#d',
-                label: '<i class="tcon tcon-folder"></i>新加卷(D:)'
+                label: '<i class="tcon tcon-folder"></i>新加卷(D:)',
+                children: [{
+                    href: '#360',
+                    label: '<i class="tcon tcon-360"></i>360'
+                }]
             }]
         }],
-        template: _.dot('{{~it._data :v:i}}<li><a style="padding-left:{{=28+it._data.depth*14}}px"{{?v.href}} href="{{=v.href}}"{{?}}>{{=v.label}}</a>{{?v.children}}{{?v.children.depth=it._data.depth+1,it._data=v.children}}{{?}}<ul>{{=it.template(it)}}</ul>{{?}}</li>{{~}}'),
+        //深度标记
+        depth:0,
+        template: _.dot('{{~it.data :v:i}}<li><a style="padding-left:{{=28+it.depth*14}}px"{{?v.href}} href="{{=v.href}}"{{?}}>{{=v.label}}</a>{{?v.children}}<ul>{{=it.template({template:it.template,data:v.children,depth:it.depth+1})}}</ul>{{?}}</li>{{~}}'),
         //初始化
         init: function() {
-            //递归缓存
-            this._data = this.data;
-            //深度标记
-            this._data['depth']=0;
-
             //生成html并插入
-            this.el.html(this.template(this));
             //遍历校准左边距 28+14*depth
-            
+            this.el.html(this.template(this));
         }
     });
     //选中第一个链接

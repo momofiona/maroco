@@ -115,13 +115,13 @@
     </header>
     <div id="sideMenu">
         <ul class="nav m3">
-            <li><a href="#apps/user/main"><i>☭</i>组织管理</a>
+            <li><a href="#!apps/user/main"><i>☭</i>组织管理</a>
             </li>
-            <li><a href="#apps/user/group"><i>♝</i>用户组管理</a>
+            <li><a href="#!apps/user/group"><i>♝</i>用户组管理</a>
             </li>
-            <li><a href="#apps/user/role"><i>♞</i>角色管理</a>
+            <li><a href="#!apps/user/role"><i>♞</i>角色管理</a>
             </li>
-            <li><a href="#apps/user/resource"><i>♜</i>资源管理</a>
+            <li><a href="#!apps/user/resource"><i>♜</i>资源管理</a>
             </li>
             <li><a href="../home.html" target="cloud"><i class="f f-browse"></i>移动云</a>
             </li>
@@ -218,7 +218,7 @@
         }
         //#开始的匹配hash
         router({
-            '#apps/*': function(mod) {
+            '#!apps/*': function(mod) {
                 seajs.use('apps/' + mod, function(view) {
                     view.show({
                         container: mainbody.empty()
