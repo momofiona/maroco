@@ -60,7 +60,14 @@
     header .dropdown {
         border-top: solid 1px #f93;
     }
-    
+    .topnav ul{
+        padding:0 0 0 1px;
+        margin-left:10px;
+        border-left:solid 3px #ccc;
+    }
+    .topnav a{
+        border-radius: 0 3px 3px 0;
+    }
     #sideMenu,
     #mainbody {
         position: absolute;
@@ -153,7 +160,7 @@
                     </li>
                     <li><a href="#!validate"><i>✓</i>Validate</a>
                     </li>
-                    <li><a href="#!validate2"><i>✓</i>Validate2</a>
+                    <li><a href="#!valid"><i>✓</i>Valid</a>
                     </li>
                     <li><a href="#!upload"><i>⤴</i>Upload</a>
                     </li>
@@ -189,6 +196,7 @@
         var navs=UI.navs({
             el:$('.nav'),
             cls:'topnav',
+            accordion:true,
             onExpand:function(a){
                 console.log('onExpand',a);
             },
@@ -245,7 +253,8 @@
             //不以#开头的不去匹配hash
             hashMap: function(mod) {
                 var as=navs.active('[href$="#!' + mod + '"]');
-                as.parentsUntil('.nav').filter('li').slice(1).find('>a').addClass('active');
+                as=as.parentsUntil('.nav').filter('li').slice(1).find('>a').addClass('active');
+                navs.toggle(as,true,0);
             }
         });
         //IE6 fix

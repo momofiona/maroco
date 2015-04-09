@@ -308,7 +308,7 @@ seajs.config({
                 }
             },
             events: {
-                'click a': function(e, conf) {
+                'click >.tab a': function(e, conf) {
                     var t = this,
                         tab = $(t),
                         panel = tab.attr('panel');
@@ -341,7 +341,7 @@ seajs.config({
     };
     //navs
     UI.navs = function(conf) {
-        return UI(_.extend({
+        return UI($.extend(true,{
             events: {
                 'click a': function(e, conf) {
                     var isCart = conf.isCart(e, this);
@@ -365,7 +365,6 @@ seajs.config({
                 }
                 return isCart;
             },
-            speed: 'fast',
             //主动触发接口
             active: function(a) {
                 if (!a.jquery) {
@@ -381,19 +380,24 @@ seajs.config({
                     speed = speed === undefined ? this.speed : speed,
                     isOpen = t.hasClass(op);
                 //如果设置强制打开已经是打开状态
-                if (force === true && isOpen || t.next().length == 0) return;
+                if (t.length == 0 || force === true && isOpen || t.next().length == 0) return;
                 if (isOpen || false == force) {
                     t.removeClass(op).next().slideUp(speed);
                     this.onCollapse(t);
                 } else {
                     t.addClass(op).next().slideDown(speed);
+                    if(this.accordion){
+                        this.toggle(t.parent().siblings().find('>.'+this.openCls),false);
+                    }
                     this.onExpand(t);
                 }
             },
+            speed: 'fast',
+            //手风琴
+            accordion:false,
             //链接打开时的class
             openCls: 'nav-open',
             cartCls: 'f f-down',
-            accouding: false,
             //展开时回调
             onExpand: $.noop,
             //收缩时回调

@@ -29,11 +29,17 @@
 .user-select,
 .toolbar,
 .cutebar,
+.notify-tool,
 .notify-con,
 .dialog-title,
 .rollbar-noselect,
 .pager,
-.order {
+.order,
+.notify-checkmark,
+.notify-close,
+.dialog-tool,
+.dialog-close,
+.dialog-close {
   -webkit-user-select: none;
   -khtml-user-select: none;
   -moz-user-select: none;

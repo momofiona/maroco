@@ -1,26 +1,14 @@
 /* https://github.com/DiegoLopesLima/Validate
  *
  * 
- * 
- *
- *
- * 
- * remote 
- * 
  */
 define(function(require, exports, module) {
     var tips = require('ui/tips');
     var defaults = {
-        // Send form if is valid?
-        sendForm: false,
-        // Use WAI-ARIA properties
-        waiAria: true,
         // Validate on submit?
         onSubmit: true,
         // Validate on onKeyup?
         onKeyup: false,
-        // Validate on onBlur?
-        onBlur: false,
         // Validate on onChange?
         onChange: true,
         // Default namespace
@@ -45,23 +33,25 @@ define(function(require, exports, module) {
         // All field types
         allTypes = type.join(','),
         //规则
-        //data-valid="required regexp(^1231234$) number(10.00,20.00) length(6,20) email url date(yyyy-MM-dd hh:mm:ss)"
-        valid = {
-            email:function(v,p,status){
-                var re=/^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/.test(v);
-                if(!re) status.msg=msg.email;
-                return re;
-            },
-            url:function(v,p,status){
-                var re=/^https?\:\/\/[^\s\/]+(?:\.[^\s\/]+)+(?:\/[^\s]+)*$/.test(v);
-                status.msg=msg.url;
-                return re;
-            },
+        //data-valid="required regexp(^1231234$) remote(abc.php) number(10.00,20.00) tofixed(2) length(6,20) email url date(yyyy-MM-dd hh:mm:ss)"
+        extend = {
+            email:/^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/,
+            url:/^https?\:\/\/[^\s\/]+(?:\.[^\s\/]+)+(?:\/[^\s]+)*$/,
+            charsafe:/^[^\\\/:\*\?\"<>\|]*$/,
+            //number 数字
+            //number(1) 整数
+            //number(0,) 大于等于0的整数
+            //number(,0) 小于等于0的整数
+            //number(0.00,) 大于等于0的小数，保留两位小数
+            //number(,0.00) 小于等于0的小数，保留两位小数
+            //number(0.00,1) 大于等于0，小于等于1的小数，保留两位小数
             number:function(v,p,status){
                 if(!$.isNumeric(v)) return false;
+                //没有参数表示无限制的数值
+                if(p==undefined) return true;
                 v=v-0;
                 //如果存在参数
-                //一个参数的时候表明
+                //一个参数表明
                 if(p){
                     p=p.split(',');
                     p[0]
@@ -77,9 +67,10 @@ define(function(require, exports, module) {
             required:'必填项，请输入内容'
             email:'请输入正确的邮箱格式',
             url:'请输入正确的URL链接',
-            number:'请输入0~10 之间的数'
+            number:'','大于等于0，小于等于1的小数，保留两位小数'
         }
-
+        //onchange的时候验证
+        //onkeydown不会报错，只会解除报错
         // Method to validate each fields
         validateField = function(event, options) {
             var status={
@@ -91,7 +82,7 @@ define(function(require, exports, module) {
                 // Current field value
                 fieldValue = field.val() || '',
                 // A index in the conditional object containing a function to validate the field value
-                fieldConditional = field.data('valid')||'',
+                fieldConditional = field.attr('valid')||'',
                 fieldRequired=field.data('required'),
                 name = 'validate';
 
@@ -183,11 +174,6 @@ define(function(require, exports, module) {
             // If the field is valid
             if (status.required && status.pattern && status.conditional) {
 
-                // If WAI-ARIA is enabled
-                if (!!options.waiAria) {
-
-                    field.prop('aria-invalid', false);
-                }
 
                 if (typeof(validation.valid) == 'function') {
 
@@ -198,11 +184,6 @@ define(function(require, exports, module) {
                 options.eachValidField.call(field, event, status, options);
             } else {
 
-                // If WAI-ARIA is enabled
-                if (!!options.waiAria) {
-
-                    field.prop('aria-invalid', true);
-                }
 
                 if (typeof(validation.invalid) == 'function') {
 
@@ -268,14 +249,6 @@ define(function(require, exports, module) {
                         });
                     }
 
-                    // If onBlur is enabled
-                    if (!!options.onBlur) {
-
-                        fields.on('blur.' + namespace, function(event) {
-
-                            validateField.call(this, event, options);
-                        });
-                    }
 
                     // If onChange is enabled
                     if (!!options.onChange) {
@@ -303,11 +276,7 @@ define(function(require, exports, module) {
                             // If form is valid
                             if (formValid) {
 
-                                // Send form?
-                                if (!options.sendForm) {
-
-                                    event.preventDefault();
-                                }
+                                event.preventDefault();
 
                                 // Is a function?
                                 if ($.isFunction(options.valid)) {
