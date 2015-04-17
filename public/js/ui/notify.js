@@ -122,7 +122,10 @@ define(function(require, exports, module) {
                 //drag & resize
                 if (_t.draggable) {
                     _t.el.draggable({
-                        handle: isDialog ? ">.dialog-title" : ''
+                        handle: isDialog ? ">.dialog-title" : '',
+                        drag: function( event, ui ){
+                            if(ui.position.top<0) ui.position.top=0;
+                        }
                     });
                 }
                 /*                if (_t.resizable) {

@@ -54,6 +54,7 @@ define(function(require, exports, module) {
         extend = {
             trim: true
         },
+        name = 'validate',
 
         // Method to validate each fields
         validateField = function(event, options) {
@@ -91,9 +92,7 @@ define(function(require, exports, module) {
                 reFalse = /^false$/i,
 
                 // The description object 
-                fieldDescription=$.extend({},validation.description,options.description[fieldDescription]),
-
-                name = 'validate';
+                fieldDescription=$.extend({},validation.description,options.description[fieldDescription]);
 
             fieldRequired = fieldRequired != '' ? (fieldRequired || !!validation.required) : true;
 
@@ -306,7 +305,6 @@ define(function(require, exports, module) {
 
                 // This is a form?
                 if (form.is('form')) {
-
                     form.data(name, {
                         options: options
                     });
@@ -472,7 +470,7 @@ define(function(require, exports, module) {
                         of: this,
                         msg: msg,
                         cls: 'error',
-                        dir: this.attr('dir') || 'rc',
+                        dir: this.data('dir') || 'rc',
                         within: options.tipWithin||options.form
                     });
                 }

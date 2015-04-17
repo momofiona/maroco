@@ -29,26 +29,30 @@ define(function(require, exports, module) {
 
 
     var type = ['input:not([type]),input[type="color"],input[type="date"],input[type="datetime"],input[type="datetime-local"],input[type="email"],input[type="file"],input[type="hidden"],input[type="month"],input[type="number"],input[type="password"],input[type="range"],input[type="search"],input[type="tel"],input[type="text"],input[type="time"],input[type="url"],input[type="week"],textarea', 'select', 'input[type="checkbox"],input[type="radio"]'],
-
         // All field types
         allTypes = type.join(','),
+        isNum=$.isNumeric,
         //规则
-        //data-valid="required regexp(^1231234$) remote(abc.php) number(10.00,20.00) tofixed(2) length(6,20) email url date(yyyy-MM-dd hh:mm:ss)"
-        extend = {
+        //data-valid="required regexp(^1231234$) remote(abc.php) float(10,20,2) int(0,) length(6,20) email url date(yyyy-MM-dd hh:mm:ss)"
+        validation = {
             email:/^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/,
-            url:/^https?\:\/\/[^\s\/]+(?:\.[^\s\/]+)+(?:\/[^\s]+)*$/,
+            url:/^(?:https?|ftp)\:\/\/[^\s\/]+(?:\.[^\s\/]+)+(?:\/[^\s]+)*$/,
             charsafe:/^[^\\\/:\*\?\"<>\|]*$/,
-            //number 数字
-            //number(1) 整数
-            //number(0,) 大于等于0的整数
-            //number(,0) 小于等于0的整数
-            //number(0.00,) 大于等于0的小数，保留两位小数
-            //number(,0.00) 小于等于0的小数，保留两位小数
-            //number(0.00,1) 大于等于0，小于等于1的小数，保留两位小数
-            number:function(v,p,status){
-                if(!$.isNumeric(v)) return false;
+            mobile:/^1\d{10}$/, 
+            //number 请输入数字 
+            //number(1) 请输入整数
+            //number(0,) 请输入大于等于0的整数
+            //number(,0) 请输入小于等于0的整数
+            //number(0,10) 请输0到10之间的整数
+            //number(1.00) 请输入小数，最多保留两位小数
+            //number(0.00,) 请输入大于等于0.00的数，最多保留两位小数
+            //number(,0.00) 请输入小于等于0.00的数，最多保留两位小数
+            //number(0.00,1) 请输入大于等于0.00，小于等于1的数，最多保留两位小数
+            float:function(pm,un){
+                var v=this.val();
+                if(!isNum(v)) return false;
                 //没有参数表示无限制的数值
-                if(p==undefined) return true;
+                if(pm=='') return;
                 v=v-0;
                 //如果存在参数
                 //一个参数表明
@@ -59,18 +63,32 @@ define(function(require, exports, module) {
                     return true;
                 }
             },
-            integer:function(){
-                
+            int:function(pm,un){
+                var v=this.val();
+                if(!isNum(v)) return 0;
+                if(!pm) return true;
+                pm=pm.split(',');
+                v=v-0;
+                var r=2;
+                if(pm[0]&&pm[1]){
+                    r=3;
+                }else if(pm[0]){
+                    r=1;
+                }
+                this.val(parseInt(v));
             }
         },
-        msg={
+        description={
             required:'必填项，请输入内容'
             email:'请输入正确的邮箱格式',
-            url:'请输入正确的URL链接',
-            number:'','大于等于0，小于等于1的小数，保留两位小数'
-        }
+            url:'请输入正确的URL格式',
+            length:['至少输入 {0} 个字符','最多输入 {1} 个字符','只允许输入 {0} 到 {1} 个字符'],
+            float:['请输入数字','请输入大于等于{0}的数字','请输入小于等于{1}的数字','请输入大于等于{0},小于等于{1}的数字'],
+            int:['请输入整数','请输入大于等于{0}的整数','请输入小于等于{1}的整数','请输入大于等于{0},小于等于{1}的整数']
+        },
+        validReg=/(?:^|\s)(\w+)(?:\((.*?)\))?/g,
         //onchange的时候验证
-        //onkeydown不会报错，只会解除报错
+        //input不会报错，只会解除报错
         // Method to validate each fields
         validateField = function(event, options) {
             var status={
@@ -78,21 +96,22 @@ define(function(require, exports, module) {
             },
                 // Current field
                 field = $(this),
-                fieldCName=field.attr('cname')||field.attr('name'),
+                fieldCName=field.data('name')||field.attr('name'),
                 // Current field value
                 fieldValue = field.val() || '',
                 // A index in the conditional object containing a function to validate the field value
-                fieldConditional = field.attr('valid')||'',
-                fieldRequired=field.data('required'),
+                fieldConditional = field.data('valid')||'',
+                fieldRequired=fieldConditional.indexOf('required')!=-1,
                 name = 'validate';
 
-                fieldConditional.replace(/(?:^|\s)(\w+)(?:\((.*?)\))?/g,function(match,name,params){
+                fieldConditional.replace(validReg,function(match,name,params){
                     //判断存在 extend[name]?,如果存在则传入参数
                     var ex=extend[name];
                     if(ex){
-                        ex(fieldValue,params,status);
+                        ex.call(field,params);
                     }
                 });
+                //keyup的时候只判断通过，不处理false
 /*            // The conditional exists?
             if (fieldConditional != undefined) {
 

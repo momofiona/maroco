@@ -238,7 +238,7 @@ seajs.config({
      * button 给页面上所有btn绑定事件
      * @type {Array}
      */
-    var btnClassNames = ['log', 'silver', 'note', 'info', 'safe', 'warn', 'error', 'link', 'dark'];
+    var btnClassNames = ['log', 'silver', 'note', 'info', 'safe', 'warn', 'care', 'error', 'link', 'dark'];
     var button = UI.button = function(dom, cName) {
         //主动触发
         var _t = $(dom);
@@ -253,6 +253,7 @@ seajs.config({
                 }).mouseleave(function() {
                     $(this).removeClass(cName + '-hover');
                 }).mousedown(function(e) {
+                    if(e.which!==1) return;
                     //解决鼠标拖动元素的时候
                     var _btn = $(this);
                     if (_btn.hasClass('active')) return;

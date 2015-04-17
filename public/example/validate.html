@@ -1,8 +1,8 @@
 <div class="row m10">
     <h1>验证 <small>Validate</small></h1>
     <hr>
-    <div class="text-auto m1">
-        <input class="text" dir="bl" form="validateForm" data-required placeholder="form外边的元素" data-description="platformName">
+    <div class="text-auto">
+        <input class="text" data-dir="bl" form="validateForm" data-required placeholder="form外边的元素" data-description="platformName">
     </div>
     <form id="validateForm">
         <h2>Form</h2>
@@ -23,6 +23,21 @@
                 <td class="flabel">确认密码</td>
                 <td>
                     <input type="password" data-conditional="confirmpass" data-description="confirmpass" class="text tiny">
+                </td>
+            </tr>
+            <tr>
+                <td class="flabel">性别</td>
+                <td>
+                    <label><input type="radio" name="gender" class="va-t" > 男</label>
+                    <label><input type="radio" name="gender" class="va-t" data-dir="trr" data-required> 女</label>
+                    <input type="radio" name="gender2" class="va-t"   disabled>
+                    <input type="radio" name="gender2" class="va-t"  checked disabled>
+                    <input type="checkbox" name="both" class="va-t" data-required>
+                    <input type="checkbox" name="both" class="va-t" checked>
+                    <input type="checkbox" name="both" class="va-t"  disabled>
+                    <input type="checkbox" name="both" class="va-t" checked disabled>
+                    <input type="range" name="both" class="va-t" >
+                    <meter value="5" min="0" max="100" title="num" low="20" high="80" optimum="50"></meter>
                 </td>
             </tr>
             <tr>
@@ -185,7 +200,7 @@ seajs.use('ui/validate', function(validate) {
         //条件
         conditional: {
             confirmpass: function(value, options) {
-                return value === options.form[0]['password'].value
+                return value === options.form[0]['password'].value;
             }
         },
         //预处理数据
@@ -196,6 +211,9 @@ seajs.use('ui/validate', function(validate) {
             platformName: {
                 required: 'biang~'
             },
+            gender:{
+                required: '请选择性别'
+            },
             confirmpass: {
                 conditional: '两次输入密码不一样'
             },
@@ -203,8 +221,8 @@ seajs.use('ui/validate', function(validate) {
                 required: '请填写帐号'
             },
             password: {
-                required: '请填写密码',
-                pattern: '密码需要填写6-20位'
+                required:'请填写密码',
+                pattern:'密码需要填写6-20位'
             }
         }
     });

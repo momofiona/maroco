@@ -66,13 +66,20 @@ define(function(require, exports, module) {
                     callback: function(b) {
                         if (b) {
                             delete config.roleCache[orgId];
-                            _t.remove();
-                            var tmpids = {};
+                            var tmpids = {},_other=config.otherRoleBox;
                             _.each(config.roleCache, function(o) {
-                                _.each(o.roles, function(role) {
+                                _.each(o.roleList, function(role) {
                                     tmpids[role.id] = 1;
                                 })
                             });
+                            //把内部属于某个部门下继承的角色归纳到other里面
+                            _t.find('>ul').children().each(function(i, o) {
+                                var id = o.id.slice(2);
+                                if (tmpids[id]){
+                                    $(this).appendTo(_other);
+                                }
+                            });
+                            _t.remove();
                             //清除其他框内相应的东西
                             config.otherRoleBox.children().each(function(i, o) {
                                 //如果o.id不存在于任何cache中，则删掉

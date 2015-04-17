@@ -249,6 +249,7 @@
             },
             '#*':function(mod){
                 //其他的东西;
+                if(mod=="") location.hash = '!layout';
             },
             //不以#开头的不去匹配hash
             hashMap: function(mod) {

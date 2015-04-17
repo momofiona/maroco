@@ -28,6 +28,8 @@
         color: #555;
         text-decoration: none;
         padding: 5px 15px 5px 34px;
+        //IE6下必须带高度，不然top:50%会计算错误
+        _height: 20px;
         white-space: nowrap;
         border-radius: 4px;
         &:hover {
@@ -48,8 +50,8 @@
         top: 50%;
     }
     i {
-        left: 6px;
-        margin-top: -8px;
+        // 这里不能用left，IE7的定位起始点会受padding影响
+        margin: -8px 0 0 -26px;
     }
 }
 

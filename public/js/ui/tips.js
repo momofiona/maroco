@@ -125,7 +125,7 @@ define(function(require, exports, module) {
                 tips = $('<div>', {
                     id: config.id,
                     'class': 'tips ' + config.cls,
-                    'style': 'position:absolute;top:50%;left:50%;'
+                    'style': 'position:absolute;top:300px;left:300px;'
                 }).appendTo(config.within || 'body');
             }
             if (config.timeout) {

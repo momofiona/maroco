@@ -208,21 +208,22 @@ define(function(require, exports, module) {
         thead.on('click', '.order', function(e) {
             //排序
             e.stopPropagation();
-            var asc = 'asc',t=$(this);
-        	if(t.hasClass('desc')){
-        		t.removeClass('desc');
-        	}else if(t.hasClass('asc')){
-        		asc='desc';
-        		t.addClass('desc');
-        	}else{
-        		t.addClass('asc');
-        	}
-        	//去除其余列图标
-        	t.siblings().removeClass('asc desc');
-        	_.extend(config.baseparams,{
-        		order:t.attr('order'),
-        		asc:asc
-        	});
+            var asc = 'asc',
+                t = $(this);
+            if (t.hasClass('desc')) {
+                t.removeClass('desc');
+            } else if (t.hasClass('asc')) {
+                asc = 'desc';
+                t.addClass('desc');
+            } else {
+                t.addClass('asc');
+            }
+            //去除其余列图标
+            t.siblings().removeClass('asc desc');
+            _.extend(config.baseparams, {
+                order: t.attr('order'),
+                asc: asc
+            });
             loader.load();
         });
         //排序
@@ -459,6 +460,9 @@ define(function(require, exports, module) {
             count: config.count,
             url: config.url,
             cache: config.cache,
+            beforeLoad: function(filter) {
+                config.beforeLoad && config.beforeLoad.call(table, filter, config);
+            },
             afterLoad: function(data) {
                 cache = config.parseData(data) || [];
                 //如果page不是第一页但是返回数据为0，则自动刷新到前一页

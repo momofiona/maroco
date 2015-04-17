@@ -11,10 +11,11 @@
 
 @distance: 10px;
 @fontColor: #434749;
+//背景色
 @logColor: #fafafa;
 @infoColor: #4abffc;
 @noteColor: #478af8;//#016EB1;
-@warnColor: #f9c832;
+@warnColor: #FFF061;//f9c832
 @errorColor: #ab2918;
 @safeColor: #129324;
 @linkColor: @noteColor;
@@ -92,7 +93,7 @@ body, input, textarea, select, button {
 }
 input, select, textarea {
     &[disabled], &[readonly] {
-        cursor: not-allowed;
+        cursor: not-allowed !important;
         background-color: #eee;
     }
 }
@@ -194,7 +195,7 @@ abbr[title] {
     height: 2em;
     clear: both;
 }
-input[type=checkbox] {
+/*input[type=checkbox] {
     width: 16px;
     height: 16px;
     &:after {
@@ -215,6 +216,58 @@ input[type=checkbox] {
     }
     &:checked[disabled] {
         content: url(img/checkbox-checked-disabled.png);
+    }
+}*/
+input[type=checkbox],input[type=radio] {
+    width: 18px;
+    height: 18px;
+    padding:0 !important;
+    line-height: 18px !important;
+    -webkit-appearance: none;
+    border: solid 1px #bfbfbf;
+    border-top-color: #aaa;
+    // IE6-10系列去掉border
+    border:none\9;
+    background: #fff;
+    //IE7
+    *width:24px;
+    *height: 24px;
+    border-radius: @radius;
+    outline: none;
+    &:hover {
+        border-color: #aaa;
+    }
+    &:active {
+        background-color: #ddd;
+    }
+    &:checked:before {
+        content: '\e62e';
+        color: @safeColor;
+        position: absolute;
+        margin-left:2px;
+        font-size: 14px;
+        font-family: icomoon;
+        border-radius: 20px;
+    }
+    &[disabled] {
+        background: #f4f4f4;
+        *background: none;
+    }
+    &[disabled]:before{
+        color: #aaa;
+    }
+}
+input[type=radio]{
+    border-radius: 20px;
+    &:checked:before{
+        content:'';
+        width:10px;
+        height: 10px;
+        margin:3px;
+        background: #444;
+    }
+    &[disabled]:before{
+        background: #bbb;
     }
 }
 /*align*/
@@ -368,7 +421,8 @@ a:hover {
     .baseFactory(@noteColor, @noteColor);
 }
 .warn {
-    .baseFactory(@warnColor, @warnColor, #660F0F);
+    // .baseFactory(#fffded, #fbdf85, #9c6a3d);
+    .baseFactory(@warnColor, #fbdf85, #9c6a3d);
 }
 .error {
     .baseFactory(@errorColor, @errorColor);
@@ -381,6 +435,10 @@ a:hover {
 }
 .dark {
     .baseFactory(@darkColor, @darkColor);
+}
+.care{
+    &:extend(.warn);
+    background-color: #fffded;
 }
 /*toolbar*/
 
@@ -469,13 +527,13 @@ a:hover {
         border: 1px solid #8FB3E1;
     }
 }
-.text {
-    *height: @btnHeight - 14px;
-    *line-height: @btnHeight - 13px;
-}
 .tiny{
     padding:3px 5px;
     height: @btnHeight - 6px;
+}
+.text {
+    *height: @btnHeight - 14px;
+    *line-height: @btnHeight - 14px;
 }
 .text-auto {
     *zoom: 1;
@@ -620,6 +678,10 @@ a:hover {
         margin-top: -1px;
     }
 }
+.care>.dialog-con{
+    border-top: solid 1px lighten(#fbdf85, 13%);
+    margin-top: -1px;
+}
 .dialog-title {
     &:extend(.clear all, .user-select);
     padding: @distance;
@@ -652,6 +714,8 @@ a:hover {
         list-style: none;
         padding: 0;
         line-height: 20px;
+        //重要,影响li高度
+        _zoom:1;
     }
     input {
         vertical-align: middle;

@@ -95,7 +95,10 @@ vertical-align:middle;
 }
 .warn-hover {
     background-color: darken(@warnColor, 9%);
-    border-color: darken(@warnColor, 9%);
+    // border-color: darken(@warnColor, 9%);
+}
+.care-hover {
+    background-color: #fbdf85;
 }
 .error-hover {
     background-color: darken(@errorColor, 9%);
@@ -109,7 +112,7 @@ vertical-align:middle;
     background-color: lighten(@linkColor, 30%);
 }
 .dark-hover {
-    background-color: @darkColor;
+    background-color: lighten(@darkColor, 10%);
     color: #fff !important;
 }
 //active

@@ -2,7 +2,7 @@
     <h1>表单验证2.0 <small>Valid</small></h1>
     <hr>
     <div class="text-auto m1">
-        <input class="text" dir="bl" form="validateForm" data-required placeholder="form外边的元素" data-valid="required regexp(^1231234$) number(10.00,20.00) length(6,20) email url date(yyyy-MM-dd hh:mm:ss)">
+        <input class="text" dir="bl" form="validateForm" placeholder="form外边的元素" valid="required regexp(^1231234$) number(10.00,20.00) length(6,20) email url date(yyyy-MM-dd hh:mm:ss)">
     </div>
     <form id="validateForm">
         <h2>Form</h2>
@@ -10,13 +10,13 @@
             <tr>
                 <td class="flabel w3">帐号</td>
                 <td>
-                    <input class="text tiny" data-required data-valid="charsafe" name="account"> <i class="fi-req">*</i>
+                    <input class="text tiny" data-valid="charsafe" name="account"> <i class="fi-req">*</i>
                 </td>
             </tr>
             <tr>
                 <td class="flabel">密码</td>
                 <td>
-                    <input type="password" class="text tiny" data-required data-valid="length(6,20) charsafe" data-label=".ac-passlabel" name="password"> <i class="fi-req">*</i> <span class="ac-passlabel"></span>
+                    <input type="password" class="text tiny" data-valid="length(6,20) charsafe" data-label=".ac-passlabel" name="password"> <i class="fi-req">*</i> <span class="ac-passlabel"></span>
                 </td>
             </tr>
             <tr>
@@ -28,13 +28,13 @@
             <tr>
                 <td class="flabel">手机</td>
                 <td>
-                    <input class="text tiny" data-pattern="^1\d{10}$" name="mobile" data-validate="mobile">
+                    <input class="text tiny" data-pattern="^1\d{10}$" name="mobile" validate="mobile">
                 </td>
             </tr>
             <tr>
                 <td class="flabel">Email</td>
                 <td>
-                    <input data-required data-validate="email" class="text tiny" name="email"> <i class="fi-req">*</i>
+                    <input validate="email" class="text tiny" name="email"> <i class="fi-req">*</i>
                 </td>
             </tr>
             <tr>
@@ -169,7 +169,7 @@
     <div class="footman"></div>
 </div>
 <script>
-seajs.use('ui/validate2', function(validate) {
+seajs.use('ui/valid', function(validate) {
     var validForm = validate({
         form: $('#validateForm'),
         valid: function(event, status, options) {
