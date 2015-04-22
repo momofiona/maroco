@@ -21,19 +21,17 @@ define(function(require, exports, module) {
             oninit: $.noop, //元素初始化前调用
             oncreate: $.noop, //元素dom创建完毕之后调用
             close: function(e, config) {
-                //如果支持动画，等fadedown后再干掉
+                //如果支持动画，监控animate finished 再干掉
                 config = config || this;
-                config.onclose.apply(config);
+                //阻止冒泡关闭更上层的dialog或者notify，虽然这种情况很少出现
+                e && e.stopPropagation && e.stopPropagation();
+                e !== true && config.onclose(e, config);
                 config.close = $.noop;
                 config.el.remove();
                 delete config.el;
                 if (config.mask) {
                     config.mask.remove();
                     delete config.mask;
-                }
-                if (e) {
-                    //阻止冒泡关闭更上层的dialog或者notify，虽然这种情况很少出现
-                    e.stopPropagation();
                 }
             },
             position: {
@@ -66,23 +64,24 @@ define(function(require, exports, module) {
                 if (_t.id) _t.el.attr('id', _t.id);
                 _t.el.addClass(_t.cls + ' ' + _t.type + ' ' + _t.anime).html(_t.template(_t)).data('_notify_', _t);
                 _t.contentEl = _t.$('>.' + _t.type + '-con');
-                if(_t['width']) _t.el.css('width', _t['width']);
-                if(_t['height']) _t.contentEl.css('height', _t['height']).addClass('scroll');
+                if (_t['width']) _t.el.css('width', _t['width']);
+                if (_t['height']) _t.contentEl.css('height', _t['height']).addClass('scroll');
                 /*_.each(['width', 'height', 'maxWidth', 'maxHeight', 'minHeight', 'minWidth'], function(o, i) {
                     if (_t[o]) _t.contentEl.css(o, _t[o]).addClass('scroll');
                 });*/
                 //button evenet
                 if (_t.buttons) {
                     _t.el.find('>.dialog-foot .b[click]').on('click', function(e) {
-                        var click = $(this).attr('click');
-                        click=_t.buttons[click].click;
+                        var click = $(this).attr('click'),
+                            _op = _t.buttons[click];
+                        click = _op.click;
                         //如果是字符串，直接找属性执行
-                        if(_.isString(click)){
-                            _t[click]();
-                        }else{
-                           click.call(this, e, _t); 
+                        if (_.isString(click)) {
+                            _t[click](e, _t, _op);
+                        } else {
+                            click.call(this, e, _t, _op);
                         }
-                        
+
                     });
                 }
                 //mask
@@ -103,7 +102,9 @@ define(function(require, exports, module) {
                     var poz = positions[_t.tips.dir];
                     if (poz) {
                         if (_t.tips.of) {
-                            position = _.extend(_t.tips, poz,{collision: 'none'});
+                            position = _.extend(_t.tips, poz, {
+                                collision: 'none'
+                            });
                         }
                         if (!_t.tips.el) {
                             _t.tips.el = $('<b class="tip tip-' + poz.tip + '"></b>').appendTo(_t.el.addClass('tips'));
@@ -113,9 +114,9 @@ define(function(require, exports, module) {
                     }
                 }
                 _t.el.position(position);
-                
+
                 if (_t.timeout) {
-                    _t.timer=setTimeout(function() {
+                    _t.timer = setTimeout(function() {
                         _t.close();
                     }, _t.timeout * 1000);
                 }
@@ -123,8 +124,8 @@ define(function(require, exports, module) {
                 if (_t.draggable) {
                     _t.el.draggable({
                         handle: isDialog ? ">.dialog-title" : '',
-                        drag: function( event, ui ){
-                            if(ui.position.top<0) ui.position.top=0;
+                        drag: function(event, ui) {
+                            if (ui.position.top < 0) ui.position.top = 0;
                         }
                     });
                 }
@@ -138,9 +139,9 @@ define(function(require, exports, module) {
         };
     //创建元素
     var dialog = function(option) {
-        if(option.id){
-            var d=$('#'+option.id);
-            if(d.length) return d.data('_notify_');
+        if (option.id) {
+            var d = $('#' + option.id);
+            if (d.length) return d.data('_notify_');
         }
         option = _.extend(_.proto(defaults), option);
         return UI(option);
@@ -152,33 +153,58 @@ define(function(require, exports, module) {
                 msg: '加载中'
             }, config));
         },
+        /*        verify: function(config) {
+                    if (config.test) {
+                        config.callback && config.callback(true);
+                    }
+                    return this(_.extend({
+                        cls: 'note',
+                        icon: '<i class="m2 f-lg f f-warn va-m"></i>',
+                        closeable: true,
+                        mask: true,
+                        oninit: function() {
+                            this.msg = '<span class="va-m" style="display:inline-block">' + this.msg + '</span><i class="f f-lg f-checkmark notify-checkmark" title="确定"></i>';
+                            this.events = {
+                                'click .notify-checkmark': 'doVerify',
+                                'click .notify-close': 'doVerify'
+                            }
+                            this.el.css('padding', 30);
+                            this.doVerify = function(e, _config) {
+                                _config.close();
+                                config.callback && config.callback($(this).hasClass('notify-checkmark'));
+                            }
+                        }
+                    }, config));
+                },*/
         confirm: function(config) {
             if (config.test) {
                 config.callback && config.callback(true);
             }
             return this(_.extend({
-                cls: 'note',
-                icon: '<i class="m2 f-lg f f-warn va-m"></i>',
-                closeable: true,
+                icon: '<i class="mr f f-warn"></i>',
                 mask: true,
-                oninit: function() {
-                    this.msg = '<span class="va-m" style="display:inline-block">'+this.msg+'</span><i class="f f-lg f-checkmark notify-checkmark" title="确定"></i>';
-                    this.events = {
-                        'click .notify-checkmark': 'doConfirm',
-                        'click .notify-close': 'doConfirm'
-                    }
-                    this.el.css('padding', 30);
-                    this.doConfirm = function(e, _config) {
-                        _config.close();
-                        config.callback && config.callback($(this).hasClass('notify-checkmark'));
-                    }
+                title: '请确认',
+                buttons: [{
+                    label: '<i class="f mr f-checkmark"></i>确定',
+                    cls: 'note',
+                    click: 'doComfirm'
+                }, {
+                    label: '取消',
+                    click: 'doComfirm'
+                }],
+                doComfirm: function(e, _config, op) {
+                    config.callback && config.callback(!!op.cls);
+                    _config.close(e, _config);
+                },
+                create: function() {
+                    this.contentEl.css('padding', 20);
                 }
             }, config));
         },
-        clear: function() {
+        clear: function(silent) {
             $('.notify').each(function() {
                 var c = $(this).data('_notify_');
-                c && c.close();
+                c && c.close(silent);
             });
         }
     });
