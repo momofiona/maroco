@@ -1,11 +1,12 @@
 <div class="row m10">
     <h1>验证 <small>Validate</small></h1>
     <hr>
+    <p>已废弃，请使用Valid</p>
     <div class="text-auto">
         <input class="text" data-dir="bl" form="validateForm" data-required placeholder="form外边的元素" data-description="platformName">
     </div>
     <form id="validateForm">
-        <h2>Form</h2>
+        <h2 name="xx">Form</h2>
         <table class="formtable">
             <tr>
                 <td class="flabel w3">帐号</td>
@@ -30,13 +31,13 @@
                 <td>
                     <label><input type="radio" name="gender" class="va-t" > 男</label>
                     <label><input type="radio" name="gender" class="va-t" data-dir="trr" data-required> 女</label>
-                    <input type="radio" name="gender2" class="va-t"   disabled>
-                    <input type="radio" name="gender2" class="va-t"  checked disabled>
-                    <input type="checkbox" name="both" class="va-t" data-required>
-                    <input type="checkbox" name="both" class="va-t" checked>
-                    <input type="checkbox" name="both" class="va-t"  disabled>
-                    <input type="checkbox" name="both" class="va-t" checked disabled>
-                    <input type="range" name="both" class="va-t" >
+                    <input type="radio" name="gender" class="va-t"   readonly>
+                    <input type="radio" name="gender" class="va-t"  checked disabled>
+                    <input type="checkbox" name="both" value="1" class="va-t" data-required>
+                    <input type="checkbox" name="both" value="2" class="va-t" checked>
+                    <input type="checkbox" name="both" value="3" class="va-t"  readonly>
+                    <input type="checkbox" name="both" value="4" class="va-t" checked disabled>
+                    <input type="range" name="range" class="va-t" >
                     <meter value="5" min="0" max="100" title="num" low="20" high="80" optimum="50"></meter>
                 </td>
             </tr>

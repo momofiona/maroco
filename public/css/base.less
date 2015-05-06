@@ -15,7 +15,8 @@
 @logColor: #fafafa;
 @infoColor: #4abffc;
 @noteColor: #478af8;//#016EB1;
-@warnColor: #FFF061;//f9c832
+@warnColor: #f9c832;
+@careColor: #fbdf85;//borderColor
 @errorColor: #ab2918;
 @safeColor: #129324;
 @linkColor: @noteColor;
@@ -93,7 +94,7 @@ body, input, textarea, select, button {
 }
 input, select, textarea {
     &[disabled], &[readonly] {
-        cursor: not-allowed !important;
+        // cursor: not-allowed !important;
         background-color: #eee;
     }
 }
@@ -398,7 +399,7 @@ a:hover {
 }
 /* 基本样式，不设置layout */
 
-.log, .silver, .info, .note, .warn, .error, .safe, .link, .dark {
+.log, .silver, .info, .note, .warn, .error, .safe, .link, .dark,.care{
     padding: .3em .5em;
     border-radius: @radius;
 }
@@ -422,7 +423,7 @@ a:hover {
 }
 .warn {
     // .baseFactory(#fffded, #fbdf85, #9c6a3d);
-    .baseFactory(@warnColor, #fbdf85, #9c6a3d);
+    .baseFactory(@warnColor, @warnColor, #722626);
 }
 .error {
     .baseFactory(@errorColor, @errorColor);
@@ -437,8 +438,7 @@ a:hover {
     .baseFactory(@darkColor, @darkColor);
 }
 .care{
-    &:extend(.warn);
-    background-color: #fffded;
+    .baseFactory(#fffded, @careColor, #9c6a3d);
 }
 /*toolbar*/
 
@@ -523,9 +523,12 @@ a:hover {
     outline: 0;
     border-top-color: #aaa;
     transition: width .3s;
-    &:focus {
-        border: 1px solid #8FB3E1;
-    }
+}
+textarea.text{
+    height: auto;
+}
+.searchbox-focus,.text:focus{
+    border: 1px solid #8FB3E1;
 }
 .tiny{
     padding:3px 5px;
@@ -565,7 +568,7 @@ a:hover {
     }
     .search-filter {
         position: absolute;
-        left: 25px;
+        left: 0px;
         padding: 0 10px;
         top: 0px;
         bottom: 0;
@@ -576,7 +579,8 @@ a:hover {
         text-overflow: ellipsis;
         cursor: pointer;
         color: #6FB3E0;
-        box-shadow: 3px 0 6px -5px;
+        background: #fafafa;
+        // box-shadow: 3px 0 6px -5px;
     }
 }
 .invalid {
@@ -590,9 +594,12 @@ a:hover {
     font-size: 18px;
     font-style: normal;
 }
-/*.text[data-required]{
-    background: url(img/req.png) no-repeat;
-}*/
+.text[required]{
+    background:#fff url(img/req.png) no-repeat right center;
+    textarea&{
+        background-position: right 5px;
+    }
+}
 /* notify */
 .mask, .notify, .tips {
     z-index: 1000;
@@ -619,7 +626,7 @@ a:hover {
 }
 .glass {
     background-repeat: repeat;
-    background: rgba(0, 0, 0, 0.02);
+    background: rgba(0, 0, 0, 0.2);
 }
 .notify {
     box-shadow: 0 0 0 3px rgba(0, 0, 0, .04);

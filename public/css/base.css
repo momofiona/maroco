@@ -20,7 +20,7 @@
   color: #478af8 !important;
 }
 .c-warn {
-  color: #fff061 !important;
+  color: #f9c832 !important;
 }
 .c-gray {
   color: #dedede !important;
@@ -83,7 +83,6 @@ textarea[disabled],
 input[readonly],
 select[readonly],
 textarea[readonly] {
-  cursor: not-allowed !important;
   background-color: #eee;
 }
 input::-ms-clear {
@@ -459,11 +458,10 @@ a:hover {
   border: 1px solid #478af8;
   color: #ffffff !important;
 }
-.warn,
-.care {
-  background-color: #fff061;
-  border: 1px solid #fbdf85;
-  color: #9c6a3d !important;
+.warn {
+  background-color: #f9c832;
+  border: 1px solid #f9c832;
+  color: #722626 !important;
 }
 .error {
   background-color: #ab2918;
@@ -487,6 +485,8 @@ a:hover {
 }
 .care {
   background-color: #fffded;
+  border: 1px solid #fbdf85;
+  color: #9c6a3d !important;
 }
 /*toolbar*/
 .toolbar,
@@ -573,8 +573,11 @@ a:hover {
   border-top-color: #aaa;
   transition: width .3s;
 }
-.text:focus,
-.searchbox:focus {
+textarea.text {
+  height: auto;
+}
+.searchbox-focus,
+.text:focus {
   border: 1px solid #8FB3E1;
 }
 .tiny {
@@ -616,7 +619,7 @@ a:hover {
 }
 .searchbox .search-filter {
   position: absolute;
-  left: 25px;
+  left: 0px;
   padding: 0 10px;
   top: 0px;
   bottom: 0;
@@ -627,7 +630,7 @@ a:hover {
   text-overflow: ellipsis;
   cursor: pointer;
   color: #6FB3E0;
-  box-shadow: 3px 0 6px -5px;
+  background: #fafafa;
 }
 .invalid {
   border-color: #ab2918 !important;
@@ -640,9 +643,12 @@ a:hover {
   font-size: 18px;
   font-style: normal;
 }
-/*.text[data-required]{
-    background: url(img/req.png) no-repeat;
-}*/
+.text[required] {
+  background: #ffffff url(img/req.png) no-repeat right center;
+}
+textarea.text[required] {
+  background-position: right 5px;
+}
 /* notify */
 .mask,
 .notify,
@@ -670,7 +676,7 @@ a:hover {
 }
 .glass {
   background-repeat: repeat;
-  background: rgba(0, 0, 0, 0.02);
+  background: rgba(0, 0, 0, 0.2);
 }
 .notify,
 .dialog {
@@ -819,7 +825,7 @@ a:hover {
   border-color: #4abffc;
 }
 .warn .tip {
-  border-color: #fff061;
+  border-color: #f9c832;
 }
 .error .tip {
   border-color: #ab2918;

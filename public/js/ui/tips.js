@@ -1,4 +1,5 @@
 define(function(require, exports, module) {
+    'use strict';
     var defaults = {
             msg: '',
             cls: 'dark'
@@ -115,7 +116,7 @@ define(function(require, exports, module) {
             //必须要有of参数
             config.id = config.id || _.uniqueId('tips_');
             var tips = $('#' + config.id),
-                poz = _.proto(positions[config.dir || 'tll'], {
+                poz = _.proto(positions[config.dir || config.of.data('dir')||'tc'], {
                     id: config.id,
                     of: config.of,
                     collision: 'none',

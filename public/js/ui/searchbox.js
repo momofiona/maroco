@@ -13,14 +13,14 @@ define(function(require, exports, module) {
             input: $.noop,
             init: function() {
                 var t = this;
-                t.el.addClass(t.cls).html('<input value="' + t.value + '" class="text" placeholder="' + t.placeholder + '"><i class="i i-cancel am-rotate"></i>');
+                t.el.attr('tabindex',-1).addClass(t.cls).html('<input value="' + t.value + '" class="text" placeholder="' + t.placeholder + '"><i class="i i-cancel am-rotate"></i>');
 
                 //如果带了分类选择
                 if (t.filter) {
                     t.events['click .ac-filter'] = function(e, conf) {
                         filter = conf.filter[$(this).attr('index')];
-                        t.tip.html(filter.label);
-                        conf.el.css('padding-left', t.tip.outerWidth() + 35);
+                        t.tip.html('<i class="f f-search m2"></i>'+filter.label);
+                        conf.el.css('padding-left', t.tip.outerWidth() + 10);
                         t.tip.dropdown('hide');
                         return false;
                     }
@@ -29,7 +29,7 @@ define(function(require, exports, module) {
                         s += '<li><a index="' + i + '" href="#" class="ac-filter ' + o.cls + '">' + o.label + '</a></li>';
                     });
                     t.tip = $('<a href="#" class="search-filter" data-dropdown></a>').prependTo(t.el);
-                    t.dropdown = $('<div class="dropdown" position="left top,left-25 bottom"><ul class="menu">' + s + '</ul></div>').insertAfter(t.tip);
+                    t.dropdown = $('<div class="dropdown noshadow"  position="left top,left-1 bottom"><ul class="menu">' + s + '</ul></div>').insertAfter(t.tip);
                 }
 
                 var input = t.el.find('input'),
@@ -59,6 +59,10 @@ define(function(require, exports, module) {
                     if (e.keyCode == "13") {
                         t.search.call(input, this.value, filter);
                     }
+                }).focus(function(){
+                    t.el.addClass('searchbox-focus');
+                }).blur(function(){
+                    t.el.removeClass('searchbox-focus');
                 });
             },
             create: function() {
