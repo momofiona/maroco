@@ -6,7 +6,7 @@
         <input class="text" data-dir="bl" form="validateForm" data-required placeholder="form外边的元素" data-description="platformName">
     </div>
     <form id="validateForm">
-        <h2 name="xx">Form</h2>
+        <h2>Form</h2>
         <table class="formtable">
             <tr>
                 <td class="flabel w3">帐号</td>
@@ -216,7 +216,7 @@ seajs.use('ui/validate', function(validate) {
                 required: '请选择性别'
             },
             confirmpass: {
-                conditional: ''
+                conditional: '两次输入密码不一样'
             },
             account: {
                 required: '请填写帐号'

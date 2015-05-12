@@ -163,7 +163,7 @@ define(function(require, exports, module) {
                 this.el.appendTo(opt.container);
                 //searchbox
                 this.$('.ac-role-search').searchbox({
-                    placeholder: '筛选权限',
+                    placeholder: '筛选角色',
                     value: '',
                     input: function(value, filter) {
                         if (value) {

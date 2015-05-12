@@ -455,7 +455,7 @@ define(function(require, exports, module) {
             }
         });
         if (!config.count) spaging.hide();
-        var loader = UI.loader({
+        var loader = config.loader = UI.loader({
             baseparams: config.baseparams,
             count: config.count,
             url: config.url,

@@ -55,7 +55,7 @@
             <tr>
                 <td class="flabel">手机</td>
                 <td>
-                    <input class="text tiny w7" data-valid="mobile" name="mobile">
+                    <input class="text tiny w7" data-valid="mobile" required name="mobile">
                 </td>
             </tr> 
             <tr>
@@ -67,7 +67,7 @@
             <tr>
                 <td class="flabel va-t">描述</td>
                 <td>
-                    <textarea required data-valid="charsafe length(,144)" rows="3" class="text w7" name="description"></textarea>
+                    <textarea  data-dir="rt" required data-valid="charsafe length(,144)" rows="3" class="text w7" name="description"></textarea>
                 </td>
             </tr>
             <tr>
@@ -78,6 +78,7 @@
             </tr>
         </table>
     </form>
+    <p>新增表单元素后不需要重新绑定事件</p>
     <pre class="codemirror" source="#validScriptSource" mode="javascript"></pre>
     <section>
         <h2>Attributes</h2>
@@ -245,7 +246,8 @@ seajs.use('ui/valid', function(validate) {
             confirmpass: function(value, status, options) {
                 var pws = options.form[0]['password'].value;
                 if (pws && this.val() !== pws) {
-                    status.report('两次输入的密码不一样');
+                    //只要返回不为空的字符串都算验证不通过
+                    return '两次输入的密码不一样';
                 }
             },
             //帐号
@@ -265,9 +267,27 @@ seajs.use('ui/valid', function(validate) {
                 diy:123
             }*/
         },
-        //cname说辞改写
+        /**
+         * cname说辞改写
+         * labels:{
+         *   name:'第一形态,覆盖所有的描述,无成功描述',
+         *   name:{
+         *       valid:'覆盖验证成功后的提示',
+         *       key:"第二形态，覆盖对应规则描述",
+         *       required:'验证必填不成功时的提示',
+         *       invalid:'覆盖验证不成功时的提示'
+         *     }
+         * }
+         */
         labels:{
-            description:'说点什么吧，最多114个字。'
+            description:'说点什么吧，最多144个字。',
+            mobile:{
+                mobile:'手机没有么？来我这儿拿一打'
+            },
+            email:{
+                valid:' ',
+                invalid:'invalid Email'
+            }
         }
     });
 });

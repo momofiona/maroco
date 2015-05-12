@@ -50,8 +50,8 @@ define(function(require, exports, module) {
                         tips({
                             id: tipid,
                             of: elem,
-                            msg: '<i class="f f-warn"></i> ' + msg,
-                            cls: 'error validate-tips',
+                            msg: '<i class="f f-'+(isSafe?'checkmark':'warn')+'"></i> ' + msg,
+                            cls: (isSafe?'safe':'error')+' validate-tips',
                             dir: elem.data('dir') || this.tipDir || 'rc',
                             within: this.tipWithin || form
                         });
@@ -88,7 +88,7 @@ define(function(require, exports, module) {
                     } else {
                         label = range(value.length, 0, pm, rule.label);
                     };
-                    if (label) status.report(label);
+                    return label;
                 },
                 label: ['', '至少输入 {0} 个字符', '最多输入 {1} 个字符', '请输入 {0} 到 {1} 个字符'],
                 label2: ['', '至少选择 {0} 项', '最多选择 {1} 项', '请选择 {0} 到 {1} 项']
@@ -96,22 +96,22 @@ define(function(require, exports, module) {
             //整数
             int: {
                 rule: function(value, pm, status, rule) {
-                    var label = range(value, !intReg.test(value), pm, rule.label);;
-                    if (label) status.report(label);
+                    var label = range(value, !intReg.test(value), pm, rule.label);
+                    return label;
                 },
                 label: ['请输入整数', '请输入整数,最小值 {0}', '请输入整数,最大值 {1}', '请输入 {0} 到 {1} 的整数']
             },
             //小数
             float: {
                 rule: function(value, pm, status, rule) {
-                    var label = range(value, !$.isNumeric(value), pm, rule.label);;
-                    if (label) status.report(label);
+                    var label = range(value, !$.isNumeric(value), pm, rule.label);
+                    return label;
                 },
                 label: ['请输入一个数', '请输入一个数,最小值 {0}', '请输入一个数,最大值 {1}', '请输入 {0} 到 {1} 的一个数', '最多保留{2}位小数']
             },
             mobile: {
                 rule: /^1\d{10}$/,
-                label: '请输入手机号'
+                label: '请输入11位手机号码'
             }
         },
         /**
@@ -209,8 +209,8 @@ define(function(require, exports, module) {
                 // A index in the conditional object containing a function to validate the field value
                 fieldRuleList = field.data('valid') || '',
                 fieldConditional = options.rules[fieldCName],
-                fieldDescription = options.labels[fieldCName];
-            status.required = field.attr('required'); //undefined or required
+                fieldLabel = options.labels[fieldCName]||"";
+                status.required = field.attr('required'); //undefined or required
             //三无不列入监控范围,直接返回三围或disabled readabled
             if (options.eachField.call(field, event, status, options) === false || !fieldConditional && !status.required && !fieldRuleList) {
                 return status;
@@ -219,9 +219,9 @@ define(function(require, exports, module) {
             if (status.required) {
                 //如果是chackbox||radio 必填项没填写,当存在其他验证消息的时候，应忽略required消息；
                 if (status.fieldType == 2) {
-                    if (fieldGroup.filter(':checked').length == 0) requiredMsg = allRules.required.label[1];
+                    if (fieldGroup.filter(':checked').length == 0) requiredMsg = fieldLabel['required'] || allRules.required.label[1];
                 } else {
-                    if (fieldValue == "") requiredMsg = allRules.required.label[0];
+                    if (fieldValue == "") requiredMsg = fieldLabel['required'] || allRules.required.label[0];
                 }
             } else {
                 //非必需项在value为空的时候跳过默认其他验证
@@ -244,25 +244,28 @@ define(function(require, exports, module) {
             fieldRuleList.replace(validReg, function(match, name, params) {
                 //判断存在 extend[name]?,如果存在则传入参数
                 var ex = allRules[name],
-                    rule;
+                    rule, rlabel;
                 if (ex) {
                     rule = ex.rule;
                     if (_.isRegExp(rule)) {
-                        if (!rule.test(fieldValue)) status.report(ex.label);
+                        if (!rule.test(fieldValue)) rlabel = ex.label;
                     } else if (_.isFunction(rule)) {
-                        rule.call(field, fieldValue, params, status, ex);
+                        rlabel = rule.call(field, fieldValue, params, status, ex);
                     }
+                    if (rlabel) status.report(fieldLabel[name] || rlabel);
                 }
             });
             //name rules validate
             if (fieldConditional) {
+                var rlabel;
                 if (_.isRegExp(fieldConditional.rule)) {
-                    if (!fieldConditional.rule.test(fieldValue)) status.report(fieldConditional.label);
+                    if (!fieldConditional.rule.test(fieldValue)) rlabel = fieldConditional.label;
                 } else if (_.isFunction(fieldConditional)) {
-                    fieldConditional.call(field, fieldValue, status, options);
+                    rlabel = fieldConditional.call(field, fieldValue, status, options);
                 } else if (_.isFunction(fieldConditional.rule)) {
-                    fieldConditional.rule.call(field, fieldValue, status, options, fieldConditional);
+                    rlabel = fieldConditional.rule.call(field, fieldValue, status, options, fieldConditional);
                 }
+                if (rlabel) status.report(rlabel);
             }
 
             // If the field is valid
@@ -276,8 +279,12 @@ define(function(require, exports, module) {
                 options.eachInvalidField.call(field, event, status, options);
             }
             var _msg = status.msg.length ? status.msg : requiredMsg || '';
-            if (!status.isValid && fieldDescription) {
-                _msg = fieldDescription;
+            if(fieldLabel){
+                if (status.isValid) {
+                    _msg = fieldLabel['valid']||_msg;
+                }else{
+                    _msg = (_.isString(fieldLabel)?fieldLabel:fieldLabel['invalid'])||_msg;
+                }
             }
             options.showLabel(field, _msg, status.isValid);
             // Returns the field status

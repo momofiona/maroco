@@ -125,10 +125,10 @@ define(function(require, exports, module) {
             if (!tips.length) {
                 tips = $('<div>', {
                     id: config.id,
-                    'class': 'tips ' + config.cls,
                     'style': 'position:absolute;top:300px;left:300px;'
                 }).appendTo(config.within || 'body');
             }
+            tips[0].className='tips ' + config.cls;
             if (config.timeout) {
                 setTimeout(function() {
                     tips.remove();
