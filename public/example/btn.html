@@ -1,0 +1,165 @@
+<div class="m4">
+    <h1>表单 <small>Form Elements</small></h1>
+    <hr>
+    <h2>Button</h2>
+    <p>组合式按钮，hover和active依赖js</p>
+    <p>
+        <b class="b">b<i class="ml f f-arb"></i></b>
+        <b class="b log"><i class="f f-upload"></i></b>
+        <b class="b silver"><i class="f f-upload"></i></b>
+        <b class="b info"><i class="f mr f-add"></i>新建</b>
+        <b class="b care"><i class="f mr f-pencil"></i>修改</b>
+        <b class="b note"><i class="mr f f-undo"></i>返回</b>
+        <b class="b warn"><i class="mr f f-buy"></i>购买</b>
+        <b class="b error"><i class="mr f f-bin"></i>删除</b>
+        <b class="b link"><i class="mr f f-link"></i>link</b>
+        <b class="b bs safe">safe | .bs</b>
+        <b class="b bl dark">dark | .bl</b>
+    </p>
+    <textarea class="codemirror">
+        <b class="b">b<i class="ml f f-arb"></i></b>
+        <b class="b log"><i class="f f-upload"></i></b>
+        <b class="b info"><i class="f mr f-add"></i>新建</b>
+        <b class="b note"><i class="mr f f-undo"></i>返回</b>
+        <b class="b warn"><i class="mr f f-buy"></i>购买</b>
+        <b class="b error"><i class="mr f f-bin"></i>删除</b>
+        <b class="b link"><i class="mr f f-link"></i>link</b>
+        <b class="b safe">safe</b>
+        <b class="b dark">dark</b>
+    </textarea>
+    <h3>不同标签</h3>
+    <ol>
+        <li>IE67中 div 、 a:hover 、只包含图标的节点 元素后面不带空字符节点 所以没有后边距</li>
+        <li>IE67中 button 元素前面不带空字符节点 所以没有前边距</li>
+        <li>IE6中 元素内有display:inline-block元素就会丢失line-height</li>
+        <li>IE6中 不带href的a标签没有:hover特性</li>
+    </ol>
+    <div>
+        <b class="b log">b</b>
+        <b class="b log"><i class="f f-upload"></i></b>
+        <i class="b log">i</i>
+        <div class="b log">div</div>
+        <a class="b log">a</a>
+        <a class="b note">a:href:note <i class="i i-loading"></i></a>
+        <span class="b log">span</span>
+        <span class="b log">span中文</span>
+        <button class="b log">button</button>
+        <input class="b log" type="button" value="input">
+        <input class="b log" type="submit" value="submit">
+    </div>
+    <textarea class="codemirror">
+        <b class="b log">b</b>
+        <b class="b log"><i class="f f-upload"></i></b>
+        <i class="b log">i</i>
+        <div class="b log">div</div>
+        <a class="b log">a</a>
+        <a class="b note">a:href:note <i class="i i-loading"></i></a>
+        <span class="b log">span</span>
+        <span class="b log">span中文</span>
+        <button class="b log">button</button>
+        <input class="b log" type="button" value="input">
+        <input class="b log" type="submit" value="submit">
+    </textarea>
+    <p>PS：推荐使用b标签;不推荐带href的a标签</p>
+    <h2>toolbar</h2>
+    <div class="toolbar">
+        <span class="caption">caption文字：</span>
+        <div class="xr">
+            <span class="cap xl">哈哈</span>
+            <input class="text mr xl">
+            <span class="b note">提交<i class="f f-arb"></i></span>
+        </div>
+        <button class="b">button<i class="f f-arb"></i>
+        </button>
+        <span class="wall"></span>
+        <button class="b note">button xl<i class="f f-arb"></i>
+        </button>
+        <select class="text ml">
+            <option>知道么</option>
+            <option>select在IE67上无法控制高度</option>
+            <option>select。。。</option>
+        </select>
+    </div>
+    <h2>按钮组 <small>Group</small></h2>
+    <p>
+        <span class="group mr" id="demoBtnset">
+        <button class="b link">button<i class="f f-arb"></i></button>
+        <span class="b link link-active">span<i class="f f-arb"></i></span>
+        <a class="b link" href="#btn2">a<i class="f f-arb"></i></a>
+        </span>
+        <span class="group mr" id="demoBtnset2"></span>
+        <span class="group ml">
+            <b class="b log">b log </b>
+            <span class="b bi silver"><i class="f f-arb"></i></span>
+        </span>
+        <span class="group ml">
+        <input class="text w5">
+        <a class="b link"><i class="f f-search"></i></a>
+    </span>
+    </p>
+    <pre class="codemirror" mode="javascript" source="#codemirror-buttonset"></pre>
+    <p id="otherGroup">
+        <span class="group mr">
+            <a class="b log">a</a>
+            <span class="b log log-active">span</span>
+        <a class="b log">a</a>
+        </span>
+        <span class="group mr">
+            <a class="b info">a</a>
+            <span class="b info info-active">span</span>
+        <a class="b info">a</a>
+        </span>
+        <span class="group mr">
+    <a class="b warn">a</a>
+        <span class="b warn warn-active">span</span>
+        <a class="b warn">a</a>
+        </span>
+        <span class="group mr">
+    <a class="b safe">a</a>
+        <span class="b safe safe-active">span</span>
+        <a class="b safe">a</a>
+        </span>
+        <span class="group mr">
+    <a class="b note">a</a>
+        <span class="b note note-active">span</span>
+        <a class="b note">a</a>
+        </span>
+    </p>
+    <div class="footman"></div>
+</div>
+<script id="codemirror-buttonset">
+seajs.use('ui/buttonset', function(buttonset) {
+    buttonset({
+        el: '#demoBtnset',
+        onselect: function(e, config, data) {
+            console.log(data, this);
+        }
+    });
+    buttonset({
+        cls: 'error',
+        el: '#demoBtnset2',
+        data: [{
+            label: '高级'
+        }, {
+            label: '中级',
+            on: true //开启状态
+        }, {
+            label: '初级'
+        }],
+        multi: true,
+        onselect: function(e, config, data) {
+            console.log(data, this);
+        }
+    });
+    $('#otherGroup').children().each(function() {
+        var _t = this;
+        buttonset({
+            el: _t,
+            //在初始化结束后设置cls
+            create: function() {
+                this.cls = this.el.children()[0].className.replace('b ', '');
+            }
+        });
+    });
+});
+</script>

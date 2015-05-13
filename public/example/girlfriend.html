@@ -1,0 +1,243 @@
+<script src="../js/fun/snowfall.jquery.js"></script>
+<div class="row m4">
+    <h1>工具&规范 <small>Potatoes</small></h1>
+    <hr>
+    <p>所有文件编码全部UTF8</p>
+    <dl>
+        <dt>后端通信参数:</dt>
+        <dd>order ——order by 列名</dd>
+        <dd>asc ——'asc'|'desc'</dd>
+        <dd>page —— 页码</dd>
+        <dd>count —— 每页数量</dd>
+        <dt>后端返回：data</dt>
+        <dd>data.result —— 主要数据</dd>
+        <dd>data.error —— 错误码</dd>
+        <dd>data.msg —— 返回消息</dd>
+        <dd>data.total —— 请求的数据源总数量，一般用于分页计算总页数： totalPages=Math.ceil(total/count)</dd>
+    </dl>
+    <section>
+        <h2>IE条件注释 <small>Hack</small></h2>
+        <textarea class="codemirror">
+            <!--[if lt IE 7 ]> <html class="ie6 ie6-9 ie6-8"> <![endif]-->
+            <!--[if IE 7 ]>    <html class="ie7 ie6-9 ie6-8"> <![endif]-->
+            <!--[if IE 8 ]>    <html class="ie8 ie6-9 ie6-8"> <![endif]-->
+            <!--[if IE 9 ]>    <html class="ie9 ie6-9 "> <![endif]-->
+            <!--[if !IE]><!-->
+            <html>
+            <!--<![endif]-->
+        </textarea>
+        <ol>
+            <li>UI.brower.ie==6</li>
+            <li>_ + * \9 \0 \9\0</li>
+            <li>media IE9+</li>
+        </ol>
+    </section>
+    <section>
+        <h2>HTML规范 <small>HTML</small></h2>
+        <ol>
+            <li>无论如何，属性请用双引号包裹，不要使用单引号</li>
+            <li>有时候会把属性写在dom的attribute里面，要确保属性值不带双引号</li>
+            <li>有时候把内容生成到网页上，确保过滤html标记{{!it.html}}</li>
+            <li>dot执行自定义js不能忘记最后加分号{{alert(1);}}</li>
+        </ol>
+        <h2>CSS规范 <small>CSS</small></h2>
+        <ol>
+            <li>.ac- 开头的类名不允许定义任何样式，含义是action，只用于js动作</li>
+            <li>
+                <h3>图片处理 <small>Images</small></h3>
+                <ul>
+                    <li>一般用png8(256色)、png24，photoshop导出的是png32</li>
+                    <li>IE6不支持半透明 <a href="http://dtop.powereasy.net/Item.aspx?id=1958" target="_blank"><i class="f f-link"></i></a>，灰度图（小三角图）一般使用索引透明gif或png，请用xxx.8.png文件命名规范</li>
+                    <li>视情况而定把图片用css实现，减少http请求</li>
+                </ul>
+            </li>
+        </ol>
+        <h2>JS规范 <small>Javascript</small></h2>
+        <ol>
+            <li>一般界面模块使用UI({})来模块化</li>
+            <li>不允许创建全局变量</li>
+            <li>不要做容错处理，是bug就要暴露出来</li>
+            <li>对自身模块外的绑定比如$(window).resize(...)，必须提供自动或手动的销毁机制</li>
+            <li>如多个模块公用一个container，则模块需要自己生成一个innerContainer包裹。｛UI方法不设置el会自动生成一个el,在init中this.el.appendTo(container)｝</li>
+            <li>IE67兼容注意
+                <ul>
+                    <li>用dom.innerHTML取代dom.text</li>
+                </ul>
+            </li>
+        </ol>
+    </section>
+    <section>
+        <h2>日期选择 <small>My97</small></h2>
+        <p>
+            <input class="text"  onFocus="WdatePicker({isShowWeek:true,dateFmt:'yyyy-MM'})">
+            <input class="text"  onFocus="WdatePicker({dateFmt:'yyyy-MM-dd'})">
+            <input class="text"  onFocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})">
+
+        </p>
+        <script>
+        seajs.use('my97',function(laydate) {
+            
+        });
+        </script>
+    </section>
+    <section>
+        <h2>复制 <small>Zero Clipboard</small></h2>
+        <p>
+            <button class="b note m2" id="copy">复制</button>
+            <button class="b note" data-copy="data-copy">data-copy</button>
+        </p>
+        <script>
+        seajs.use(['ui/clipboard','ui/notify'],function(clip,notify) {
+            //函数拷贝
+            clip({
+                el:$('#copy'),
+                copy:function(){
+                    return _.uniqueId('Copy');
+                }
+            });
+            //属性拷贝
+            clip({
+                el:$('#copy').next()
+            });
+            //给元素或者元素祖先元素添加拷贝成功回调
+            $('#copy').parent().on('complete',function(e,copyText){
+                e.stopPropagation();
+                copyText&&notify.safe(copyText,1);
+            });
+        });
+        </script>
+    </section>
+    <section>
+        <h2>Unicode 飘雪 <small>Snow Fall</small></h2>
+        <p>
+            <button id="snowing" class="b link w4">开始</button>
+        </p>
+        <textarea class="codemirror">
+            <script src="../js/fun/snowfall.jquery.js"></script>
+            <script>
+            $(function() {
+                $(document).snowfall('clear');
+                $(document).snowfall({
+                    round: true,
+                    minSize: 4,
+                    maxSize: 35,
+                    text: '❄',
+                    flakeColor: '',
+                    flakeCount: 50
+                });
+            });
+            </script>
+        </textarea>
+        <script>
+        $(function() {
+            $('#snowing').click(function() {
+                var _t = $(this);
+                if (_t.hasClass('active')) {
+                    _t.removeClass('active link-active').text('开始');
+                    $(document).snowfall('clear');
+                } else {
+                    _t.addClass('active link-active').text('停止');;
+                    $(document).snowfall({
+                        round: true,
+                        minSize: 4,
+                        maxSize: 35,
+                        text: '❄',
+                        flakeColor: '',
+                        flakeCount: 50
+                    });
+                }
+            });
+        });
+        </script>
+    </section>
+    <section id="verticalMiddle">
+        <h2>垂直居中 <small>Vertical-align: middle</small></h2>
+        <div class="vam link" style="width:400px;height:100px">
+            <div class="vam-helper"></div>
+            <div class="vam-con">多行文字垂直居中～多行文字垂直居中～多行文字垂直居中～多行文字垂直居中～多行文字垂直居中～多行文字垂直居中～多行文字垂直居中～多行文字垂直居中～</div>
+        </div>
+        <textarea class="codemirror">
+            <div class="vam link" style="width:400px;height:100px">
+                <div class="vam-helper"></div>
+                <div class="vam-con">多行文字垂直居中～多行文字垂直居中～...</div>
+            </div>
+        </textarea>
+    </section>
+    <section>
+        <h2>重复提交阀 <small>Ajax Throttle</small></h2>
+        <p>点击按钮太快的时候可能会执行多次click，这里不对click进行throttle处理，而是直接控制ajax请求流程，使得在请求结束前忽略相同请求(target参数相同),同时可通过监控on('waiting')[ajaxOptions|undefined]执行自定义动作 </p>
+        <pre class="codemirror" source="#ajaxThrottleTestScript" mode="javascript"></pre>
+        <script id="ajaxThrottleTestScript">
+        //_.extend  _.extednOwn  $.extend() $.extend(true)
+        $(function() {
+            var target = $('#ajaxThrottleTestBtn').on('waiting', function(e, options) {
+                if (options) {
+                    // 'ajax send'; 
+                } else if (options === null) {
+                    console.log('取消了一次重复提交');
+                } else {
+                    // ajax结束，阀状态重置;
+                }
+            }).click(function() {
+                $.ajax({
+                    url: 'big.jpg',
+                    //target参数触发了重复提交阀，target为jquery对象
+                    target: target
+                });
+            });
+        });
+        </script>
+    </section>
+    <section>
+        <h2>分页 <small>UI.loader</small></h2>
+        <p id="pagerViewr" class="pager"></p>
+        <p id="pagerViewr2" class="pager"></p>
+        <pre class="codemirror" source="#pageViewrScript" mode="javascript"></pre>
+        <script id="pageViewrScript">
+        seajs.use('ui/pager', function(pager) {
+            //独立存在
+            var pageControl = pager({
+                el: $('#pagerViewr'),
+                count: 10, //每页10个数据
+                page: 10,
+                onPageClick: function(e, page) {
+                    console.log(page, this);
+                    this.render(215);
+                }
+            });
+            pageControl.render(205);
+
+            //和loader 配合
+            var pageControl2 = pager({
+                el: $('#pagerViewr2'),
+                onPageClick: function(e, page) {
+                    loader.page = page;
+                    loader.load();
+                }
+            });
+            var loader = UI.loader({
+                count: 10, //每页10条
+                url: '/json/getUserByOrgId',
+                afterLoad: function(data) {
+                    console.log(data);
+                    pageControl2.render(data.total, this.page, this.count);
+                }
+            });
+            loader.load();
+
+
+        });
+        </script>
+    </section>
+    <div class="footman"></div>
+</div>
+<script>
+/*
+新闻发布
+外网发布
+组织管理
+单点登录
+审批流程
+ */
+previewCode();
+</script>

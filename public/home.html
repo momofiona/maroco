@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html class="noscroll">
+
+<head>
+    <meta charset="utf-8">
+    <title>Maroco UI</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/maroco.css">
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="css/icomoon/ie7/ie7.css">
+    <![endif]-->
+    <script src="maroco.js"></script>
+    <script src="js/ui/ui.js"></script>
+    <!-- 假数据 -->
+    <script src="js/vendor/mock-min.js"></script>
+    <script src="api.js"></script>
+    <!-- /假数据 -->
+    <style type="text/css">
+    /* IE8 +*/
+    
+    html,
+    body {
+        height: 100%;
+        overflow: hidden;
+        background-color: #fff;
+        min-width: 980px;
+        overflow-x: auto;
+    }
+    #aside {
+        background: #113B63;
+        color: #fff;
+        width: 130px;
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        height: 100%;
+    }
+    #bside {
+        height: 100%;
+        margin-left: 130px;
+        position: relative;
+    }
+    #guider {
+        position: relative;
+        z-index: 100;
+        height: 36px;
+        font-size: 12px;
+        background: #eee;
+    }
+    #guider .caption {
+        padding-left: 0;
+    }
+    #guider .wall {
+        background: #ddd;
+        border-right: solid 1px #fff;
+        margin: 0;
+    }
+    /*    #guider .searchbox {
+        height: 28px;
+        margin-top: 4px;
+    }
+    #guider .searchbox .text {
+        padding:0;
+        height: 100%;
+    }
+    #guider .searchbox b {
+        top:0;
+    }
+    #guider .ac-seachmore {
+        margin-left: -1px;
+    }*/
+    
+    #logo {
+        background: url(cloud/img/logo.png) center center no-repeat;
+        height: 36px;
+    }
+    #sideMenu {
+        position: absolute;
+        left: 0;
+        right: 0;
+        _width: 100%;
+        top: 36px;
+        bottom: 40px;
+    }
+    #mainbody {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 36px;
+        bottom: 0;
+        _width: 100%;
+    }
+    
+    
+    .mainmenu {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    .mainmenu a {
+        display: block;
+        padding: 10px 0 10px 20px;
+        color: #fff;
+
+    }
+    .mainmenu a:hover {
+        background: #2c77bb;
+        color: #fff;
+    }
+    .mainmenu .active a {
+        background: #33aff5 url(data:image/gif;base64,R0lGODlhBwAOAIAAAP///////yH5BAEHAAEALAAAAAAHAA4AAAIUjA9nkMj+Apty2osTXhY2/nHKUgAAOw==) right center no-repeat;
+    }
+    
+    #state {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 40px;
+        width: 110px;
+        margin: 0 10px;
+    }
+    #state .progress {
+        border: solid 2px #fff;
+        border-radius: 10px;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="aside">
+        <div id="logo"></div>
+        <!-- sideMenu -->
+        <div id="sideMenu">
+        </div>
+        <!-- /sideMenu -->
+        <div id="state">
+            <div class="text-center">1M/20M</div>
+            <div class="progress">
+                <div class="bar note" style="width:30%"></div>
+            </div>
+        </div>
+    </div>
+    <div id="bside">
+        <div id="guider" class="toolbar p0">
+            <b class="b xr"><i class="f f-shutdown"></i> 退出</b>
+            <b class="wall xr"></b>
+            <b class="b xr"><i class="f f-msg"></i> 消息 <span class="star error" style="">12</span></b>
+            <b class="wall xr"></b>
+            <b class="b xl"><i class="f f-chat"></i> 即时通讯</b>
+            <!-- <b class="b xr ac-profile"><i class="f f-gear"></i> 个人设置</b>
+            <span class="caption xr"></span> -->
+        </div>
+        <!-- mainbody -->
+        <div id="mainbody"></div>
+        <!-- /mainbody -->
+    </div>
+    <script>
+    seajs.use(['ui/rollbar'], function() {    
+        var mainbody = $('#mainbody'),
+            sideMenu = $('#sideMenu');
+
+        //假数据
+        Mock.mock('getUserConfig', {
+            'id|+1': 12,
+            "name": '@NAME',
+            "address": "@TITLE",
+            "avanta": 'css/img/avanta.jpg',
+            "token": '@GUID',
+            "apps": [{
+                id: 'pan',
+                icon: 'f f-star',
+                name: '云盘存储'
+            }, {
+                id: 'securety',
+                icon: 'f f-star',
+                name: '安全文柜'
+            }, {
+                id: 'ftp',
+                icon: 'f f-star',
+                name: '快传FFT'
+            }]
+        });
+
+        //获取用户信息和Menu
+        $.getJSON('getUserConfig', function(v) {
+            //toolbar
+            var guider = UI({
+                el: $('#guider'),
+                events: {
+                    'click .ac-profile': function(e, config) {
+                        seajs.use('ui/notify', function(notify) {
+                            notify({
+                                title: '个人设置',
+                                mask:true,
+                                msg: '个人设置',
+                                cls: 'note',
+                                width: 500
+                            });
+                        });
+                    }
+                },
+                init: function() {
+                    this.el.append('<span class="ac-profile b xr" title="个人设置">' + v.name +' <i class="f f-arb"></i> <img class="va-m" style="margin:-8px -12px 0 5px;" src="' + v.avanta + '" height=36 width=36></span>');
+                }
+            });
+            //输出菜单
+            window.APP = UI({
+                el: sideMenu,
+                events: {
+                    'click .ac-app': function(e, config) {
+                        config.route($(this).attr('app'));
+                    }
+                },
+                menuT: _.dot('<ul class="mainmenu">{{~it :v:i}}<li><a class="ac-app" app="{{=v.id}}" href="#{{=v.id}}"><i class="m2 {{=v.icon}}"></i>{{=v.name}}</a></li>{{~}}</ul>'),
+                //控制跳转
+                route: function(path, data) {
+                    if (!path) return;
+                    this.lis.removeClass('active');
+                    this.cache[path] && this.cache[path].addClass('active');
+                    // this.$('[href="#'+path+'"]').parent().addClass('active').siblings().removeClass('active');
+                    seajs.use('apps/' + path + '/main', function(app) {
+                        app.show({
+                            container: mainbody.empty(),
+                            data: data
+                        });
+                    });
+                },
+/*                search: function() {
+                    guider.$('.ac-search').searchbox({
+                        placeholder: '在当前部门下查找',
+                        value: '',
+                        search: function(value, filter) {
+                            //回车和点击清空按钮时触发
+                            console.log(value, filter)
+                        },
+                        input: function(value, filter) {
+                            //键入内容时触发
+                            console.log(value, filter)
+                        }
+                    });
+                },*/
+                init: function() {
+                    var cache = this.cache,
+                        lis = $(this.menuT(v.apps));
+                    this.el.html(lis);
+                    this.lis = lis = lis.children();
+                    $.each(v.apps, function(i, o) {
+                        cache[o.id] = lis.eq(i);
+                    });
+                },
+                cache: {},
+                create: function() {
+                    //打开第一个应用
+                    var path = location.hash.slice(1);
+                    if (!this.cache[path]) {
+                        path = v.apps[0].id;
+                    }
+                    this.route(path);
+                    //左侧menu加上滚动条
+                    if (UI.browser.chrome) {
+                        sideMenu.addClass('scroll');
+                    } else {
+                        sideMenu.rollbar({
+                            checkTimer: 0, //关闭定时器
+                            checkWhenResize: true, //开启window.resize
+                            shadow: true //启用上阴影
+                        });
+                    };
+                    // this.search();
+                }
+            });
+        });
+
+        //IE6 调整布局
+        if (UI.browser.ie == 6) {
+            var resize = _.throttle(function() {
+                var h = $(this).height();
+                mainbody.height(h - 40);
+                sideMenu.height(h - 36 - 40);
+            }, 500, {
+                leading: false
+            });
+            $(window).resize(resize);
+            resize();
+            //IE6 背景缓存
+            try {
+                document.execCommand("BackgroundImageCache", false, true);
+            } catch (e) {}
+        }
+
+    });
+    </script>
+</body>
+
+</html>

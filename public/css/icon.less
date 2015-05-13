@@ -1,0 +1,378 @@
+/* icons */
+.i {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    background-position: center;
+    vertical-align: middle;
+    // line-height: 1;
+}
+.i-loading {
+    background-position: left 2px;
+    background-image: url(img/loading.gif);
+}
+b.i-loading {
+    width: 30px;
+    height: 30px;
+    background-image: url(img/loading-m.gif);
+}
+.i-safe, .i-error, .i-info, .i-close {
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+    background: url(img/notify.png) no-repeat;
+}
+.i-safe {
+    background-position: -24px 0;
+}
+.i-error {
+    background-position: -48px 0;
+}
+.i-info {
+    background-position: 0 0;
+}
+.i-close {
+    background-position: -72px 0;
+}
+b {
+    &.i-info {
+        background-position: 0 -24px;
+    }
+    &.i-safe {
+        background-position: -24px -24px;
+    }
+    &.i-error {
+        background-position: -48px -24px;
+    }
+    &.i-close {
+        background-position:-72px -24px;
+    }
+}
+.i-cancel{
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+    background: url(img/cancel.png) no-repeat center;
+    //background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAXBJREFUeNqck99KAkEUxs+Ok9FNFxKGaUX2T1Osm3qA8sKoxxDqoptepAgKCnqNIEK67jJo7Q/UVuRKJRhdRGC19o2cXcbFRPuWH7uc2e/MnJkzxsnZBfk0A/IgB+Ics8AxOASX+s9C+w6CXaAyboIk6GWSHFNj+6DPNUnNfASy1F5qwjUwCZZBzV3BdgdmXYtgy82Y4qzdal15BW9YwKtJCFqaT1E41O/9GRsMUXYhRULoW9bw5CXvtqdvx6H7coUyE8Nk3pUo2CNpajRC1w9lcjDmU05qR+XJsl+pjic9HiMyDLqybLIrb63KiIs/K6z73q1Vk9wkiaa00XCDooUSZICS8SgZwqDSS9Wf4FFyhyX0gx4bGiDz9omeq++NmINVTI9EWiUoGGjlND7O9ZPoUD9gTk1ogoN/9IHymO4mqj4vdGE+ZY93mWpgBeypktsYHZ55lT1Nt1EFNkAG7IAb8AU+QJFjs9zCn67pV4ABAIYHW8cc80gfAAAAAElFTkSuQmCC") no-repeat center;
+
+}
+/* font-icons */
+.f{
+	display: inline-block;
+    font-size: 1.2em;//为了和文字对齐，line-height设置1.2
+    min-width: 16px;
+    vertical-align: text-bottom;
+    text-align: center;
+    // -webkit-text-stroke-width: 0.2px;
+}
+.f-s{
+    font-size: 0.825em;
+}
+.f-lg {
+    font-size: 1.33333333em;
+}
+.f-lg,.f-2x,.f-3x,.f-4x,.f-5x{
+    line-height: 1;
+}
+.f-2x {
+    font-size: 2em;
+}
+.f-3x {
+    font-size: 3em;
+}
+.f-4x {
+    font-size: 4em;
+}
+.f-5x {
+    font-size: 5em;
+}
+.f-none{
+    *zoom: ~"expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xffff;')";
+    &:before{
+        content:"\ffff"; 
+    }
+}
+
+
+//import "icomoon/style.css";
+//.f的line-height 要去掉，不然影响IE7中只包含fonticon的btn的高度
+//line-height:1.6,保持和body一致
+//但是呢，加上了会影响其他浏览器button带ficon的高度
+@font-face {
+    font-family: 'icomoon';
+    src:url('icomoon/fonts/icomoon.eot?88uqre');
+    src:url('icomoon/fonts/icomoon.eot?#iefix88uqre') format('embedded-opentype'),
+        url('icomoon/fonts/icomoon.woff?88uqre') format('woff'),
+        url('icomoon/fonts/icomoon.ttf?88uqre') format('truetype'),
+        url('icomoon/fonts/icomoon.svg?88uqre#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.f {
+    font-family: 'icomoon';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.f-cut:before {
+    content: "\e617";
+}
+
+.f-export:before {
+    content: "\e609";
+}
+
+.f-gear:before {
+    content: "\e60a";
+}
+
+.f-history:before {
+    content: "\e60b";
+}
+
+.f-see:before {
+    content: "\e60d";
+}
+
+.f-unsee:before {
+    content: "\e60e";
+}
+
+.f-chart:before {
+    content: "\e60f";
+}
+
+.f-chat:before {
+    content: "\e610";
+}
+
+.f-msg:before {
+    content: "\e611";
+}
+
+.f-block:before {
+    content: "\e612";
+}
+
+.f-tag:before {
+    content: "\e614";
+}
+
+.f-more:before {
+    content: "\e615";
+}
+
+.f-bell:before {
+    content: "\e616";
+}
+
+.f-read:before {
+    content: "\e606";
+}
+
+.f-doc:before {
+    content: "\f1c2";
+}
+
+.f-xls:before {
+    content: "\f1c3";
+}
+
+.f-ppt:before {
+    content: "\f1c4";
+}
+
+.f-fly:before {
+    content: "\f1d9";
+}
+
+.f-save:before {
+    content: "\f0c7";
+}
+
+.f-grid:before {
+    content: "\f009";
+}
+
+.f-down:before {
+    content: "\e604";
+}
+
+.f-up:before {
+    content: "\e605";
+}
+
+.f-txt:before {
+    content: "\e086";
+}
+
+.f-copy:before {
+    content: "\e091";
+}
+
+.f-location:before {
+    content: "\e608";
+}
+
+.f-home:before {
+    content: "\e002";
+}
+
+.f-browse:before {
+    content: "\e0a2";
+}
+
+.f-user:before {
+    content: "\e199";
+}
+
+.f-star-empty:before {
+    content: "\e2ff";
+}
+
+.f-star:before {
+    content: "\e301";
+}
+
+.f-pencil:before {
+    content: "\e600";
+}
+
+.f-filter:before {
+    content: "\e443";
+}
+
+.f-warn:before {
+    content: "\e601";
+}
+
+.f-calendar:before {
+    content: "\e603";
+}
+
+.f-share:before {
+    content: "\e48c";
+}
+
+.f-org:before {
+    content: "\e9bc";
+}
+
+.f-shutdown:before {
+    content: "\e9b6";
+}
+
+.f-menus:before {
+    content: "\f05e";
+}
+
+.f-add:before {
+    content: "\e63a";
+}
+
+.f-minus:before {
+    content: "\e63c";
+}
+
+.f-multiply:before {
+    content: "\e60c";
+}
+
+.f-checkmark:before {
+    content: "\e62e";
+}
+
+.f-bin:before {
+    content: "\f014";
+}
+
+.f-search:before {
+    content: "\e607";
+}
+
+.f-tool:before {
+    content: "\e991";
+}
+
+.f-info:before {
+    content: "\e62b";
+}
+
+.f-question:before {
+    content: "\e640";
+}
+
+.f-alert:before {
+    content: "\e950";
+}
+
+.f-buy:before {
+    content: "\e639";
+}
+
+.f-denied:before {
+    content: "\e602";
+}
+
+.f-loop:before {
+    content: "\ea2e";
+}
+
+.f-turnr:before {
+    content: "\e613";
+}
+
+.f-print:before {
+    content: "\e954";
+}
+
+.f-undo:before {
+    content: "\e967";
+}
+
+.f-lock:before {
+    content: "\f06a";
+}
+
+.f-unlock:before {
+    content: "\e990";
+}
+
+.f-attachment:before {
+    content: "\e9cd";
+}
+
+.f-link:before {
+    content: "\f05c";
+}
+
+.f-download:before {
+    content: "\e9c7";
+}
+
+.f-upload:before {
+    content: "\e9c8";
+}
+
+.f-list:before {
+    content: "\f00b";
+}
+
+.f-arb:before {
+    content: "\f0d7";
+}
+
+.f-art:before {
+    content: "\f0d8";
+}

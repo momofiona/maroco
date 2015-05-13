@@ -1,0 +1,294 @@
+<div class="row m10">
+    <h1>表单验证2.0 <small>Valid</small></h1>
+    <hr>
+    <p>取消form外部验证支持，元素放form标签外部只有chrome原生支持。</p>
+    <form id="validateForm">
+        <h2>Form</h2>
+        <table class="formtable">
+            <tr>
+                <td class="flabel w3">帐号</td>
+                <td>
+                    <input class="text tiny w7" required name="account">
+                </td>
+            </tr>
+            <tr>
+                <td class="flabel">密码</td>
+                <td>
+                    <input type="password" id="psw" required class="text tiny w7" data-valid="charsafe" data-label=".ac-passlabel" name="password"> <span class="ac-passlabel"></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="flabel">确认密码</td>
+                <td>
+                    <input type="password" required valid-name="confirmpass" class="text tiny w7" data-label=".ac-conpasslabel"> <span class="ac-conpasslabel"></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="flabel">性别</td>
+                <td>
+                    <label>
+                        <input type="radio" name="gender" class="va-t"> 男</label>
+                    <label>
+                        <input type="radio" name="gender" class="va-t" data-dir="trr" required> 女</label>
+                    <input type="radio" name="gender" class="va-t" readonly>
+                    <input type="radio" name="gender" class="va-t" checked disabled>
+                    <input type="checkbox" name="both" value="1" class="va-t">
+                    <input type="checkbox" name="both" value="2" class="va-t">
+                    <input type="checkbox" name="both" value="3" class="va-t" readonly>
+                    <input type="checkbox" name="both" value="4" class="va-t" data-valid="length(2,3)" data-dir="rc" required checked>
+                    <input type="range" name="range" min="1" max="10" data-valid="int(6)"  class="va-t">
+                    <meter value="50" min="0" class="w5" max="100" low="20" high="80" optimum="50"></meter>
+                </td>
+            </tr>
+            <tr>
+                <td class="flabel">年龄</td>
+                <td>
+                    <input type="number" min="1" class="text tiny w7" data-valid="int(18)" name="age">
+                </td>
+            </tr>
+            <tr>
+                <td class="flabel">身高</td>
+                <td>
+                    <input type="number" min="0" step="0.01" class="text tiny w7" data-valid="float(0,3,2)" name="tall"> m
+                </td>
+            </tr>
+            <tr>
+                <td class="flabel">手机</td>
+                <td>
+                    <input class="text tiny w7" data-valid="mobile" required name="mobile">
+                </td>
+            </tr> 
+            <tr>
+                <td class="flabel">Email</td>
+                <td>
+                    <input data-valid="email" class="text tiny w7" name="email">
+                </td>
+            </tr>
+            <tr>
+                <td class="flabel va-t">描述</td>
+                <td>
+                    <textarea  data-dir="rt" required data-valid="charsafe length(,144)" rows="3" class="text w7" name="description"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit" class="b note w7" value="提交">
+                </td>
+            </tr>
+        </table>
+    </form>
+    <p>新增表单元素后不需要重新绑定事件</p>
+    <pre class="codemirror" source="#validScriptSource" mode="javascript"></pre>
+    <section>
+        <h2>Attributes</h2>
+        <table class="ctable">
+            <thead>
+                <tr>
+                    <th width="110">Attribute</th>
+                    <th>Description</th>
+                    <th width="75">Default</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>data-valid</td>
+                    <td>接受一个空格分开的验证指令，如：remote(abc.php) float(10,20,2) int(0,) length(6,20) email url date(yyyy-MM-dd hh:mm:ss)</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>data-dir</td>
+                    <td>tips定义的20个方位（tips中默认tc），tll、tl、tc、tr、trr、rtt、rt、rc、rb、rbb、brr、br、bc、bl、bll、lbb、lb、lc、lt、ltt，元素radio、checkbox的tips定位在第一个带data-dir的元素，如果没有找到data-dir属性的元素，定位在同组第一个元素</td>
+                    <td>rc</td>
+                </tr>
+                <tr>
+                    <td>required</td>
+                    <td>是否必填属性，如果是radio、checkbox组属性，可以只加在第一个带data-dir的</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>data-label</td>
+                    <td>接受一个字符串标记label位置，例如 #someGlobalId、.informclass，如无设置，使用tips显示</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>valid-name</td>
+                    <td>valid-name="myprop",会匹配options.rules["myprop"]验证规则</td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Parameters</h2>
+        <table class="ctable">
+            <thead>
+                <tr>
+                    <th width="110">Parameter</th>
+                    <th>Description</th>
+                    <th width="75">Default</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>form</td>
+                    <td>必要参数，form表单元素</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>rules</td>
+                    <td>自定义规则列表，对应表单元素的name或valid-name</td>
+                    <td>{}</td>
+                </tr>
+                <tr>
+                    <td>onKeyup</td>
+                    <td>是否在keyup的时候触发验证</td>
+                    <td>true</td>
+                </tr>
+                <tr>
+                    <td>eachField</td>
+                    <td>每个元素验证时触发，参数event, status, options，this是当前元素</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>eachInvalidField</td>
+                    <td>每个元素验证不通过时触发</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>eachValidField</td>
+                    <td>每个元素验证通过时触发</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>invalid</td>
+                    <td>验证不通过时触发</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>valid</td>
+                    <td>验证全部通过时触发</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>labels</td>
+                    <td>出错时覆盖提示信息</td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Default Rules (data-valid accepts)</h2>
+        <table class="ctable">
+            <thead>
+                <tr>
+                    <th width="110">rule</th>
+                    <th>Description</th>
+                    <th width="75">Default</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>email</td>
+                    <td>验证email</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>charsafe</td>
+                    <td>不能包含\/:*?"<>|等字符</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>length</td>
+                    <td>长度验证，length(1,2)表示长度1-2，length(1)表示长度1以上，length(,10)表示长度10以下，包括2</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>int</td>
+                    <td>整型验证</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>float</td>
+                    <td>浮点型号 float(0,10,2) 表示从0到10之间的数，最多保留两位小数</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>mobile</td>
+                    <td>手机号1开头的11位数字</td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+    <div class="footman"></div>
+</div>
+<script id="validScriptSource">
+seajs.use('ui/valid', function(validate) {
+
+    validate({
+        form: $('#validateForm'),
+        valid: function(event, status, options) {
+            console.log('valid');
+            var sb = this.find(':submit').attr('disabled', true);
+            setTimeout(function() {
+                sb.removeAttr('disabled');
+            }, 3000);
+        },
+        invalid: function(event, status, options) {
+            console.log('invalid');
+        },
+        eachField: function(event, status, options) {
+            //动态修改是否必填
+            //这里如果返回false则当前field不验证，适合条件验证
+        },
+        eachValidField:function(){},
+        eachInvalidField:function(){},
+        //条件
+        rules: {
+            confirmpass: function(value, status, options) {
+                var pws = options.form[0]['password'].value;
+                if (pws && this.val() !== pws) {
+                    //只要返回不为空的字符串都算验证不通过
+                    return '两次输入的密码不一样';
+                }
+            },
+            //帐号
+            account:{
+                rule:/^[a-z0-9_]{6,21}$/i,
+                label:'用户名由数字、字母、下划线组成，6-21个字符'
+            }
+            /*
+             第三种写法   
+             demo:{
+                rule:function(value, status, options,rule){
+                    if(/^test$/.test(value)){
+                        status.report('第三种表现形式');
+                    }
+                    alert(rule.diy);
+                },
+                diy:123
+            }*/
+        },
+        /**
+         * cname说辞改写
+         * labels:{
+         *   name:'第一形态,覆盖所有的描述,无成功描述',
+         *   name:{
+         *       valid:'覆盖验证成功后的提示',
+         *       key:"第二形态，覆盖对应规则描述",
+         *       required:'验证必填不成功时的提示',
+         *       invalid:'覆盖验证不成功时的提示'
+         *     }
+         * }
+         */
+        labels:{
+            description:'说点什么吧，最多144个字。',
+            mobile:{
+                mobile:'手机没有么？来我这儿拿一打'
+            },
+            email:{
+                valid:' ',
+                invalid:'invalid Email'
+            }
+        }
+    });
+});
+</script>

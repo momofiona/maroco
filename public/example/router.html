@@ -1,0 +1,41 @@
+<div class="m4">
+    <h1>Router <small>Router</small></h1>
+    <hr>
+    <div id="jsonMock">
+        <pre class="codemirror" mode="javascript">
+            seajs.use(['ui', 'ui/router'], function(UI, router) {
+                //IE67当第一次调用router的时候
+                router({
+                    //以#开头的属性会和hash去匹配
+                    '#layout/:id': "method",
+                    "#*": function(mod) {
+                        //从上到下匹配，取第一个执行，没有则不执行
+                    },
+                    //自定义属性，不参加匹配
+                    method:function(){}
+                })
+            });
+        </pre>
+        <dl>
+            <dt>缺点:</dt>
+            <dd>无法使用锚点定位功能</dd>
+            <dd>hash无法传递大量数据</dd>
+            <dd>不可控，无法确定页面上不会出现不受控制的链接来修改hash</dd>
+            <dt>优点:</dt>
+            <dd>浏览器产生历史记录，方便回退</dd>
+        </dl>
+        <p>综上所述，hashchange这种东西正式项目不要使用，一般是html5的history配合后端无缝跳转才有意义(有兴趣可以去研究下youtube.com)。</p>
+    </div>
+    <div class="footman"></div>
+</div>
+<script>
+$(function() {
+    previewCode();
+    $('#jsonMock').find('.ac-mock').on('click', function() {
+        $.getJSON('/json/members', function(json) {
+            console.log(json);
+        });
+
+    });
+});
+</script>

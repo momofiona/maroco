@@ -1,0 +1,29 @@
+<form>
+    <table class="formtable">
+        <tr>
+            <td class="flabel">名称</td>
+            <td colspan="3">
+                <input type="hidden" name="id" value="{{=it.id}}">
+                <input type="text" name="name" data-required class="text w20" value="{{=it.name}}">
+            </td>
+        </tr>
+        <tr>
+            <td class="flabel">描述</td>
+            <td colspan="3">
+                <input type="text" name="description" class="text w20" value="{{=it.description}}">
+            </td>
+        </tr>
+        <tr>
+            <td class="flabel va-t" width="50">继承</td>
+            <td class="va-t" width="258">
+                <div class="ac-extend"></div>
+                <a href="#" class="ac-add-extend c-safe"><i class="f f-add"></i> 增加继承关系</a>
+            </td>
+            <td class="flabel va-t" width="50">互斥</td>
+            <td class="va-t">
+                <div class="ac-exclusion"></div>
+                <a href="#" class="ac-add-exclusion c-error"><i class="f f-add"></i> 增加互斥关系</a>
+            </td>
+        </tr>
+    </table>
+</form>

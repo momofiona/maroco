@@ -1,0 +1,36 @@
+<div class="row m4">
+    <h1>数据监控 <small>Watch</small></h1>
+    <hr>
+    <p>由于IE6-8不支持Object.defineProperties,使用了VBS类来偷龙转凤，所以返回值和标准的defineProperties有质的差别：</p>
+    <pre class="codemirror" mode="javascript">
+        seajs.use(['ui/watch'], function(watch) {
+            var proto={c:'not fine'},
+            watcher=watch(proto,{
+                xman:function(newVal,oldVal){
+                  console.log(this.c,newVal,oldVal);
+                  //return false;// 如果返回false 此次赋值不成功
+                }
+            });
+
+            proto===watcher;//IE6-8 返回false，因为watcher是VBS对象
+            proto.girl='lily';
+            watcher.girl;//IE6-8 输出 undefined 因为VBS对象没有定义内部属性girl
+            proto.c='fine';
+            watcher.c;//所有浏览器输出fine 因为已经定义了内部属性c
+
+            //对于IE6-8，必须调用watcher.xman才能触发函数
+            watcher.xman=13;//输出 fine 13 undefined;
+            watcher.xman;//输出 13;
+            proto.xman;//输出 13;
+
+            watcher.c=10;//10
+            proto.c;//10
+
+            //PS：所有属性必须开始就全部定义，因为IE6-8不支持新增属性
+            watcher.big;//undefined
+            watcher.big=10;//IE6-8 会报错，因为VB类还没有给big写定义;
+
+        });
+        </pre>
+</div>
+<div class="footman"></div>

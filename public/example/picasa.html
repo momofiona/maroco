@@ -1,0 +1,225 @@
+<div class="row m4">
+    <h1>多媒体查看 <small>Picasa</small></h1>
+    <hr>
+    <section>
+        <button class="b note" id="openPicasaBase">普通模式</button>
+        <button class="b note" id="openPicasa">高级模式</button>
+        <button class="b note" id="openPicasaWithout">无缩略图模式</button>
+        <pre source="#picasaScriptSource" class="codemirror" mode="javascript"></pre>
+    </section>
+
+    <section>
+        <h2>Attributes</h2>
+        <table class="ctable">
+            <thead>
+                <tr>
+                    <th width="110">rule</th>
+                    <th>Description</th>
+                    <th width="75">Default</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>thumb</td>
+                    <td>是否开启缩略图模式</td>
+                    <td>true</td>
+                </tr>
+                <tr>
+                    <td>margin</td>
+                    <td>接受数组，标记上右下左的外边距</td>
+                    <td>[0,0,0,0]</td>
+                </tr>
+                <tr>
+                    <td>padding</td>
+                    <td>接受数组，标记上右下左内边距</td>
+                    <td>[10, 50, 80, 50]</td>
+                </tr>
+                <tr>
+                    <td>sideWidth</td>
+                    <td>侧边栏宽度，设置则开启高级模式</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>skin</td>
+                    <td>指定皮肤class样式</td>
+                    <td>""</td>
+                </tr>
+                <tr>
+                    <td>data</td>
+                    <td>数据，根据src、iframe依次检测是否是图片模式、iframe模式，最后是html模式</td>
+                    <td>""</td>
+                </tr>
+                <tr>
+                    <td>setTitle(page,itm)</td>
+                    <td>设置显示的标题</td>
+                    <td>page/totalpage + itm.title</td>
+                </tr>
+                <tr>
+                    <td>onchange(itm)</td>
+                    <td>当切换的时候调用，在setTitle之后执行</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>create</td>
+                    <td>这个是UI方法的接口，UI初始化之后调用</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>escExit</td>
+                    <td>是否可以通过ESC按键关闭</td>
+                    <td>true</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+    <div class="footman"></div>
+    <script id="picasaScriptSource">
+    seajs.use('ui/picasa', function(picasa) {
+        var data = [{
+            src: 'photo/Original/syana.jpg',
+            title: 'シャナ',
+            thumb: 'photo/syana.jpg'
+        }, {
+            src: 'photo/Original/1.jpg',
+            title: 'this is title',
+            thumb: 'photo/1.jpg'
+        }, {
+            src: 'photo/Original/2.jpg',
+            title: 'this is title',
+            thumb: 'photo/2.jpg'
+        }, {
+            src: 'photo/Original/3.jpg',
+            title: 'this is title',
+            thumb: 'photo/3.jpg'
+        }, {
+            src: 'photo/Original/4.jpg',
+            title: 'this is title',
+            thumb: 'photo/4.jpg'
+        }, {
+            src: 'photo/Original/5.jpg',
+            title: 'this is title',
+            thumb: 'photo/5.jpg'
+        }, {
+            src: 'photo/Original/6.jpg',
+            title: 'this is title',
+            thumb: 'photo/6.jpg'
+        }, {
+            src: 'photo/Original/7.jpg',
+            title: 'this is title',
+            thumb: 'photo/7.jpg'
+        }, {
+            src: 'photo/Original/8.jpg',
+            title: 'this is title',
+            thumb: 'photo/8.jpg'
+        }, {
+            src: 'photo/Original/9.jpg',
+            title: 'this is title',
+            thumb: 'photo/9.jpg'
+        }, {
+            src: 'photo/Original/10.jpg',
+            title: 'this is title',
+            thumb: 'photo/10.jpg'
+        }, {
+            src: 'photo/Original/11.jpg',
+            title: 'this is title',
+            thumb: 'photo/11.jpg'
+        }, {
+            src: 'photo/Original/12.jpg',
+            title: 'this is title',
+            thumb: 'photo/12.jpg'
+        }, {
+            src: 'photo/Original/13.jpg',
+            title: 'this is title',
+            thumb: 'photo/13.jpg'
+        }, {
+            src: 'photo/Original/14.jpg',
+            title: 'this is title',
+            thumb: 'photo/14.jpg'
+        }, {
+            src: 'photo/Original/15.jpg',
+            title: 'this is title',
+            thumb: 'photo/15.jpg'
+        }, {
+            src: 'photo/Original/16.jpg',
+            title: 'this is title',
+            thumb: 'photo/16.jpg'
+        }, {
+            src: 'photo/Original/17.jpg',
+            title: 'this is title',
+            thumb: 'photo/17.jpg'
+        }, {
+            html: '<p class="m">自定义html</p>',
+            title: '自定义html',
+            thumb: 'photo/18.jpg'
+        }, {
+            iframe: 'http://baidu.com',
+            title: '自定义iframe',
+            thumb: 'photo/19.jpg'
+        }];
+
+
+        $('#openPicasaBase').click(function() {
+            //普通模式
+            picasa({
+                onchange: function(itm) {
+                    var _t = this;
+                    if (itm.html) {
+                        this.scene.children('.pica-html').append('<p><b class="b note m ac-pica-prev">&lt; 上一张</b><b class="b note m ac-pica-next">下一张 &gt; </b><b class="b error m ac-pica-close">关闭 </b></p>');
+                    }
+                },
+                //数据
+                data: data
+            });
+        });
+
+        $('#openPicasa').click(function() {
+            //分栏模式
+            picasa({
+                sideWidth: 320,
+                margin: [30, 30, 30, 30],
+                onchange: function(itm) {
+                    var s = "",
+                        _t = this;
+                    _.each(itm, function(o, k) {
+                        s += '<li class="clear"><b class="w3 xl text-right m2">' + k + '</b>: ' + o + '</li>';
+                    });
+                    this.sidebar.html('<ul>' + s + '</ul>');
+                    if (itm.html) {
+                        $('<b class="b note m">&lt; 上一张</b>').appendTo(this.scene.children('.pica-html')).click(function() {
+                            _t.prev();
+                        });
+                        $('<b class="b note m">下一张 &gt; </b>').appendTo(this.scene.children('.pica-html')).click(function() {
+                            _t.next();
+                        })
+                        $('<b class="b error m">关闭 </b>').appendTo(this.scene.children('.pica-html')).click(function() {
+                            _t.close();
+                        })
+                    }
+                },
+                //数据
+                data: data,
+                create: function() {
+                    //把按钮放到外边的方法
+                    /*this.prevBtn.appendTo(this.el);
+    			this.nextBtn.appendTo(this.el);*/
+                }
+            });
+        });
+        $('#openPicasaWithout').click(function() {
+            picasa({
+                padding: [50, 60, 50, 60],
+                thumb: false,//关闭缩略图
+                setTitle: function(n, itm) {
+                    return (itm.title || '') + " " + n + '/' + this.data.length;
+                },
+                //数据
+                data: data,
+                create: function() {
+                	//把title的位置往下移一点
+                    this.title.css('bottom', 10);
+                }
+            });
+        });
+    });
+    </script>
+</div>

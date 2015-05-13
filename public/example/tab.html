@@ -1,0 +1,35 @@
+<div class="row m10">
+    <h1>Tabs <small>Tabs</small></h1>
+    <hr>
+    <div class="tabs" id="acDemoTab">
+        <ul class="tab">
+            <li><a panel=".ac-myprofile" href="#">HTML</a></li>
+            <li><a panel="#atologin" href="#">Javascript</a></li>
+        </ul>
+        <div class="ac-myprofile p1">html</div>
+    </div>
+    <div id="atologin" class="p1">javascript</div>
+    <textarea class="codemirror">
+        <div class="tabs" id="acDemoTab">
+            <ul class="tab">
+                <li><a panel=".ac-myprofile" href="#">HTML</a></li>
+                <li><a panel="#atologin" href="#">Javascript</a></li>
+            </ul>
+            <div class="ac-myprofile p1">html</div>
+        </div>
+        <div id="atologin" class="p1">javascript</div>
+        <script>
+        UI.tabs({
+            el: $('#acDemoTab'),
+            onActive: function(tab, panel) {}
+        });
+        </script>
+    </textarea>
+    <div class="footman"></div>
+</div>
+<script>
+UI.tabs({
+    el: $('#acDemoTab'),
+    onActive: function(tab, panel) {}
+});
+</script>

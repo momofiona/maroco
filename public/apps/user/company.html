@@ -1,0 +1,74 @@
+<div class="toolbar">
+    <b class="b note ac-save xr"><i class="f f-save"></i> 保存更改</b>
+    <b class="ac-back b info"><i class="f f-undo"></i> {{=it.title}}</b>
+</div>
+<hr>
+<div class="footman"></div>
+<form>
+    <table class="formtable">
+        <tr>
+            <td class="flabel w3">组织名称</td>
+            <td class="w9">
+                <input class="text w7" data-required data-validate="charsafe" name="account"> <i class="fi-req">*</i>
+            </td>
+            <td class="flabel w3">组织类型</td>
+            <td>
+                <select class="text w7" data-required>
+                    <option value="008">外商合作企业</option>
+                    <option value="007">外商合伙企业</option>
+                    <option value="006">外商独资企业</option>
+                    <option value="005">个体工商户</option>
+                    <option value="004">合伙企业</option>
+                    <option value="003">个人独资企业</option>
+                    <option value="002">股份有限公司</option>
+                    <option value="001">有限责任公司</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="flabel">所属行业</td>
+            <td>
+                <select name="trade" class="text w7">
+                    <option value="022">建筑业</option>
+                    <option value="021">健康/保健</option>
+                    <option value="020">化学/化工</option>
+                    <option value="019">航空航天</option>
+                    <option value="018">广告业</option>
+                    <option value="017">公益组织</option>
+                    <option value="016">服装业</option>
+                    <option value="015">服务行业</option>
+                    <option value="014">房地产</option>
+                    <option value="013">地质</option>
+                    <option value="012">电讯业</option>
+                    <option value="011">餐饮/宾馆</option>
+                    <option value="010">采矿/能源</option>
+                    <option value="009">保险业</option>
+                </select>
+            </td>
+            <td class="flabel">组织性质</td>
+            <td>
+                <select name="property" class="text w7">
+                    <option value="032">国防军事企业</option>
+                    <option value="030">集体企业</option>
+                    <option value="029">私营企业</option>
+                    <option value="028">外资企业</option>
+                    <option value="027">国际组织机构</option>
+                    <option value="026">社会组织机构</option>
+                    <option value="025">中外合资企业</option>
+                    <option value="024">公司合作企业</option>
+                    <option value="023">国家行政企业</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <input type="submit" class="b note w7" value="提交">
+            </td>
+        </tr>
+    </table>
+</form>
+<div class="footman"></div>

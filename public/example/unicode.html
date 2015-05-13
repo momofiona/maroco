@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <meta charset="gbk">
+</head>
+<style>
+    body{
+        font-size: 1.5em;
+    }
+    i{
+        font-style: normal;
+        cursor: default;
+    }
+</style>
+<body>
+    <div id="luck" style="font-family:arial"></div>
+    <script type="text/javascript">
+    var s = '',luck=document.getElementById('luck');
+    for (var i = 9216; i < 11098; i++) {
+        if(i==10088) s+='<button onclick="luck.style.color=\'#fff\'" style="padding:1em;width:100%;margin-top:1em;">firefox 有亮点</button>';
+        s += '<i title="&amp;#' + i + ';">&#' + i + ';</i>\n';
+    }
+    luck.innerHTML = s;
+    </script>
+</body>
+
+</html>

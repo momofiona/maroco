@@ -1,0 +1,148 @@
+<div class="x w7 m2 sidebar">
+    <ul class="ztree ac-restree m9"></ul>
+</div>
+<div class="row mainbody scroll">
+    <form class="m5">
+        <div class="xr">
+            <span class="b bs safe ac-add-app"><i class="f f-add"></i> 顶级应用</span>
+            <span class="b bs note ac-add-menu"><i class="f f-add"></i> 菜单</span>
+            <span class="b bs note ac-add-page"><i class="f f-txt"></i> 页面</span>
+            <span class="b bs note ac-add-subpage"><i class="f f-txt"></i> 子页面</span>
+        </div>
+        <h3 class="ac-head">资源信息</h3>
+        <hr>
+        <div class="ac-info"></div>
+        <div class="m">
+            <span class="b note ac-new-save w4"><i class="f f-save"></i> 确定</span>
+            <span class="b log ac-new-cancel">取消</span>
+        </div>
+        <div class="m">
+            <span class="b note ac-edit w4"><i class="f f-save"></i> 保存修改</span>
+            <input type="reset" class="b log m10" value="重置">
+            <span class="b error ac-del"><i class="f f-bin"></i> 删除</span>
+        </div>
+    </form>
+    <div class="footman"></div>
+    <div class="m2">
+        <div class="xr">
+            <span class="b bs note ac-power-add" title="新建操作"><i class="f f-add"></i></span>
+            <span class="b bs error ac-power-del" title="删除操作"><i class="f f-bin"></i></span>
+        </div>
+        <h3>操作信息</h3>
+        <hr>
+        <div class="ac-powers"></div>
+    </div>
+    <div class="footman"></div>
+</div>
+<div class="ac-template hide">
+    <!-- 应用 -->
+    <div class="ac-temp-app">
+        <table class="formtable">
+            <tr>
+                <td class="flabel" width="70">资源类型</td>
+                <td>
+                    <input class="text tiny" value="应用" disabled>
+                </td>
+            </tr>
+            <tr>
+                <td class="flabel" width="70">资源名称</td>
+                <td>
+                    <input class="text tiny" value="{{=it.name}}">
+                </td>
+            </tr>
+            <tr>
+                <td class="flabel">资源图标</td>
+                <td>
+                    <input class="text tiny">
+                </td>
+            </tr>
+        </table>
+    </div>
+    <!-- 菜单 -->
+    <div class="ac-temp-menu">
+        <table class="formtable">
+            <tr>
+                <td class="flabel" width="70">资源类型</td>
+                <td>
+                    <input class="text tiny" value="菜单" disabled>
+                </td>
+            </tr>
+            <tr>
+                <td class="flabel" width="70">资源名称</td>
+                <td>
+                    <input class="text tiny">
+                </td>
+            </tr>
+            <tr>
+                <td class="flabel">资源图标</td>
+                <td>
+                    <input class="text tiny">
+                </td>
+            </tr>
+            <tr>
+                <td class="flabel">资源链接</td>
+                <td>
+                    <input class="text tiny">
+                </td>
+            </tr>
+        </table>
+    </div>
+    <!-- 页面 -->
+    <div class="ac-temp-page">
+        <table class="formtable">
+            <tr>
+                <td class="flabel" width="70">资源类型</td>
+                <td>
+                    <input class="text tiny" value="页面" disabled>
+                </td>
+            </tr>
+            <tr>
+                <td class="flabel" width="70">资源名称</td>
+                <td>
+                    <input class="text tiny">
+                </td>
+            </tr>
+            <tr>
+                <td class="flabel">资源图标</td>
+                <td>
+                    <input class="text tiny">
+                </td>
+            </tr>
+            <tr>
+                <td class="flabel">资源链接</td>
+                <td>
+                    <input class="text tiny">
+                </td>
+            </tr>
+        </table>
+    </div>
+    <!-- 子页面 -->
+    <div class="ac-temp-subpage">
+        <table class="formtable">
+            <tr>
+                <td class="flabel" width="70">资源类型</td>
+                <td>
+                    <input class="text tiny" value="子页面" disabled>
+                </td>
+            </tr>
+            <tr>
+                <td class="flabel" width="70">资源名称</td>
+                <td>
+                    <input class="text tiny">
+                </td>
+            </tr>
+            <tr>
+                <td class="flabel">资源图标</td>
+                <td>
+                    <input class="text tiny">
+                </td>
+            </tr>
+            <tr>
+                <td class="flabel">资源链接</td>
+                <td>
+                    <input class="text tiny">
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

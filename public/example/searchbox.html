@@ -1,0 +1,32 @@
+<div class="row m10">
+    <h1>搜索框 <small>SearchBox</small></h1>
+    <hr>
+    <div id="searchBox"></div>
+    <textarea class="codemirror" mode="javascript" source="#searchBoxScript"></textarea>
+    <div class="footman"></div>
+</div>
+<script id="searchBoxScript">
+seajs.use('ui/searchbox', function() {
+    $('#searchBox').searchbox({
+        placeholder: '在当前部门下查找',
+        value: '',
+        delays:0,//默认500毫秒,0表示不启用延迟
+        //不带filter则不出现筛选
+        filter: [{
+            label: '基本信息',
+            cls: 'w3',
+            id: 'secret code'
+        }, {
+            label: '角色'
+        }],
+        search: function(value, filter) {
+            //回车和点击清空按钮时触发
+            console.log('search:',value, filter)
+        },
+        input: function(value, filter) {
+            //键入内容时触发
+            console.log('input:',value, filter)
+        }
+    })
+});
+</script>

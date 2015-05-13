@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html class="noscroll">
+
+<head>
+    <meta charset="utf-8">
+    <title>Maroco UI</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../css/maroco.css">
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="../css/icomoon/ie7/ie7.css">
+    <![endif]-->
+    <script src="../maroco.js"></script>
+    <script src="../js/ui/ui.js"></script>
+    <!-- 假数据 -->
+    <script src="../js/vendor/mock-min.js"></script>
+    <script src="../api.js"></script>
+    <!-- /假数据 -->
+    <style type="text/css">
+    /* IE8 +*/
+    header.toolbar {
+        position: fixed;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 3;
+        background: #fff;
+        border-bottom: 1px solid #d9d9d9;
+        box-shadow: 0 0 5px rgba(100, 100, 100, .2);
+        z-index: 300;
+        padding:0;
+        height: 48px;
+    }
+    
+    body {
+        background-color: #fff;
+    }
+    header .rock,header .caption{
+        height: 48px;
+        line-height: 48px;
+        padding: 0 10px;
+    }
+    header.toolbar .wall{
+        height: 48px;
+    }
+    
+    .myAvanta img {
+        width: 36px;
+        margin-top: 4px;
+        height: 36px;
+    }
+    
+    header .dropdown-open {
+        background: #f5f5f5;
+    }
+    
+    header .dropdown {
+        border-top: solid 1px #f93;
+    }
+    .topnav ul{
+        padding:0 0 0 1px;
+        margin-left:10px;
+        border-left:dotted 1px #ccc;
+    }
+    .topnav a{
+        border-radius: 0 3px 3px 0;
+    }
+    #sideMenu,
+    #mainbody {
+        position: absolute;
+        top: 49px;
+        left: 0;
+        bottom: 0;
+        overflow: hidden;
+        background: #fff;
+    }
+    
+    #sideMenu {
+        width: 180px;
+        padding:0 1px;
+        border-right: 1px solid #e3e3e3;
+        background-color: #f9f9f9;
+    }
+    
+    #mainbody {
+        left: 184px;
+        right: 0;
+    }
+    .appframe {
+        width: 100%;
+        height: 100%;
+        border: 0;
+    }
+    </style>
+</head>
+
+<body>
+    <header class="toolbar">
+        <!-- profile -->
+        <span href="#" class="xr myAvanta rock" data-dropdown>
+            天满流云
+            <img src="../css/img/zgs.jpg" class="moon va-t">
+            <i class="f f-arb"></i>
+        </span>
+        <div class="dropdown w4">
+            <ul class="menu">
+                <li><a href="#"><i class="f f-gear"></i>设置</a></li>
+                <li><a href="#"><i class="f f-user"></i>个人资料</a></li>
+                <li><a href="#"><i class="f f-msg"></i>消息</a></li>
+                <li class="devider"></li>
+                <li><a href="#"><i class="f f-warn"></i>帮助</a></li>
+                <li><a href="#"><i class="f f-shutdown"></i>登出</a></li>
+            </ul>
+        </div>
+        <!-- /profile -->
+        <span class="b xr rock"><i class="f f-msg"></i><i class="star error" style="">12</i></span>
+        <span class="caption xl"><i class="m2 f f-star"></i>Maroco UI</span>
+        <span class="wall xl"></span>
+    </header>
+    <div id="sideMenu">
+        <ul class="nav m3">
+            <li><a href="#!apps/user/main"><i>☭</i>组织管理</a>
+            </li>
+            <li><a href="#!apps/user/group"><i>♝</i>用户组管理</a>
+            </li>
+            <li><a href="#!apps/user/role"><i>♞</i>角色管理</a>
+            </li>
+            <li><a href="#!apps/user/resource"><i>♜</i>资源管理</a>
+            </li>
+            <li><a href="../home.html" target="cloud"><i class="f f-browse"></i>移动云</a>
+            </li>
+            <li><a href="#!girlfriend"><i>♥</i>工具规范</a>
+            </li>
+            <li><a href="#"><i class="f f-star"></i>Maroco</a>
+                <ul>
+                    <li><a href="#!layout"><i>☵</i>Layout</a>
+                    </li>
+                    <li><a href="#!text"><i>☷</i>Text</a>
+                    </li>
+                    <li><a href="#!icon"><i>✌</i>Icon</a>
+                    </li>
+                    <li><a href="#!btn"><i>☛</i>Button</a>
+                    </li>
+                    <li><a href="#!notify"><i>✦</i>Notify</a>
+                    </li>
+                    <li><a href="#!tips"><i>✦</i>Tips</a>
+                    </li>
+                    <li><a href="#!tab"><i>✦</i>Tab</a>
+                    </li>
+                    <li><a href="#!searchbox"><i>▦</i>searchbox</a>
+                    </li>
+                    <li><a href="#!table"><i>▦</i>Table</a>
+                    </li>
+                    <li><a href="#!nav"><i>▦</i>nav</a>
+                    </li>
+                    <li><a href="#!watch"><i>☻</i>Watch(beta)</a>
+                    </li>
+                    <li><a href="#!router"><i>♆</i>Router</a>
+                    </li>
+                    <li><a href="#!validate"><i>✓</i><del>Validate</del></a>
+                    </li>
+                    <li><a href="#!valid"><i>✓</i>Valid</a>
+                    </li>
+                    <li><a href="#!upload"><i>⤴</i>Upload</a>
+                    </li>
+                    <li><a href="#!picasa"><i>⤴</i>Picasa</a>
+                    </li>
+                </ul>
+            </li>
+            <li><a href="#!css3"><i class="f f-star"></i>Animate</a>
+            </li>
+            <li><a href="#!selector"><i class="f f-alert"></i>Todo</a>
+                <ul>
+                    <li><a href="#!selector"><i>♨</i>selector</a>
+                    </li>
+                    <li><a href="#!autocomplete"><i>♨</i>Autocomplete</a>
+                    </li>
+                    <li><a href="#!vm"><i>♨</i>Vm</a>
+                    </li>
+                    <li><a href="#!viewport"><i class="f f-alert"></i>Viewport</a>
+                    </li>
+                    <li><a href="#!charts"><i class="f f-alert"></i>Chart</a>
+                    </li>
+                    <li><a href="#!standard"><i class="f f-alert"></i>Standard</a>
+                    </li>
+                    <li><a href="#!datepicker"><i class="f f-alert"></i>Datepicker</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="scroll" id="mainbody"></div>
+    <script>
+    // BL BC CR TL TC TR
+    seajs.use(['ui/router', 'ui/rollbar'], function(router) {
+        //Nav
+        var navs=UI.navs({
+            el:$('.nav'),
+            cls:'topnav',
+            accordion:true,
+            onExpand:function(a){
+                console.log('onExpand',a);
+            },
+            onCollapse:function(a){
+                console.log('onCollapse',a);
+            },
+            curA:null,
+            onClick:function(a){
+                if(a===this.curA) return;
+                this.curA=a;
+                console.log('onClick',a);
+            }
+        });
+        var mainbody = $('#mainbody'),
+            sideMenu = $('#sideMenu'),
+            menus = sideMenu.find('a'),
+            legalMod = _.reduce(menus, function(memo, a) {
+                a.hash && memo.push(a.hash);
+                return memo;
+            }, []);
+
+        //给sidebar加上滚动条
+        if (UI.browser.chrome) {
+            sideMenu.addClass('scroll');
+        } else {
+            sideMenu.rollbar({});
+        }
+        //#开始的匹配hash
+        router({
+            '#!apps/*': function(mod) {
+                seajs.use('apps/' + mod, function(view) {
+                    view.show({
+                        container: mainbody.empty()
+                    })
+                });
+                this.hashMap('apps/' + mod);
+            },
+            "#!*": function(mod) {
+                if (_.indexOf(legalMod, '#!' + mod) > -1) {
+                    mainbody.empty().scrollTop(0).load(mod + '.html', function(res, state, xhr) {
+                        if (state == 'error') {
+                            mainbody.html(res);
+                        }
+                        previewCode();
+                    });
+                    this.hashMap(mod);
+                } else {
+                    location.hash = legalMod[0];
+                }
+            },
+            '#*':function(mod){
+                //其他的东西;
+                if(mod=="") location.hash = '!layout';
+            },
+            //不以#开头的不去匹配hash
+            hashMap: function(mod) {
+                var as=navs.active('[href$="#!' + mod + '"]');
+                as=as.parentsUntil('.nav').filter('li').slice(1).find('>a').addClass('active');
+                navs.toggle(as,true,0);
+            }
+        });
+        //IE6 fix
+        if (UI.browser.ie < 8) {
+            var resize = _.throttle(function() {
+                var h = $(this).height() - 48;
+                mainbody.height(h).width($(this).width() - sideMenu.width());
+                sideMenu.height(h);
+            }, 500, {
+                leading: false
+            });
+            $(window).resize(resize);
+            resize();
+            //IE6 背景缓存
+            if (UI.browser.ie == 6) {
+                try {
+                    document.execCommand("BackgroundImageCache", false, true);
+                } catch (e) {}
+            }
+        }
+
+    });
+
+    var previewCode = function() {
+        $('#mainbody .codemirror').each(function() {
+            var win = $('<div class="m1">').insertAfter(this),
+                that = $(this).remove(),
+                source = that.attr('source'),
+                mode = that.attr('mode') || 'text/html',
+                value = "";
+            if (source) {
+                value = $(source).html();
+            } else {
+                value = this.value || this.innerHTML;
+            }
+            value = value.replace(/^(\n+\s*)+|(\n+\s*)+$/, '');
+            var pt = value.match(/^\s+/);
+            if (pt) {
+                pt = new RegExp('\n' + pt[0], 'g');
+                value = $.trim(value).replace(pt, '\n');
+            }
+
+            CodeMirror(win[0], {
+                value: value,
+                mode: mode,
+                indentUnit: 4,
+                lineNumbers: true,
+                styleActiveLine: true,
+                indentWithTabs: true
+            });
+        });
+    }
+    </script>
+    <!--  js 代码高亮 -->
+    <link rel="stylesheet" href="../js/codemirror/codemirror.css">
+    <script src="../js/codemirror/codemirror.js"></script>
+    <script src="../js/codemirror/mode/xml/xml.js"></script>
+    <script src="../js/codemirror/mode/javascript/javascript.js"></script>
+    <script src="../js/codemirror/mode/css/css.js"></script>
+    <script src="../js/codemirror/mode/vbscript/vbscript.js"></script>
+    <script src="../js/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+    <script src="../js/codemirror/addon/selection/active-line.js"></script>
+    <!-- / js 代码高亮 -->
+</body>
+
+</html>

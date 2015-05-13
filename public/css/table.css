@@ -1,0 +1,110 @@
+/* ctable */
+.ctable,
+.ctable table {
+  background-color: #fff;
+  *zoom: 1;
+  width: 100%;
+  line-height: 21px;
+  table-layout: fixed;
+  border-collapse: collapse;
+  border: none;
+}
+.ctable {
+  clear: both;
+}
+.ctable td,
+.ctable th {
+  padding: 8px;
+  border: solid 1px #ddd;
+  overflow: hidden;
+}
+.ctable th {
+  color: #333;
+  font-size: 13px;
+  background-color: #f5f5f5;
+  font-weight: normal;
+  text-shadow: 1px 1px 0px #FFF;
+  box-shadow: inset 1px 1px 0px #FFF;
+}
+.ctable .line {
+  padding: 8px;
+  margin: -9px -8px 9px;
+  border-top: 1px solid #ddd;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ctable .line-last {
+  margin-bottom: -8px;
+}
+.ctable .odd {
+  background: #fdfdfd;
+}
+.ctable .ctable-colgroup {
+  padding: 3px 8px;
+}
+.ctable .chandler {
+  padding: 0;
+  font-size: 0;
+}
+.ctable-hide {
+  visibility: hidden;
+}
+.ctable-ebtn {
+  margin: 0 3px;
+  cursor: pointer;
+}
+.ctable-hover {
+  background: #ffffcb;
+}
+.ctable-hover .ctable-hide {
+  visibility: visible;
+}
+.ctable .ctable-selected {
+  background-color: #039ACC;
+  color: #fff;
+}
+.ctable .ctable-selected td {
+  box-shadow: none;
+  border-color: #039ACC;
+}
+.ctable .ctable-selected a {
+  color: #fff;
+}
+.ctable-head {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+.ctable-body {
+  margin-top: -1px;
+  overflow: hidden;
+  position: relative;
+}
+.ctable-body .chandler {
+  background: #f5f5f5 url(img/handler.png) repeat-y;
+  cursor: move;
+}
+.ctable-body .rollbar-content {
+  float: left;
+}
+.ctable-foot {
+  height: 30px;
+  overflow: hidden;
+  line-height: 30px;
+  border-top: solid 1px #ddd;
+  margin-top: -1px;
+  position: relative;
+  z-index: 10;
+}
+.ctable-foot .pager {
+  float: right;
+}
+.ctable-status {
+  float: left;
+  padding: 0 5px;
+}
+.ctable-checkall,
+.ctable-checkbox {
+  vertical-align: middle;
+}

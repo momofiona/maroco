@@ -1,0 +1,35 @@
+<div class="m4">
+    <h1>假数据 <small>Mock</small></h1>
+    <hr>
+    <div id="jsonMock">
+        <p><b class="b link ac-mock"><i class="f f-eye"></i> 在调试窗查看输出数据</b>
+        </p>
+        <p>所有假数据接口写在api.js里面</p>
+        <pre class="brush: js;">
+        Mock.mock('/json/members', 'get', {
+            "total|200": 12,
+            "result|2-10": [{
+                'id|+1': 12,
+                "cname": '@WORD',
+                "address": "@TITLE",
+                "thumb": '@IMAGE',
+                "from": '@STRING(3,8)',
+                "sender": '@NAME',
+                "sendtime": '@DATE("yyyy-MM-dd hh:mm:ss")'
+            }]
+        });
+    </pre>
+    </div>
+    <div class="footman"></div>
+</div>
+<script>
+$(function() {
+    previewCode();
+    $('#jsonMock').find('.ac-mock').on('click', function() {
+        $.getJSON('/json/members', function(json) {
+            console.log(json);
+        });
+
+    });
+});
+</script>

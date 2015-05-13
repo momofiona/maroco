@@ -1,0 +1,283 @@
+<div class="row m10">
+    <h1>导航菜单 <small>UI.navs</small></h1>
+    <hr>
+    <p>普通用法见左边的nav导航</p>
+    <textarea class="codemirror" mode="javascript">
+        var navs=UI.navs({ el:$('.nav') }); 
+        //定位和选中 
+        var as=navs.active('[href$="#!apps/user/main"]'); 
+        as.parentsUntil('.nav').filter('li').slice(1).find('>a').addClass('active');
+    </textarea>
+    <h3>Accordion</h3>
+    <ul class="acod x4 m2">
+        <li class="log acod-item">
+            <div class="acod-title">容器不能加class .nav</div>
+            <div class="acod-con" style="height:80px;">
+                因为要支持僵尸IE6 所以必须写一堆class .acod .acod-item .acod-title .acod-con,
+                .acod-item的作用仅仅是1px的下边距
+            </div>
+        </li>
+        <li class="log acod-item">
+            <div class="acod-title">.nav 侵入性比较强</div>
+            <div class="acod-con scroll" style="height:80px;">
+                对固定高度容器的accordion只需要给所有acod-item加上计算后的高度即可，高度=容器高度-title高度*title数量。
+                <p>如果内容超出了容器高度，请加上.scroll</p>
+                <p>这地方如果加rollbar来美化，请务必加上checkTimer:0，在expend回调中校准</p>
+            </div>
+        </li>
+        <li class="log acod-item">
+            <div class="acod-title">哈哈</div>
+            <div class="acod-con" style="height:80px;">
+                右上角的小箭头可以自定义，打开后的css使用：.nav-open .?{} 定义
+            </div>
+        </li>
+    </ul>
+    <ul class="acod x3 m2">
+        <li class="note acod-item">
+            <div class="acod-title"><i class="f f-star-empty"></i> 哈哈</div>
+            <div class="acod-con">
+                SlideDown和SlideUp有些卡卡~这瑕疵就不处理了哈 
+            </div>
+        </li>
+        <li class="note acod-item">
+            <div class="acod-title"><i class="f f-star-empty"></i> 哈哈</div>
+            <div class="acod-con">
+                css没多做限制，便于自定义   
+            </div>
+        </li>
+        <li class="safe acod-item">
+            <div class="acod-title"><i class="f f-star"></i> 哈哈</div>
+            <ul class="acod-con">
+                <li class="warn acod-item">
+                    <div class="acod-title">哈哈</div>
+                    <div class="acod-con">HelloSon，支持无限极嵌套</div>
+                </li>
+                <li class="error acod-item">
+                    <div class="acod-title">哈哈</div>
+                    <div class="acod-con">Hellogay</div>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <div class="xc"></div>
+    <textarea class="codemirror" mode="javascript" source="#accordionScript"></textarea>
+    <script id="accordionScript">
+    (function(){
+        var navs=UI.navs({
+            el:$('.acod'),
+            accordion:true,
+            speed:200,
+            init:function(){
+                //改写事件绑定，去除对内容的影响
+                var e=this.events;
+                e['click .acod-title']=e['click a'];
+                delete e['click a'];//去除对a单击监控
+                delete e['dblclick a'];//去除双击事件
+            },
+            //重写create
+            create:function(){
+                this.$('.acod-title').prepend('<b class="nav-cart f f-down"></b>');
+            }
+        });
+        navs.toggle(navs.$('.acod-title').get(0));
+    })();
+    </script>
+
+    <h3 class="xc">Win8 Explorer Menu （增强扩展方法）</h3>
+    <ul id="navsDemo" class="nav"></ul>
+    <textarea class="codemirror" mode="javascript" source="#win8NavScript"></textarea>
+    <p>高级扩展：</p>
+    <ol>
+        <li>events 中已经占用了'click a' 'dblclick a'</li>
+        <li>看UI.js中UI.navs，加注释共70行代码很容易理解</li>
+        <li>扩展成异步加载树也是相当容易的，相关方法和参数：onExpend、isParent、readystate</li>
+    </ol>
+    <div class="footman"></div>
+</div>
+<style type="text/css">
+.tcon {
+    display: inline-block;
+    background: url(../css/img/win8.8.png) center -48px no-repeat;
+}
+
+.tcon-computer {
+    background-position: center 0;
+}
+
+.tcon-folder {
+    background-position: center -16px;
+}
+
+.tcon-360 {
+    background-position: center -32px;
+}
+
+.win8 a,
+.win8 ul a {
+    border: solid 1px #fff;
+    border-radius: 0;
+    padding: 4px 4px 4px 28px;
+}
+
+.win8 a:hover,
+.win8 a.active {
+    border-color: #70a0E7;
+    background: #E5F3FB;
+    color: #444;
+}
+
+.win8 ul {
+    padding: 0;
+}
+
+.win8 li {
+    margin: 0;
+}
+
+.win8 i {
+    position: static;
+    margin: 0 4px 0 0;
+    vertical-align: text-bottom;
+}
+
+.win8 .nav-cart {
+    margin-left: -28px;
+    right: auto;
+}
+
+.win8 .nav-cart:hover {
+    text-shadow: 0 1px 10px #fff;
+    background-position: center -74px;
+}
+
+.win8 .nav-open .nav-cart {
+    background-position: center -100px;
+    filter: none;
+    -webkit-transform: none;
+    -moz-transform: none;
+    -ms-transform: none;
+    -o-transform: none;
+    transform: none;
+}
+
+.win8 .nav-open .nav-cart:hover {
+    background-position: center -126px;
+}
+</style>
+<script id="win8NavScript">
+$(function() {
+    var navs = UI.navs({
+        el: $('#navsDemo'),
+        //皮肤
+        cls: 'win8',
+        //小箭头样式
+        cartCls: 'tcon',
+        //是否开启手风琴,默认false
+        accordion: false,
+        //当前活动链接标记，自定义的
+        curA: null,
+        //三个回调
+        onExpand: function(a) {
+            console.log('onExpand', a);
+        },
+        onCollapse: function(a) {
+            console.log('onCollapse', a);
+        },
+        onClick: function(a) {
+            //双击的时候会触发两次，所以加了curA避免重复触发
+            if (this.curA == a) return false;
+            this.curA = a;
+            console.log('onClick',this.getData(a));
+            this.active(a);
+            return false;
+        },
+        //data和template展示了如何使用dot模板引擎递归生成整个nav的html，包括左边距，和本插件无任何关系，不熟不建议使用。
+        //父ID 的 key
+        pId: 'pid',
+        //儿子们的key
+        children: 'children',
+        //根节点的key，当pid为root或者为空的时候认为是根节点的子
+        rootId: 'root',
+        data: [{
+            id: 'computer',
+            pid: 'root',
+            icon: 'tcon tcon-computer',
+            label: '我的电脑'
+        }, {
+            id: 'desktop',
+            pid: 'computer',
+            icon: 'tcon tcon-folder',
+            label: '桌面'
+        }, {
+            id: 'c',
+            pid: 'computer',
+            icon: 'tcon tcon-folder',
+            label: '本地磁盘(C:)'
+        }, {
+            id: 'Program files',
+            pid: 'c',
+            icon: 'tcon tcon-folder',
+            label: 'Program files'
+        }, {
+            id: 'Windows',
+            pid: 'c',
+            icon: 'tcon tcon-folder',
+            label: 'Windows'
+        }, {
+            id: 'd',
+            pid: 'computer',
+            icon: 'tcon tcon-folder',
+            label: '本地磁盘(D:)'
+        }, {
+            id: '360',
+            pid: 'd',
+            icon: 'tcon tcon-360',
+            label: '360'
+        }],
+        cache:{},
+        //获取对应数据
+        getData:function(id){
+            //如果ID是个dom
+            if(id.tagName){
+                id=id.hash.slice(1);
+            }
+            return this.cache[id];
+        },
+        //深度标记
+        depth: 0,
+        template: _.dot('{{~it.data :v:i}}<li><a style="padding-left:{{=28+it.depth*14}}px" href="#{{=v.id}}"><i class="{{=v.icon}}"></i>{{=v.label}}</a>{{?v.children}}<ul>{{=it.template({template:it.template,data:v.children,depth:it.depth+1})}}</ul>{{?}}</li>{{~}}'),
+        //初始化
+        init: function() {
+            //生成html并插入
+            //遍历校准左边距 28+14*depth
+            var cache = this.cache,
+                parent, _self = this,
+                pId = this.pId,
+                children = this.children,
+                _list = [],
+                rootId = this.rootId;
+            _.each(this.data, function(o, i) {
+                if (o[pId]) {
+                    parent = cache[o[pId]];
+                    if (parent) {
+                        if (parent[children]) {
+                            parent[children].push(o);
+                        } else {
+                            parent[children] = [o];
+                        }
+                    }
+                }
+                if (o[pId] == rootId || o[pId] == "" || o[pId] == undefined) _list.push(o);
+                cache[o.id] = o;
+            });
+            this.data = _list;
+            this.el.html(this.template(this));
+        }
+    });
+    //选中第一个链接
+    var root = navs.active('a:eq(0)');
+    //打开第一个链接的儿子们
+    navs.toggle(root, true, 0);
+
+});
+</script>

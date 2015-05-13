@@ -1,0 +1,105 @@
+//nav
+.nav {
+    list-style: none;
+    overflow: visible;
+    padding: 0;
+    margin: 0;
+    line-height: 20px;
+    ul {
+        padding: 0 0 0 14px;
+        margin: 0;
+        display: none;
+        a {
+            padding: 3px 15px 3px 30px;
+        }
+    }
+    li {
+        margin: 1px 0;
+        list-style: none;
+        *zoom: 1;
+        *position: relative;
+    }
+    a {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        position: relative;
+        display: block;
+        cursor: pointer;
+        color: #555;
+        text-decoration: none;
+        padding: 5px 15px 5px 34px;
+        //IE6下必须带高度，不然top:50%会计算错误
+        _height: 20px;
+        white-space: nowrap;
+        border-radius: 4px;
+        &:hover {
+            background-color: #5d5d5d;
+            color: #FFF;
+        }
+        &.active {
+            background-color: #08C;
+            color: #FFF;
+        }
+    }
+    .nav-cart,i {
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        text-align: center;
+        top: 50%;
+    }
+    i {
+        // 这里不能用left，IE7的定位起始点会受padding影响
+        margin: -8px 0 0 -26px;
+    }
+}
+
+.nav-open {
+    .nav-cart {
+        &:extend(.rotate2);
+    }
+}
+.nav-cart {
+    padding: 5px;
+    margin-top: -13px;
+    right: 2px;
+    transition: -webkit-transform .3s;
+    &:hover {
+        text-shadow: 0 0 10px #fff;
+    }
+}
+//accodion
+.acod{
+    padding:0;
+    margin:0 ;
+    list-style: none;
+}
+.acod-item{
+    padding: 0;
+    margin-bottom: 1px;
+}
+.acod-title{
+    &:extend(.user-select);
+    clear: both;
+    padding:5px 10px;
+    cursor:pointer;
+    .nav-cart{
+        position: static;
+        float:right;
+        padding:0;
+        margin:0;
+    }
+}
+.acod-con{
+    clear: both;
+    display: none;
+    padding:5px;
+    margin: 0;
+    list-style: none;
+    background:#fff;
+    color: #333;
+    .log &,.silver &{
+        border-top:solid 1px #eee;
+    }
+}

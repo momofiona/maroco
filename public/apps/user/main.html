@@ -1,0 +1,42 @@
+<div class="x w7 m2 sidebar">
+    <ul class="ztree ac-orgtree m9"></ul>
+</div>
+<div id="peopleViewer" class="row mainbody">
+    <div class="toolbar">
+<!--         <span class="group xr m4 ac-user-role">
+            <b class="b link link-active active">用户</b>
+            <b class="b link">角色</b>
+            <b class="b link">权限</b>
+        </span> -->
+        <div class="xr w10">
+            <div class="ac-search"></div>
+        </div>
+        <span class="xl caption" data-dropdown>
+            <i class="f f-org"></i> <span class="ac-orgname"></span> <i class="m4 f f-arb"></i>
+        </span>
+        <div class="dropdown tips">
+            <b class="tip tip-tll"></b>
+            
+            <ul class="menu ac-company-menu">
+                <li><a class="ac-editCompany"><i class="f f-pencil"></i>编辑当前公司</a></li>
+                <li><a class="ac-addCompany"><i class="f f-add"></i>创建子公司</a></li>
+                <li><a class="ac-delCompany menu-error"><i class="f f-bin"></i>删除当前公司</a></li>
+                <li class="devider"></li>
+            </ul>
+            <ul class="menu">
+                <li><a class="ac-editDepart"><i class="f f-pencil"></i>编辑当前部门</a></li>
+                <li><a class="ac-addDepart"><i class="f f-add"></i>添加子部门</a></li>
+                <li><a class="ac-delDepar menu-error"><i class="f f-bin"></i>删除当前部门</a></li>
+                <li class="devider"></li>
+                <li><a class="ac-addDepart"><i class="f f-add"></i>新建人员</a></li>
+                <li><a class="ac-addDepart"><i class="f f-user"></i>从其他部门选择添加</a></li>
+            </ul>
+        </div>
+        <span class="wall"></span>
+        <span class="hide am-fadeinright b log rock ac-changeDepart ac-onselect" title="更换部门"><i class="f f-tool"></i> 更换部门</span>
+        <span class="hide am-fadeinright b error rock ac-addPeople ac-onselect" title="删除人员"><i class="f f-bin"></i> 删除</span>
+        <span class="hide am-fadeinright b rock log ac-frozen ac-onselect" title="冻结人员"><i class="f f-lock"></i> 冻结</span>
+        <span class="hide am-fadeinright b rock log ac-unfrozen ac-onselect" title="解冻人员"><i class="f f-unlock"></i> 解冻</span>
+    </div>
+    <div class="ac-peoples m2"></div>
+</div>

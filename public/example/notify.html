@@ -1,0 +1,301 @@
+<div class="m4">
+    <h1>提示 <small>notify</small></h1>
+    <hr>
+    </button>
+    <h2>弹出提示</h2>
+    <p id="demoNotify">
+        <span class="group">
+            <b class="b silver ac-loading">loading</b>
+            <b class="b silver ac-loading-shutdown">loading shutdown</b>
+            <b class="b info ac-clear"><i class="f f-bin"></i> 清空</b>
+        </span>
+        <span class="group">
+            <b class="b silver ac-loading2">带关闭</b>
+            <b class="b silver ac-tips">带tips</b>
+            <b class="b care ac-loading3">自动关闭</b>
+        </span>
+        <span class="group">
+            <b class="b link ac-confirm">confirm</b>
+            <b class="b link ac-confirm2">confirm2</b>
+        </span>
+        <b class="b warn ac-warn">warning</b>
+        <b class="b error ac-error">error</b>
+        <b class="b safe ac-safe">safe</b>
+        <b class="b note ac-dialog">open a dialog</b> 
+    </p>
+    <h2>当dialog用</h2>
+    <p>考虑IE6，dialog 必须有宽度,当存在buttons或者title参数的时候会被当成是dialog处理,明确指定type='dialog'时候也一样</p>
+    <div class="dialog m note w8 am-popin" style="position:relative;float:left;">
+        <i class="f f-multiply dialog-close am-rotate"></i>
+        <i class="f f-minus dialog-tool"></i>
+        <div class="dialog-title">
+            note dialog
+        </div>
+        <div class="dialog-con am-popin">
+            <i class="i i-loading"></i> 加载中
+        </div>
+        <div class="dialog-foot">
+            <b class="b log xr m4">取消</b>
+            <b class="b xr note"><i class="f f-checkmark f-lg m2"></i>确定</b>
+        </div>
+    </div>
+
+    <div class="dialog m log w8" style="position:relative;float:left;">
+        <i class="f f-multiply dialog-close am-rotate"></i>
+        <div class="dialog-title">
+            log dialog
+        </div>
+        <div class="dialog-con">
+            <i class="i i-loading"></i> 加载中
+        </div>
+        <div class="dialog-foot">
+            <b class="b log xr m4">取消</b>
+            <b class="b xr note">确定</b>
+        </div>
+    </div>
+
+    <div class="dialog m error w8 am-fadeup" style="position:relative;float:left;">
+        <i class="f f-multiply dialog-close am-rotate"></i>
+        <div class="dialog-title">
+            error dialog
+        </div>
+        <div class="dialog-con">
+            <i class="i i-loading"></i> 加载中
+        </div>
+        <div class="dialog-foot">
+            <b class="b log xr m4">取消</b>
+            <b class="b xr note">确定</b>
+        </div>
+    </div>
+    <div class="dialog m safe w8" style="position:relative;float:left;">
+        <i class="f f-multiply dialog-close am-rotate"></i>
+        <div class="dialog-title">
+            safe dialog
+        </div>
+        <div class="dialog-con">
+            <i class="i i-loading"></i> 加载中
+        </div>
+        <div class="dialog-foot">
+            <b class="b log xr m4">取消</b>
+            <b class="b xr note">确定</b>
+        </div>
+    </div>
+    <div class="dialog m silver w8" style="position:relative;float:left;">
+        <i class="f f-multiply dialog-close am-rotate"></i>
+        <div class="dialog-title">
+            silver dialog
+        </div>
+        <div class="dialog-con">
+            <i class="i i-loading"></i> 加载中
+        </div>
+        <div class="dialog-foot">
+            <b class="b log xr m4">取消</b>
+            <b class="b xr note">确定</b>
+        </div>
+    </div>
+    <div class="dialog m info w8" style="position:relative;float:left;">
+        <i class="f f-multiply dialog-close am-rotate"></i>
+        <div class="dialog-title">
+            info dialog
+        </div>
+        <div class="dialog-con">
+            <i class="i i-loading"></i> 加载中
+        </div>
+        <div class="dialog-foot">
+            <b class="b log xr m4">取消</b>
+            <b class="b xr note">确定</b>
+        </div>
+    </div>
+    <div class="dialog m link w8" style="position:relative;float:left;">
+        <i class="f f-multiply dialog-close am-rotate"></i>
+        <div class="dialog-title">
+            link dialog
+        </div>
+        <div class="dialog-con">
+            <i class="i i-loading"></i> 加载中
+        </div>
+        <div class="dialog-foot">
+            <b class="b log xr m4">取消</b>
+            <b class="b xr note">确定</b>
+        </div>
+    </div>
+    <div class="dialog m warn w8" style="position:relative;float:left;">
+        <div class="dialog-title">
+            warn dialog
+        </div>
+        <div class="dialog-con">
+            <i class="i i-loading"></i> 加载中
+        </div>
+        <div class="dialog-foot">
+            <b class="b log xr m4">取消</b>
+            <b class="b xr note">确定</b>
+        </div>
+    </div>
+    <div class="dialog m care w8" style="position:relative;float:left;">
+        <div class="dialog-title">
+            care dialog
+        </div>
+        <div class="dialog-con">
+            <i class="i i-loading"></i> 加载中
+        </div>
+        <div class="dialog-foot">
+            <b class="b log xr m4">取消</b>
+            <b class="b xr note">确定</b>
+        </div>
+    </div>
+    <div class="dialog m x2 dark noshadow" style="position:relative;float:left;">
+        <i class="f f-minus m2 dialog-tool" onclick="$(this).next().next().toggle(300)"></i>
+        <div class="dialog-title">
+            dark dialog
+        </div>
+        <div class="dialog-con">
+            Sed non urna. Donec et ante. Phasellus eu ligula. Vestibulum sit amet purus. Vivamus hendrerit, dolor at aliquet laoreet, mauris turpis porttitor velit, faucibus interdum tellus libero ac justo. Vivamus non quam. In suscipit faucibus urna.
+        </div>
+    </div>
+    <div class="xc"></div>
+    <pre class="codemirror" mode="javascript" source="#codemirror-notify"></pre>
+    <div class="footman"></div>
+</div>
+<script id="codemirror-notify">
+seajs.use(['ui/notify','ui/tips'], function(notify,tips) {
+    var loadingTip;
+    UI({
+        el: '#demoNotify',
+        events: {
+            'click .ac-loading': function(e, config) {
+                loadingTip = notify.loading({
+                    cls:'link',
+                    draggable: true
+                });
+            },
+            'click .ac-loading-shutdown': function(e, config) {
+                loadingTip && loadingTip.close();
+            },
+            'click .ac-loading2': function(e, config) {
+                notify.loading({
+                    cls: 'note',
+                    closeable: true,
+                    onclose: function() {
+                        notify.note('onclose trigger',1);
+                    }
+                });
+            },
+            'click .ac-tips': function(e, config) {
+                notify.note({
+                    msg:'notify tips 参数具体查看tips文档',
+                    timeout:10,
+                    shadow:false,
+                    id:'notify_solon',//如果窗口中已经有此ID，不会弹出新notify提示
+                    closeable: true,
+                    tips:{
+                        dir:'bc',
+                        of:this
+                    }
+                });
+
+                tips({
+                    msg:'tips模块更加精细，贴近元素',
+                    id:'notify_solon_tip',//如果窗口中已经有此ID，不会弹出新notify提示
+                    dir: 'tl',
+                    closeable:true,
+                    of: this,
+                    cls: 'safe',
+                    within:this.parentNode
+                });
+
+            },
+            'click .ac-loading3': function(e, config) {
+                notify.loading({
+                    cls: 'safe',
+                    msg: '3秒后自动关闭',
+                    timeout: 3
+                });
+            },
+            'click .ac-confirm': function(e, config) {
+                notify.confirm({
+                    msg: '确认要更改此组织权限？',
+                    //初始化之前调用
+                    oninit:function(){
+                        console.log(this.buttons);
+                    },
+                    //关闭的时候调用
+                    onclose:function(e,_config){},
+                    //默认回调，可自定义
+                    callback: function(result) {
+                        if(result){
+                            notify.safe('yes',1)
+                        }else{
+                            notify.error('no',1)
+                        }
+                    }
+                });
+            },
+            'click .ac-confirm2': function(e, config) {
+                notify.confirm({
+                    msg: '确认要更改此组织权限？',
+                    buttons:[{
+                        label:'<i class="f mr f-checkmark"></i>是',
+                        cls:'note',
+                        click:'ok'
+                    },{
+                        label:'否',
+                        cls:'error w2',
+                        click:'no'
+                    }],
+                    width:300,
+                    onclose:function(e,conf){
+                        console.log('trigger onclose');
+                    },
+                    ok: function(e,conf,op) {
+                        notify.safe(op.label);
+                        conf.close(true);
+                    },
+                    no:function(e,conf,op){
+                        notify.error(op.label);
+                        conf.close();
+                    }
+                });
+            },
+            'click .ac-warn': function(e, config) {
+                notify.warn('警告');
+            },
+            'click .ac-error': function(e, config) {
+                notify.error('错误');
+            },
+            'click .ac-safe': function(e, config) {
+                notify.safe('成功');
+            },
+            'click .ac-clear': function(e, config) {
+                var silent;
+                //当silent为true的时候，不会触发关闭回调
+                notify.clear(silent);
+            },
+            'click .ac-dialog': function(e, config) {
+                var _btn=$(this);
+                notify({
+                    title:_.uniqueId()+'番',
+                    msg:'消息msg',
+                    draggable:true,
+                    resizable:true,
+                    mask:true,
+                    oncreate:function(){
+                        var a=$('<b class="b link">继续弹</b>').click(function(){
+                            _btn.trigger('click');
+                        });
+                        this.contentEl.append(a);
+                    },
+                    buttons:[{
+                        label:'关闭',
+                        cls:'error',
+                        click:function(e,config){
+                           console.log(config);
+                           config.close();
+                        }
+                    }]
+                });
+            }
+
+        }
+    });
+});
+</script>
