@@ -75,14 +75,14 @@
     
     #logo {
         background: url(cloud/img/logo.png) center center no-repeat;
-        height: 80px;
+        height: 36px;
     }
     #sideMenu {
         position: absolute;
         left: 0;
         right: 0;
         _width: 100%;
-        top: 80px;
+        top: 36px;
         bottom: 40px;
     }
     #mainbody {
@@ -280,7 +280,7 @@
             var resize = _.throttle(function() {
                 var h = $(this).height();
                 mainbody.height(h - 40);
-                sideMenu.height(h - 80 - 40);
+                sideMenu.height(h - 36 - 40);
             }, 500, {
                 leading: false
             });

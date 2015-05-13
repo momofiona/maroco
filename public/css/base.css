@@ -1238,3 +1238,13 @@ textarea.text[required] {
   margin-top: 8px;
   background-position: left bottom;
 }
+fieldset {
+  border-radius: 2px;
+  border-color: #ddd;
+}
+fieldset legend {
+  padding: 0 5px;
+}
+fieldset p {
+  margin: .5em 0 0;
+}
