@@ -4,7 +4,8 @@
 .pica-stage,
 .pica-sidebar,
 .pica-close,
-.pica-title {
+.pica-title,
+.pica-tool {
     position: absolute;
     z-index: 1000;
 }
@@ -41,7 +42,6 @@
 .pica-loading {
     background: url(img/loading-m.gif) center center no-repeat;
 }
-
 .pica-prev,
 .pica-next {
     position: absolute;
@@ -50,10 +50,10 @@
     top: 50%;
     margin-top: -50px;
     padding: 5px;
-    color: #fff;
     font-size: 80px;
-    cursor: pointer;
     z-index: 1000;
+    cursor: pointer;
+    color: #fff;
     opacity: .3;
     &:hover {
         background: url(img/alpha-black-50.png);
@@ -126,7 +126,6 @@
     line-height: 30px;
 }
 
-.pica-tool {}
 
 .pica-scene {
     position: absolute;
@@ -155,7 +154,31 @@
     -ms-user-select: auto;
     user-select: auto;
 }
+.pica-img{
+    transition:transform .3s;
+}
 
+.pica-tool {
+    top: 50%;
+    right: 5px;
+    margin-top: 40px;
+    color: #fff;
+}
+.pica-rotate{
+    float: right;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    opacity: .5;
+    cursor: pointer;
+    &:hover{
+        opacity: .8;
+    }
+    &:active{
+        opacity: .5;
+    }
+}
 .pica-player {
     width: 100%;
     height: 100%;

@@ -164,15 +164,7 @@
                 onchange: function(itm) {
                     var _t = this;
                     if (itm.html) {
-                        $('<b class="b note m">&lt; 上一张</b>').appendTo(this.scene.children('.pica-html')).click(function() {
-                            _t.prev();
-                        });
-                        $('<b class="b note m">下一张 &gt; </b>').appendTo(this.scene.children('.pica-html')).click(function() {
-                            _t.next();
-                        })
-                        $('<b class="b error m">关闭 </b>').appendTo(this.scene.children('.pica-html')).click(function() {
-                            _t.close();
-                        })
+                        this.scene.children('.pica-html').append('<p><b class="b note m ac-pica-prev">&lt; 上一张</b><b class="b note m ac-pica-next">下一张 &gt; </b><b class="b error m ac-pica-close">关闭 </b></p>');
                     }
                 },
                 //数据

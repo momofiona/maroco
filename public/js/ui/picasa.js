@@ -24,9 +24,9 @@ define(function(require, exports, module) {
             skin: '', //皮肤
             thumb: true, //默认开启缩略图模式
             //关闭事件
-            close: function(e, config) {
-                config = config || this;
-                config.el.remove();
+            close: function(e, conf) {
+                conf = conf || this;
+                conf.el.remove();
                 $(window).off('resize.picasa');
                 $('body').removeClass('pica-body');
             },
@@ -125,11 +125,13 @@ define(function(require, exports, module) {
             setTitle: function(n, itm) {
                 return '<span class="pica-page">' + n + '/' + this.data.length + '</span>' + (itm.title || '');
             },
-            prev: function() {
-                this.play(this.active - 1);
+            prev: function(e, conf) {
+                conf = conf || this;
+                conf.play(conf.active - 1);
             },
-            next: function() {
-                this.play(this.active + 1);
+            next: function(e, conf) {
+                conf = conf || this;
+                conf.play(conf.active + 1);
             },
             //只用于眼晕bug
             timmer: null,
@@ -137,23 +139,42 @@ define(function(require, exports, module) {
                 var _t = this,
                     len = this.data.length - 1;
                 if (n < 0 || n > len) return;
+                var itm = this.data[n];
                 this.prevBtn.toggle(n !== 0);
                 this.nextBtn.toggle(n !== len);
+                this.rotater.toggle(!!itm.src);
                 this.active = n;
                 this.thumbUl.css('marginLeft', -15 - n * 32);
-                var itm = this.data[n];
                 this.title.html(_t.setTitle(n + 1, itm) || '');
                 this.insert(itm);
-                //在切换的时候去掉width和height的动画，使立即变更大小防止眼晕
-                if (this.timmer) {
-                    this.scene.addClass('pica-tranfix');
-                    clearTimeout(this.timmer);
+                //在支持css动画的浏览器上，在切换的时候去掉width和height的动画，使立即变更大小防止眼晕
+                if(this.cssPrefix){
+                    if (this.timmer) {
+                        this.scene.addClass('pica-tranfix');
+                        clearTimeout(this.timmer);
+                    }
+                    this.timmer = setTimeout(function() {
+                        _t.scene.removeClass('pica-tranfix');
+                    }, 100);
                 }
-                this.timmer = setTimeout(function() {
-                    _t.scene.removeClass('pica-tranfix');
-                }, 100);
                 //change 回调
                 this.onchange(itm);
+            },
+            //右旋90度,接受整型数字
+            rotate: function(e, conf) {
+                //当点击触发时 conf，当主动调用时this
+                conf = conf || this;
+                var itm = conf.data[conf.active];
+                //只有图片带旋转
+                if (itm.src) {
+                    itm.rotate = (itm.rotate || 0) + 1;
+                    conf.scene.children().get(0).style.cssText = conf.rotateStyle(itm);
+                }
+            },
+            //IE678使用滤镜，IE9+使用transform
+            rotateStyle: function(itm, insert) {
+                if (insert && !itm.rotate) return '';
+                return this.cssPrefix ? this.cssPrefix + 'transform:rotate(' + (90 * itm.rotate) + 'deg)' : 'filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=' + (itm.rotate + 4) % 4 + ')';
             },
             //插入场景
             insert: function(itm) {
@@ -169,7 +190,8 @@ define(function(require, exports, module) {
                                 //如果加载成功了就调整大小
                                 _t.position();
                             }
-                            _t.scene.html('<img src="' + itm.src + '" class="pica-player">');
+                            var rs = _t.rotateStyle(itm);
+                            _t.scene.html('<img src="' + itm.src + '"' + (rs ? ' style="' + rs + '"' : '') + ' class="pica-player pica-img">');
                         }
                     });
                 } else {
@@ -190,20 +212,25 @@ define(function(require, exports, module) {
                     _t.position();
                 }
             },
+            events: {
+                'click .ac-pica-close': 'close',
+                'click .ac-pica-prev': 'prev',
+                'click .ac-pica-next': 'next',
+                'click .pica-rotate': 'rotate'
+            },
             init: function() {
-                //data转化
                 var _t = this;
                 _t.el.addClass(_t.skin).html('<div class="mask pica-mask glass"></div>\
                 <div class="pica-sidebar scroll am-fadeup"></div>\
                 <div class="pica-stage  user-select am-fadeup">\
                     <div class="pica-scene"></div>\
                     <div class="pica-thumb"><ul></ul></div>\
-                    <div class="pica-tool"></div>\
                     <div class="pica-title"></div>\
-                    <div class="pica-prev">&lt;</div>\
-                    <div class="pica-next">&gt;</div>\
+                    <div class="pica-tool"><b class="f f-turnr f-2x pica-rotate"></b></div>\
+                    <div class="pica-prev ac-pica-prev">&lt;</div>\
+                    <div class="pica-next ac-pica-next">&gt;</div>\
                 </div>\
-                <div class="pica-close"></div>').appendTo($('body').addClass('pica-body'));
+                <div class="pica-close ac-pica-close"></div>').appendTo($('body').addClass('pica-body'));
                 if (_t.escExit) {
                     _t.el.attr('tabIndex', 1).keydown(function(e) {
                         if (e.keyCode == 27) {
@@ -211,18 +238,19 @@ define(function(require, exports, module) {
                         }
                     }).focus();
                 }
+                //css3前缀
+                var _els = _t.el[0].style;
+                _t.cssPrefix = _.find(['-webkit-', '-moz-', '-ms-'], function(o) {
+                    return o + 'transform' in _els;
+                });
                 //绘制主框架
                 _t.mask = _t.$('.pica-mask');
                 //按钮
-                _t.closeBtn = _t.$('.pica-close').click(function() {
-                    _t.close();
-                });
-                _t.prevBtn = _t.$('.pica-prev').click(function() {
-                    _t.prev();
-                });
-                _t.nextBtn = _t.$('.pica-next').click(function() {
-                    _t.next();
-                });
+                _t.closeBtn = _t.$('.pica-close');
+                _t.prevBtn = _t.$('.pica-prev');
+                _t.nextBtn = _t.$('.pica-next');
+                //tools
+                _t.rotater = _t.$('.pica-rotate');
                 //中心舞台
                 _t.stage = _t.$('.pica-stage').on('mousewheel', function(e, delta, deltaX, deltaY) {
                     var itm = _t.data[_t.active];
