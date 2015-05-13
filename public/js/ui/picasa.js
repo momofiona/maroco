@@ -66,7 +66,7 @@ define(function(require, exports, module) {
                 //判断当前是否是html或者iframe模式，需要重新校准窗口大小
                 var itm = _t.data[_t.active];
                 if (!itm.src) {
-                    _t.scene.height(itm.height = _h);
+                    _t.scene.height(itm.height = _h).width(itm.width = _w);
                 }
             },
             //图片需要先loading后在插入
@@ -144,7 +144,7 @@ define(function(require, exports, module) {
                 this.active = n;
                 this.thumbUl.css('marginLeft', -15 - n * 32);
                 this.title.html(_t.setTitle(n + 1, itm) || '');
-                this.insert(itm);
+                this.insert(n,itm);
                 //change 回调
                 this.onchange(itm);
             },
@@ -160,14 +160,13 @@ define(function(require, exports, module) {
                 }
             },
             //IE678使用滤镜，IE9+使用transform
-            rotateStyle: function(itm, insert) {
-                if (insert && !itm.rotate) return '';
+            rotateStyle: function(itm, isInsert) {
+                if (isInsert && !itm.rotate) return '';
                 return this.cssPrefix ? this.cssPrefix + 'transform:rotate(' + (90 * itm.rotate) + 'deg)' : 'filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=' + (itm.rotate + 4) % 4 + ')';
             },
             //插入场景
-            insert: function(itm) {
+            insert: function(active,itm) {
                 var _t = this,
-                    active = _t.active,
                     max = _t.sceneMax;
                 if (itm.src) {
                     //图片
@@ -254,7 +253,7 @@ define(function(require, exports, module) {
                     if (itm.src) {
                         e.preventDefault();
                         e.stopPropagation();
-
+                        console.log(itm.scale);
                         var _dt = delta > 0 ? 1.15 : 0.85;
                         if (!$(e.target).hasClass('pica-player')) {
                             e = {
