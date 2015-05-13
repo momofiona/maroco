@@ -76,7 +76,7 @@ define(function(require, exports, module) {
                     _t = this;
                 if (itm.readyState > 0) return; //1 加载中 2加载完成 -1加载失败
                 itm.readyState = 1;
-                _t.scene.addClass('pica-loading');
+                _t.scene.empty().addClass('pica-loading');
                 img.onload = function() {
                     itm.readyState = 2;
                     itm._width = this.width;
@@ -133,8 +133,6 @@ define(function(require, exports, module) {
                 conf = conf || this;
                 conf.play(conf.active + 1);
             },
-            //只用于眼晕bug
-            timmer: null,
             play: function(n) {
                 var _t = this,
                     len = this.data.length - 1;
@@ -147,16 +145,6 @@ define(function(require, exports, module) {
                 this.thumbUl.css('marginLeft', -15 - n * 32);
                 this.title.html(_t.setTitle(n + 1, itm) || '');
                 this.insert(itm);
-                //在支持css动画的浏览器上，在切换的时候去掉width和height的动画，使立即变更大小防止眼晕
-                if(this.cssPrefix){
-                    if (this.timmer) {
-                        this.scene.addClass('pica-tranfix');
-                        clearTimeout(this.timmer);
-                    }
-                    this.timmer = setTimeout(function() {
-                        _t.scene.removeClass('pica-tranfix');
-                    }, 100);
-                }
                 //change 回调
                 this.onchange(itm);
             },
@@ -187,10 +175,18 @@ define(function(require, exports, module) {
                     _t.load(itm, function() {
                         if (active == _t.active) {
                             if (itm.readyState == 2) {
+                                //在支持css动画的浏览器上，在切换的时候去掉width和height的动画，使立即变更大小防止眼晕
+                                if (_t.cssPrefix && _t.timmer) {
+                                    clearTimeout(_.timmer);
+                                    _t.scene.addClass('pica-tranfix');
+                                }
                                 //如果加载成功了就调整大小
                                 _t.position();
+                                if (_t.cssPrefix) _t.timmer = setTimeout(function() {
+                                    _t.scene.removeClass('pica-tranfix');
+                                }, 300);
                             }
-                            var rs = _t.rotateStyle(itm);
+                            var rs = _t.rotateStyle(itm, 1);
                             _t.scene.html('<img src="' + itm.src + '"' + (rs ? ' style="' + rs + '"' : '') + ' class="pica-player pica-img">');
                         }
                     });
