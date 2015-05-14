@@ -225,7 +225,7 @@ define(function(require, exports, module) {
                 sTimmer=setTimeout(function(){
                     _t.stip.fadeOut();
                     sTimmer=0;
-                },500);
+                },800);
                 this.stip.html(scale);
             },
             init: function() {
@@ -267,17 +267,25 @@ define(function(require, exports, module) {
                 _t.stage = _t.$('.pica-stage').on('mousewheel', function(e, delta, deltaX, deltaY) {
                     var itm = _t.data[_t.active];
                     //只对图片有效
-                    if (itm.src) {
+                    if (itm.src&& 'scale' in itm) {
                         e.preventDefault();
                         e.stopPropagation();
                         var _dt = delta > 0 ? 1.15 : 0.85,
-                        _scale=parseInt(itm.scale*_dt*100);
+                        _scale=parseInt(itm.scale*_dt*100),sceneMax=_t.sceneMax;
                         if(_scale<1||_scale>10000) return;
-                        //如果鼠标没有在图片上，就当鼠标在stage中心点上
+                        //如果鼠标没有在图片上，并且中心点在图片上，就当鼠标在stage中心点上
                         if (!$(e.target).hasClass('pica-player')) {
-                            e = {
-                                offsetX: _t.sceneMax.x,
-                                offsetY: _t.sceneMax.y
+                            //如果stage中心点在图片上,以stage中心点为准，否则以图片中心点为准
+                            if(sceneMax.x<itm.left||sceneMax.y<itm.top||sceneMax.x>itm.left+itm.width||sceneMax.y>itm.top+itm.height){
+                                e = {
+                                    offsetX: itm.left+itm.width/2,
+                                    offsetY: itm.top+itm.height/2
+                                }
+                            }else{
+                                e = {
+                                    offsetX: sceneMax.x,
+                                    offsetY: sceneMax.y
+                                }
                             }
                         }
                         itm.scale *= _dt;
