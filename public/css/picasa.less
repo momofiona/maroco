@@ -5,7 +5,8 @@
 .pica-sidebar,
 .pica-close,
 .pica-title,
-.pica-tool {
+.pica-tool,
+.pica-stip{
     position: absolute;
     z-index: 1000;
 }
@@ -41,9 +42,6 @@
 
 .pica-loading {
     background: url(img/loading-line.gif) center center no-repeat;
-    .pica-img{
-        opacity: .3;
-    }
 }
 .pica-prev,
 .pica-next {
@@ -129,7 +127,29 @@
     line-height: 30px;
     pointer-events:none;
 }
-
+.pica-stip{
+    display: none;
+    pointer-events:none;
+    background: url(img/alpha-black-50.png);
+    background: rgba(0, 0, 0, .3);
+    border-radius: 5px;
+    top: 50%;
+    left:50%;
+    color: #fff;
+    font-size: 14px;
+    padding:5px 10px;
+    margin:-16px 0 0 -25px;
+}
+    /*IE9+*/
+@media screen and (min-width: 0) {
+    .pica-stip {
+        margin-left: 0;
+        -webkit-transform: translateX(-50%);
+        -moz-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+        transform: translateX(-50%);
+    }
+}
 
 .pica-scene {
     position: absolute;
