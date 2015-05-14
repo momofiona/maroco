@@ -6,6 +6,7 @@
  * 如果带thumb参数，显示缩略图
  * 如果是html：最大尺寸，锁定缩放
  * 支持右侧固定分栏
+ * 锁定比例 1-10000
  * item:{
  *     src:'xxxx.jpg'//图片路径,有此参数表示图片模式
  *     html:'string',//有此参数表示html模式
@@ -15,7 +16,7 @@
 define(function(require, exports, module) {
     require('css/picasa.css');
     require('js/vendor/jquery.mousewheel');
-    var isIE6 = UI.browser.ie === 6,
+    var isIE6 = UI.browser.ie === 6,timmer,sTimmer,
         defaults = {
             sideWidth: 0, //右侧栏位宽度
             mask: true, //背景遮罩
@@ -66,7 +67,7 @@ define(function(require, exports, module) {
                 //判断当前是否是html或者iframe模式，需要重新校准窗口大小
                 var itm = _t.data[_t.active];
                 if (!itm.src) {
-                    _t.scene.height(itm.height = _h);
+                    _t.scene.height(itm.height = _h).width(itm.width = _w);
                 }
             },
             //图片需要先loading后在插入
@@ -101,7 +102,7 @@ define(function(require, exports, module) {
                     _t.scene.removeClass('pica-loading');
                     fn();
                 }
-                img.error = function() {
+                img.onerror = function() {
                     itm.readyState = -1;
                     _t.scene.removeClass('pica-loading');
                     fn();
@@ -144,7 +145,7 @@ define(function(require, exports, module) {
                 this.active = n;
                 this.thumbUl.css('marginLeft', -15 - n * 32);
                 this.title.html(_t.setTitle(n + 1, itm) || '');
-                this.insert(itm);
+                this.insert(n,itm);
                 //change 回调
                 this.onchange(itm);
             },
@@ -160,14 +161,13 @@ define(function(require, exports, module) {
                 }
             },
             //IE678使用滤镜，IE9+使用transform
-            rotateStyle: function(itm, insert) {
-                if (insert && !itm.rotate) return '';
+            rotateStyle: function(itm, isInsert) {
+                if (isInsert && !itm.rotate) return '';
                 return this.cssPrefix ? this.cssPrefix + 'transform:rotate(' + (90 * itm.rotate) + 'deg)' : 'filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=' + (itm.rotate + 4) % 4 + ')';
             },
             //插入场景
-            insert: function(itm) {
+            insert: function(active,itm) {
                 var _t = this,
-                    active = _t.active,
                     max = _t.sceneMax;
                 if (itm.src) {
                     //图片
@@ -176,13 +176,13 @@ define(function(require, exports, module) {
                         if (active == _t.active) {
                             if (itm.readyState == 2) {
                                 //在支持css动画的浏览器上，在切换的时候去掉width和height的动画，使立即变更大小防止眼晕
-                                if (_t.cssPrefix && _t.timmer) {
-                                    clearTimeout(_.timmer);
+                                if (_t.cssPrefix && timmer) {
+                                    clearTimeout(timmer);
                                     _t.scene.addClass('pica-tranfix');
                                 }
                                 //如果加载成功了就调整大小
                                 _t.position();
-                                if (_t.cssPrefix) _t.timmer = setTimeout(function() {
+                                if (_t.cssPrefix) timmer = setTimeout(function() {
                                     _t.scene.removeClass('pica-tranfix');
                                 }, 300);
                             }
@@ -214,6 +214,20 @@ define(function(require, exports, module) {
                 'click .ac-pica-next': 'next',
                 'click .pica-rotate': 'rotate'
             },
+            //比例提示
+            showTip:function(scale){
+                var _t=this;
+                if(sTimmer){
+                    clearTimeout(sTimmer);
+                }else{
+                    _t.stip.stop().show().fadeIn();
+                }
+                sTimmer=setTimeout(function(){
+                    _t.stip.fadeOut();
+                    sTimmer=0;
+                },500);
+                this.stip.html(scale);
+            },
             init: function() {
                 var _t = this;
                 _t.el.addClass(_t.skin).html('<div class="mask pica-mask glass"></div>\
@@ -225,6 +239,7 @@ define(function(require, exports, module) {
                     <div class="pica-tool"><b class="f f-turnr f-2x pica-rotate"></b></div>\
                     <div class="pica-prev ac-pica-prev">&lt;</div>\
                     <div class="pica-next ac-pica-next">&gt;</div>\
+                    <span class="pica-stip"></span>\
                 </div>\
                 <div class="pica-close ac-pica-close"></div>').appendTo($('body').addClass('pica-body'));
                 if (_t.escExit) {
@@ -239,6 +254,7 @@ define(function(require, exports, module) {
                 _t.cssPrefix = _.find(['-webkit-', '-moz-', '-ms-'], function(o) {
                     return o + 'transform' in _els;
                 });
+                _t.stip=_t.$('.pica-stip');
                 //绘制主框架
                 _t.mask = _t.$('.pica-mask');
                 //按钮
@@ -254,8 +270,10 @@ define(function(require, exports, module) {
                     if (itm.src) {
                         e.preventDefault();
                         e.stopPropagation();
-
-                        var _dt = delta > 0 ? 1.15 : 0.85;
+                        var _dt = delta > 0 ? 1.15 : 0.85,
+                        _scale=parseInt(itm.scale*_dt*100);
+                        if(_scale<1||_scale>10000) return;
+                        //如果鼠标没有在图片上，就当鼠标在stage中心点上
                         if (!$(e.target).hasClass('pica-player')) {
                             e = {
                                 offsetX: _t.sceneMax.x,
@@ -267,7 +285,7 @@ define(function(require, exports, module) {
                         itm.height = itm._height * itm.scale;
                         itm.left = e.offsetX - (e.offsetX - itm.left) * _dt;
                         itm.top = e.offsetY - (e.offsetY - itm.top) * _dt;
-
+                        _t.showTip(_scale+'%');
                         _t.position();
                     }
                 });
