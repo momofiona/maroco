@@ -633,6 +633,13 @@ textarea.text {
   color: #6FB3E0;
   background: #fafafa;
 }
+.tiny .i-cancel {
+  top: 2px;
+}
+.tiny .text {
+  height: 30px;
+  padding: 0;
+}
 .invalid {
   border-color: #ab2918 !important;
   color: #ab2918 !important;
@@ -1238,16 +1245,6 @@ textarea.text[required] {
   height: 8px;
   margin-top: 8px;
   background-position: left bottom;
-}
-fieldset {
-  border-radius: 2px;
-  border-color: #ddd;
-}
-fieldset legend {
-  padding: 0 5px;
-}
-fieldset p {
-  margin: .5em 0 0;
 }
 /**
  * Button

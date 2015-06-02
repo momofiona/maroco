@@ -119,7 +119,7 @@ define(function(require, exports, module) {
                     cache = this.cache;
                 this.body.children('.grid-selected').each(function(o, i) {
                     var index = this.getAttribute('index');
-                    ret.push(cache[index]);
+                    cache[index] && ret.push(cache[index]);
                 });
                 return ret;
             },
@@ -127,6 +127,13 @@ define(function(require, exports, module) {
             getRowData: function(dom) {
                 var index = $(dom).closest('.grid-row').attr('index');
                 return this.cache[index];
+            },
+            //更新当前行
+            updateRow:function(row,extend){
+                var conf=this,data=this.cache[row.attr('index')];
+                if(extend) _.extend(data,extend);
+                conf.data = conf.render([data]);
+                row.html($(conf.templates.items(conf)).html());
             },
             //调整高度以适应窗体
             layout: function() {

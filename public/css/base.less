@@ -40,7 +40,7 @@
     color: @warnColor !important;
 }
 .c-gray {
-    color: #dedede !important;
+    color: #888 !important;
 }
 .user-select {
     -webkit-user-select: none;
@@ -583,6 +583,15 @@ textarea.text{
         // box-shadow: 3px 0 6px -5px;
     }
 }
+.tiny{
+    .i-cancel {
+        top: 2px;
+    }
+    .text {
+        height: 30px;
+        padding:0;
+    }
+}
 .invalid {
     border-color: @errorColor !important;
     color: @errorColor !important;
@@ -1019,13 +1028,3 @@ textarea.text{
     background-position: left bottom;
 }
 
-fieldset{
-    border-radius: @radius;
-    border-color: #ddd;
-    legend{
-        padding: 0 5px;
-    }
-    p{
-        margin:.5em 0 0;
-    }
-}

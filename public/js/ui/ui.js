@@ -80,7 +80,7 @@ seajs.config({
             ie11: '-ms-scroll-limit' in document.documentElement.style && '-ms-ime-align' in document.documentElement.style,
             //下面这些尽量不要使用
             chrome: !!window.chrome && window.chrome.webstore,
-            firefox: !!window.sidebar && !window.sidebar.nodeName, //这是不严谨的
+            firefox: !!window.sidebar && !!window.sidebar.addSearchEngine, //这是不严谨的
             safari: /constructor/i.test(window.HTMLElement),
             opera: !!window.opera || /opera|opr/i.test(navigator.userAgent)
         };
@@ -253,7 +253,7 @@ seajs.config({
                 }).mouseleave(function() {
                     $(this).removeClass(cName + '-hover');
                 }).mousedown(function(e) {
-                    if(e.which!==1) return;
+                    if (e.which !== 1) return;
                     //解决鼠标拖动元素的时候
                     var _btn = $(this);
                     if (_btn.hasClass('active')) return;
@@ -275,8 +275,8 @@ seajs.config({
     //被动触发
     $(document).on('mouseenter', '.b.' + btnClassNames.join(',.b.'), function() {
         button(this);
-    }).on('click', 'a[href="#"]', function() {
-        return false;
+    }).on('click', 'a[href="#"]', function(e) {
+        e.preventDefault();
     });
 
     //tabs
@@ -342,7 +342,7 @@ seajs.config({
     };
     //navs
     UI.navs = function(conf) {
-        return UI($.extend(true,{
+        return UI($.extend(true, {
             events: {
                 'click a': function(e, conf) {
                     var isCart = conf.isCart(e, this);
@@ -387,15 +387,15 @@ seajs.config({
                     this.onCollapse(t);
                 } else {
                     t.addClass(op).next().slideDown(speed);
-                    if(this.accordion){
-                        this.toggle(t.parent().siblings().find('>.'+this.openCls),false);
+                    if (this.accordion) {
+                        this.toggle(t.parent().siblings().find('>.' + this.openCls), false);
                     }
                     this.onExpand(t);
                 }
             },
             speed: 'fast',
             //手风琴
-            accordion:false,
+            accordion: false,
             //链接打开时的class
             openCls: 'nav-open',
             cartCls: 'f f-down',
