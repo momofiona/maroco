@@ -84,26 +84,33 @@
         <h2>复制 <small>Zero Clipboard</small></h2>
         <p>
             <button class="b note m2" id="copy">复制</button>
-            <button class="b note" data-copy="data-copy">data-copy</button>
+            <span id="proxyBtns">
+                <button class="b note">num-1</button>
+                <button class="b note">num-2</button>
+                <button class="b note">num-3</button>
+                <button class="b note">num-4</button>
+                <button class="b note">num-5</button>
+            </span>
         </p>
-        <script>
+        <pre class="codemirror" source="#clipboardSource" mode="javascript"></pre>
+        <script id="clipboardSource">
         seajs.use(['ui/clipboard','ui/notify'],function(clip,notify) {
-            //函数拷贝
-            clip({
-                el:$('#copy'),
-                copy:function(){
-                    return _.uniqueId('Copy');
+            //直接绑定
+            clip('#copy',function(copy){
+                var txt=this.innerHTML;
+                if(copy(txt)){
+                    notify.safe(txt,1);
                 }
             });
-            //属性拷贝
-            clip({
-                el:$('#copy').next()
+
+            //代理绑定
+            clip('#proxyBtns','button',function(copy){
+                var txt=this.innerHTML;
+                if(copy(txt)){
+                    notify.safe(txt,1);
+                }
             });
-            //给元素或者元素祖先元素添加拷贝成功回调
-            $('#copy').parent().on('complete',function(e,copyText){
-                e.stopPropagation();
-                copyText&&notify.safe(copyText,1);
-            });
+            
         });
         </script>
     </section>

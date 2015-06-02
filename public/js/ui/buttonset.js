@@ -21,7 +21,6 @@ define(function(require, exports, module) {
                     $(this).addClass(ac).siblings().removeClass(ac);
                 }
                 if (config.onselect) config.onselect.call(this, e, config, data);
-                return false;
             }
         },
         tmp:_.dot('{{~it.data :v:i}}<b index="{{=i}}"{{?v.title}} title="{{=v.title}}"{{?}} class="b {{=v.cls||""}} {{=it.cls}}{{?v.on}} {{=it.cls}}-active active{{?}}">{{=v.label}}</b>{{~}}'),
