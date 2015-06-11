@@ -131,7 +131,7 @@ define(function(require, exports, module) {
                 },
                 FileUploaded: function(up, file, data) {
                     data = JSON.parse(data.response);
-                    file.dom.fadeOut().find('.ac-cancel').remove();
+                    file.dom.fadeOut(function(){$(this).remove()}).find('.ac-cancel').remove();
                     up.removeFile(file);
                     options.FileUploaded && options.FileUploaded(up, file, data);
                 },
