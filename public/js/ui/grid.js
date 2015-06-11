@@ -252,6 +252,7 @@ define(function(require, exports, module) {
                                     lis += '<li><a' + (o.cls ? ' class="' + o.cls + '"' : '') + ' href="' + (_.isFunction(o.href) ? o.href(data) : o.href || '#') + '">' + o.label + '</a></li>';
                                 }
                             });
+                            if(lis=="") return;
                             this.mask.show().appendTo('body');
                             this.el.html('<ul class="menu">' + lis + '</ul>').show().appendTo('body').position({
                                 at: 'left+' + x + ' top+' + y,

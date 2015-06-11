@@ -69,22 +69,17 @@ seajs.config({
     /**
      * 浏览器判断 主要判断IE6-10
      */
-    var browser;
-    if (!!window.ActiveXObject) {
-        //IE6-10
-        browser = {
-            ie: window.atob ? 10 : document.addEventListener ? 9 : document.querySelector ? 8 : window.XMLHttpRequest ? 7 : 6
-        }
-    } else {
-        browser = {
-            ie11: '-ms-scroll-limit' in document.documentElement.style && '-ms-ime-align' in document.documentElement.style,
-            //下面这些尽量不要使用
+    var browser = {
+            webkit: 'webkitHidden' in document,
+            ms: 'msHidden' in document, //IE10+
+            moz: 'mozHidden' in document,
+            //IE6-10
+            ie: window.ActiveXObject ? window.atob ? 10 : document.addEventListener ? 9 : document.querySelector ? 8 : window.XMLHttpRequest ? 7 : 6 : undefined,
+            // ie11: '-ms-scroll-limit' in document.documentElement.style && '-ms-ime-align' in document.documentElement.style,
             chrome: !!window.chrome && window.chrome.webstore,
-            firefox: !!window.sidebar && !!window.sidebar.addSearchEngine, //这是不严谨的
-            safari: /constructor/i.test(window.HTMLElement),
-            opera: !!window.opera || /opera|opr/i.test(navigator.userAgent)
+            firefox: !!window.sidebar && !!window.sidebar.addSearchEngine,
+            safari: /constructor/i.test(window.HTMLElement)
         };
-    }
     UI.browser = browser;
     var proto = Object.create || function(proto) {
             function F() {};

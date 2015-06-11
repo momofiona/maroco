@@ -23,7 +23,7 @@
   color: #f9c832 !important;
 }
 .c-gray {
-  color: #dedede !important;
+  color: #888 !important;
 }
 .user-select,
 .toolbar,
@@ -793,6 +793,9 @@ textarea.text[required] {
 .menu a.menu-error:hover {
   background-color: #ab2918;
   color: #FFF;
+}
+.menu-noicon a {
+  padding-left: 15px;
 }
 .devider {
   font-size: 1px;
