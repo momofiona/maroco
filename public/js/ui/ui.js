@@ -68,15 +68,14 @@ seajs.config({
     });
     /**
      * 浏览器判断 主要判断IE6-10
-     * http://googlesystem.blogspot.com/2014/08/mobile-internet-explorers-new-user-agent.html
      */
     var browser = {
             webkit: 'webkitHidden' in document,
             ms: 'msHidden' in document, //IE10+
             moz: 'mozHidden' in document,
             //IE6-10
-            ie: window.ActiveXObject ? window.atob ? 10 : document.addEventListener ? 9 : document.querySelector ? 8 : window.XMLHttpRequest ? 7 : 6 : undefined
-                // ie11: '-ms-scroll-limit' in document.documentElement.style && '-ms-ime-align' in document.documentElement.style,
+            ie: window.ActiveXObject ? window.atob ? 10 : document.addEventListener ? 9 : document.querySelector ? 8 : window.XMLHttpRequest ? 7 : 6 : undefined,
+            // ie11: '-ms-scroll-limit' in document.documentElement.style && '-ms-ime-align' in document.documentElement.style,
             chrome: !!window.chrome && window.chrome.webstore,
             firefox: !!window.sidebar && !!window.sidebar.addSearchEngine,
             safari: /constructor/i.test(window.HTMLElement)

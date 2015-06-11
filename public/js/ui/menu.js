@@ -91,11 +91,11 @@ if (jQuery) (function ($) {
             trigger = dropdown.data('dropdown-trigger');
         if (dropdown.length === 0 || !trigger) return;
         var pos=dropdown.attr('position'),top=dropdown.hasClass('tips')?'+6':'-1';
-        pos=pos?pos.split(','):[];
+        pos=pos?$.trim(pos).split(','):[];
         dropdown.position({
                 my: pos[0]||'left top'+top,
                 at: pos[1]||'left bottom',
-                of: trigger
+                of: pos[2]||trigger
             });
     }
     $(document).on('click.dropdown', '[data-dropdown]', show);

@@ -20,8 +20,8 @@
             container: document.getElementById('container'), //存放file控件的容器，一般是按钮的父元素，默认document.body
             url: '/upload', //上传路径
             filters: {
-                max_file_size: '50mb',
-                mime_types: [{
+                max_file_size: '100Gb',
+                mime_typess: [{
                     title: "Image files",
                     extensions: "jpg,gif,png"
                 }]
@@ -37,10 +37,10 @@
             },
             FileUploaded: function(up, file, data) {
                 var s;
-                if ($.inArray(data.ext, ['png', 'jpg', 'gif']) != -1) {
+                if ($.inArray(data.ext.toLowerCase(), ['png', 'jpg', 'gif']) != -1) {
                     s = '<a target="_blank" href="../temp/' + data.name + '"><img height="100" src="../temp/' + data.name + '" alt="' + data.filename + '"></a>';
                 } else {
-                    s = '<a target="_blank" href="../temp/' + data.name + '">' + data.filename + '"</a>'
+                    s = '<a target="_blank" href="../temp/' + data.name + '">' + data.filename + '</a>'
                 }
                 $('#filelist').append(s);
             }
