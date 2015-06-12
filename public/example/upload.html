@@ -7,16 +7,42 @@
     <div id="filelist"></div>
     <br />
     <div id="container">
-        <a class="upbtn b note" id="uploadBtn1" href="javascript:;"><i class="f f-upload m2"></i>文件上传</a>
-        <a class="upbtn" id="uploadBtn2" href="javascript:;">[Select files]</a>
+        <a class="upbtn b note" id="uploadBtn1" href="javascript:;"><i class="f f-upload mr"></i>快捷模式</a>
+        <a class="upbtn b note" id="uploadBtn2" href="javascript:;"><i class="f f-upload mr"></i>需要时加载模式</a>
     </div>
-
     <pre class="codemirror" source="#demo_upload_script" mode="javascript"></pre>
     <script id="demo_upload_script">
+    var addPreview = function(up,file,data) {
+        var s;
+        if ($.inArray(data.ext.toLowerCase(), ['png', 'jpg', 'gif']) != -1) {
+            s = '<a target="_blank" href="../temp/' + data.name + '"><img height="100" src="../temp/' + data.name + '" alt="' + data.filename + '"></a>';
+        } else {
+            s = '<a target="_blank" href="../temp/' + data.name + '">' + data.filename + '</a>'
+        }
+        $('#filelist').append(s);
+    }
+    //需要时加载
+    $('#uploadBtn2').click(function() {
+        seajs.use('ui/uploader', function(uploader) {
+            uploader.show({
+                url: '/upload',
+                path: '我的云盘/我的媒体',
+                data: {
+                    parentId: ""
+                },
+                //上传完每个文件后触发
+                uploaded: addPreview,
+                complete: function(up, files) {
+
+                }
+            });
+        });
+    });
+    //初始化加载
     seajs.use('ui/upload', function(upload) {
         // Custom example logic
         upload({
-            browse_button: $('.upbtn').toArray(), //这里可以是 "uploadBtn1" 或 document.getElementById("uploadBtn1") 或 ["uploadBtn1","uploadBtn2"] 或["uploadBtn1",document.getElementById("uploadBtn2")]
+            browse_button: $('#uploadBtn1')[0], //这里可以是 "uploadBtn1" 或 document.getElementById("uploadBtn1") 或 ["uploadBtn1","uploadBtn2"] 或["uploadBtn1",document.getElementById("uploadBtn2")]
             container: document.getElementById('container'), //存放file控件的容器，一般是按钮的父元素，默认document.body
             url: '/upload', //上传路径
             filters: {
@@ -35,15 +61,7 @@
             BeforeUpload: function(up, file) {
                 up.settings.url = file.url; //配合FilesAdded 更改上传路径
             },
-            FileUploaded: function(up, file, data) {
-                var s;
-                if ($.inArray(data.ext.toLowerCase(), ['png', 'jpg', 'gif']) != -1) {
-                    s = '<a target="_blank" href="../temp/' + data.name + '"><img height="100" src="../temp/' + data.name + '" alt="' + data.filename + '"></a>';
-                } else {
-                    s = '<a target="_blank" href="../temp/' + data.name + '">' + data.filename + '</a>'
-                }
-                $('#filelist').append(s);
-            }
+            FileUploaded: addPreview
         });
     });
     </script>
@@ -244,9 +262,6 @@
                         <p>监听函数参数：<strong>(uploader)</strong>
                         </p>
                         <p><code>uploader</code>为当前的plupload实例对象</p>
-
-
-
                     </td>
                 </tr>
                 <tr>
@@ -258,9 +273,6 @@
                         <p>监听函数参数：<strong>(uploader)</strong>
                         </p>
                         <p><code>uploader</code>为当前的plupload实例对象</p>
-
-
-
                     </td>
                 </tr>
                 <tr>
@@ -272,9 +284,6 @@
                         <p>监听函数参数：<strong>(uploader,option_name,new_value,old_value)</strong>
                         </p>
                         <p><code>uploader</code>为当前的plupload实例对象，<code>option_name</code>为发生改变的参数名称，<code>new_value</code>为改变后的值，<code>old_value</code>为改变前的值</p>
-
-
-
                     </td>
                 </tr>
                 <tr>
@@ -286,9 +295,6 @@
                         <p>监听函数参数：<strong>(uploader)</strong>
                         </p>
                         <p><code>uploader</code>为当前的plupload实例对象</p>
-
-
-
                     </td>
                 </tr>
                 <tr>
@@ -300,9 +306,6 @@
                         <p>监听函数参数：<strong>(uploader)</strong>
                         </p>
                         <p><code>uploader</code>为当前的plupload实例对象</p>
-
-
-
                     </td>
                 </tr>
                 <tr>
@@ -314,9 +317,6 @@
                         <p>监听函数参数：<strong>(uploader,file)</strong>
                         </p>
                         <p><code>uploader</code>为当前的plupload实例对象，<code>file</code>为触发此事件的文件对象</p>
-
-
-
                     </td>
                 </tr>
                 <tr>
@@ -328,9 +328,6 @@
                         <p>监听函数参数：<strong>(uploader,file)</strong>
                         </p>
                         <p><code>uploader</code>为当前的plupload实例对象，<code>file</code>为触发此事件的文件对象</p>
-
-
-
                     </td>
                 </tr>
                 <tr>
@@ -342,9 +339,6 @@
                         <p>监听函数参数：<strong>(uploader)</strong>
                         </p>
                         <p><code>uploader</code>为当前的plupload实例对象</p>
-
-
-
                     </td>
                 </tr>
                 <tr>
@@ -356,9 +350,6 @@
                         <p>监听函数参数：<strong>(uploader,file)</strong>
                         </p>
                         <p><code>uploader</code>为当前的plupload实例对象，<code>file</code>为触发此事件的文件对象</p>
-
-
-
                     </td>
                 </tr>
                 <tr>
@@ -370,9 +361,6 @@
                         <p>监听函数参数：<strong>(uploader,files)</strong>
                         </p>
                         <p><code>uploader</code>为当前的plupload实例对象，<code>files</code>为一个数组，里面的元素为本次事件所移除的文件对象</p>
-
-
-
                     </td>
                 </tr>
                 <tr>
@@ -384,9 +372,6 @@
                         <p>监听函数参数：<strong>(uploader,file)</strong>
                         </p>
                         <p><code>uploader</code>为当前的plupload实例对象，<code>file</code>为触发此事件的文件对象</p>
-
-
-
                     </td>
                 </tr>
                 <tr>
@@ -398,9 +383,6 @@
                         <p>监听函数参数：<strong>(uploader,files)</strong>
                         </p>
                         <p><code>uploader</code>为当前的plupload实例对象，<code>files</code>为一个数组，里面的元素为本次添加到上传队列里的文件对象</p>
-
-
-
                     </td>
                 </tr>
                 <tr>
@@ -415,9 +397,6 @@
                         <p><strong>response：</strong>服务器返回的文本</p>
                         <p><strong>responseHeaders：</strong>服务器返回的头信息</p>
                         <p><strong>status：</strong>服务器返回的http状态码，比如200</p>
-
-
-
                     </td>
                 </tr>
                 <tr>
@@ -434,9 +413,6 @@
                         <p><strong>responseHeaders：</strong>服务器返回的头信息</p>
                         <p><strong>status：</strong>服务器返回的http状态码，比如200</p>
                         <p><strong>total：</strong>该文件(指的是被切割成了许多文件小片的那个文件)的总大小，单位为字节</p>
-
-
-
                     </td>
                 </tr>
                 <tr>
@@ -448,9 +424,6 @@
                         <p>监听函数参数：<strong>(uploader,files)</strong>
                         </p>
                         <p><code>uploader</code>为当前的plupload实例对象，<code>files</code>为一个数组，里面的元素为本次已完成上传的所有文件对象</p>
-
-
-
                     </td>
                 </tr>
                 <tr>
@@ -465,9 +438,6 @@
                         <p><strong>code：</strong>错误代码，具体请参考plupload上定义的表示错误代码的常量属性</p>
                         <p><strong>file：</strong>与该错误相关的文件对象</p>
                         <p><strong>message：</strong>错误信息</p>
-
-
-
                     </td>
                 </tr>
                 <tr>
@@ -479,9 +449,6 @@
                         <p>监听函数参数：<strong>(uploader)</strong>
                         </p>
                         <p><code>uploader</code>为当前的plupload实例对象</p>
-
-
-
                     </td>
                 </tr>
             </tbody>
@@ -820,6 +787,5 @@
         </table>
     </div>
     <!-- /params -->
-
     <div class="footman"></div>
 </div>
