@@ -135,7 +135,8 @@ define(function(require, exports, module) {
                         if (isChrome) {
                             var dirInput = browserBtn.next().change(function() {
                                 _t.uploader.addFile(this);
-                            }).next().click(function() {
+                            });
+                            dirInput.next().click(function() {
                                 dirInput.trigger('click');
                                 return false;
                             });

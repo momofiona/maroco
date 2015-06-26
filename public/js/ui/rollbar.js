@@ -19,14 +19,14 @@ define(function(require, exports, module) {
         this.pressed = 0;
         this.vslider = $('<div/>', {
             'class': 'rollbar-handle',
-            style: 'top:' + setting.pathPadding+'px'
+            style: 'top:' + setting.pathPadding + 'px'
         });
         this.vpath = $('<div/>', {
             'class': 'rollbar-path-vertical'
         });
         this.hslider = $('<div/>', {
             'class': 'rollbar-handle',
-            style: 'left:' + setting.pathPadding+'px'
+            style: 'left:' + setting.pathPadding + 'px'
         });
         this.hpath = $('<div/>', {
             'class': 'rollbar-path-horizontal'
@@ -74,7 +74,7 @@ define(function(require, exports, module) {
         //IE11 突变观察者 var mutationObserver = new MutationObserver(callback);
         //anyway 还是定时器最好
         var lazytimer, _resize = function() {
-                //当判断content不在dom上的时候移除定时器
+            //当判断content不在dom上的时候移除定时器
             if (!document.getElementById(contentId)) {
                 //去掉定时器
                 clearInterval(lazytimer);
@@ -105,6 +105,8 @@ define(function(require, exports, module) {
             vdiff = h - ch,
             hdiff = w - cw,
             a = this.settings.pathPadding;
+            if(vdiff<0) vdiff=0;
+            if(hdiff<0) hdiff=0;
         /*        if (this.ch !== ch) {
                     this.ch = ch;
                     this.vpath.css({
@@ -146,7 +148,7 @@ define(function(require, exports, module) {
             this.hdiff = hdiff;
             this.hslider.width(100 * cw / w + '%');
         }
-        if (hdiff > 0) this.htrack = this.hpath.width() - this.hslider.width();
+        if (hdiff > 0) this.htrack = cw - 2 * a - this.hslider.width();
     };
 
     RollBar.prototype.scroll = function(v, h, e) {

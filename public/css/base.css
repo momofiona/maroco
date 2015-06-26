@@ -1096,8 +1096,8 @@ textarea.text[required] {
   width: 40%;
 }
 .rollbar-path-horizontal .rollbar-handle {
-  height: 40%;
-  margin-top: 30%;
+  height: 50%;
+  margin: 2px 0 0;
 }
 /* round corners for rollbar handle and paths */
 /*.rollbar-path-vertical, .rollbar-path-horizontal, .rollbar-handle {
@@ -1210,6 +1210,9 @@ textarea.text[required] {
   float: left;
   line-height: 16px;
   margin-right: 2px;
+}
+.tab a[panel] {
+  cursor: default;
 }
 .tab a:hover {
   background: #f8f8f8;
