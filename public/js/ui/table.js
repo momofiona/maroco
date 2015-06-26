@@ -484,10 +484,9 @@ define(function(require, exports, module) {
             }
         });
 
-
-        config.create && config.create.call(table, config);
         var api = {
             config: config,
+            table: table,
             load: function(filter) {
                 loader.load(filter);
             },
@@ -510,6 +509,9 @@ define(function(require, exports, module) {
                 });
                 return result;
             },
+            getSelectedRow: function() {
+                return tbody.find('.ctable-checkbox:checked').parent().parent();
+            },
             update: update,
             append: function(datas) {
                 if (!(datas instanceof Array)) {
@@ -525,6 +527,10 @@ define(function(require, exports, module) {
                 //生成html
                 var tr = $(_tbody(config)).appendTo(tbody);
                 delete config.__appendIndex__;
+                //去除全选
+                thead.find('.ctable-checkall').each(function() {
+                    this.checked = false;
+                });
                 return tr;
             },
             //清空数据
@@ -535,6 +541,7 @@ define(function(require, exports, module) {
                 paging.render(0);
             }
         }
+        config.create && config.create.call(table, api);
         return api;
     }
 });

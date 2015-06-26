@@ -129,9 +129,14 @@ define(function(require, exports, module) {
                 return this.cache[index];
             },
             //更新当前行
-            updateRow:function(row,extend){
-                var conf=this,data=this.cache[row.attr('index')];
-                if(extend) _.extend(data,extend);
+            updateRow: function(row, extend) {
+                var conf = this,
+                    data = this.cache[row.attr('index')];
+                if ($.isFunction(extend)) {
+                    extend(data);
+                } else if ($.isPlainObject(extend)) {
+                    _.extend(data, extend);
+                }
                 conf.data = conf.render([data]);
                 row.html($(conf.templates.items(conf)).html());
             },
@@ -186,6 +191,7 @@ define(function(require, exports, module) {
                     baseparams: config.baseparams,
                     count: config.count,
                     url: config.url,
+                    beforeLoad:config.beforeLoad,
                     cache: config.ajaxCache,
                     afterLoad: function(data) {
                         var cache = config.cache = config.parseData(data) || [];
@@ -209,7 +215,7 @@ define(function(require, exports, module) {
                         config.isScrolling();
                         //grid 回调
                         config.afterLoad(data, cache);
-                        config.onSelected([]);
+                        // config.onSelected([]);
                     }
                 });
                 //build
@@ -252,7 +258,7 @@ define(function(require, exports, module) {
                                     lis += '<li><a' + (o.cls ? ' class="' + o.cls + '"' : '') + ' href="' + (_.isFunction(o.href) ? o.href(data) : o.href || '#') + '">' + o.label + '</a></li>';
                                 }
                             });
-                            if(lis=="") return;
+                            if (lis == "") return;
                             this.mask.show().appendTo('body');
                             this.el.html('<ul class="menu">' + lis + '</ul>').show().appendTo('body').position({
                                 at: 'left+' + x + ' top+' + y,

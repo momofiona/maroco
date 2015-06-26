@@ -4,7 +4,7 @@
 define(function(require, exports, module) {
     var tips = require('ui/tips'),
         positions = tips.positions,
-        template = _.dot('{{?it.type=="dialog"}}{{?it.closeable!==false}}<i class="f f-multiply dialog-close am-rotate"></i>{{?}}<div class="dialog-title">{{=it.icon}}{{=it.title}}</div><div class="dialog-con">{{=it.msg}}</div>{{?it.buttons}}<div class="dialog-foot">{{~it.buttons :v:i}}<b class="b xr m4 {{=v.cls||"log"}}"{{?v.click}} click="{{=i}}"{{?}}>{{=v.label}}</b>{{~}}</div>{{?}}{{??}}{{=it.icon}}<span class="notify-con">{{=it.msg}}</span>{{?it.closeable}}<i class="f f-multiply notify-close am-rotate"></i>{{?}}{{?}}'),
+        template = _.dot('{{?it.type=="dialog"}}{{?it.closeable!==false}}<i class="f f-multiply dialog-close am-rotate"></i>{{?}}<div class="dialog-title">{{=it.icon}}{{=it.title}}</div><div class="dialog-con">{{=it.msg}}</div>{{?it.buttons}}<div class="dialog-foot">{{~it.buttons :v:i}}<{{=v.tag||"b"}} class="b xr m4 {{=v.cls||"log"}}"{{?v.click}} click="{{=i}}"{{?}}>{{=v.label}}</{{=v.tag||"b"}}>{{~}}</div>{{?}}{{??}}{{=it.icon}}<span class="notify-con">{{=it.msg}}</span>{{?it.closeable}}<i class="f f-multiply notify-close am-rotate"></i>{{?}}{{?}}'),
         defaults = {
             cls: 'log',
             type: 'notify',

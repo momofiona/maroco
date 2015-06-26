@@ -28,12 +28,14 @@ seajs.config({
             TAB: 9,
             COMMA: 188,
             DELETE: 46,
-            DOWN: 40,
             END: 35,
             ENTER: 13,
-            ESCAPE: 27,
+            ESC: 27,
             HOME: 36,
-            LEFT: 37
+            LEFT: 37,
+            UP: 38,
+            RIGHT: 39,
+            DOWN: 40
         },
         //UI widget
         UI = function(config) {
@@ -64,7 +66,8 @@ seajs.config({
         illegalCharacter: /[^\\\/:\*\?\"<>\|]/,
         //分页每页数量
         count: 15,
-        server: seajs.data.base
+        server: seajs.data.base,
+        keyCode:keyCode
     });
     /**
      * 浏览器判断 主要判断IE6-10
@@ -320,9 +323,9 @@ seajs.config({
                         //show current panel
                         tab.parent().addClass('active').siblings().removeClass('active');
                         var panel = $(panel).show();
-                        conf.onActive(t, panel);
                         conf.tab = t;
                         conf.panel = panel;
+                        conf.onActive(t, panel);
                         return false;
                     }
                 }

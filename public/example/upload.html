@@ -9,29 +9,48 @@
     <div id="container">
         <a class="upbtn b note" id="uploadBtn1" href="javascript:;"><i class="f f-upload mr"></i>快捷模式</a>
         <a class="upbtn b note" id="uploadBtn2" href="javascript:;"><i class="f f-upload mr"></i>需要时加载模式</a>
+        <!-- <input type="file" name="file_input[]" id="file_input" multiple webkitdirectory=""> -->
     </div>
     <pre class="codemirror" source="#demo_upload_script" mode="javascript"></pre>
     <script id="demo_upload_script">
-    var addPreview = function(up,file,data) {
-        var s;
-        if ($.inArray(data.ext.toLowerCase(), ['png', 'jpg', 'gif']) != -1) {
-            s = '<a target="_blank" href="../temp/' + data.name + '"><img height="100" src="../temp/' + data.name + '" alt="' + data.filename + '"></a>';
-        } else {
-            s = '<a target="_blank" href="../temp/' + data.name + '">' + data.filename + '</a>'
+    $('#file_input').change(function(e) {
+        debugger;
+    });
+    var addPreview = function(up, file, data) {
+            var s;
+            if ($.inArray(data.ext.toLowerCase(), ['png', 'jpg', 'gif']) != -1) {
+                s = '<a target="_blank" href="../temp/' + data.name + '"><img height="100" src="../temp/' + data.name + '" alt="' + data.filename + '"></a>';
+            } else {
+                s = '<a target="_blank" href="../temp/' + data.name + '">' + data.filename + '</a>'
+            }
+            $('#filelist').append(s);
         }
-        $('#filelist').append(s);
-    }
-    //需要时加载
+        //需要时加载
     $('#uploadBtn2').click(function() {
         seajs.use('ui/uploader', function(uploader) {
             uploader.show({
+                //额外参数
+                uploadPath: '我的云盘/我的媒体',
+                footLabel: '请下载客户端',
+                //上传插件固定参数
                 url: '/upload',
-                path: '我的云盘/我的媒体',
-                data: {
+                multipart_params: {
                     parentId: ""
                 },
-                //上传完每个文件后触发
+                //调用show的时候会首先更新一次配置
+                filters: {
+                    max_file_size: '100kb',
+                    mime_typess: [{
+                        title: "Image files",
+                        extensions: "jpg,gif,png"
+                    }]
+                },
+                beforeUploaded: function(up, file) {
+                    //这里可以修改file._settings
+                },
+                //上传完每个文件后触发，不同按钮可绑定不同的事件
                 uploaded: addPreview,
+                //全部上传完毕后触发，原理和uploaded完全不同，触发最后一次绑定的complete事件
                 complete: function(up, files) {
 
                 }
@@ -46,7 +65,7 @@
             container: document.getElementById('container'), //存放file控件的容器，一般是按钮的父元素，默认document.body
             url: '/upload', //上传路径
             filters: {
-                max_file_size: '100Gb',
+                max_file_size: '100kb',
                 mime_typess: [{
                     title: "Image files",
                     extensions: "jpg,gif,png"
