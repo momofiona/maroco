@@ -1,9 +1,12 @@
 <div class="m13">
-    <p class="warn">暂时不要使用table的editable接口，过于复杂，正在优化中...</p>
-    <div id="tableDemo"></div>
+    <p class="warn">暂时不要使用table的editable接口，过于复杂，正在优化中...,下面是列冻结示例，实际上是用了两个table实例联合成的</p>
+    <div class="row ellipsis">
+        <div class="x" id="tableDemoLeft"></div>
+        <div class="row" id="tableDemo"></div>
+    </div>
 </div>
 <script>
-seajs.use(['ui/table', 'ui/notify', 'ui/tips'], function(table, notify,tips) {
+seajs.use(['ui/table', 'ui/notify', 'ui/tips'], function(table, notify, tips) {
     //mock table列表
     Mock.mock('fakedata_demo.json', {
         "total|200": 12,
@@ -30,8 +33,8 @@ seajs.use(['ui/table', 'ui/notify', 'ui/tips'], function(table, notify,tips) {
         }
     });
     // 更多ctable配置接口详见 ui/table.js
-    var ctable = table({
-        container: '#tableDemo',
+    var leftTable = table({
+        container: '#tableDemoLeft',
         //排序,参考jqueryui sortable
         sortable: {
             //当有变化的时候触发
@@ -52,87 +55,140 @@ seajs.use(['ui/table', 'ui/notify', 'ui/tips'], function(table, notify,tips) {
                 notify.safe('成功更改排序');
             }
         },
-        //编辑选项
-        editable: {
-            beforeAdd: function() {
-                var a=this.find('.ac-tr-save');
-                if(a.length) {
-                    // notify.error('请先保存');
-                    notify.error({
-                        msg:'请先保存',
-                        id:'notify_q2',
-                        shadow:false,
-                        tips:{
-                            of:a,
-                            dir:'lc'
-                        }
-                    });
-                    return false;
-                }
-
-            },
-            beforeEdit: function() {},
-            create: function(inputElements, data, fx, config) {
-                var tr = this;
-                
-            },
-            post: function(data, config) {
-                var changeData={},isNew;
-                if(data.__index__){
-                    //新增的
-                    changeData=data;
-                    isNew=true;
-                }else{
-                    _.extendOwn(changeData,data);
-                }
-                var tr = this;
-                notify.confirm({
-                    test:isNew,
-                    msg: '确定更新?',
-                    callback: function(b) {
-                        if (!b) return;
-                        $.ajax({
-                            url: 'fakedata_demo_update.json',
-                            type: 'post',
-                            dataType: 'json',
-                            data: changeddata,
-                            success: function(v) {
-                                ctable.update(tr, v.result);
-                            }
-                        });
-                    }
-                })
-            },
-            remove: function(data, config) {
-                //this是tr
-                var tr = this;
-                notify.confirm({
-                    msg: '确定删除?' + data.id,
-                    callback: function(b) {
-                        if (!b) return;
-                        $.ajax({
-                            url: 'fakedata_demo_update.json',
-                            type: 'post',
-                            dataType: 'json',
-                            data: {
-                                id: data.id
-                            },
-                            success: function(v) {
-                                //ps:cache中依然存在此data数据 可考虑使用 ctable.load()刷新
-                                tr.remove();
-                            }
-                        });
-                    }
-                })
-            }
-        },
         //列配置,title,width,sortable...
         cols: [{
-            title: '序号',
+            title: 'ID',
             align: 'center',
             width: 45
         }, {
+            title: '冻结列',
+            width: 120
+        }],
+        events: {
+            'mouseenter tr': function(e, tr, data, config) {
+                ctable.getBody().children().eq($(tr).index()).trigger('mouseenter',{silent:true});
+            },
+            'mouseleave tr': function(e, tr, data, config) {
+                ctable.getBody().children().eq($(tr).index()).trigger('mouseleave',{silent:true});
+            }
+        },
+        //没有render方法的时候，执行cols内部的html
+        render: function(records) {
+            //这边返回table矩阵[[01,02,03],[11,12,13]] 用于输出的内容
+            return _.map(records, function(record, i) {
+                return [
+                    i + 1,
+                    record.cname,
+                    record.address,
+                    record.sendtime,
+                    '<a data-index="' + i + '" href="javascript:;" class="ac-getdata">查看</a>'
+                ];
+            });
+        },
+        //是否启用checkbox
+        checkbox: true,
+        count: 20,
+        //自适应屏幕
+        height: function(table) {
+            return $(window).height() - table.offset().top;
+        },
+        //滚动同步
+        onscroll: function(v, h) {
+            if (v !== undefined) {
+                ctable.contentEl.trigger('rollbar', [v, h, 1]);
+            }
+        },
+        create: function(api) {
+            api.contentEl = this.find('.rollbar-content');
+            this.find('.pager').hide();
+            this.find('.rollbar-path-vertical').remove();
+        }
+    });
+    var ctable = table({
+        container: '#tableDemo',
+        //编辑选项
+        /*        editable: {
+                    beforeAdd: function() {
+                        var a = this.find('.ac-tr-save');
+                        if (a.length) {
+                            // notify.error('请先保存');
+                            notify.error({
+                                msg: '请先保存',
+                                id: 'notify_q2',
+                                shadow: false,
+                                tips: {
+                                    of: a,
+                                    dir: 'lc'
+                                }
+                            });
+                            return false;
+                        }
+
+                    },
+                    beforeEdit: function() {},
+                    create: function(inputElements, data, fx, config) {
+                        var tr = this;
+
+                    },
+                    post: function(data, config) {
+                        var changeData = {},
+                            isNew;
+                        if (data.__index__) {
+                            //新增的
+                            changeData = data;
+                            isNew = true;
+                        } else {
+                            _.extendOwn(changeData, data);
+                        }
+                        var tr = this;
+                        notify.confirm({
+                            test: isNew,
+                            msg: '确定更新?',
+                            callback: function(b) {
+                                if (!b) return;
+                                $.ajax({
+                                    url: 'fakedata_demo_update.json',
+                                    type: 'post',
+                                    dataType: 'json',
+                                    data: changeddata,
+                                    success: function(v) {
+                                        ctable.update(tr, v.result);
+                                    }
+                                });
+                            }
+                        })
+                    },
+                    remove: function(data, config) {
+                        //this是tr
+                        var tr = this;
+                        notify.confirm({
+                            msg: '确定删除?' + data.id,
+                            callback: function(b) {
+                                if (!b) return;
+                                $.ajax({
+                                    url: 'fakedata_demo_update.json',
+                                    type: 'post',
+                                    dataType: 'json',
+                                    data: {
+                                        id: data.id
+                                    },
+                                    success: function(v) {
+                                        //ps:cache中依然存在此data数据 可考虑使用 ctable.load()刷新
+                                        tr.remove();
+                                    }
+                                });
+                            }
+                        })
+                    }
+                },*/
+        //列配置,title,width,sortable...
+        cols: [{
+            title: '人员',
+            align: 'center',
+            width: 120
+        }, {
             title: '功能需求',
+            width: 200,
             // colgroup: "组合",
             //需要排序
             order: 'cname',
@@ -146,6 +202,7 @@ seajs.use(['ui/table', 'ui/notify', 'ui/tips'], function(table, notify,tips) {
             width: 120
         }, {
             title: ' 方法调用',
+            width: 420,
             // colgroup: "组合",
             field: {
                 //带name的表示可编辑字段,必须和后端返回的值一样，用post传递到后端
@@ -167,11 +224,17 @@ seajs.use(['ui/table', 'ui/notify', 'ui/tips'], function(table, notify,tips) {
             width: 120
         }, {
             title: '操作',
-            width: 120
+            width: 520
         }],
         events: {
             'click .ac-getdata': function(event, tr, data, config) {
                 console.log(data);
+            },
+            'mouseenter tr': function(e, tr, data, config) {
+                leftTable.getBody().children().eq($(tr).index()).trigger('mouseenter',{silent:true});
+            },
+            'mouseleave tr': function(e, tr, data, config) {
+                leftTable.getBody().children().eq($(tr).index()).trigger('mouseleave',{silent:true});
             }
         },
         //没有render方法的时候，执行cols内部的html
@@ -192,10 +255,25 @@ seajs.use(['ui/table', 'ui/notify', 'ui/tips'], function(table, notify,tips) {
             //这里可以在数据显示前进行一些更改
             return data.result;
         },
+        status: $.noop,
+        //数据加载后执行
+        afterLoad: function(data, cache) {
+            // leftTable.append(data.result);
+            leftTable.config.loader.afterLoad(data);
+        },
         //自适应屏幕
         // height: 'window',
         //是否启用checkbox
-        checkbox: true,
+        checkbox: false,
+        height: function(table) {
+            return $(window).height() - table.offset().top;
+        },
+        //滚动同步
+        onscroll: function(v, h) {
+            if (v !== undefined) {
+                leftTable.contentEl.trigger('rollbar', [v, h, 1]);
+            }
+        },
         //每页数量
         count: 20,
         //加载路径
@@ -203,6 +281,9 @@ seajs.use(['ui/table', 'ui/notify', 'ui/tips'], function(table, notify,tips) {
         //需要固定提交的参数
         baseparams: {
             token: 'FFASLE*&EFFA^%$#ef'
+        },
+        create: function(api) {
+            api.contentEl = this.find('.rollbar-content');
         }
     });
     ctable.load();

@@ -262,7 +262,8 @@ define(function(require, exports, module) {
                         return false;
                     }
                 });
-                table.find('thead').find('.ctable-checkall')[0].checked = ckall;
+                var ckl = table.find('thead').find('.ctable-checkall')[0];
+                if (ckl) ckl.checked = ckall;
 
                 if (config.onselect) {
                     var tr = $(this).closest('tr').attr('data-index');
@@ -372,7 +373,8 @@ define(function(require, exports, module) {
             $.each(config.events, function(k, v) {
                 var s = k.indexOf(' ');
                 if (s < 2) return;
-                tbody.on(k.substr(0, s), k.substr(s + 1), function(event) {
+                tbody.on(k.substr(0, s), k.substr(s + 1), function(event, obj) {
+                    if (obj && obj.silent) return;
                     var tr = $(this).closest('tr');
                     var index = tr.attr('data-index');
                     var data = cache[index];
@@ -413,6 +415,7 @@ define(function(require, exports, module) {
                     if (h !== undefined) {
                         theadContainer[0].scrollLeft = h;
                     }
+                    config.onscroll && config.onscroll(v, h);
                 }
             }); //.find('>.rollbar-content');
 

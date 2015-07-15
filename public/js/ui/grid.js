@@ -215,7 +215,7 @@ define(function(require, exports, module) {
                         config.isScrolling();
                         //grid 回调
                         config.afterLoad(data, cache);
-                        // config.onSelected([]);
+                        config.onSelected([]);
                     }
                 });
                 //build

@@ -172,24 +172,21 @@
     </section>
     <section>
         <h2>重复提交阀 <small>Ajax Throttle</small></h2>
-        <p>点击按钮太快的时候可能会执行多次click，这里不对click进行throttle处理，而是直接控制ajax请求流程，使得在请求结束前忽略相同请求(target参数相同),同时可通过监控on('waiting')[ajaxOptions|undefined]执行自定义动作 </p>
+        <p>在ajax option中增加两个参数： </p>
+        <ol>
+            <li>target: [dom]（注意不是jQuery对象），作用是这个ajax在发起新的请求时会忽略上一次ajax请求，并且自动管理target的disabled</li>
+            <li>loadtip：[String | Object]  作为notify.loading的参数使用，请求时会弹出loading层</li>
+        </ol>
+        <button id="ajaxThrottleTestBtn" class="b note">试试呢</button>
         <pre class="codemirror" source="#ajaxThrottleTestScript" mode="javascript"></pre>
         <script id="ajaxThrottleTestScript">
         //_.extend  _.extednOwn  $.extend() $.extend(true)
         $(function() {
-            var target = $('#ajaxThrottleTestBtn').on('waiting', function(e, options) {
-                if (options) {
-                    // 'ajax send'; 
-                } else if (options === null) {
-                    console.log('取消了一次重复提交');
-                } else {
-                    // ajax结束，阀状态重置;
-                }
-            }).click(function() {
+            $('#ajaxThrottleTestBtn').click(function() {
                 $.ajax({
-                    url: 'big.jpg',
-                    //target参数触发了重复提交阀，target为jquery对象
-                    target: target
+                    url: 'http://www.thedivergentseries.com/js/main.min.js',
+                    loadtip:'努力加载中....',//默认：加载中
+                    target: this
                 });
             });
         });

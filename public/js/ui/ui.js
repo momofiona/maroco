@@ -2,6 +2,7 @@
 seajs.config({
     alias: {
         ztree: 'js/vendor/zTree/jquery.ztree.all-3.5.min.js',
+        ztreeCSS:'css/zTree/zTreeStyle.css',
         my97: 'js/vendor/my97/WdatePicker.js'
     },
     paths: {
@@ -73,16 +74,16 @@ seajs.config({
      * 浏览器判断 主要判断IE6-10
      */
     var browser = {
-            webkit: 'webkitHidden' in document,
-            ms: 'msHidden' in document, //IE10+
-            moz: 'mozHidden' in document,
-            //IE6-10
-            ie: window.ActiveXObject ? window.atob ? 10 : document.addEventListener ? 9 : document.querySelector ? 8 : window.XMLHttpRequest ? 7 : 6 : undefined,
-            // ie11: '-ms-scroll-limit' in document.documentElement.style && '-ms-ime-align' in document.documentElement.style,
-            chrome: !!window.chrome && window.chrome.webstore,
-            firefox: !!window.sidebar && !!window.sidebar.addSearchEngine,
-            safari: /constructor/i.test(window.HTMLElement)
-        };
+        webkit: 'webkitHidden' in document,
+        ms: 'msHidden' in document, //IE10+
+        moz: 'mozHidden' in document,
+        //IE6-10
+        ie: window.ActiveXObject ? window.atob ? 10 : document.addEventListener ? 9 : document.querySelector ? 8 : window.XMLHttpRequest ? 7 : 6 : undefined,
+        // ie11: '-ms-scroll-limit' in document.documentElement.style && '-ms-ime-align' in document.documentElement.style,
+        chrome: !!window.chrome && window.chrome.webstore,
+        firefox: !!window.sidebar && !!window.sidebar.addSearchEngine,
+        safari: /constructor/i.test(window.HTMLElement)
+    };
     UI.browser = browser;
     var proto = Object.create || function(proto) {
             function F() {};
@@ -308,10 +309,10 @@ seajs.config({
             },
             events: {
                 'click >.tab a': function(e, conf) {
+                    if (this == conf.tab) return;
                     var t = this,
                         tab = $(t),
-                        panel = tab.attr('panel');
-                    if (this == conf.tab) return;
+                        panel = conf.getPanel(this);
                     if (panel) {
                         //隐藏其他容器
                         conf.tabs.find('a').each(function(i, o) {
@@ -321,8 +322,9 @@ seajs.config({
                             box && box.hide();
                         });
                         //show current panel
+                        panel.show();
                         tab.parent().addClass('active').siblings().removeClass('active');
-                        var panel = $(panel).show();
+
                         conf.tab = t;
                         conf.panel = panel;
                         conf.onActive(t, panel);
@@ -429,12 +431,24 @@ $(document).ajaxSend(function(event, XMLHttpRequest, ajaxOptions) {
     //多次点击只发送一次ajax请求
     var t = ajaxOptions.target;
     if (t) {
-        if (t.data('_waiting_')) {
-            XMLHttpRequest.abort();
-            t.trigger('waiting', [null]);
-        } else {
-            t.data('_waiting_', 1).trigger('waiting', ajaxOptions);
+        var xhr = $(t).data('_xhr_');
+        if (xhr) {
+            xhr.abort();
         }
+        $(t).data('_xhr_', XMLHttpRequest);
+        if (t.tagName == 'BUTTON') {
+            t.disabled = true;
+        }
+    }
+    //loading
+    var tip = ajaxOptions.loadtip;
+    if (tip) {
+        seajs.use('ui/notify', function(notify) {
+            if (!ajaxOptions.loadtip) return; //已经完成无需弹出
+            ajaxOptions.loadtip = notify.loading(typeof tip == 'string' ? {
+                msg: tip
+            } : tip);
+        });
     }
 }).ajaxSuccess(function(event, XMLHttpRequest, ajaxOptions) {
     //TODO 过滤错误码
@@ -444,8 +458,15 @@ $(document).ajaxSend(function(event, XMLHttpRequest, ajaxOptions) {
     }
 }).ajaxComplete(function(event, XMLHttpRequest, ajaxOptions) {
     var t = ajaxOptions.target;
-    if (t) {
-        t.removeData('_waiting_').trigger('waiting');
+    if (t && t.tagName == 'BUTTON') {
+        t.disabled = false;
+        $(t).data('_xhr_', null);
+    }
+    //loading,如果tip不是notify对象
+    var tip = ajaxOptions.loadtip;
+    if (tip) {
+        ajaxOptions.loadtip = 0;
+        tip.close && tip.close();
     }
 });
 
