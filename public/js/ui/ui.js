@@ -2,7 +2,7 @@
 seajs.config({
     alias: {
         ztree: 'js/vendor/zTree/jquery.ztree.all-3.5.min.js',
-        ztreeCSS:'css/zTree/zTreeStyle.css',
+        ztreeCSS: 'css/zTree/zTreeStyle.css',
         my97: 'js/vendor/my97/WdatePicker.js'
     },
     paths: {
@@ -328,7 +328,7 @@ seajs.config({
                         conf.tab = t;
                         conf.panel = panel;
                         conf.onActive(t, panel);
-                        return false;
+                        e.preventDefault();
                     }
                 }
             },

@@ -191,7 +191,7 @@ define(function(require, exports, module) {
                     baseparams: config.baseparams,
                     count: config.count,
                     url: config.url,
-                    beforeLoad:config.beforeLoad,
+                    beforeLoad: config.beforeLoad,
                     cache: config.ajaxCache,
                     afterLoad: function(data) {
                         var cache = config.cache = config.parseData(data) || [];
@@ -247,7 +247,6 @@ define(function(require, exports, module) {
                     //禁止body右键菜单
                     this.contextmenu = UI(_.defaults({
                         el: $('<div class="dropdown am-fadeup">'),
-                        mask: $('<div class="mask"/>'),
                         render: function(x, y) {
                             var lis = '',
                                 data = this.data = config.getSelected();
@@ -258,27 +257,25 @@ define(function(require, exports, module) {
                                     lis += '<li><a' + (o.cls ? ' class="' + o.cls + '"' : '') + ' href="' + (_.isFunction(o.href) ? o.href(data) : o.href || '#') + '">' + o.label + '</a></li>';
                                 }
                             });
-                            if (lis == "") return;
-                            this.mask.show().appendTo('body');
-                            this.el.html('<ul class="menu">' + lis + '</ul>').show().appendTo('body').position({
+                            if (lis == "") {
+                                this.hide();
+                                return
+                            };
+                            this.el.html('<ul class="menu dropdown-menu">' + lis + '</ul>').show().appendTo('body').position({
                                 at: 'left+' + x + ' top+' + y,
                                 my: 'left top',
                                 collision: 'flipfit',
                                 of: window
                             });
                         },
+                        hide: function() {
+                            this.el.detach();
+                        },
                         init: function() {
-                            var t = this,
-                                rmv = function(e) {
-                                    e.stopPropagation();
-                                    all.detach();
-                                    el.css('left', '');
-                                },
-                                mask = this.mask.on('mousedown', rmv),
-                                el = this.el.on('click', 'a', rmv),
-                                all = mask.add(el);
-                            all.add(config.body).on('contextmenu', function() {
-                                return false;
+                            this.el.on('hide', function() {
+                                $(this).detach();
+                            }).add(config.body).on('contextmenu', function(e) {
+                                e.preventDefault();
                             });
                         }
                     }, this.contextmenu));
@@ -320,6 +317,8 @@ define(function(require, exports, module) {
                                 isWorking = true;
                                 box.appendTo('body');
                                 sheeps = config.body.children();
+                                //如果存在右键菜单，需要删除
+                                config.contextmenu && config.contextmenu.hide();
                             }
                         }
                     };
@@ -339,13 +338,13 @@ define(function(require, exports, module) {
                             }
                             doc.off('mousedown', moving);
                         });
-                    }
-                }).on('mousedown', function(e) {
-                    //判断如果点击的是自己,并且不是点的滚动条，全部解除选择
-                    if (e.target == this && e.offsetX < this.clientWidth && e.offsetY < this.clientHeight) {
-                        $(this).children().removeClass('grid-selected');
-                        config.onSelected([]);
-                        config.isSelectAll(false);
+                        if (e.target == this) {
+                            $(this).children().removeClass('grid-selected');
+                            config.onSelected([]);
+                            config.isSelectAll(false);
+                            //如果存在右键菜单，需要删除
+                            config.contextmenu && config.contextmenu.hide();
+                        }
                     }
                 });
 
