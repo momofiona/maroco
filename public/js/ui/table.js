@@ -230,10 +230,10 @@ define(function(require, exports, module) {
         if (config.sortable) {
             tbody.sortable($.extend({
                 handle: '.chandler',
-                start: function(event, ui) {},
-                sort: function() {},
-                stop: function() {},
-                update: function() {}
+                start: $.noop,
+                sort: $.noop,
+                stop: $.noop,
+                update: $.noop
             }, config.sortable));
         }
         //多选
@@ -399,7 +399,7 @@ define(function(require, exports, module) {
                     leading: false
                 });
                 $(window).on('resize', _throttle);
-                _throttle();
+                height(config.height(table));;
             } else if (config.height) {
                 height(config.height);
             }
@@ -435,8 +435,8 @@ define(function(require, exports, module) {
             //局部更新
         var update = function(tr, newdata) {
                 var index = tr.attr('data-index');
-                cache[index] = newdata;
-                config.data = config.render([newdata]);
+                cache[index] = _.extend(cache[index],newdata);
+                config.data = config.render([cache[index]]);
                 tr.html($(_tbody(config)).html());
             }
             /*            //局部fx计算
