@@ -171,12 +171,12 @@ abbr[title] {
   border-bottom: 1px dotted;
 }
 /*float*/
-.xl {
-  float: left !important;
-  *display: inline;
-}
 .xr {
   float: right !important;
+  *display: inline;
+}
+.xl {
+  float: left !important;
   *display: inline;
 }
 .xc {

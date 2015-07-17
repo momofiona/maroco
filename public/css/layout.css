@@ -171,12 +171,12 @@ abbr[title] {
   border-bottom: 1px dotted;
 }
 /*float*/
-.xl {
-  float: left !important;
-  *display: inline;
-}
 .xr {
   float: right !important;
+  *display: inline;
+}
+.xl {
+  float: left !important;
   *display: inline;
 }
 .xc {
@@ -1400,9 +1400,6 @@ textarea.text[required] {
 .m {
   margin: 10px !important;
 }
-.m0 {
-  margin: 0 !important;
-}
 .m1 {
   margin: 10px 0 0 !important;
 }
@@ -1445,6 +1442,9 @@ textarea.text[required] {
 .m14 {
   margin: 10px 10px 10px 0 !important;
 }
+.m0 {
+  margin: 0 !important;
+}
 /* padding */
 .pr {
   padding-right: .45em !important;
@@ -1454,9 +1454,6 @@ textarea.text[required] {
 }
 .p {
   padding: 10px !important;
-}
-.p0 {
-  padding: 0 !important;
 }
 .p1 {
   padding: 10px 0 0 !important;
@@ -1499,4 +1496,7 @@ textarea.text[required] {
 }
 .p14 {
   padding: 10px 10px 10px 0 !important;
+}
+.p0 {
+  padding: 0 !important;
 }

@@ -87,7 +87,7 @@ define(function(require, exports, module) {
                 //mask
                 var _msk = _t.mask;
                 if (_msk || isDialog) {
-                    _t.mask = $('<div class="mask' + (_msk ? ' glass' : '') + '"/>').appendTo('body');
+                    _t.mask = $('<div class="mask' + (_msk===true ? ' glass' : '') + '"/>').appendTo('body');
                 }
                 _t.el.appendTo(_t.mask || 'body');
                 _t.oncreate.apply(_t);
@@ -150,7 +150,8 @@ define(function(require, exports, module) {
         loading: function(config) {
             return this(_.extend({
                 icon: '<i class="i i-loading m2"></i>',
-                msg: '加载中'
+                msg: '加载中',
+                mask:1 //1 和 true 是有区别的
             }, config));
         },
         /*        verify: function(config) {

@@ -230,10 +230,10 @@ define(function(require, exports, module) {
         if (config.sortable) {
             tbody.sortable($.extend({
                 handle: '.chandler',
-                start: function(event, ui) {},
-                sort: function() {},
-                stop: function() {},
-                update: function() {}
+                start: $.noop,
+                sort: $.noop,
+                stop: $.noop,
+                update: $.noop
             }, config.sortable));
         }
         //多选
@@ -262,7 +262,8 @@ define(function(require, exports, module) {
                         return false;
                     }
                 });
-                table.find('thead').find('.ctable-checkall')[0].checked = ckall;
+                var ckl = table.find('thead').find('.ctable-checkall')[0];
+                if (ckl) ckl.checked = ckall;
 
                 if (config.onselect) {
                     var tr = $(this).closest('tr').attr('data-index');
@@ -372,7 +373,8 @@ define(function(require, exports, module) {
             $.each(config.events, function(k, v) {
                 var s = k.indexOf(' ');
                 if (s < 2) return;
-                tbody.on(k.substr(0, s), k.substr(s + 1), function(event) {
+                tbody.on(k.substr(0, s), k.substr(s + 1), function(event, obj) {
+                    if (obj && obj.silent) return;
                     var tr = $(this).closest('tr');
                     var index = tr.attr('data-index');
                     var data = cache[index];
@@ -397,7 +399,7 @@ define(function(require, exports, module) {
                     leading: false
                 });
                 $(window).on('resize', _throttle);
-                _throttle();
+                height(config.height(table));;
             } else if (config.height) {
                 height(config.height);
             }
@@ -413,6 +415,7 @@ define(function(require, exports, module) {
                     if (h !== undefined) {
                         theadContainer[0].scrollLeft = h;
                     }
+                    config.onscroll && config.onscroll(v, h);
                 }
             }); //.find('>.rollbar-content');
 
@@ -432,8 +435,8 @@ define(function(require, exports, module) {
             //局部更新
         var update = function(tr, newdata) {
                 var index = tr.attr('data-index');
-                cache[index] = newdata;
-                config.data = config.render([newdata]);
+                cache[index] = _.extend(cache[index],newdata);
+                config.data = config.render([cache[index]]);
                 tr.html($(_tbody(config)).html());
             }
             /*            //局部fx计算

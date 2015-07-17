@@ -105,8 +105,8 @@ define(function(require, exports, module) {
             vdiff = h - ch,
             hdiff = w - cw,
             a = this.settings.pathPadding;
-            if(vdiff<0) vdiff=0;
-            if(hdiff<0) hdiff=0;
+        if (vdiff < 0) vdiff = 0;
+        if (hdiff < 0) hdiff = 0;
         /*        if (this.ch !== ch) {
                     this.ch = ch;
                     this.vpath.css({
@@ -151,7 +151,7 @@ define(function(require, exports, module) {
         if (hdiff > 0) this.htrack = cw - 2 * a - this.hslider.width();
     };
 
-    RollBar.prototype.scroll = function(v, h, e) {
+    RollBar.prototype.scroll = function(v, h, silent, e) {
         var a = this.settings.pathPadding;
         if (v < 0) {
             v = 0
@@ -191,7 +191,7 @@ define(function(require, exports, module) {
             }
         }
         if (this.before.v != v || this.before.h != h) {
-            this.settings.onscroll.call(this.container, v, h)
+            if (!silent) this.settings.onscroll.call(this.container, v, h);
             this.before.v = v;
             this.before.h = h
         }
@@ -283,7 +283,7 @@ define(function(require, exports, module) {
                     return
                 }
                 if (_rollbar.vdiff > 0 || _rollbar.hdiff > 0) {
-                    _rollbar.scroll(-_rollbar.top - c * _rollbar.settings.scrollamount, -_rollbar.left - b * _rollbar.settings.scrollamount, e);
+                    _rollbar.scroll(-_rollbar.top - c * _rollbar.settings.scrollamount, -_rollbar.left - b * _rollbar.settings.scrollamount, 0, e);
                 }
 
                 if (_rollbar.settings.blockGlobalScroll && (_rollbar.vdiff || _rollbar.hdiff)) {
@@ -294,7 +294,7 @@ define(function(require, exports, module) {
             .on("dragstart" + this.namespace, function(e) {
                 e.preventDefault()
             })
-            .on('rollbar' + this.namespace, function(e, v, h) {
+            .on('rollbar' + this.namespace, function(e, v, h, silent) {
                 e.stopPropagation();
                 if (v === undefined) {
                     //手动触发
@@ -302,7 +302,7 @@ define(function(require, exports, module) {
                 } else {
                     v = $.isNumeric(v) ? v : -this.top;
                     h = $.isNumeric(h) ? h : -this.left;
-                    _rollbar.scroll(v, h)
+                    _rollbar.scroll(v, h, silent)
                 }
             })
             .on('mouseenter' + this.namespace, function() {

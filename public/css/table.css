@@ -43,21 +43,18 @@
 .ctable .ctable-colgroup {
   padding: 3px 8px;
 }
+.ctable .ctable-hover {
+  background: #ffffcb;
+}
 .ctable .chandler {
   padding: 0;
   font-size: 0;
-}
-.ctable-hide {
-  visibility: hidden;
 }
 .ctable-ebtn {
   margin: 0 3px;
   cursor: pointer;
 }
-.ctable-hover {
-  background: #ffffcb;
-}
-.ctable-hover .ctable-hide {
+.ctable-hover .vhide {
   visibility: visible;
 }
 .ctable .ctable-selected {
@@ -106,5 +103,5 @@
 }
 .ctable-checkall,
 .ctable-checkbox {
-  vertical-align: middle;
+  vertical-align: bottom;
 }

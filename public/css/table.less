@@ -38,10 +38,13 @@
         margin-bottom: -8px;
     }
     .odd {
-        background:#fdfdfd;
+        background:#fdfdfd; 
     }
     .ctable-colgroup{
     	padding:3px 8px;
+    }
+    .ctable-hover{
+        background: #ffffcb;
     }
     .chandler {
         &:extend(.user-select);
@@ -49,16 +52,12 @@
         font-size: 0;
     }
 }
-.ctable-hide{
-    visibility: hidden;
-}
 .ctable-ebtn{
     margin:0 3px;
     cursor: pointer;
 }
 .ctable-hover {
-    background: #ffffcb;
-    .ctable-hide{
+    .vhide{
         visibility: visible;
     }
 }
@@ -109,7 +108,7 @@
 	padding: 0 5px;
 }
 .ctable-checkall, .ctable-checkbox {
-    vertical-align: middle;
+    vertical-align: bottom;
 }
 
 
