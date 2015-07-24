@@ -232,7 +232,7 @@
             '#!apps/*': function(mod) {
                 seajs.use('apps/' + mod, function(view) {
                     view.show({
-                        container: mainbody.empty()
+                        container: $('<div class="am-fadeinright">').appendTo(mainbody.empty())
                     })
                 });
                 this.hashMap('apps/' + mod);

@@ -287,6 +287,8 @@ input[type=radio]{
     overflow:hidden;
     text-overflow:ellipsis;
     white-space: nowrap;
+    //解决scroll继承下来的word-break问题
+    word-wrap:normal;
 }
 /* scroll */
 
@@ -975,8 +977,8 @@ textarea.text{
 .tab{
     &:extend(.clear all);
     border-bottom: solid 1px #ddd;
-    padding: 2px 0 0;
     margin:0;
+    padding:0;
     list-style: none;
     _zoom:1;
     li{
@@ -1009,6 +1011,12 @@ textarea.text{
             cursor: default;
         }
     }
+}
+.tab-con{
+    border: solid 1px #ddd;
+    border-top: 0;
+    padding: @distance;
+    border-radius: 0 0 @radius @radius;
 }
 /*order table 和 grid 排序用到了*/
 .order {

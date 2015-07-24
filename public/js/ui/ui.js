@@ -207,12 +207,13 @@ seajs.config({
             load: function(_filter) {
                 if (!this.url) return;
                 if (this.xhr) this.xhr.abort();
-                this.beforeLoad(_filter);
                 //开启筛选
                 if (_filter) {
                     this.filter = _filter;
-                    this.page = _filter.page || 1;
+                    //如果开启了分页
+                    if(this.count) this.page = _filter.page || 1;
                 }
+                this.beforeLoad(_filter);
                 this.xhr = $.ajax({
                     url: this.url,
                     data: $.extend({}, this.baseparams, {
@@ -420,7 +421,7 @@ seajs.config({
 //全局ajax处理
 $.ajaxSetup({
     //ie 都不缓存
-    cache: !UI.browser.ie,
+    cache: false,//!UI.browser.ie,
     complete: function(jqXHR, b, c) {},
     data: {},
     error: function(jqXHR, textStatus, errorThrown) {
