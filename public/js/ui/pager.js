@@ -19,7 +19,7 @@ define(function(require, exports, module) {
             'click a': function(e, config) {
                 e.preventDefault();
                 $(this).addClass('loading');
-                config.onPageClick(event, config.page = parseInt(this.getAttribute('page')));
+                config.onPageClick(e, config.page = parseInt(this.getAttribute('page')));
                 // return false;
             }
         },

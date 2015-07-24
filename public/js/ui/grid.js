@@ -232,7 +232,7 @@ define(function(require, exports, module) {
                                     config.layout();
                                 }
                             },
-                            _resizeDefer = _.throttle(_resize, 500, {
+                            _resizeDefer = _.throttle(_resize, 100, {
                                 leading: false
                             });
                         $(window).resize(_resizeDefer);
@@ -323,8 +323,16 @@ define(function(require, exports, module) {
                         }
                     };
                 this.body.on('mousedown', function(e) {
+                    //该死的火狐没有offsetX
+                    var x = e.offsetX,
+                        y = e.offsetY;
+                    if (!x && !y) {
+                        var bcr = this.getBoundingClientRect();
+                        x = e.pageX - bcr.left;
+                        y = e.pageY - bcr.top;
+                    }
                     //左键点击，排除滚动条位置
-                    if (e.which == 1 && e.offsetX < this.clientWidth && e.offsetY < this.clientHeight) {
+                    if (e.which == 1 && x  < this.clientWidth && y < this.clientHeight) {
                         startEvent = e;
                         isMouseDown = true;
                         doc.on('mousemove', moving).one('mouseup', function(e) {

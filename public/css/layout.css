@@ -299,6 +299,7 @@ input[type=radio][disabled]:before {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  word-wrap: normal;
 }
 /* scroll */
 .noscroll,
@@ -1194,8 +1195,8 @@ textarea.text[required] {
 /* tabs */
 .tab {
   border-bottom: solid 1px #ddd;
-  padding: 2px 0 0;
   margin: 0;
+  padding: 0;
   list-style: none;
   _zoom: 1;
 }
@@ -1228,6 +1229,12 @@ textarea.text[required] {
   background: #fff;
   color: #444;
   cursor: default;
+}
+.tab-con {
+  border: solid 1px #ddd;
+  border-top: 0;
+  padding: 10px;
+  border-radius: 0 0 2px 2px;
 }
 /*order table 和 grid 排序用到了*/
 .order {

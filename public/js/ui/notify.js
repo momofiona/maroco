@@ -150,6 +150,7 @@ define(function(require, exports, module) {
         loading: function(config) {
             return this(_.extend({
                 icon: '<i class="i i-loading m2"></i>',
+                cls:'nobg noshadow',
                 msg: '加载中',
                 mask:1 //1 和 true 是有区别的
             }, config));

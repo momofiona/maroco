@@ -50,8 +50,8 @@ define(function(require, exports, module) {
                         tips({
                             id: tipid,
                             of: elem,
-                            msg: '<i class="f f-'+(isSafe?'checkmark':'warn')+'"></i> ' + msg,
-                            cls: (isSafe?'safe':'error')+' validate-tips',
+                            msg: '<i class="f f-' + (isSafe ? 'checkmark' : 'warn') + '"></i> ' + msg,
+                            cls: (isSafe ? 'safe' : 'error') + ' validate-tips',
                             dir: elem.data('dir') || this.tipDir || 'rc',
                             within: this.tipWithin || form
                         });
@@ -112,6 +112,13 @@ define(function(require, exports, module) {
             mobile: {
                 rule: /^1\d{10}$/,
                 label: '请输入11位手机号码'
+            },
+            equal: {
+                rule: function(value, pm, status, rule) {
+                    var form =this[0].form;
+                    if(form[pm].value!==value) return rule.label;
+                },
+                label: '两次输入的密码不一样'
             }
         },
         /**
@@ -209,8 +216,8 @@ define(function(require, exports, module) {
                 // A index in the conditional object containing a function to validate the field value
                 fieldRuleList = field.data('valid') || '',
                 fieldConditional = options.rules[fieldCName],
-                fieldLabel = options.labels[fieldCName]||"";
-                status.required = field.attr('required'); //undefined or required
+                fieldLabel = options.labels[fieldCName] || "";
+            status.required = field.attr('required'); //undefined or required
             //三无不列入监控范围,直接返回三围或disabled readabled
             if (options.eachField.call(field, event, status, options) === false || !fieldConditional && !status.required && !fieldRuleList) {
                 return status;
@@ -279,11 +286,11 @@ define(function(require, exports, module) {
                 options.eachInvalidField.call(field, event, status, options);
             }
             var _msg = status.msg.length ? status.msg : requiredMsg || '';
-            if(fieldLabel){
+            if (fieldLabel) {
                 if (status.isValid) {
-                    _msg = fieldLabel['valid']||_msg;
-                }else{
-                    _msg = (_.isString(fieldLabel)?fieldLabel:fieldLabel['invalid'])||_msg;
+                    _msg = fieldLabel['valid'] || _msg;
+                } else {
+                    _msg = (_.isString(fieldLabel) ? fieldLabel : fieldLabel['invalid']) || _msg;
                 }
             }
             options.showLabel(field, _msg, status.isValid);

@@ -16,7 +16,8 @@
 define(function(require, exports, module) {
     require('css/picasa.css');
     require('js/vendor/jquery.mousewheel');
-    var isIE6 = UI.browser.ie === 6,timmer,sTimmer,
+    var isIE6 = UI.browser.ie === 6,
+        timmer, sTimmer,
         defaults = {
             sideWidth: 0, //右侧栏位宽度
             mask: true, //背景遮罩
@@ -145,7 +146,7 @@ define(function(require, exports, module) {
                 this.active = n;
                 this.thumbUl.css('marginLeft', -15 - n * 32);
                 this.title.html(_t.setTitle(n + 1, itm) || '');
-                this.insert(n,itm);
+                this.insert(n, itm);
                 //change 回调
                 this.onchange(itm);
             },
@@ -163,10 +164,10 @@ define(function(require, exports, module) {
             //IE678使用滤镜，IE9+使用transform
             rotateStyle: function(itm, isInsert) {
                 if (isInsert && !itm.rotate) return '';
-                return this.cssPrefix ? this.cssPrefix + 'transform:rotate(' + (90 * itm.rotate) + 'deg)' : 'filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=' + (itm.rotate + 4) % 4 + ')';
+                return this.cssPrefix != undefined ? this.cssPrefix + 'transform:rotate(' + (90 * itm.rotate) + 'deg)' : 'filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=' + (itm.rotate + 4) % 4 + ')';
             },
             //插入场景
-            insert: function(active,itm) {
+            insert: function(active, itm) {
                 var _t = this,
                     max = _t.sceneMax;
                 if (itm.src) {
@@ -215,23 +216,22 @@ define(function(require, exports, module) {
                 'click .pica-rotate': 'rotate'
             },
             //比例提示
-            showTip:function(scale){
-                var _t=this;
-                if(sTimmer){
+            showTip: function(scale) {
+                var _t = this;
+                if (sTimmer) {
                     clearTimeout(sTimmer);
-                }else{
+                } else {
                     _t.stip.stop().show().fadeIn();
                 }
-                sTimmer=setTimeout(function(){
+                sTimmer = setTimeout(function() {
                     _t.stip.fadeOut();
-                    sTimmer=0;
-                },800);
+                    sTimmer = 0;
+                }, 800);
                 this.stip.html(scale);
             },
             init: function() {
                 var _t = this;
-                _t.el.addClass(_t.skin).html('<div class="mask pica-mask glass"></div>\
-                <div class="pica-sidebar scroll am-fadeup"></div>\
+                _t.el.addClass('mask glass pica-body ' + _t.skin).html('<div class="pica-sidebar scroll am-fadeup"></div>\
                 <div class="pica-stage  user-select am-fadeup">\
                     <div class="pica-scene"></div>\
                     <div class="pica-thumb"><ul></ul></div>\
@@ -242,6 +242,7 @@ define(function(require, exports, module) {
                     <span class="pica-stip"></span>\
                 </div>\
                 <div class="pica-close ac-pica-close"></div>').appendTo($('body').addClass('pica-body'));
+
                 if (_t.escExit) {
                     _t.el.attr('tabIndex', 1).keydown(function(e) {
                         if (e.keyCode == 27) {
@@ -251,12 +252,12 @@ define(function(require, exports, module) {
                 }
                 //css3前缀
                 var _els = _t.el[0].style;
-                _t.cssPrefix = _.find(['-webkit-', '-moz-', '-ms-'], function(o) {
+                _t.cssPrefix = _.find(['-webkit-', '-moz-', '-ms-', ''], function(o) {
                     return o + 'transform' in _els;
                 });
-                _t.stip=_t.$('.pica-stip');
+                _t.stip = _t.$('.pica-stip');
                 //绘制主框架
-                _t.mask = _t.$('.pica-mask');
+                // _t.mask = _t.$('.pica-mask');
                 //按钮
                 _t.closeBtn = _t.$('.pica-close');
                 _t.prevBtn = _t.$('.pica-prev');
@@ -267,21 +268,22 @@ define(function(require, exports, module) {
                 _t.stage = _t.$('.pica-stage').on('mousewheel', function(e, delta, deltaX, deltaY) {
                     var itm = _t.data[_t.active];
                     //只对图片有效
-                    if (itm.src&& 'scale' in itm) {
+                    if (itm.src && 'scale' in itm) {
                         e.preventDefault();
                         e.stopPropagation();
                         var _dt = delta > 0 ? 1.15 : 0.85,
-                        _scale=parseInt(itm.scale*_dt*100),sceneMax=_t.sceneMax;
-                        if(_scale<1||_scale>10000) return;
+                            _scale = parseInt(itm.scale * _dt * 100),
+                            sceneMax = _t.sceneMax;
+                        if (_scale < 1 || _scale > 10000) return;
                         //如果鼠标没有在图片上，并且中心点在图片上，就当鼠标在stage中心点上
                         if (!$(e.target).hasClass('pica-player')) {
                             //如果stage中心点在图片上,以stage中心点为准，否则以图片中心点为准
-                            if(sceneMax.x<itm.left||sceneMax.y<itm.top||sceneMax.x>itm.left+itm.width||sceneMax.y>itm.top+itm.height){
+                            if (sceneMax.x < itm.left || sceneMax.y < itm.top || sceneMax.x > itm.left + itm.width || sceneMax.y > itm.top + itm.height) {
                                 e = {
-                                    offsetX: itm.left+itm.width/2,
-                                    offsetY: itm.top+itm.height/2
+                                    offsetX: itm.left + itm.width / 2,
+                                    offsetY: itm.top + itm.height / 2
                                 }
-                            }else{
+                            } else {
                                 e = {
                                     offsetX: sceneMax.x,
                                     offsetY: sceneMax.y
@@ -293,7 +295,7 @@ define(function(require, exports, module) {
                         itm.height = itm._height * itm.scale;
                         itm.left = e.offsetX - (e.offsetX - itm.left) * _dt;
                         itm.top = e.offsetY - (e.offsetY - itm.top) * _dt;
-                        _t.showTip(_scale+'%');
+                        _t.showTip(_scale + '%');
                         _t.position();
                     }
                 });

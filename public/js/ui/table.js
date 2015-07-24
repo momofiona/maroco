@@ -418,7 +418,6 @@ define(function(require, exports, module) {
                     config.onscroll && config.onscroll(v, h);
                 }
             }); //.find('>.rollbar-content');
-
         }
         //重新计算长宽
 
