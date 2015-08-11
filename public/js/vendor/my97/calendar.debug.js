@@ -87,8 +87,8 @@ function My97DP() {
         function $($) {
             return $d.getElementsByTagName($)
         }
-        $d.onselectstart=function(){
-        	return false;
+        $d.onselectstart = function() {
+            return false;
         }
     }
 
@@ -163,7 +163,8 @@ My97DP.prototype = {
             $dp.attachEvent($dp.el, "onblur", function() {
                 if ($dp && $dp.dd.style.display == "none") {
                     $c.close();
-                    if (!$dp.valueEdited && $dp.cal.oldValue != $dp.el[$dp.elProp] && $dp.el.onchange) fireEvent($dp.el, "change")
+                    // if (!$dp.valueEdited && $dp.cal.oldValue != $dp.el[$dp.elProp] && $dp.el.onchange) fireEvent($dp.el, "change")
+                    if (!$dp.valueEdited && $dp.cal.oldValue != $dp.el[$dp.elProp]) fireEvent($dp.el, "change")
                 }
             });
             $dp.el["My97Mark"] = false
@@ -283,7 +284,9 @@ My97DP.prototype = {
     },
     update: function($) {
         if ($ === undefined) $ = this.getNewDateStr();
-        if ($dp.el[$dp.elProp] != $) $dp.el[$dp.elProp] = $;
+        if ($dp.el[$dp.elProp] != $) {
+            $dp.el[$dp.elProp] = $;
+        };
         this.setRealValue()
     },
     setRealValue: function($) {
@@ -1105,6 +1108,11 @@ function rtn($, _) {
 }
 
 function fireEvent(A, $) {
+    //这bug挺大的其实，借用jQuery来补补身子
+    if(top.jQuery) {
+        top.jQuery(A).trigger($);
+        return;
+    }
     if ($IE) A.fireEvent("on" + $);
     else {
         var _ = document.createEvent("HTMLEvents");

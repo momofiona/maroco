@@ -232,14 +232,14 @@
             '#!apps/*': function(mod) {
                 seajs.use('apps/' + mod, function(view) {
                     view.show({
-                        container: $('<div class="am-fadeinright">').appendTo(mainbody.empty())
+                        container: mainbody.empty()
                     })
                 });
                 this.hashMap('apps/' + mod);
             },
             "#!*": function(mod) {
                 if (_.indexOf(legalMod, '#!' + mod) > -1) {
-                    mainbody.empty().scrollTop(0).load(mod + '.html', function(res, state, xhr) {
+                    mainbody.empty().load(mod + '.html', function(res, state, xhr) {
                         if (state == 'error') {
                             mainbody.html(res);
                         }

@@ -7,7 +7,7 @@ define(function(require, exports, module) {
         "tb": "TB",
         "Size": "大小",
         "Close": "关闭",
-        "Init error.": "初始化错误。",
+        "Init error.": "上传初始化错误，您的浏览器是否支持Flash？",
         "Add files to the upload queue and click the start button.": "将文件添加到上传队列，然后点击”开始上传“按钮。",
         "Filename": "文件名",
         "Image format either wrong or not supported.": "图片格式错误或者不支持。",
@@ -113,6 +113,7 @@ define(function(require, exports, module) {
                         }
                     });
                     dialog.close();
+                    options.PostInit && options.PostInit.call(this, up);
                 },
                 QueueChanged: function(up) {
                     var n = up.files.length;
@@ -131,7 +132,18 @@ define(function(require, exports, module) {
                 },
                 FileUploaded: function(up, file, data) {
                     data = JSON.parse(data.response);
-                    file.dom.fadeOut(function(){$(this).remove()}).find('.ac-cancel').remove();
+                    //服务器自定义错误，切换到错误模式
+                    if (!data.success) {
+                        up.trigger('Error', {
+                            code: 'sugon',
+                            message: data.msg,
+                            file: file
+                        });
+                        return;
+                    }
+                    file.dom.fadeOut(function() {
+                        $(this).remove()
+                    }).find('.ac-cancel').remove();
                     up.removeFile(file);
                     options.FileUploaded && options.FileUploaded(up, file, data);
                 },

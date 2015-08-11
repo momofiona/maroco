@@ -1,5 +1,5 @@
 define(function(require, exports, module) {
-    var tips = require('ui/tips'),
+    var tips = require('ui/notify').tips,
         nameSpace = 'validate',
         defaults = {
             // Validate on onKeyup?

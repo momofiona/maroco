@@ -10,6 +10,7 @@ define(function(require, exports, module) {
             delay: 500,
             events: {},
             search: $.noop,
+            focus: $.noop,
             input: $.noop,
             init: function() {
                 var t = this;
@@ -61,8 +62,10 @@ define(function(require, exports, module) {
                     }
                 }).focus(function(){
                     t.el.addClass('searchbox-focus');
+                    t.focus(true);
                 }).blur(function(){
                     t.el.removeClass('searchbox-focus');
+                    t.focus();
                 });
             },
             create: function() {

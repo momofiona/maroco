@@ -8,7 +8,7 @@
             <tr>
                 <td class="flabel w3">帐号</td>
                 <td>
-                    <input class="text tiny w7" required name="account">
+                    <input class="text tiny w7" data-valid="charsafe" required name="account">
                 </td>
             </tr>
             <tr>
@@ -20,7 +20,7 @@
             <tr>
                 <td class="flabel">确认密码</td>
                 <td>
-                    <input type="password" required data-valid="password" class="text tiny w7" data-label=".ac-conpasslabel"> <span class="ac-conpasslabel"></span>
+                    <input type="password" required data-valid="equal(password)" class="text tiny w7" data-label=".ac-conpasslabel"> <span class="ac-conpasslabel"></span>
                 </td>
             </tr>
             <tr>
@@ -93,7 +93,7 @@
             <tbody>
                 <tr>
                     <td>data-valid</td>
-                    <td>接受一个空格分开的验证指令，如：remote(abc.php) float(10,20,2) int(0,) length(6,20) email url date(yyyy-MM-dd hh:mm:ss)</td>
+                    <td>接受一个空格分开的验证指令，如：remote(abc.php) float(10,20,2) int(0,) length(6,20) email charsafe equal(name) url date(yyyy-MM-dd hh:mm:ss)</td>
                     <td></td>
                 </tr>
                 <tr>
@@ -243,7 +243,7 @@ seajs.use('ui/valid', function(validate) {
         eachInvalidField:function(){},
         //条件
         rules: {
-            confirmpass: function(value, status, options) {
+/*            confirmpass: function(value, status, options) {
                 var pws = options.form[0]['password'].value;
                 if (pws && this.val() !== pws) {
                     //只要返回不为空的字符串都算验证不通过
@@ -254,7 +254,7 @@ seajs.use('ui/valid', function(validate) {
             account:{
                 rule:/^[a-z0-9_]{6,21}$/i,
                 label:'用户名由数字、字母、下划线组成，6-21个字符'
-            }
+            }*/
             /*
              第三种写法   
              demo:{

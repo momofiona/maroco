@@ -4,6 +4,7 @@
     <div class="progress m3">
         <div style="width:30%" class="note bar"></div>
     </div>
+    <div class="warn">快捷模式下，container必须可见，否则插入的flash在IE下无法初始化</div>
     <div id="filelist"></div>
     <br />
     <div id="container">
@@ -66,7 +67,7 @@
             url: '/upload', //上传路径
             filters: {
                 max_file_size: '100kb',
-                mime_typess: [{
+                mime_types: [{
                     title: "Image files",
                     extensions: "jpg,gif,png"
                 }]

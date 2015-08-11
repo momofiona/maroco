@@ -92,7 +92,8 @@
     </div>
     <div class="xc"></div>
     <textarea class="codemirror" mode="javascript">
-        seajs.use('ui/tips', function(tips) {
+        seajs.use('ui/notify', function(notify) {
+            var tips=notify.tips;
             var select = $('#tipsTipDemo').change(function() {
                     var va = this.options[this.selectedIndex].text;
                     tips({
@@ -113,7 +114,8 @@
     <div class="footman"></div>
 </div>
 <script>
-seajs.use('ui/tips', function(tips) {
+seajs.use('ui/notify', function(notify) {
+    var tips=notify.tips;
     var select = $('#tipsTipDemo').change(function() {
             var va = this.options[this.selectedIndex].text;
             tips({
