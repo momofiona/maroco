@@ -26,8 +26,6 @@
   color: #888 !important;
 }
 .user-select,
-.toolbar,
-.cutebar,
 .notify-tool,
 .notify-con,
 .dialog-title,
@@ -314,6 +312,7 @@ input[type=radio][disabled]:before {
   height: 100%;
 }
 .scroll {
+  *zoom: 1;
   overflow: auto !important;
 }
 .scroll::-webkit-scrollbar {
@@ -513,7 +512,7 @@ a:hover {
 .cutebar .bridge {
   font-size: 24px;
   color: #eee;
-  font-family: vedana;
+  font-family: simsun;
   margin-right: 0 10px 0 5px;
 }
 .toolbar .caption,
@@ -677,6 +676,7 @@ textarea.text[required] {
   overflow: auto;
   overflow-x: hidden;
   background: url(img/alpha-black-50.png) no-repeat -10px -10px;
+  position: fixed;
   -webkit-backface-visibility: hidden;
   /*    &:before {
         content: ""; //解决chrome下子元素动画影响自身rgba的a
@@ -761,7 +761,7 @@ textarea.text[required] {
   min-width: 100px;
   list-style: none;
   overflow: visible;
-  padding: 1px 0;
+  padding: 0;
   margin: 0;
 }
 .menu li {
@@ -786,8 +786,8 @@ textarea.text[required] {
   margin-left: -21px;
 }
 .menu a:hover {
-  background-color: #08C;
-  color: #FFF;
+  background-color: #08c;
+  color: #fff;
 }
 .menu a.menu-error {
   color: #ab2918;
@@ -802,8 +802,8 @@ textarea.text[required] {
 .devider {
   font-size: 1px;
   border-top: solid 1px #f4f4f4;
-  border-top: solid 1px rgba(60, 60, 60, 0.15);
-  margin: 3px 0;
+  border-top: solid 1px rgba(200, 200, 200, 0.15);
+  margin: 0;
 }
 /*tooltip*/
 .tips {
@@ -1193,6 +1193,9 @@ textarea.text[required] {
   transition: width 0.45s cubic-bezier(0.23, 1, 0.32, 1), background-color 1s;
 }
 /* tabs */
+.tabs {
+  *zoom: 1;
+}
 .tab {
   border-bottom: solid 1px #ddd;
   margin: 0;
@@ -1330,10 +1333,10 @@ input.bl {
   color: #aaa !important;
   border-color: #dddddd !important;
 }
-.b[data-dropdown] {
-  padding-left: .5em;
-  padding-right: .5em;
-}
+/*.b[data-dropdown]{
+    padding-left: .5em;
+    padding-right: .5em;
+}*/
 .log-hover,
 .log-active {
   background-color: #fefefe;

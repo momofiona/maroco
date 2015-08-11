@@ -6,7 +6,13 @@
  */
 define(function(require, exports, module) {
     var namespace = '.ecopy_' + _.uniqueId();
-    if (UI.browser.firefox || UI.browser.safari) {
+    //chrome42以下的版本不支持copy
+    var chromeBelow42;
+    if (UI.browser.chrome) {
+        chromeBelow42 = navigator.userAgent.match(/Chrome\/(\d+)\./);
+        chromeBelow42 = chromeBelow42 ? chromeBelow42[1] < 42 : false;
+    }
+    if (chromeBelow42 || UI.browser.firefox || UI.browser.safari) {
         //insert
         var movie, wrap, firstOut = 0,
             width = 200, //估计最大宽度和高度
@@ -35,7 +41,7 @@ define(function(require, exports, module) {
         movie = $('<embed src="' + moviePath + '" loop="false" menu="false" quality="best" bgcolor="#ffffff" width="' + width + '" height="' + height + '" align="middle" allowScriptAccess="always" allowFullScreen="false" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" flashvars="' + flashvars + '" wmode="transparent" />')[0];
         wrap = $('<div style="position:absolute;left:-1000px;top:100px;overflow:hidden;z-index:125058687">').append(movie).appendTo('body');
         // mouseover mouseout mouseover
-        return function(elem, proxy, fn) {
+        var ret = function(elem, proxy, fn) {
             if (!fn) {
                 fn = proxy;
                 proxy = '';
@@ -63,7 +69,16 @@ define(function(require, exports, module) {
                     wrap.css('left', -1000);
                 }
             });
+            if (!navigator.plugins['Shockwave Flash']) {
+                $(elem).on('click' + namespace, proxy, function(e) {
+                    require.async('ui/notify', function(n) {
+                        n.error('您的浏览器无法使用复制功能,请安装Flash');
+                    });
+                });
+            }
         }
+        ret.flash = true;
+        return ret;
     }
 
     //不使用clipboardData

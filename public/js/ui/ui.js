@@ -68,7 +68,7 @@ seajs.config({
         //分页每页数量
         count: 15,
         server: seajs.data.base,
-        keyCode:keyCode
+        keyCode: keyCode
     });
     /**
      * 浏览器判断 主要判断IE6-10
@@ -192,7 +192,26 @@ seajs.config({
     $.fn.input = function(handler) {
         return this.on('input', handler);
     };
-
+    //扩展serializeObject
+    $.fn.serializeObject = function(trim) {
+        var params = this.serializeArray(),
+            res = {},
+            tmp, v, un;
+        _.each(params, function(o) {
+            tmp = res[o.name];
+            v = trim ? $.trim(o.value) : o.value;
+            if (tmp !== un) {
+                if (_.isArray(tmp)) {
+                    tmp.push(v);
+                } else {
+                    res[o.name] = [tmp, v];
+                }
+            } else {
+                res[o.name] = v;
+            }
+        });
+        return res;
+    };
     /**
      * 基础加载器
      * 分页： page count total
@@ -211,11 +230,12 @@ seajs.config({
                 if (_filter) {
                     this.filter = _filter;
                     //如果开启了分页
-                    if(this.count) this.page = _filter.page || 1;
+                    if (this.count) this.page = _filter.page || 1;
                 }
                 this.beforeLoad(_filter);
                 this.xhr = $.ajax({
                     url: this.url,
+                    loadtip: this.loadtip,
                     data: $.extend({}, this.baseparams, {
                         page: this.page,
                         count: this.count
@@ -296,11 +316,11 @@ seajs.config({
                     ret;
                 if (id) {
                     if (cache[id]) {
-                        return cache[id]
+                        return cache[id];
                     } else if (id.indexOf('#') == 0) {
                         ret = $(id);
                     } else {
-                        ret = this.$(id);
+                        ret = this.el.children(id);
                     }
                     //如果存在则返回并缓存
                     if (ret.length) {
@@ -412,6 +432,10 @@ seajs.config({
             }
         }, conf));
     };
+    //layout([{}])
+    UI.layout = function() {
+
+    };
     //暴露全局调用
     window.UI = UI;
 })(jQuery);
@@ -421,7 +445,7 @@ seajs.config({
 //全局ajax处理
 $.ajaxSetup({
     //ie 都不缓存
-    cache: false,//!UI.browser.ie,
+    cache: false, //!UI.browser.ie,
     complete: function(jqXHR, b, c) {},
     data: {},
     error: function(jqXHR, textStatus, errorThrown) {
@@ -453,9 +477,18 @@ $(document).ajaxSend(function(event, XMLHttpRequest, ajaxOptions) {
     }
 }).ajaxSuccess(function(event, XMLHttpRequest, ajaxOptions) {
     //TODO 过滤错误码
-    if (XMLHttpRequest.responseJSON && XMLHttpRequest.responseJSON.errorCode == 999) {
-        //没有登录 跳转到登录页面
-        return;
+    var v = XMLHttpRequest.responseJSON;
+    if (v && !v.success && v.data == 20000006) {
+        seajs.use('ui/notify', function(notify) {
+            notify.error('您还没有登录');
+            //清空user
+            $.removeCookie('user', {
+                path: '/'
+            });
+            _.delay(function() {
+                location = UI.server + 'login.html';
+            }, 3000);
+        });
     }
 }).ajaxComplete(function(event, XMLHttpRequest, ajaxOptions) {
     var t = ajaxOptions.target;

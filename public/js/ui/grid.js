@@ -154,7 +154,7 @@ define(function(require, exports, module) {
                     {{~}}\
                     </div>'),
                 items: _.dot('{{~it.data :trdata:index}}\
-                    <div class="grid-row" index="{{=index}}">\
+                    <div class="grid-row{{?trdata.selected}} grid-selected{{?}}" index="{{=index}}">\
                     {{?it.checkbox}}<div class="grid-col grid-check"><i></i></div>{{?}}\
                     {{~it.cols :col:i}}\
                     <div class="grid-col c{{=i}} {{=col.cls||""}}" {{?col.style}}style="{{=col.style}}"{{?}}>{{=trdata[i]===undefined||trdata[i]===null?"":trdata[i]}}</div>\
@@ -163,7 +163,10 @@ define(function(require, exports, module) {
                     {{~}}')
             },
             //loader暴露的接口
-            load: function(filter) {
+            load: function(filter,toBase) {
+                if(toBase){
+                    _.extend(this.loader.baseparams,filter);
+                }
                 this.loader.load(filter);
             },
             init: function() {
@@ -189,6 +192,7 @@ define(function(require, exports, module) {
 
                 var loader = this.loader = UI.loader({
                     baseparams: config.baseparams,
+                    loadtip: config.loadtip,
                     count: config.count,
                     url: config.url,
                     beforeLoad: config.beforeLoad,
@@ -215,7 +219,10 @@ define(function(require, exports, module) {
                         config.isScrolling();
                         //grid 回调
                         config.afterLoad(data, cache);
-                        config.onSelected([]);
+                        var selected=_.filter(config.data,function(o){
+                            return o.selected;
+                        });
+                        config.onSelected(selected);
                     }
                 });
                 //build
@@ -248,6 +255,9 @@ define(function(require, exports, module) {
                     this.contextmenu = UI(_.defaults({
                         el: $('<div class="dropdown am-fadeup">'),
                         render: function(x, y) {
+                            //触发menu消失
+                            $(document).trigger('click.dropdown');
+
                             var lis = '',
                                 data = this.data = config.getSelected();
                             _.each(this.menus, function(o, i) {
@@ -267,6 +277,7 @@ define(function(require, exports, module) {
                                 collision: 'flipfit',
                                 of: window
                             });
+                            this.show&&this.show();
                         },
                         hide: function() {
                             this.el.detach();
@@ -332,7 +343,7 @@ define(function(require, exports, module) {
                         y = e.pageY - bcr.top;
                     }
                     //左键点击，排除滚动条位置
-                    if (e.which == 1 && x  < this.clientWidth && y < this.clientHeight) {
+                    if (e.which == 1 && x < this.clientWidth && y < this.clientHeight) {
                         startEvent = e;
                         isMouseDown = true;
                         doc.on('mousemove', moving).one('mouseup', function(e) {

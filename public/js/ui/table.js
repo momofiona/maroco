@@ -202,7 +202,8 @@ define(function(require, exports, module) {
             tbody = scrollBody.find('tbody'),
             tfoot = table.find('>.ctable-foot'),
             statubar = tfoot.find('.ctable-status'),
-            spaging = tfoot.find('.pager');
+            spaging = tfoot.find('.pager'),
+            selectAll = thead.find('.ctable-checkall')[0] || {};
         $(config.container).append(table);
 
         thead.on('click', '.order', function(e) {
@@ -238,16 +239,14 @@ define(function(require, exports, module) {
         }
         //多选
         if (config.checkbox) {
-            thead.on('click', '.ctable-checkall', function(e) {
+            $(selectAll).on('click', function(e) {
                 //全选
                 e.stopPropagation();
                 var ck = this.checked;
                 tbody.find('.ctable-checkbox').each(function(i, o) {
                     o.checked = ck;
                 });
-                table.find('thead').find('.ctable-checkall').each(function() {
-                    this.checked = ck;
-                });
+                // selectAll.checked = ck;
                 if (config.onselect) {
                     config.onselect.call(this, this.checked ? cache : []);
                 }
@@ -262,8 +261,7 @@ define(function(require, exports, module) {
                         return false;
                     }
                 });
-                var ckl = table.find('thead').find('.ctable-checkall')[0];
-                if (ckl) ckl.checked = ckall;
+                selectAll.checked = ckall;
 
                 if (config.onselect) {
                     var tr = $(this).closest('tr').attr('data-index');
@@ -378,7 +376,7 @@ define(function(require, exports, module) {
                     var tr = $(this).closest('tr');
                     var index = tr.attr('data-index');
                     var data = cache[index];
-                    if (v.call(this, event, tr, data, config) === false) return false;
+                    if (v.call(this, event, tr, data, config, cache) === false) return false;
                 });
             })
         }
@@ -422,19 +420,19 @@ define(function(require, exports, module) {
         //重新计算长宽
 
         function height(h) {
-                table.height(h);
-                if (!config.hidehead) {
-                    h -= thead.height();
-                }
-                if (config.count) {
-                    h -= 30;
-                }
-                scrollBody.height(h);
+            table.height(h);
+            if (!config.hidehead) {
+                h -= thead.height();
             }
-            //局部更新
+            if (config.count) {
+                h -= 30;
+            }
+            scrollBody.height(h);
+        }
+        //局部更新
         var update = function(tr, newdata) {
                 var index = tr.attr('data-index');
-                cache[index] = _.extend(cache[index],newdata);
+                cache[index] = _.extend(cache[index], newdata);
                 config.data = config.render([cache[index]]);
                 tr.html($(_tbody(config)).html());
             }
@@ -460,12 +458,14 @@ define(function(require, exports, module) {
         var loader = config.loader = UI.loader({
             baseparams: config.baseparams,
             count: config.count,
+            loadtip:config.loadtip,
             url: config.url,
             cache: config.cache,
             beforeLoad: function(filter) {
                 config.beforeLoad && config.beforeLoad.call(table, filter, config);
             },
             afterLoad: function(data) {
+
                 cache = config.parseData(data) || [];
                 //如果page不是第一页但是返回数据为0，则自动刷新到前一页
                 if (cache.length === 0 && this.page > 1) {
@@ -475,6 +475,9 @@ define(function(require, exports, module) {
                 }
                 config.data = config.render(cache);
                 var tbodyHtml = _tbody(config);
+
+                //去除全选
+                selectAll.checked = false;
                 tbody.html(tbodyHtml);
                 //paging
                 if (config.count) {
@@ -519,6 +522,7 @@ define(function(require, exports, module) {
                 if (!(datas instanceof Array)) {
                     datas = [datas];
                 }
+                if (datas.length == 0) return;
                 config.__appendIndex__ = cache.length;
                 //写入cache
                 $.each(datas, function(i, data) {
@@ -530,9 +534,7 @@ define(function(require, exports, module) {
                 var tr = $(_tbody(config)).appendTo(tbody);
                 delete config.__appendIndex__;
                 //去除全选
-                thead.find('.ctable-checkall').each(function() {
-                    this.checked = false;
-                });
+                selectAll.checked = false;
                 return tr;
             },
             //清空数据

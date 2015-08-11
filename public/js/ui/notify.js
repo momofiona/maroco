@@ -1,10 +1,155 @@
 /*
- * jQuery Notify
+ * Notify
+ *            t
+ *       ll l c r rr
+ *    tt      |      tt
+ *    t       |      t
+ *  l c ------------ c  r
+ *    b       |      b
+ *    bb      |      bb
+ *       ll l c r rr
+ *            b
  */
 define(function(require, exports, module) {
-    var tips = require('ui/tips'),
-        positions = tips.positions,
-        template = _.dot('{{?it.type=="dialog"}}{{?it.closeable!==false}}<i class="f f-multiply dialog-close am-rotate"></i>{{?}}<div class="dialog-title">{{=it.icon}}{{=it.title}}</div><div class="dialog-con">{{=it.msg}}</div>{{?it.buttons}}<div class="dialog-foot">{{~it.buttons :v:i}}<{{=v.tag||"b"}} class="b xr m4 {{=v.cls||"log"}}"{{?v.click}} click="{{=i}}"{{?}}>{{=v.label}}</{{=v.tag||"b"}}>{{~}}</div>{{?}}{{??}}{{=it.icon}}<span class="notify-con">{{=it.msg}}</span>{{?it.closeable}}<i class="f f-multiply notify-close am-rotate"></i>{{?}}{{?}}'),
+    'use strict';
+    var //矩形周围16等分
+        positions = {
+            //up
+            tll: {
+                my: 'right bottom',
+                at: 'left top-7',
+                tip: 'br'
+            },
+            tl: {
+                my: 'left bottom',
+                at: 'left top-7',
+                tip: 'bll'
+            },
+            tc: {
+                my: 'center bottom',
+                at: 'center top-7',
+                tip: 'b'
+            },
+            tr: {
+                my: 'right bottom',
+                at: 'right top-7',
+                tip: 'brr'
+            },
+            trr: {
+                my: 'left bottom',
+                at: 'right top-7',
+                tip: 'bl'
+            },
+            //right
+            rtt: {
+                my: 'left bottom',
+                at: 'right+7 top',
+                tip: 'lb'
+            },
+            rt: {
+                my: 'left top',
+                at: 'right+7 top',
+                tip: 'ltt'
+            },
+            rc: {
+                my: 'left center',
+                at: 'right+7 center',
+                tip: 'l'
+            },
+            rb: {
+                my: 'left bottom',
+                at: 'right+7 bottom',
+                tip: 'lbb'
+            },
+            rbb: {
+                my: 'left top',
+                at: 'right+7 bottom',
+                tip: 'lt'
+            },
+            //bottom
+            bll: {
+                my: 'right top',
+                at: 'left bottom+7',
+                tip: 'tr'
+            },
+            bl: {
+                my: 'left top',
+                at: 'left bottom+7',
+                tip: 'tll'
+            },
+            bc: {
+                my: 'center top',
+                at: 'center bottom+7',
+                tip: 't'
+            },
+            br: {
+                my: 'right top',
+                at: 'right bottom+7',
+                tip: 'trr'
+            },
+            brr: {
+                my: 'left top',
+                at: 'right bottom+7',
+                tip: 'tl'
+            },
+            //left
+            ltt: {
+                my: 'right bottom',
+                at: 'left-7 top',
+                tip: 'rb'
+            },
+            lt: {
+                my: 'right top',
+                at: 'left-7 top',
+                tip: 'rtt'
+            },
+            lc: {
+                my: 'right center',
+                at: 'left-7 center',
+                tip: 'r'
+            },
+            lb: {
+                my: 'right bottom',
+                at: 'left-7 bottom',
+                tip: 'rbb'
+            },
+            lbb: {
+                my: 'right top',
+                at: 'left-7 bottom',
+                tip: 'rt'
+            }
+        },
+        tips = function(config) {
+            config = _.extend({
+                msg: '',
+                cls: 'dark'
+            }, config);
+            //必须要有of参数
+            config.id = config.id || _.uniqueId('tips_');
+            var tips = $('#' + config.id),
+                poz = _.proto(positions[config.dir || config.of.data('dir') || 'tc'], {
+                    id: config.id,
+                    of: config.of,
+                    collision: 'none',
+                    within: config.within
+                });
+            if (!tips.length) {
+                tips = $('<div>', {
+                    id: config.id,
+                    'style': 'position:absolute;top:300px;left:700px;'
+                }).appendTo(config.within || 'body');
+            }
+            tips[0].className = 'tips ' + config.cls;
+            if (config.timeout) {
+                setTimeout(function() {
+                    tips.remove();
+                }, config.timeout * 1000);
+            }
+            return tips.html(config.msg + '<b class="tip tip-' + poz.tip + '"></b>' + (config.closeable ? '<i class="f f-multiply m4 am-rotate" onclick="$(this).parent().remove();"></i>' : '')).show().position(poz);
+        };
+
+    //notify
+    var template = _.dot('{{?it.type=="dialog"}}{{?it.closeable!==false}}<i class="f f-multiply dialog-close am-rotate"></i>{{?}}<div class="dialog-title">{{=it.icon}}{{=it.title}}</div><div class="dialog-con">{{=it.msg}}</div>{{?it.buttons}}<div class="dialog-foot">{{~it.buttons :v:i}}<{{=v.tag||"b"}} class="b xr m4 {{=v.cls||"log"}}"{{?v.click}} click="{{=i}}"{{?}}>{{=v.label}}</{{=v.tag||"b"}}>{{~}}</div>{{?}}{{??}}{{=it.icon}}<span class="notify-con">{{=it.msg}}</span>{{?it.closeable}}<i class="f f-multiply notify-close am-rotate"></i>{{?}}{{?}}'),
         defaults = {
             cls: 'log',
             type: 'notify',
@@ -87,7 +232,7 @@ define(function(require, exports, module) {
                 //mask
                 var _msk = _t.mask;
                 if (_msk || isDialog) {
-                    _t.mask = $('<div class="mask' + (_msk===true ? ' glass' : '') + '"/>').appendTo('body');
+                    _t.mask = $('<div class="mask' + (_msk === true ? ' glass' : '') + '"/>').appendTo('body');
                 }
                 _t.el.appendTo(_t.mask || 'body');
                 _t.oncreate.apply(_t);
@@ -147,12 +292,12 @@ define(function(require, exports, module) {
         return UI(option);
     }
     _.extend(dialog, {
+        tips:tips,
         loading: function(config) {
             return this(_.extend({
                 icon: '<i class="i i-loading m2"></i>',
-                cls:'nobg noshadow',
-                msg: '加载中',
-                mask:1 //1 和 true 是有区别的
+                cls: 'nobg noshadow',
+                mask: 1 //1 和 true 是有区别的
             }, config));
         },
         /*        verify: function(config) {
