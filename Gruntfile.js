@@ -37,6 +37,7 @@ module.exports = function(grunt) {
                         'public/js/vendor/seajs-text.js',
                         'public/js/vendor/seajs-css.js',
                         'public/js/vendor/jquery.min.js',
+                        //dot 考虑使用reactor
                         'public/js/vendor/doT.min.js',
                         'public/js/vendor/underscore-min.js',
                         'public/js/ui/menu.js',
@@ -51,7 +52,6 @@ module.exports = function(grunt) {
                         'public/js/vendor/jqueryui/jquery.ui.draggable.min.js', //notify.js 使用，19K 可精简
                         'public/js/vendor/jqueryui/jquery.ui.sortable.min.js', //table.js 使用，这货居然24K，算法肯定不咋的
 
-                        //navgoco 这个可以去除
                         'public/js/vendor/jquery.cookie.min.js'
 
 
@@ -62,14 +62,14 @@ module.exports = function(grunt) {
         uglify: {
             options: {
                 mangle: {
-                    except: ['jQuery', 'define', 'require']
+                    except: ['jQuery', 'define', 'require', 'exports', 'module']
                 }
             },
             ui:{
                 files:{
-                    'public/_ui.js':'public/js/ui/ui.js'
+                    'public/js/_ui/notify.js':'public/js/ui/notify.js'
                 }
-            },
+            }/*,
             allui: {
                 files: [{
                     expand: true,
@@ -77,7 +77,7 @@ module.exports = function(grunt) {
                     src: '*.js', //所有js文件
                     dest: 'public/js/_ui' //输出到此目录下
                 }]
-            }
+            }*/
         },
         jshint: {
             beforeconcat: [],
@@ -127,7 +127,7 @@ module.exports = function(grunt) {
         console.log('loadNpmTasks:' + key);
     };
     //grunt.registerTask('default', ['copy', 'uglify', 'concat']);
-    grunt.registerTask('default', ['concat','uglify:ui']);
+    grunt.registerTask('default', ['concat']);
     grunt.registerTask('liveload', ['watch:livereload']);
     grunt.registerTask('less', ['less:dev']);
     grunt.registerTask('doc', ['jsdoc']);

@@ -235,6 +235,7 @@ seajs.config({
                 this.beforeLoad(_filter);
                 this.xhr = $.ajax({
                     url: this.url,
+                    type: this.loadtype,
                     loadtip: this.loadtip,
                     data: $.extend({}, this.baseparams, {
                         page: this.page,
@@ -438,19 +439,28 @@ seajs.config({
     };
     //暴露全局调用
     window.UI = UI;
+    //IE中插入flash的时候title自动变化修复 
+    //http://stackoverflow.com/questions/4562423/ie-title-changes-to-afterhash-if-the-page-has-a-url-with-and-has-flash-s
+    if (browser.ie < 10) {
+        document.attachEvent('onpropertychange', function(evt) {
+            if (evt.propertyName === 'title' && document.title) {
+                setTimeout(function() {
+                    var b=document.title.indexOf('#');
+                    if(b!==-1){
+                        document.title = document.title.slice(0,b);
+                    }
+                    
+                }, 1);
+            }
+        });
+    }
 })(jQuery);
 
 
 
 //全局ajax处理
 $.ajaxSetup({
-    //ie 都不缓存
-    cache: false, //!UI.browser.ie,
-    complete: function(jqXHR, b, c) {},
-    data: {},
-    error: function(jqXHR, textStatus, errorThrown) {
-        //请求失败统一处理
-    }
+    cache: false
 });
 $(document).ajaxSend(function(event, XMLHttpRequest, ajaxOptions) {
     //多次点击只发送一次ajax请求
