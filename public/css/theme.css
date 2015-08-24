@@ -254,7 +254,6 @@ input[type=checkbox]:checked:before,
 input[type=radio]:checked:before {
   content: '\e62e';
   color: #129324;
-  position: absolute;
   margin-left: 2px;
   font-size: 14px;
   font-family: icomoon;
@@ -277,6 +276,7 @@ input[type=radio]:checked:before {
   width: 10px;
   height: 10px;
   margin: 3px;
+  display: inline-block;
   background: #444;
 }
 input[type=radio][disabled]:before {
@@ -675,7 +675,9 @@ textarea.text[required] {
   overflow: auto;
   overflow-x: hidden;
   background: url(img/alpha-black-50.png) no-repeat -10px -10px;
+  _background: #aaa;
   position: fixed;
+  _position: absolute;
   -webkit-backface-visibility: hidden;
   /*    &:before {
         content: ""; //解决chrome下子元素动画影响自身rgba的a

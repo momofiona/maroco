@@ -12,8 +12,8 @@
  */
 define(function(require, exports, module) {
     'use strict';
-    var //矩形周围16等分
-        positions = {
+    //矩形周围16等分
+    var positions = {
             //up
             tll: {
                 my: 'right bottom',
@@ -326,6 +326,7 @@ define(function(require, exports, module) {
         confirm: function(config) {
             if (config.test) {
                 config.callback && config.callback(true);
+                return;
             }
             return this(_.extend({
                 icon: '<i class="mr f f-warn"></i>',

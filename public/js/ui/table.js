@@ -176,6 +176,11 @@ define(function(require, exports, module) {
         var _colgroupCache;
         var _fullWidth = 0;
         $.each(config.cols, function(i, o) {
+            // IE67校准宽度,去掉padding的宽度
+            if (_.isNumber(o.width) && UI.browser.ie < 8) {
+                o.width -= 16;
+            }
+            //计算整体宽度
             _fullWidth += o.width;
             //排除外来影响
             if (o.colspan) delete o.colspan;
@@ -492,7 +497,10 @@ define(function(require, exports, module) {
         var api = {
             config: config,
             table: table,
-            load: function(filter) {
+            load: function(filter,toBase) {
+                if(toBase){
+                    _.extend(loader.baseparams,toBase===true?filter:toBase);
+                }
                 loader.load(filter);
             },
             getBody: function() {

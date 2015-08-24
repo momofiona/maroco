@@ -165,7 +165,7 @@ define(function(require, exports, module) {
             //loader暴露的接口
             load: function(filter,toBase) {
                 if(toBase){
-                    _.extend(this.loader.baseparams,filter);
+                    _.extend(this.loader.baseparams,toBase===true?filter:toBase);
                 }
                 this.loader.load(filter);
             },
@@ -253,7 +253,7 @@ define(function(require, exports, module) {
                 if (this.contextmenu) {
                     //禁止body右键菜单
                     this.contextmenu = UI(_.defaults({
-                        el: $('<div class="dropdown am-fadeup">'),
+                        el: $('<div class="dropdown am-fadeup grid-contextmenu">'),
                         render: function(x, y) {
                             //触发menu消失
                             $(document).trigger('click.dropdown');
@@ -325,6 +325,8 @@ define(function(require, exports, module) {
                                     $(o).toggleClass('grid-selected', isCross(boxRect, o.getBoundingClientRect()));
                                 });
                             } else if (Math.abs(width) > 10 || Math.abs(height) > 10) {
+                                //当没有数据的时候忽略拖选
+                                if(!config.cache.length) return;
                                 isWorking = true;
                                 box.appendTo('body');
                                 sheeps = config.body.children();
