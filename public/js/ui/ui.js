@@ -12,7 +12,7 @@ seajs.config({
         'locale': 'cn'
     },
     map: [
-        [/^(.*\.(?:css|js))(.*)$/i, '$1?20150101']
+        [/^(.*\.(?:css|js))(.*)$/i, '$1?20150826']
     ]
 });
 
@@ -432,10 +432,6 @@ seajs.config({
                 this.el.addClass(this.cls).find('a+ul').prev().prepend('<b class="nav-cart ' + this.cartCls + '"></b>');
             }
         }, conf));
-    };
-    //layout([{}])
-    UI.layout = function() {
-
     };
     //暴露全局调用
     window.UI = UI;

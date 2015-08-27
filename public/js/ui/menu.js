@@ -6,7 +6,7 @@
  * Licensed under the MIT license: http://opensource.org/licenses/MIT
  *
  */
-if (jQuery)(function($) {
+(function($) {
 
     $.extend($.fn, {
         dropdown: function(method, data) {
@@ -93,7 +93,9 @@ if (jQuery)(function($) {
     function position() {
         var dropdown = $('.dropdown:visible').eq(0),
             trigger = dropdown.data('dropdown-trigger');
-        if (dropdown.length === 0 || !trigger) return;
+        if (dropdown.length === 0 || !trigger) {
+            return;
+        }
         var pos = dropdown.attr('position'),
             top = dropdown.hasClass('tips') ? '+6' : '-1';
         pos = pos ? $.trim(pos).split(',') : [];
@@ -106,4 +108,4 @@ if (jQuery)(function($) {
     $(document).on('click.dropdown', '[data-dropdown]', show);
     $(document).on('click.dropdown', hide);
     $(window).on('resize.dropdown', position);
-})(jQuery);
+}(jQuery));

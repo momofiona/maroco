@@ -483,7 +483,10 @@ define(function(require, exports, module) {
 
                 //去除全选
                 selectAll.checked = false;
-                tbody.html(tbodyHtml);
+                //延时插入，否则IE10、IE11页面元素无法选中，select无法点出菜单
+                setTimeout(function(){
+                    tbody.html(tbodyHtml);
+                },20);
                 //paging
                 if (config.count) {
                     paging.render(data.total, loader.page, loader.count);
