@@ -17,14 +17,25 @@
     "white": true,      //true: JSHint会依据严格的空白规范检查你的代码
     "newcap": true,     //true: JSHint会要求每一个构造函数名都要大写字母开头
     "es3": true,        //true: 检查低版本IE
+    "browser": true,    //true: 表示目前是在浏览器环境
+    "undef": true,      //true: 变量未定义
+    //"unused": true,     //true: 变量未使用
     //全局变量来啦
     "predef": [
+        "JSON",
         "define",
         "seajs",
+        "require",
         "console",
         "UI",
+        "jQuery",
+        "$",
+        "doT",
+        "_",
+        "ls",
         "APP",
-        "USERINFO"
+        "USERINFO",
+        "SYS_SUPPORT"
     ]
 
 }
