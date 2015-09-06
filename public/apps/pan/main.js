@@ -18,13 +18,13 @@ define(function(require, exports, module) {
             cls: 'link',
             el: HTML.find('.ac-listorthumb'),
             data: [{
-                label: '<i class="f f-menus"></i> 列表',
+                label: '<i class="f f-menus"></i>',
                 title: '列表查看',
                 cls: 'bs',
                 on: true //开启状态
             }, {
                 thumb: true,
-                label: '<i class="f f-grid"></i> 大图标',
+                label: '<i class="f f-grid"></i>',
                 title: '大图标查看',
                 cls: 'bs'
             }],
@@ -104,31 +104,31 @@ define(function(require, exports, module) {
             create: function() {}
         });
 
-        //上传,异步加载
-        require.async(['ui/upload', 'ui/notify'], function(upload, notify) {
-            var btn = HTML.find('.ac-upload')[0];
-            upload({
-                browse_button: btn,
-                container: btn.parentNode,
-                url: '/upload',
-                FilesAdded: function(up, files) {
-                    $.each(files, function(i, o) {
-                        o.url = '/upload'; //可为每个批上传设置不同的上传路径
-                    })
-                },
-                BeforeUpload: function(up, file) {
-                    up.settings.url = file.url; //配合FilesAdded 更改上传路径
-                },
-                FileUploaded: function(up, file, data) {
+        /*        //上传,异步加载
+                require.async(['ui/upload', 'ui/notify'], function(upload, notify) {
+                    var btn = HTML.find('.ac-upload')[0];
+                    upload({
+                        browse_button: btn,
+                        container: btn.parentNode,
+                        url: '/upload',
+                        FilesAdded: function(up, files) {
+                            $.each(files, function(i, o) {
+                                o.url = '/upload'; //可为每个批上传设置不同的上传路径
+                            })
+                        },
+                        BeforeUpload: function(up, file) {
+                            up.settings.url = file.url; //配合FilesAdded 更改上传路径
+                        },
+                        FileUploaded: function(up, file, data) {
 
-                },
-                //上传结束后
-                UploadComplete: function(up, files) {
-                    notify.safe('上传完毕');
-                    fileList.load();
-                }
-            });
-        });
+                        },
+                        //上传结束后
+                        UploadComplete: function(up, files) {
+                            notify.safe('上传完毕');
+                            fileList.load();
+                        }
+                    });
+                });*/
 
         //我的文档列表
         var fileList = grid({
@@ -158,7 +158,7 @@ define(function(require, exports, module) {
             contextmenu: {
                 events: {
                     'click .ac-pig': function(e, conf) {
-                        alert('老猪来娶你了~'+conf.data[0].cname);
+                        alert('老猪来娶你了~' + conf.data[0].cname);
                         console.log(conf.data);
                     },
                     'click .ac-kulo': function(e, conf) {
@@ -173,7 +173,7 @@ define(function(require, exports, module) {
                         //这里禁止对data进行修改
                         return data.length == 1;
                     }
-                },{
+                }, {
                     label: '<i class="f f-checkmark c-safe"></i>白骨精 （选择多项时出现）',
                     cls: 'ac-kulo',
                     //当test返回true的时候显示
@@ -185,9 +185,9 @@ define(function(require, exports, module) {
                     label: '蜘蛛精',
                     //添加新页面打开外链的方法，注意总共有3个双引号
                     href: 'http://baidu.com/s?wd=蜘蛛精" target="_blank"'
-                },'', {
+                }, '', {
                     label: '<i class="f f-location"></i>蜘猪精',
-                    cls:'menu-error',
+                    cls: 'menu-error',
                     //动态添加链接也是可以的
                     href: function(data) {
                         return 'https://github.com/momofiona/maroco" target="_blank"';
@@ -243,15 +243,30 @@ define(function(require, exports, module) {
         //tabs
         UI.tabs({
             el: HTML.find('.tabs'),
+            events: {
+                'click .ac-upload': function(e, conf) {
+                    seajs.use('ui/uploader', function(uploader) {
+                        uploader.show({
+                            url: UI.server + 'upload',
+                            uploadPath: "我的电脑",
+                            multipart_params: {
+                            },
+                            // beforeUploaded: function(up, file) {},
+                            // uploaded: addPreview,
+                            complete: function(up, files) {
+                                fileList.load();
+                            }
+                        });
+                    });
+                }
+            },
             caption: HTML.find('.caption'),
             onActive: function(tab, panel) {
-                var s = ''
-                for (var i in tab) s += i + '\t';
                 //面包屑栏目
-                this.caption.html('<i class="f f-home"></i> '+tab.innerHTML);
+                this.caption.html('<i class="f f-home"></i> ' + tab.innerHTML);
                 //刷新文件列表
                 fileList.load();
             }
         });
-    }
+    };
 });

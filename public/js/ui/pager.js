@@ -1,1 +1,86 @@
-define("js/ui/pager",[],function(e,t,s){var i={page:1,total:1,count:1,edges:2,displayedPages:5,prevText:"&lt;",nextText:"&gt;",ellipseText:"&hellip;",onPageClick:$.noop,onInit:$.noop,el:null,events:{"click a":function(e,t){e.preventDefault(),$(this).addClass("loading"),t.onPageClick(e,t.page=parseInt(this.getAttribute("page")))}},link:function(e,t,s,i,n){return i=i||"",e==t&&(i+=" current",n=!0),n?'<span class="'+i+'">'+(s||e)+"</span>":'<a class="'+i+'"'+(6==UI.browser.ie?' href="#"':"")+' page="'+e+'">'+(s||e)+"</a>"},render:function(e,t,s){if(e=parseInt(e),!e)return this.el.empty();t=t?this.page=t:this.page,s=s?this.count=s:this.count;var i="",n=Math.ceil(e/s);if(1==n)return this.el.empty();i+=this.link(t-1,t,this.prevText,"prev",1==t);var a=Math.floor(this.displayedPages/2),l=this.edges+2,h=n-this.edges-1,p=h-this.displayedPages+1;h-l>=this.displayedPages&&(l=Math.max(t-a,l),l>p&&(l=p),h=l+this.displayedPages-1);for(var r=1;n>=r;r++)r<=this.edges||r>n-this.edges||r>=l&&h>=r?i+=this.link(r,t):r==this.edges+1?r==l-1?i+=this.link(r,t):(i+="<span>"+this.ellipseText+"</span>",r=l-1):r==n-this.edges&&(r==h+1?i+=this.link(r,t):(i+="<span>"+this.ellipseText+"</span>",r=n-this.edges));i+=this.link(t+1,t,this.nextText,"next",t==n),this.el.html(i)}};return function(e){return UI(_.create(i,e))}});
+/**
+ * 分页
+ */
+define(function(require, exports, module) {
+    var defaults = {
+        page: 1,
+        total: 1,
+        count: 1,
+        edges: 2, //边缘
+        displayedPages: 5, //中间个数
+        prevText: '&lt;',
+        nextText: '&gt;',
+        ellipseText: '&hellip;',
+        onPageClick: $.noop,
+        onInit: $.noop,
+
+        el: null,
+        events: {
+            'click a': function(e, config) {
+                e.preventDefault();
+                $(this).addClass('loading');
+                config.onPageClick(e, config.page = parseInt(this.getAttribute('page')));
+                // return false;
+            }
+        },
+        link: function(page, currentPage, text, cls, isSpan) {
+            cls = cls || "";
+            if (page == currentPage) {
+                cls += ' current';
+                isSpan = true;
+            }
+            if (isSpan) return '<span class="' + cls + '">' + (text || page) + '</span>';
+            return '<a class="' + cls + '"'+(UI.browser.ie==6?' href="#"':'')+' page="' + page + '">' + (text || page) + '</a>'
+        },
+        render: function(total, page, count) {
+            total = parseInt(total);
+            if (!total) {
+                return this.el.empty();
+            }
+            //page>1 page<totalPage
+            page = page ? this.page = page : this.page;
+            //count 永远不为0
+            count = count ? this.count = count : this.count;
+            var r = '',
+                totalPage = Math.ceil(total / count);
+            if (totalPage == 1) return this.el.empty();
+            //prev
+            r += this.link(page - 1, page, this.prevText, 'prev', page == 1);
+
+            var half = Math.floor(this.displayedPages / 2),
+                start = this.edges + 2,
+                stop = totalPage - this.edges - 1,
+                maxStart = stop - this.displayedPages + 1;
+            if (stop - start >= this.displayedPages) {
+                start = Math.max(page - half, start);
+                if (start > maxStart) start = maxStart;
+                stop = start + this.displayedPages - 1;
+            }
+
+            for (var i = 1; i <= totalPage; i++) {
+                if (i <= this.edges || i > totalPage - this.edges || (i >= start && i <= stop)) {
+                    r += this.link(i, page);
+                } else if (i == this.edges + 1) {
+                    if (i == start - 1) {
+                        r += this.link(i, page);
+                    } else {
+                        r += '<span>' + this.ellipseText + '</span>';
+                        i = start - 1;
+                    }
+                } else if (i == totalPage - this.edges) {
+                    if (i == stop + 1) {
+                        r += this.link(i, page);
+                    } else {
+                        r += '<span>' + this.ellipseText + '</span>';
+                        i = totalPage - this.edges;
+                    }
+                }
+            }
+            r += this.link(page + 1, page, this.nextText, 'next', page == totalPage);
+            this.el.html(r);
+        }
+    }
+    return function(pageConfig) {
+        return UI(_.create(defaults, pageConfig));
+    }
+});

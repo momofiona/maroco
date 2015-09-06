@@ -1,1 +1,77 @@
-define("js/ui/searchbox",[],function(e,t,i){$.fn.searchbox=function(e){if(1!=this.length)return this;var t,i;return UI($.extend({value:"",el:this,cls:"searchbox",placeholder:"",delay:500,events:{},search:$.noop,focus:$.noop,input:$.noop,init:function(){var e=this;if(e.el.attr("tabindex",-1).addClass(e.cls).html('<input value="'+e.value+'" class="text" placeholder="'+e.placeholder+'"><i class="i i-cancel am-rotate"></i>'),e.filter){e.events["click .ac-filter"]=function(i,l){return t=l.filter[$(this).attr("index")],e.tip.html('<i class="f f-search m2"></i>'+t.label),l.el.css("padding-left",e.tip.outerWidth()+10),e.tip.dropdown("hide"),!1};var l="";_.each(this.filter,function(e,t){l+='<li><a index="'+t+'" href="#" class="ac-filter '+e.cls+'">'+e.label+"</a></li>"}),e.tip=$('<a href="#" class="search-filter" data-dropdown></a>').prependTo(e.el),e.dropdown=$('<div class="dropdown noshadow"  position="left top,left-1 bottom"><ul class="menu">'+l+"</ul></div>").insertAfter(e.tip)}var a=e.el.find("input"),n=a.next().click(function(){$(this).hide(),a.val("").focus(),a.trigger("input"),e.search.call(a,"",t)});(i=e.value)&&n.show();var s=function(t,l,a){i!==l&&(e.input.call(t,l,a),i=l)};e.delay&&(s=_.throttle(s,e.delay,{leading:!1})),a.on("input",function(){var e=$.trim(this.value);s(a,e,t),n.toggle(!!e)}).on("keyup",function(i){"13"==i.keyCode&&e.search.call(a,this.value,t)}).focus(function(){e.el.addClass("searchbox-focus"),e.focus(!0)}).blur(function(){e.el.removeClass("searchbox-focus"),e.focus()})},create:function(){this.filter&&this.dropdown.find("a:eq(0)").click()}},e)),this}});
+define(function(require, exports, module) {
+    $.fn.searchbox = function(option) {
+        if (this.length != 1) return this;
+        var filter, oldValue;
+        UI($.extend({
+            value: '',
+            el: this,
+            cls: 'searchbox',
+            placeholder: '',
+            delay: 500,
+            events: {},
+            search: $.noop,
+            focus: $.noop,
+            input: $.noop,
+            init: function() {
+                var t = this;
+                t.el.attr('tabindex',-1).addClass(t.cls).html('<input value="' + t.value + '" class="text" placeholder="' + t.placeholder + '"><i class="i i-cancel am-rotate"></i>');
+
+                //如果带了分类选择
+                if (t.filter) {
+                    t.events['click .ac-filter'] = function(e, conf) {
+                        filter = conf.filter[$(this).attr('index')];
+                        t.tip.html('<i class="f f-search m2"></i>'+filter.label);
+                        conf.el.css('padding-left', t.tip.outerWidth() + 10);
+                        t.tip.dropdown('hide');
+                        return false;
+                    }
+                    var s = "";
+                    _.each(this.filter, function(o, i) {
+                        s += '<li><a index="' + i + '" href="#" class="ac-filter ' + o.cls + '">' + o.label + '</a></li>';
+                    });
+                    t.tip = $('<a href="#" class="search-filter" data-dropdown></a>').prependTo(t.el);
+                    t.dropdown = $('<div class="dropdown noshadow"  position="left top,left-1 bottom"><ul class="menu">' + s + '</ul></div>').insertAfter(t.tip);
+                }
+
+                var input = t.el.find('input'),
+                    cancel = input.next().click(function() {
+                        $(this).hide();
+                        input.val('').focus();
+                        input.trigger('input');
+                        t.search.call(input, '', filter);
+                    });
+                if (oldValue = t.value) cancel.show();
+                var callInput = function(input, value, filter) {
+                    if (oldValue !== value) {
+                        t.input.call(input, value, filter);
+                        oldValue = value;
+                    }
+                };
+                if (t.delay) {
+                    callInput = _.throttle(callInput, t.delay, {
+                        leading: false
+                    });
+                }
+                input.on('input', function() {
+                    var value = $.trim(this.value);
+                    callInput(input, value, filter);
+                    cancel.toggle(!!value);
+                }).on('keyup', function(e) {
+                    if (e.keyCode == "13") {
+                        t.search.call(input, this.value, filter);
+                    }
+                }).focus(function(){
+                    t.el.addClass('searchbox-focus');
+                    t.focus(true);
+                }).blur(function(){
+                    t.el.removeClass('searchbox-focus');
+                    t.focus();
+                });
+            },
+            create: function() {
+                this.filter && this.dropdown.find('a:eq(0)').click();
+            }
+        }, option));
+        return this;
+    }
+});

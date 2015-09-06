@@ -1,1 +1,57 @@
-define("js/ui/event",[],{on:function(t,e,n){this._events||(this._events={});var s=this._events[t]||(this._events[t]=[]);return s.push({callback:e,context:n,ctx:n||this}),this},one:function(t,e,n){var s=this,i=_.once(function(){s.off(t,i),e.apply(this,arguments)});return i._callback=e,this.on(t,i,n)},off:function(t,e,n){var s,i,h,c,r,a,l,v;if(!this._events)return this;if(!t&&!e&&!n)return this._events=void 0,this;for(c=t?[t]:_.keys(this._events),r=0,a=c.length;a>r;r++)if(t=c[r],h=this._events[t]){if(this._events[t]=s=[],e||n)for(l=0,v=h.length;v>l;l++)i=h[l],(e&&e!==i.callback&&e!==i.callback._callback||n&&n!==i.context)&&s.push(i);s.length||delete this._events[t]}return this},trigger:function(t){return this._events?(_.each(this._events[t],function(t,e){t.callback.apply(ev.ctx,arguments)}),this):this}});
+/**
+ * event
+ */
+define({
+    on: function(name, callback, context) {
+        this._events || (this._events = {});
+        var events = this._events[name] || (this._events[name] = []);
+        events.push({
+            callback: callback,
+            context: context,
+            ctx: context || this
+        });
+        return this;
+    },
+    one: function(name, callback, context) {
+        var self = this;
+        var once = _.once(function() {
+            self.off(name, once);
+            callback.apply(this, arguments);
+        });
+        once._callback = callback;
+        return this.on(name, once, context);
+    },
+    off: function(name, callback, context) {
+        var retain, ev, events, names, i, l, j, k;
+        if (!this._events) return this;
+        if (!name && !callback && !context) {
+            this._events = void 0;
+            return this;
+        }
+        names = name ? [name] : _.keys(this._events);
+        for (i = 0, l = names.length; i < l; i++) {
+            name = names[i];
+            if (events = this._events[name]) {
+                this._events[name] = retain = [];
+                if (callback || context) {
+                    for (j = 0, k = events.length; j < k; j++) {
+                        ev = events[j];
+                        if ((callback && callback !== ev.callback && callback !== ev.callback._callback) ||
+                            (context && context !== ev.context)) {
+                            retain.push(ev);
+                        }
+                    }
+                }
+                if (!retain.length) delete this._events[name];
+            }
+        }
+        return this;
+    },
+    trigger: function(name) {
+        if (!this._events) return this;
+        _.each(this._events[name], function(o, i) {
+            o.callback.apply(ev.ctx, arguments);
+        });
+        return this;
+    }
+});

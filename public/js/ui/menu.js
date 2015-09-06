@@ -1,1 +1,111 @@
-!function(o){function d(d,n){var e=d?o(this):n,a=e.attr("data-dropdown"),i=a?o(a):e.next(),s=e.hasClass("dropdown-open");if(d){if(o(d.target).hasClass("dropdown-ignore"))return;d.preventDefault(),d.stopPropagation()}else if(e!==n.target&&o(n.target).hasClass("dropdown-ignore"))return;r(),s||e.hasClass("dropdown-disabled")||(e.addClass("dropdown-open"),i.data("dropdown-trigger",e).show(),t(),i.trigger("show",{dropdown:i,trigger:e}))}function r(d){if(!d||3!=d.which){var r=d?o(d.target).parents().addBack():null;if(r&&r.is(".dropdown")){if(!r.is(".dropdown-menu"))return;if(!r.is("A"))return}o(document).find(".dropdown:visible").each(function(){var d=o(this);d.hide().removeData("dropdown-trigger").trigger("hide",{dropdown:d})}),o(document).find(".dropdown-open").removeClass("dropdown-open")}}function t(){var d=o(".dropdown:visible").eq(0),r=d.data("dropdown-trigger");if(0!==d.length&&r){var t=d.attr("position"),n=d.hasClass("tips")?"+6":"-1";t=t?o.trim(t).split(","):[],d.position({my:t[0]||"left top"+n,at:t[1]||"left bottom",of:t[2]||r})}}o.extend(o.fn,{dropdown:function(t,n){switch(t){case"show":return d(null,o(this)),o(this);case"hide":return r(),o(this);case"attach":return o(this).attr("data-dropdown",n);case"detach":return r(),o(this).removeAttr("data-dropdown");case"disable":return o(this).addClass("dropdown-disabled");case"enable":return r(),o(this).removeClass("dropdown-disabled")}}}),o(document).on("click.dropdown","[data-dropdown]",d),o(document).on("click.dropdown",r),o(window).on("resize.dropdown",t)}(jQuery);
+/*
+ * jQuery dropdown: A simple dropdown plugin
+ *
+ * Copyright A Beautiful Site, LLC. (http://www.abeautifulsite.net/)
+ *
+ * Licensed under the MIT license: http://opensource.org/licenses/MIT
+ *
+ */
+(function($) {
+
+    $.extend($.fn, {
+        dropdown: function(method, data) {
+            switch (method) {
+                case 'show':
+                    show(null, $(this));
+                    return $(this);
+                case 'hide':
+                    hide();
+                    return $(this);
+                case 'attach':
+                    return $(this).data('data-dropdown', data);
+                case 'detach':
+                    hide();
+                    return $(this).removeData('data-dropdown');
+                case 'disable':
+                    return $(this).addClass('dropdown-disabled');
+                case 'enable':
+                    hide();
+                    return $(this).removeClass('dropdown-disabled');
+            }
+        }
+    });
+
+    function show(event, object) {
+        var trigger = event ? $(this) : object,
+            attr = trigger.data('data-dropdown'),
+            dropdown = attr ? $(attr) : trigger.next(),
+            isOpen = trigger.hasClass('dropdown-open');
+        // In some cases we don't want to show it
+        if (event) {
+            if ($(event.target).hasClass('dropdown-ignore')) return;
+
+            event.preventDefault();
+            event.stopPropagation();
+        } else {
+            if (trigger !== object.target && $(object.target).hasClass('dropdown-ignore')) return;
+        }
+        hide();
+        if (isOpen || trigger.hasClass('dropdown-disabled')) return;
+        // Show it
+        trigger.addClass('dropdown-open');
+        dropdown.data('dropdown-trigger', trigger).show();
+        // Position it
+        position();
+        // Trigger the show callback
+        dropdown.trigger('show', {
+            dropdown: dropdown,
+            trigger: trigger
+        });
+    }
+
+    function hide(event) {
+        //排除特例火狐鼠标右键会触发document的click
+        if (event && event.which == 3) return;
+        // In some cases we don't hide them
+        var targetGroup = event ? $(event.target).parents().addBack() : null;
+
+        // Are we clicking anywhere in a dropdown?
+        if (targetGroup && targetGroup.is('.dropdown')) {
+            // Is it a dropdown menu?
+            if (targetGroup.is('.dropdown-menu')) {
+                // Did we click on an option? If so close it.
+                if (!targetGroup.is('A')) return;
+            } else {
+                // Nope, it's a panel. Leave it open.
+                return;
+            }
+        }
+        // Hide any dropdown that may be showing
+        $(document).find('.dropdown:visible').each(function() {
+            var dropdown = $(this);
+            dropdown
+                .hide()
+                .removeData('dropdown-trigger')
+                .trigger('hide', {
+                    dropdown: dropdown
+                });
+        });
+        // Remove all dropdown-open classes
+        $(document).find('.dropdown-open').removeClass('dropdown-open');
+    }
+
+    function position() {
+        var dropdown = $('.dropdown:visible').eq(0),
+            trigger = dropdown.data('dropdown-trigger');
+        if (dropdown.length === 0 || !trigger) {
+            return;
+        }
+        var pos = dropdown.attr('position'),
+            top = dropdown.hasClass('tips') ? '+6' : '-1';
+        pos = pos ? $.trim(pos).split(',') : [];
+        dropdown.position({
+            my: pos[0] || 'left top' + top,
+            at: pos[1] || 'left bottom',
+            of: pos[2] || trigger
+        });
+    }
+    $(document).on('click.dropdown', '[data-dropdown]', show);
+    $(document).on('click.dropdown', hide);
+    $(window).on('resize.dropdown', position);
+}(jQuery));

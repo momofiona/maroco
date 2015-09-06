@@ -27,9 +27,10 @@ define(function(require, exports, module) {
      * @return {[type]}          [description]
      */
     var extReg = /.*\./g;
-    exports.getExt = function(filename) {
-        return filename ? filename.replace(extReg, '') : '';
-    }
+    exports.getExt = function(name) {
+        var dp = name.lastIndexOf('.');
+        return (dp == -1 ? '' : name.slice(dp + 1)).toLocaleLowerCase();
+    };
 
     /**
      * 获取文件对应图标css class
@@ -40,9 +41,6 @@ define(function(require, exports, module) {
      * node.png?
      */
     exports.getFileIcon = function(file) {
-        //如果带otherType参数
-        if(file.otherType!==undefined&&useType!==undefined) return this.getShareFolderIcon(file);
-        
         if (file.fileType == "0") return 'folder';
         var ext = this.getExt(file.fileName);
         ext = extMap[ext] ? extMap[ext] : 'unknow';
