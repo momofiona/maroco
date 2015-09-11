@@ -1,0 +1,42 @@
+{
+    "asi": false,       //true: JSHint会无视没有加分号的行尾
+    //"bitwise": true,    //true: JSHint会禁用位运算符
+    "boss": false,      //true: 那么JSHint会允许在if，for，while里面编写赋值语句
+    "curly": false,      //true: JSHint会要求你在使用if和while等结构语句时加上{}来明确代码块
+    "debug": false,     //true: JSHint会允许代码中出现debugger的语句
+    "eqeqeq": false,     //true: JSHint会看你在代码中是否都用了===或者是!==，而不是使用==和!=
+    "eqnull": true,     //true: JSHint会允许使用”== null”作比较
+    "evil": false,      //true: JSHint会允许使用eval
+    "forin": true,      //true: 那么，JSHint允许在for in 循环里面不出现hasOwnProperty
+    "immed": true,      //true: Require immediate invocations to be wrapped in parens e.g. `(function () { } ());`
+    "laxbreak": true,   //true: JSHint则不会检查换行
+    "noarg": true,      //true: Prohibit use of `arguments.caller` and `arguments.callee`
+    "noempty":true,     //true: JSHint会禁止出现空的代码块（没有语句的代码块）
+    "sub":false,         //true: JSHint会允许各种形式的下标来访问对象
+    //"strict": true,     //true: JSHint会要求你使用use strict;语法
+    "white": true,      //true: JSHint会依据严格的空白规范检查你的代码
+    "newcap": true,     //true: JSHint会要求每一个构造函数名都要大写字母开头
+    "es3": true,        //true: 检查低版本IE
+    "browser": true,    //true: 表示目前是在浏览器环境
+    "undef": true,      //true: 变量未定义
+    //"unused": true,     //true: 变量未使用
+    //全局变量来啦
+    "predef": [
+        "JSON",
+        "define",
+        "seajs",
+        "require",
+        "console",
+        "UI",
+        "jQuery",
+        "$",
+        "doT",
+        "_",
+        "ls",
+        "plupload",
+        "APP",
+        "USERINFO",
+        "SYS_SUPPORT"
+    ]
+
+}

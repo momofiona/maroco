@@ -81,6 +81,6 @@ define(function(require, exports, module) {
         }
     }
     return function(pageConfig) {
-        return UI(_.proto(defaults, pageConfig));
+        return UI(_.create(defaults, pageConfig));
     }
 });

@@ -733,6 +733,7 @@ textarea.text[required] {
   padding: 10px;
   background: #fff;
   color: #434749;
+  word-break: break-all;
 }
 .log > .dialog-con,
 .silver > .dialog-con {

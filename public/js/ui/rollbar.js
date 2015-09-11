@@ -1,5 +1,5 @@
 define(function(require, exports, module) {
-    require('js/vendor/jquery.mousewheel');
+    require('mousewheel');
 
     function RollBar(outContainer, setting) {
         if ($(outContainer).find('>.rollbar-content').length) return;
@@ -325,7 +325,7 @@ define(function(require, exports, module) {
         onscroll: $.noop
     };
     $.fn.rollbar = function(options) {
-        options = _.proto(defaults, options);
+        options = _.create(defaults, options);
         return this.each(function() {
             new RollBar(this, options);
         });

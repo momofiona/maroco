@@ -6,7 +6,8 @@
     </div>
 </div>
 <script>
-seajs.use(['ui/table', 'ui/notify', 'ui/tips'], function(table, notify, tips) {
+seajs.use(['ui/table', 'ui/notify'], function(table, notify) {
+    var tips=notify.tips;
     //mock table列表
     Mock.mock('fakedata_demo.json', {
         "total|200": 12,

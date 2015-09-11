@@ -127,7 +127,7 @@ define(function(require, exports, module) {
             //必须要有of参数
             config.id = config.id || _.uniqueId('tips_');
             var tips = $('#' + config.id),
-                poz = _.proto(positions[config.dir || config.of.data('dir') || 'tc'], {
+                poz = _.create(positions[config.dir || config.of.data('dir') || 'tc'], {
                     id: config.id,
                     of: config.of,
                     collision: 'none',
@@ -195,7 +195,7 @@ define(function(require, exports, module) {
                 _t.oninit.apply(_t);
                 if (_t.buttons) {
                     _t.buttons.reverse();
-                };
+                }
                 //带buttons、title参数肯定是dialog
                 if (_t.buttons || _t.title) {
                     _t.type = 'dialog';
@@ -242,7 +242,7 @@ define(function(require, exports, module) {
                     if (_.isString(_t.tips)) {
                         _t.tips = {
                             dir: _t.tips
-                        }
+                        };
                     }
                     var poz = positions[_t.tips.dir];
                     if (poz) {
@@ -267,19 +267,15 @@ define(function(require, exports, module) {
                 }
                 //drag & resize
                 if (_t.draggable) {
-                    _t.el.draggable({
-                        handle: isDialog ? ">.dialog-title" : '',
-                        drag: function(event, ui) {
-                            if (ui.position.top < 0) ui.position.top = 0;
-                        }
+                    require.async('draggable',function(){
+                        _t.el.draggable({
+                            handle: isDialog ? ">.dialog-title" : '',
+                            drag: function(event, ui) {
+                                if (ui.position.top < 0) ui.position.top = 0;
+                            }
+                        });
                     });
                 }
-                /*                if (_t.resizable) {
-                                    _t.contentEl.resizable({
-                                        minWidth: 250,
-                                        handles: "e" //只允许横向放大
-                                    });
-                                }*/
             }
         };
     //创建元素
@@ -288,9 +284,9 @@ define(function(require, exports, module) {
             var d = $('#' + option.id);
             if (d.length) return d.data('_notify_');
         }
-        option = _.extend(_.proto(defaults), option);
+        option = _.extend(_.create(defaults), option);
         return UI(option);
-    }
+    };
     _.extend(dialog, {
         tips:tips,
         loading: function(config) {

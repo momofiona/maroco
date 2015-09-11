@@ -23,15 +23,15 @@ define(function(require, exports, module) {
             onOrderChange: $.noop,
             baseparams: {},
             events: {
-                //hover
-                'mouseenter .grid-row': function(e, config) {
-                    $(this).addClass('grid-hover')
+                //hover 注意.grid-row 前两个空格
+                'mouseenter  .grid-row': function() {
+                    $(this).addClass('grid-hover');
                 },
-                'mouseleave .grid-row': function(e, config) {
-                    $(this).removeClass('grid-hover')
+                'mouseleave  .grid-row': function() {
+                    $(this).removeClass('grid-hover');
                 },
                 //选择行
-                'click .grid-row': function(e, config) {
+                'click  .grid-row': function(e, config) {
                     var others;
                     if (!e.ctrlKey) {
                         var tar = $(e.target);
@@ -44,7 +44,7 @@ define(function(require, exports, module) {
                     config.onSelected(config.getSelected());
                 },
                 //选择行
-                'mouseup .grid-row': function(e, conf) {
+                'mouseup  .grid-row': function(e, conf) {
                     if (e.which == 3) {
                         if (!$(this).hasClass('grid-selected')) {
                             $(this).addClass('grid-selected').siblings().removeClass('grid-selected');
@@ -58,14 +58,14 @@ define(function(require, exports, module) {
 
                 },
                 //全选
-                'click .grid-check-all': function(e, config) {
+                'click  .grid-check-all': function(e, config) {
                     var parent = $(this).parent().toggleClass('grid-selected'),
                         isAll = parent.hasClass('grid-selected');
                     config.body.children().toggleClass('grid-selected', isAll);
                     config.onSelected(isAll ? config.cache : []);
                 },
                 //排序 order-asc 升序 order-desc 降序 
-                'click .order': function(e, config) {
+                'click  .order': function(e, config) {
                     var t = $(this),
                         asc = 'asc';
                     if (t.hasClass('desc')) {
@@ -110,16 +110,18 @@ define(function(require, exports, module) {
             },
             //检查是否存在滚动条
             isScrolling: function() {
-                var b = this.body[0];
-                this.head.css('margin-right', b.offsetWidth - b.scrollWidth);
+                var b = this.body[0],
+                    sw = b.offsetWidth - b.scrollWidth;
+                this.head.css('margin-right', sw);
+                return sw > 0;
             },
             //获取已选数据
             getSelected: function() {
                 var ret = [],
                     cache = this.cache;
-                this.body.children('.grid-selected').each(function(o, i) {
+                this.body.children('.grid-selected').each(function() {
                     var index = this.getAttribute('index');
-                    cache[index] && ret.push(cache[index]);
+                    if(cache[index]) ret.push(cache[index]);
                 });
                 return ret;
             },
@@ -163,9 +165,9 @@ define(function(require, exports, module) {
                     {{~}}')
             },
             //loader暴露的接口
-            load: function(filter,toBase) {
-                if(toBase){
-                    _.extend(this.loader.baseparams,toBase===true?filter:toBase);
+            load: function(filter, toBase) {
+                if (toBase) {
+                    _.extend(this.loader.baseparams, toBase === true ? filter : toBase);
                 }
                 this.loader.load(filter);
             },
@@ -193,10 +195,10 @@ define(function(require, exports, module) {
                 var loader = this.loader = UI.loader({
                     baseparams: config.baseparams,
                     loadtip: config.loadtip,
+                    loadtype: config.loadtype,
                     count: config.count,
                     url: config.url,
                     beforeLoad: config.beforeLoad,
-                    cache: config.ajaxCache,
                     afterLoad: function(data) {
                         var cache = config.cache = config.parseData(data) || [];
                         //如果page不是第一页但是返回数据为0，则自动刷新到前一页
@@ -205,7 +207,18 @@ define(function(require, exports, module) {
                             this.load();
                             return;
                         }
-                        config.data = config.render(cache);
+                        var aData = config.data = config.render(cache),
+                            aLen = 0;
+                        //处理自动选中
+                        if (config.autoSelect) {
+                            _.each(cache, function(o, i) {
+                                if (config.autoSelect(o)) {
+                                    aLen++;
+                                    aData[i].selected = true;
+                                }
+                            });
+                            config.autoSelect = null;
+                        }
                         config.body.html(config.templates.items(config));
                         //paging
                         if (config.count) {
@@ -214,15 +227,16 @@ define(function(require, exports, module) {
                         //状态
                         config.statubar.html(config.status(data.total, loader.page, loader.count) || '');
                         //去除全选状态
-                        config.isSelectAll(false);
-                        //检查滚动条
-                        config.isScrolling();
+                        config.isSelectAll(aLen !== 0 && aLen === cache.length);
                         //grid 回调
                         config.afterLoad(data, cache);
-                        var selected=_.filter(config.data,function(o){
-                            return o.selected;
-                        });
-                        config.onSelected(selected);
+                        //跳转到第一个默认选中元素
+                        //检查滚动条
+                        if (config.isScrolling() && aLen) {
+                            config.body.children(".grid-selected").get(0).scrollIntoView();
+                        }
+                        //触发选中回调
+                        config.onSelected(config.getSelected());
                     }
                 });
                 //build
@@ -261,23 +275,23 @@ define(function(require, exports, module) {
                             var lis = '',
                                 data = this.data = config.getSelected();
                             _.each(this.menus, function(o, i) {
-                                if (o == '') {
+                                if (o === '') {
                                     lis += '<li class="devider"></li>';
                                 } else if (!o.test || _.isFunction(o.test) && o.test(data) === true) {
                                     lis += '<li><a' + (o.cls ? ' class="' + o.cls + '"' : '') + ' href="' + (_.isFunction(o.href) ? o.href(data) : o.href || '#') + '">' + o.label + '</a></li>';
                                 }
                             });
-                            if (lis == "") {
+                            if (lis === "") {
                                 this.hide();
-                                return
-                            };
+                                return;
+                            }
                             this.el.html('<ul class="menu dropdown-menu">' + lis + '</ul>').show().appendTo('body').position({
                                 at: 'left+' + x + ' top+' + y,
                                 my: 'left top',
                                 collision: 'flipfit',
                                 of: window
                             });
-                            this.show&&this.show();
+                            if(this.show) this.show();
                         },
                         hide: function() {
                             this.el.detach();
@@ -320,18 +334,18 @@ define(function(require, exports, module) {
                                     top: startEvent.clientY + (height > 0 ? 0 : height)
                                 });
                                 //选择出在框内的元素
-                                var boxRect = box[0].getBoundingClientRect()
+                                var boxRect = box[0].getBoundingClientRect();
                                 sheeps.each(function(i, o) {
                                     $(o).toggleClass('grid-selected', isCross(boxRect, o.getBoundingClientRect()));
                                 });
                             } else if (Math.abs(width) > 10 || Math.abs(height) > 10) {
                                 //当没有数据的时候忽略拖选
-                                if(!config.cache.length) return;
+                                if (!config.cache.length) return;
                                 isWorking = true;
                                 box.appendTo('body');
                                 sheeps = config.body.children();
                                 //如果存在右键菜单，需要删除
-                                config.contextmenu && config.contextmenu.hide();
+                                if(config.contextmenu) config.contextmenu.hide();
                             }
                         }
                     };
@@ -348,7 +362,7 @@ define(function(require, exports, module) {
                     if (e.which == 1 && x < this.clientWidth && y < this.clientHeight) {
                         startEvent = e;
                         isMouseDown = true;
-                        doc.on('mousemove', moving).one('mouseup', function(e) {
+                        doc.on('mousemove', moving).one('mouseup', function() {
                             isMouseDown = startEvent = null;
                             if (isWorking) {
                                 sheeps = isWorking = null;
@@ -364,13 +378,11 @@ define(function(require, exports, module) {
                             config.onSelected([]);
                             config.isSelectAll(false);
                             //如果存在右键菜单，需要删除
-                            config.contextmenu && config.contextmenu.hide();
+                            if(config.contextmenu) config.contextmenu.hide();
                         }
                     }
                 });
-
                 //over
-
             }
         }, config));
     };

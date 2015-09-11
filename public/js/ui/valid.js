@@ -38,7 +38,7 @@ define(function(require, exports, module) {
                 var label = elem.data('label'),
                     form = $(elem[0].form);
                 if (label) {
-                    label = label.indexOf('#') == 0 ? $(label) : form.find(label);
+                    label = label.indexOf('#') === 0 ? $(label) : form.find(label);
                 }
                 if (label && label.length) {
                     label.html(this.label(msg, isSafe));
@@ -87,14 +87,14 @@ define(function(require, exports, module) {
                         label = range(status.fieldGroup.filter(':checked').length, 0, pm, rule.label2);
                     } else {
                         label = range(value.length, 0, pm, rule.label);
-                    };
+                    }
                     return label;
                 },
                 label: ['', '至少输入 {0} 个字符', '最多输入 {1} 个字符', '请输入 {0} 到 {1} 个字符'],
                 label2: ['', '至少选择 {0} 项', '最多选择 {1} 项', '请选择 {0} 到 {1} 项']
             },
             //整数
-            int: {
+            "int": {
                 rule: function(value, pm, status, rule) {
                     var label = range(value, !intReg.test(value), pm, rule.label);
                     return label;
@@ -102,7 +102,7 @@ define(function(require, exports, module) {
                 label: ['请输入整数', '请输入整数,最小值 {0}', '请输入整数,最大值 {1}', '请输入 {0} 到 {1} 的整数']
             },
             //小数
-            float: {
+            "float": {
                 rule: function(value, pm, status, rule) {
                     var label = range(value, !$.isNumeric(value), pm, rule.label);
                     return label;
@@ -115,8 +115,8 @@ define(function(require, exports, module) {
             },
             equal: {
                 rule: function(value, pm, status, rule) {
-                    var form =this[0].form;
-                    if(form[pm].value!==value) return rule.label;
+                    var form = this[0].form;
+                    if (form[pm].value !== value) return rule.label;
                 },
                 label: '两次输入的密码不一样'
             }
@@ -141,7 +141,7 @@ define(function(require, exports, module) {
                 label = labels[3];
                 if (error || num < rg[0] || num > rg[1]) {
                     error = 1;
-                };
+                }
             } else if (rg[1]) {
                 label = labels[2];
                 if (error || num > rg[1]) {
@@ -150,14 +150,14 @@ define(function(require, exports, module) {
             } else if (rg[0]) {
                 label = labels[1];
                 if (error || num < rg[0]) {
-                    error = 1
+                    error = 1;
                 }
             }
             //第三个附加参数标记小数位
             if (rg[2]) {
                 label += ', ' + labels[4];
                 if (error || num.replace(/.*\./, '').length > rg[2]) {
-                    error = 1
+                    error = 1;
                 }
             }
             if (error) return labelFormat(label, rg);
@@ -172,10 +172,10 @@ define(function(require, exports, module) {
             return msg ? msg.replace(ruleReg, function(a, b) {
                 return arr[b] !== undefined ? arr[b] : a;
             }) : '';
-        }
+        },
 
-    // Method to validate each fields
-    validateField = function(event, options) {
+        // Method to validate each fields
+        validateField = function(event, options) {
             var status = {
                     fieldType: this.tagName == 'SELECT' ? 1 : 0,
                     isValid: true,
@@ -298,7 +298,7 @@ define(function(require, exports, module) {
             return status;
         },
         validate = function(options) {
-            options = _.proto(defaults, options);
+            options = _.create(defaults, options);
             var form = options.form;
             form.attr('novalidate', true).data(nameSpace, {
                 options: options

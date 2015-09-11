@@ -1,1 +1,1 @@
-##Maroco演示地址：[http://momofiona.github.io/maroco/public/example/](http://momofiona.github.io/maroco/public/example/)* 为了兼容IE6 被迫搞了这孩子###基本情况* express* weed-fs###全局变量* jQuery* $* UI* _###这个项目适合谁* 需要兼容IE6的...* 懒人###如何使用:见demo... 文件上传依赖express框架###近期计划:作者不高兴，开发计划暂停
+#Maroco---又一个轮子，最大限度地兼容了IE6演示地址：[http://momofiona.github.io/maroco/public/example/](http://momofiona.github.io/maroco/public/example/)###基本情况* express* weed-fs* maroco ui###全局变量* jQuery* $* UI* _* 实际项目中(USERINFO , APP)###近期计划:* layout自动布局* 改用gulp打包优化* react版

@@ -1,5 +1,5 @@
 /**
- * buttonset
+ * buttonset 
  */
 define(function(require, exports, module) {
     var defaults = {
@@ -35,7 +35,7 @@ define(function(require, exports, module) {
                         on: $(o).attr('index', i).hasClass('active'),
                         label: $(o).text()
                     });
-                })
+                });
             }
             //IE6禁止复制
             if (UI.browser.ie == 6) {
@@ -53,6 +53,6 @@ define(function(require, exports, module) {
         }
     }
     return function(config) {
-        return UI(_.proto(defaults,config));
+        return UI(_.create(defaults,config));
     }
 });

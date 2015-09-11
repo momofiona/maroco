@@ -157,8 +157,8 @@
     <div class="footman"></div>
 </div>
 <script id="codemirror-notify">
-seajs.use(['ui/notify','ui/tips'], function(notify,tips) {
-    var loadingTip;
+seajs.use(['ui/notify'], function(notify) {
+    var loadingTip,tips=notify.tips;
     UI({
         el: '#demoNotify',
         events: {

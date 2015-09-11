@@ -4,17 +4,17 @@ seajs.config({
         ztree: 'js/vendor/zTree/jquery.ztree.all-3.5.min.js',
         ztreeCSS: 'css/zTree/zTreeStyle.css',
         my97: 'js/vendor/my97/WdatePicker.js',
-        zrender: 'js/vendor/eCharts/zrender/zrender.js'
+        draggable: 'js/vendor/jqueryui/jquery.ui.draggable.min.js',
+        sortable: 'js/vendor/jqueryui/jquery.ui.sortable.min.js',
+        mousewheel:'js/vendor/jquery.mousewheel'
     },
     paths: {
-        'ui': 'js/ui',
-        'zrender': 'js/vendor/eCharts/zrender',
-        'echarts': 'js/vendor/eCharts/echarts'
+        'ui': 'js/ui'
     },
     vars: {
         'locale': 'cn'
     },
     map: [
-        [/^(.*\.(?:css|js))(.*)$/i, '$1?20150101']
+        [/^(.*\.(?:css|js))(.*)$/i, '$1?20150901']
     ]
 });

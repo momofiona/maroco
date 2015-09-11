@@ -15,6 +15,7 @@
  */
 define(function(require, exports, module) {
     require('css/picasa.css');
+    require('draggable');
     require('js/vendor/jquery.mousewheel');
     var isIE6 = UI.browser.ie === 6,
         timmer, sTimmer,
@@ -342,6 +343,6 @@ define(function(require, exports, module) {
             }
         }
     return function(config) {
-        return UI(_.proto(defaults, config));
+        return UI(_.create(defaults, config));
     }
 });

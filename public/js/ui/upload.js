@@ -2,39 +2,17 @@
 define(function(require, exports, module) {
     require('js/vendor/plupload/plupload.full.min.js');
     plupload.addI18n({
-        "Stop Upload": "停止上传",
-        "Upload URL might be wrong or doesn't exist.": "上传的URL可能是错误的或不存在。",
+        "N/A": "N/A",
         "tb": "TB",
-        "Size": "大小",
-        "Close": "关闭",
-        "Init error.": "上传初始化错误，您的浏览器是否支持Flash？",
-        "Add files to the upload queue and click the start button.": "将文件添加到上传队列，然后点击”开始上传“按钮。",
-        "Filename": "文件名",
-        "Image format either wrong or not supported.": "图片格式错误或者不支持。",
-        "Status": "状态",
-        "HTTP Error.": "HTTP 错误。",
-        "Start Upload": "开始上传",
         "mb": "MB",
         "kb": "KB",
-        "Duplicate file error.": "重复文件错误。",
-        "File size error.": "文件体积太大。",
-        "N/A": "N/A",
-        "gb": "GB",
-        "Error: Invalid file extension:": "错误：无效的文件扩展名:",
-        "Select files": "选择文件",
-        "%s already present in the queue.": "%s 已经在当前队列里。",
-        "File: %s": "文件: %s",
         "b": "B",
-        "Uploaded %d/%d files": "已上传 %d/%d 个文件",
-        "Upload element accepts only %d file(s) at a time. Extra files were stripped.": "每次只接受同时上传 %d 个文件，多余的文件将会被删除。",
-        "%d files queued": "%d 个文件加入到队列",
-        "File: %s, size: %d, max file size: %d": "文件: %s, 大小: %d, 最大文件大小: %d",
-        "Drag files here.": "把文件拖到这里。",
-        "Runtime ran out of available memory.": "运行时已消耗所有可用内存。",
-        "File count error.": "文件数量错误。",
+        "gb": "GB",
         "File extension error.": "文件类型错误。",
-        "Error: File too large:": "错误: 文件太大:",
-        "Add Files": "增加文件"
+        "File size error.": "文件体积太大，不能大于200M。",
+        "Duplicate file error.": "重复文件错误。",
+        "Init error.": "初始化错误。",
+        "HTTP Error.": "HTTP 错误。"
     });
     var notify = require('ui/notify'),
         dialog;
@@ -72,7 +50,7 @@ define(function(require, exports, module) {
             send_chunk_number: true, //Whether to send chunks and chunk numbers, or total and offset bytes.
             multipart_params:{}//Hash of key/value pairs to send with every file upload.*/
             runtimes: 'html5,flash',
-            max_file_size: '100mb',
+            max_file_size: '200mb',
             flash_swf_url: require.resolve('../') + 'vendor/plupload/Moxie.swf',
             //trigger order: init -> Error $ ro QueueChanged -> FilesAdded -> BeforeUpload -> UploadProgress -> FileUploaded -> QueueChanged -> UploadComplete 
             //上传失败: QueueChanged - FilesAdded - BeforeUpload - UploadProgress - Error - QueueChanged - UploadComplete
@@ -87,11 +65,11 @@ define(function(require, exports, module) {
                         events: {
                             'click .ac-cancel': function(e, conf) {
                                 var item = $(this).parent().fadeOut(function() {
-                                    conf.el.position(conf.position);
-                                    $(this).remove();
-                                });
-                                file = up.getFile($(this).data('id'));
-                                file && up.removeFile(file);
+                                        conf.el.position(conf.position);
+                                        $(this).remove();
+                                    }),
+                                    file = up.getFile($(this).data('id'));
+                                if (file) up.removeFile(file);
                             }
                         },
                         close: function(e, conf) {
@@ -113,7 +91,7 @@ define(function(require, exports, module) {
                         }
                     });
                     dialog.close();
-                    options.PostInit && options.PostInit.call(this, up);
+                    options.PostInit.call(this, up);
                 },
                 QueueChanged: function(up) {
                     var n = up.files.length;
@@ -121,11 +99,11 @@ define(function(require, exports, module) {
                 },
                 FilesAdded: function(up, files) {
                     dialog.add(files);
-                    options.FilesAdded && options.FilesAdded.call(this, up, files);
+                    options.FilesAdded.call(this, up, files);
                     up.start();
                 },
                 BeforeUpload: function(up, file) {
-                    options.BeforeUpload && options.BeforeUpload.call(this, up, file);
+                    options.BeforeUpload.call(this, up, file);
                 },
                 UploadProgress: function(up, file) {
                     file.bar.width(file.percent + "%");
@@ -142,16 +120,16 @@ define(function(require, exports, module) {
                         return;
                     }
                     file.dom.fadeOut(function() {
-                        $(this).remove()
+                        $(this).remove();
                     }).find('.ac-cancel').remove();
                     up.removeFile(file);
-                    options.FileUploaded && options.FileUploaded(up, file, data);
+                    options.FileUploaded(up, file, data);
                 },
                 UploadComplete: function(up, files) {
-                    if (dialog.contentEl.children('.ac-error').length == 0) {
+                    if (dialog.contentEl.children('.ac-error').length === 0) {
                         dialog.close();
                     }
-                    options.UploadComplete && options.UploadComplete(up, files);
+                    options.UploadComplete(up, files);
                 },
                 Error: function(up, err) {
                     var file = err.file;
@@ -161,15 +139,21 @@ define(function(require, exports, module) {
                         } else {
                             up.removeFile(file);
                         }
-                        file.bar.parent().replaceWith('<div class="c-error">' + (err.code == -600 ? '文件大小不能超过' + up.settings.filters.max_file_size : err.message) + '</div>');
+                        file.bar.parent().replaceWith('<div class="c-error">' + err.message + '</div>');
                         file.dom.addClass('ac-error').find('.ac-cancel').remove();
                     } else {
                         notify.error(err.message);
                     }
                 }
-            }
+            },
+            PostInit: $.noop,
+            FilesAdded: $.noop,
+            BeforeUpload: $.noop,
+            FileUploaded: $.noop,
+            UploadComplete: $.noop
+
         }, options));
         uploader.init();
         return uploader;
-    }
+    };
 });

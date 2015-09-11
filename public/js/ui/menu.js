@@ -6,7 +6,7 @@
  * Licensed under the MIT license: http://opensource.org/licenses/MIT
  *
  */
-if (jQuery)(function($) {
+(function($) {
 
     $.extend($.fn, {
         dropdown: function(method, data) {
@@ -18,10 +18,10 @@ if (jQuery)(function($) {
                     hide();
                     return $(this);
                 case 'attach':
-                    return $(this).attr('data-dropdown', data);
+                    return $(this).data('data-dropdown', data);
                 case 'detach':
                     hide();
-                    return $(this).removeAttr('data-dropdown');
+                    return $(this).removeData('data-dropdown');
                 case 'disable':
                     return $(this).addClass('dropdown-disabled');
                 case 'enable':
@@ -33,7 +33,7 @@ if (jQuery)(function($) {
 
     function show(event, object) {
         var trigger = event ? $(this) : object,
-            attr = trigger.attr('data-dropdown'),
+            attr = trigger.data('data-dropdown'),
             dropdown = attr ? $(attr) : trigger.next(),
             isOpen = trigger.hasClass('dropdown-open');
         // In some cases we don't want to show it
@@ -93,7 +93,9 @@ if (jQuery)(function($) {
     function position() {
         var dropdown = $('.dropdown:visible').eq(0),
             trigger = dropdown.data('dropdown-trigger');
-        if (dropdown.length === 0 || !trigger) return;
+        if (dropdown.length === 0 || !trigger) {
+            return;
+        }
         var pos = dropdown.attr('position'),
             top = dropdown.hasClass('tips') ? '+6' : '-1';
         pos = pos ? $.trim(pos).split(',') : [];
@@ -106,4 +108,4 @@ if (jQuery)(function($) {
     $(document).on('click.dropdown', '[data-dropdown]', show);
     $(document).on('click.dropdown', hide);
     $(window).on('resize.dropdown', position);
-})(jQuery);
+}(jQuery));

@@ -43,48 +43,32 @@ define(function(require, exports, module) {
                 }
                 return '到：' + s;
             },
+            handError: function(up, err) {
+                if (err.code == -600) {
+                    return '文件大小超过' + up.settings.filters.max_file_size + '，建议使用<a target="_blank" href="#" onclick="ls.startIMClient();">客户端</a>，高速、稳定';
+                }
+                return err.message;
+            },
             //国际化
             i18n: {
-                "Stop Upload": "停止上传",
-                "Upload URL might be wrong or doesn't exist.": "上传的URL可能是错误的或不存在。",
+                "N/A": "N/A",
                 "tb": "TB",
-                "Size": "大小",
-                "Close": "关闭",
-                "Init error.": "初始化错误。",
-                "Add files to the upload queue and click the start button.": "将文件添加到上传队列，然后点击”开始上传“按钮。",
-                "Filename": "文件名",
-                "Image format either wrong or not supported.": "图片格式错误或者不支持。",
-                "Status": "状态",
-                "HTTP Error.": "HTTP 错误。",
-                "Start Upload": "开始上传",
                 "mb": "MB",
                 "kb": "KB",
-                "Duplicate file error.": "重复文件错误。",
-                "File size error.": "文件体积太大。",
-                "N/A": "N/A",
-                "gb": "GB",
-                "Error: Invalid file extension:": "错误：无效的文件扩展名:",
-                "Select files": "选择文件",
-                "%s already present in the queue.": "%s 已经在当前队列里。",
-                "File: %s": "文件: %s",
                 "b": "B",
-                "Uploaded %d/%d files": "已上传 %d/%d 个文件",
-                "Upload element accepts only %d file(s) at a time. Extra files were stripped.": "每次只接受同时上传 %d 个文件，多余的文件将会被删除。",
-                "%d files queued": "%d 个文件加入到队列",
-                "File: %s, size: %d, max file size: %d": "文件: %s, 大小: %d, 最大文件大小: %d",
-                "Drag files here.": "把文件拖到这里。",
-                "Runtime ran out of available memory.": "运行时已消耗所有可用内存。",
-                "File count error.": "文件数量错误。",
+                "gb": "GB",
                 "File extension error.": "文件类型错误。",
-                "Error: File too large:": "错误: 文件太大:",
-                "Add Files": "增加文件"
+                "File size error.": "文件体积太大。",
+                "Duplicate file error.": "重复文件错误。",
+                "Init error.": "初始化错误。",
+                "HTTP Error.": "HTTP 错误。"
             },
             show: function(options) {
                 var _t = this;
                 _t.mask.appendTo('body').show();
                 _t.el.position(_t.position);
                 _t.path.html(_t.ellipsis(options.uploadPath));
-                _t.footLabel.html(options.footLabel);
+                _t.footLabel.html('网页版单文件最大支持200M <br><a target="_blank" href="#" onclick="ls.startIMClient();">使用PC客户端</a>，支持文件秒传、断点续传');
                 //绑定上传插件
                 //trigger order: init -> Error $ ro QueueChanged -> FilesAdded -> BeforeUpload -> UploadProgress -> FileUploaded -> QueueChanged -> UploadComplete 
                 //上传失败: QueueChanged - FilesAdded - BeforeUpload - UploadProgress - Error - QueueChanged - UploadComplete
@@ -143,7 +127,7 @@ define(function(require, exports, module) {
                             FileUploaded: function(up, file, data) {
                                 data = JSON.parse(data.response);
                                 //服务器自定义错误，切换到错误模式
-                                if (!data.success) {
+                                if (data.code) {
                                     up.trigger('Error', {
                                         code: 'sugon',
                                         message: data.msg,
@@ -169,7 +153,7 @@ define(function(require, exports, module) {
                                     } else {
                                         up.removeFile(file);
                                     }
-                                    file.bar.parent().parent().html('<div class="c-error">' + (err.code == -600 ? '文件大小超过' + up.settings.filters.max_file_size + '，建议使用<a target="_blank" href="#" onclick="ls.startIMClient();">客户端</a>，高速、稳定' : err.message) + '</div>');
+                                    file.bar.parent().parent().html('<div class="c-error">' + dialog.handError(up, err) + '</div>');
                                     file.dom.addClass('ac-error');
                                 } else {
                                     notify.error(err.message);
@@ -183,7 +167,7 @@ define(function(require, exports, module) {
             hide: function() {
                 this.mask.hide();
                 if (this.uploader) {
-                    this.uploader.destroy()
+                    this.uploader.destroy();
                 }
             },
             //点击取消
@@ -203,10 +187,14 @@ define(function(require, exports, module) {
             finish: function(e, conf) {
                 conf = conf || this;
                 this.showcase.empty();
-                conf.dropTip.show && conf.dropTip.show();
+                if (conf.dropTip.show) {
+                    conf.dropTip.show();
+                }
                 var up = conf.uploader;
                 _.each(up.files, function(o) {
-                    o && up.removeFile(o);
+                    if (o) {
+                        up.removeFile(o);
+                    }
                 });
                 conf.hide();
             },
@@ -214,14 +202,17 @@ define(function(require, exports, module) {
                 var _t = this;
                 _t.path = _t.$('.ac-path');
                 _t.showcase = _t.$('.ac-showcase');
-                _t.footLabel = $('<div class="xl m1"></div>');
+                _t.footLabel = $('<div style="height:40px;width:400px;" class="xl text-left vam c-gray"><div class="vam-helper"></div><div class="vam-con"></div></div>');
                 _t.contentEl.addClass('p10').next().prepend(_t.footLabel);
+                _t.footLabel = _t.footLabel.find('.vam-con');
                 _t.btnCancel = _t.$('.ac-btncancel').hide();
                 _t.btnFinish = _t.$('.ac-btnfinish');
             },
             //添加队列上传
             add: function(files) {
-                this.dropTip.hide && this.dropTip.hide();
+                if (this.dropTip.hide) {
+                    this.dropTip.hide();
+                }
                 $.each(files, function(i, file) {
                     file.dom = $('<div id="' + file.id + '" class="xc" style="margin-top:-1px;border-top:solid 1px #e4e5e9;padding:10px 10px 10px 30px">' + '<span class="xr">' + plupload.formatSize(file.size) + '</span><div class="ellipsis w13"><strong>' + file.name + '</strong></div>' + '<div class="xc" style="height:30px;padding-top:6px;"><div class="progress w11 xl" style="height:10px;margin:5px 10px 0 0;"><div class="bar safe"></div></div>' + '<span class="ac-percent xl"></span>' + '<a href="#" class="ac-cancel xr" data-id="' + file.id + '">取消</a></div>' + '</div>');
                     file.bar = file.dom.find('.bar');

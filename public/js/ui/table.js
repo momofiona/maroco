@@ -48,14 +48,13 @@
         });
     });
  */
-"use strict";
 define(function(require, exports, module) {
-    require('js/vendor/jquery.mousewheel');
+    "use strict";
+    require('mousewheel');
     require('ui/rollbar');
     //分页
     var pager = require('ui/pager');
     var editOver = '<b class="i i-safe ac-tr-save m2" title="保存"></b><b class="i i-close ac-tr-cancel" title="取消"></b>';
-    // var addIcon = '';
     var inputs = 'input:not([type]),input[type="color"],input[type="date"],input[type="datetime"],input[type="datetime-local"],input[type="email"],input[type="file"],input[type="hidden"],input[type="month"],input[type="number"],input[type="password"],input[type="range"],input[type="search"],input[type="tel"],input[type="text"],input[type="time"],input[type="url"],input[type="week"],textarea, select, input[type="checkbox"],input[type="radio"]';
     var editInput = _.dot('<div class="text-auto-wrap"><input name="{{=it.name}}" value="{{=it.value}}" data-trim="true" data-describedby="tooltip" type="text" class="text-auto" {{=it.attr}}></div>');
     var _colgroup = '{{?it.sortable}}\
@@ -152,23 +151,14 @@ define(function(require, exports, module) {
                 return '共 ' + total + ' 条数据';
             },
             parseData: function(data) {
-                    return data.result;
-                }
-                /*,
-                            render:function(result){
-                                var cols=this.cols;
-                                return _.map(result,function(v,k){
-                                    return _.map(cols,function(o,i){
-                                        return _.isFunction(o.html)?o.html(v,k,i):v[o.html];
-                                    });
-                                });
-                            }*/
+                return data.result;
+            }
         }
         //$.support.boxSizing=false时候所有宽度减去td的padding
     return function(config) {
         config = _.extend({}, defaults, config, {
             skipIndex: (config.checkbox ? 1 : 0) + (config.sortable ? 1 : 0),
-            cscrollId: _.guid('c')
+            cscrollId: _.uniqueId("tableRoll")
         });
         var skipIndex = config.skipIndex;
         //预处理表头分组
@@ -234,13 +224,15 @@ define(function(require, exports, module) {
         });
         //排序
         if (config.sortable) {
-            tbody.sortable($.extend({
-                handle: '.chandler',
-                start: $.noop,
-                sort: $.noop,
-                stop: $.noop,
-                update: $.noop
-            }, config.sortable));
+            require.async('sortable', function() {
+                tbody.sortable($.extend({
+                    handle: '.chandler',
+                    start: $.noop,
+                    sort: $.noop,
+                    stop: $.noop,
+                    update: $.noop
+                }, config.sortable));
+            });
         }
         //多选
         if (config.checkbox) {
@@ -321,7 +313,7 @@ define(function(require, exports, module) {
                 var tr = $(this).closest('tr'),
                     data = cache[tr.attr('data-index')];
                 if (_editable.beforeEdit.call(tr, data) === false) return false;
-                var _data = _.proto(data),
+                var _data = _.create(data),
                     tds = tr.find('>td');
                 //保存模板用于取消编辑
                 data.__html__ = tr.html();
@@ -463,9 +455,8 @@ define(function(require, exports, module) {
         var loader = config.loader = UI.loader({
             baseparams: config.baseparams,
             count: config.count,
-            loadtip:config.loadtip,
+            loadtip: config.loadtip,
             url: config.url,
-            cache: config.cache,
             beforeLoad: function(filter) {
                 config.beforeLoad && config.beforeLoad.call(table, filter, config);
             },
@@ -483,23 +474,26 @@ define(function(require, exports, module) {
 
                 //去除全选
                 selectAll.checked = false;
-                tbody.html(tbodyHtml);
+                //延时插入，否则IE10、IE11页面元素无法选中，select无法点出菜单
+                setTimeout(function() {
+                    tbody.html(tbodyHtml);
+                    config.afterLoad && config.afterLoad.call(table, data, cache);
+                }, 20);
                 //paging
                 if (config.count) {
                     paging.render(data.total, loader.page, loader.count);
                 }
                 //如果返回了总数
                 statubar.html(config.status(data.total, loader.page, loader.count) || '');
-                config.afterLoad && config.afterLoad.call(table, data, cache);
             }
         });
 
         var api = {
             config: config,
             table: table,
-            load: function(filter,toBase) {
-                if(toBase){
-                    _.extend(loader.baseparams,toBase===true?filter:toBase);
+            load: function(filter, toBase) {
+                if (toBase) {
+                    _.extend(loader.baseparams, toBase === true ? filter : toBase);
                 }
                 loader.load(filter);
             },

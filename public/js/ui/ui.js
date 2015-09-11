@@ -1,75 +1,33 @@
-//seajs config2
-seajs.config({
-    alias: {
-        ztree: 'js/vendor/zTree/jquery.ztree.all-3.5.min.js',
-        ztreeCSS: 'css/zTree/zTreeStyle.css',
-        my97: 'js/vendor/my97/WdatePicker.js'
-    },
-    paths: {
-        'ui': 'js/ui'
-    },
-    vars: {
-        'locale': 'cn'
-    },
-    map: [
-        [/^(.*\.(?:css|js))(.*)$/i, '$1?20150101']
-    ]
-});
-
 /**
  * UI base
- * 数据类的放到_
- * UI类的放到UI下
  */
 (function($) {
     'use strict';
-    //KeyCode
-    var keyCode = {
-            BACKSPACE: 8,
-            TAB: 9,
-            COMMA: 188,
-            DELETE: 46,
-            END: 35,
-            ENTER: 13,
-            ESC: 27,
-            HOME: 36,
-            LEFT: 37,
-            UP: 38,
-            RIGHT: 39,
-            DOWN: 40
-        },
-        //UI widget
-        UI = function(config) {
-            config.$ = function(arg) {
-                return $(arg, this.el);
-            };
-            //el init
-            config.el = $(config.el || '<div/>');
-            if (config.init) {
-                config.init();
-            }
-            //绑定事件
-            _.each(config.events, function(v, k) {
-                var s = k.indexOf(' ');
-                config.el.on(s == -1 ? k : k.slice(0, s), s == -1 ? '' : $.trim(k.slice(s + 1)), function(event) {
-                    var _fn = (_.isString(v) ? config[v] : v);
-                    if (_fn) return _fn.call(this, event, config);
-                });
-            });
-            if (config.create) {
-                config.create();
-            }
-            return config;
+    if (window.UI) return;
+    //UI widget $.ui.keyCode
+    var UI = function(config) {
+        config.$ = function(arg) {
+            return $(arg, this.el);
         };
-    //一些基本属性
-    _.extend(UI, {
-        //非法字符，依据windows文件夹命名规则
-        illegalCharacter: /[^\\\/:\*\?\"<>\|]/,
-        //分页每页数量
-        count: 15,
-        server: seajs.data.base,
-        keyCode: keyCode
-    });
+        //el init
+        config.el = $(config.el || '<div/>');
+        if (config.init) {
+            config.init();
+        }
+        //绑定事件
+        _.each(config.events, function(v, k) {
+            var s = k.indexOf(' ');
+            config.el.on(s == -1 ? k : k.slice(0, s), s == -1 ? '' : $.trim(k.slice(s + 1)), function(event) {
+                var _fn = (_.isString(v) ? config[v] : v);
+                if (_fn) return _fn.call(this, event, config);
+            });
+        });
+        if (config.create) {
+            config.create();
+        }
+        return config;
+    };
+
     /**
      * 浏览器判断 主要判断IE6-10
      */
@@ -84,16 +42,19 @@ seajs.config({
         firefox: !!window.sidebar && !!window.sidebar.addSearchEngine,
         safari: /constructor/i.test(window.HTMLElement)
     };
-    UI.browser = browser;
-    var proto = Object.create || function(proto) {
-            function F() {};
-            F.prototype = proto;
-            return new F;
-        }
-        //underscore mixin
+    //一些公用属性
+    _.extend(UI, {
+        //非法字符，依据windows文件夹命名规则
+        illegalCharacter: /[^\\\/:\*\?\"<>\|]/,
+        //分页每页数量
+        count: 15,
+        server: seajs.data.base,
+        browser: browser
+    });
+    //underscore mixin
     _.mixin({
         /**
-         * 全局唯一ID ，局部可用_.uniqueId(UI.guid)
+         * 全局唯一ID ，局部可用_.uniqueId
          */
         guid: function(prefix) {
             var n = _.now().toString(32),
@@ -103,11 +64,6 @@ seajs.config({
             }
             n += _.uniqueId().toString(32);
             return prefix ? prefix + n : n;
-        },
-        //原型链
-        proto: function(prototype, object) {
-            var ret = proto(prototype);
-            return object ? _.extend(ret, object) : ret;
         },
         dot: doT.template,
         queryString: function(str, sep, eq) {
@@ -145,16 +101,17 @@ seajs.config({
      * Input Event Fixed
      * jquery plugin
      * IE6\7\8不支持input，用'onpropertychange' in document
+     * IE8中如果监控和赋值同时绑定，那么第一次输入不会触发 onpropertychange
      * IE9比较鸡肋 无法监控backspace delete 和右键菜单的剪切 撤销 删除
      * 感谢 toFishes 提醒IE9可以用selectionchange监控解决问题
      * 剩余bug：当input只有一个字符的情况下，右键撤销不会触发selectionchange
      */
     if (browser.ie < 10) {
         // 检查是否为可输入元素
-        var rinput = /^INPUT|TEXTAREA$/,
-            isInput = function(elem) {
-                return rinput.test(elem.nodeName);
-            };
+        var isInput = function(elem) {
+                return elem.nodeName == 'INPUT' || elem.nodeName == 'TEXTAREA';
+            },
+            iefx = _.uniqueId('.ieinputFixed');
         $.event.special.input = {
             setup: function() {
                 if (!isInput(this)) return false;
@@ -164,18 +121,23 @@ seajs.config({
                         if (oldValue !== elem.value) {
                             oldValue = elem.value;
                             $.event.trigger('input', null, elem);
-                        };
-                    };
+                        }
+                    },
+                    doc = $(document);
                 // oldValue = elem.value;
-                if (browser.ie == 9) {
-                    $(elem).on('focus._ie9inputFixed', function() {
-                        document.addEventListener('selectionchange', setter, false);
-                    }).on('blur._ie9inputFixed', function() {
-                        document.removeEventListener('selectionchange', setter, false);
+                if (browser.ie == 9 || browser.ie == 8) {
+                    $(elem).on('focus' + iefx, function() {
+                        doc.on('selectionchange' + iefx, setter);
+                    }).on('blur' + iefx, function() {
+                        doc.off('selectionchange' + iefx, setter);
                     });
                 }
+                // IE8
+                if (browser.ie == 8) {
+                    $(elem).on('keyup' + iefx, setter);
+                }
                 //ie6-9
-                elem.attachEvent('onpropertychange', $.data(elem, '@inputFixed', function(event) {
+                elem.attachEvent('onpropertychange', $.data(elem, iefx, function(event) {
                     if (event.propertyName.toLowerCase() == "value") {
                         setter();
                     }
@@ -183,12 +145,12 @@ seajs.config({
             },
             teardown: function() {
                 if (!isInput(this)) return false;
-                if (browser.ie == 9) $.event.remove(this, "._ie9inputFixed");
-                this.detachEvent('onpropertychange', $.data(this, '@inputFixed'));
-                $.removeData(this, '@inputFixed');
+                if (browser.ie == 9 || browser.ie == 8) $.event.remove(this, iefx);
+                this.detachEvent('onpropertychange', $.data(this, iefx));
+                $.removeData(this, iefx);
             }
         };
-    };
+    }
     $.fn.input = function(handler) {
         return this.on('input', handler);
     };
@@ -218,7 +180,7 @@ seajs.config({
      * @param  {[type]} config [description]
      * @return {[type]}        [description]
      */
-    var loader = function(config) {
+    UI.loader = function(config) {
         config = $.extend({
             baseparams: {},
             beforeLoad: $.noop,
@@ -241,7 +203,6 @@ seajs.config({
                         page: this.page,
                         count: this.count
                     }, this.filter),
-                    cache: this.cache,
                     dataType: 'JSON',
                     success: function(data) {
                         config.afterLoad(data);
@@ -251,16 +212,60 @@ seajs.config({
         }, config);
         //分页
         if (config.count && !config.page) config.page = 1;
-        return config
-    }
-    UI.loader = loader;
+        return config;
+    };
 
     /**
      * button 给页面上所有btn绑定事件
      * @type {Array}
      */
     var btnClassNames = ['log', 'silver', 'note', 'info', 'safe', 'warn', 'care', 'error', 'link', 'dark'];
-    var button = UI.button = function(dom, cName) {
+    var raf = 'requestAnimationFrame' in window ? function(obj, e) {
+        var x = e.offsetX,
+            y = e.offsetY,
+            bc1 = obj[0],
+            bc2 = e.target;
+        if (x === undefined) {
+            //火狐没有offsetX
+            bc1 = bc1.getBoundingClientRect();
+            x = e.clientX - bc1.left;
+            y = e.clientY - bc1.top;
+        } else if (bc1 !== bc2) {
+            //有可能点击的是子元素
+            bc1 = bc1.getBoundingClientRect();
+            bc2 = bc2.getBoundingClientRect();
+            x += bc2.left - bc1.left;
+            y += bc2.top - bc1.top;
+        }
+        //
+        var prefix = browser.ms ? '-ms-' : browser.webkit ? '-webkit-' : browser.moz ? '-moz-' : '',
+            str = prefix + 'radial-gradient(' + x + 'px ' + y + 'px' + ',circle cover,',
+            scal = 0,
+            destroy, //进入自毁流程
+            speed = 5,
+            opacity = 0.14,
+            run = function() {
+                obj.css("background-image", str + 'rgba(0,0,0,' + opacity + ') ' + scal + '%,transparent ' + scal + '%)');
+                if (scal < 100) {
+                    if (destroy) {
+                        opacity /= 2;
+                    }
+                    scal += speed;
+                    requestAnimationFrame(run);
+                } else if (destroy) {
+                    obj.css("background-image", '');
+                }
+            };
+        run();
+        return function() {
+            if (scal < 100) {
+                destroy = true;
+            } else {
+                obj.css("background-image", '');
+            }
+        };
+    } : 0;
+    var button = function(dom, cName) {
         //主动触发
         var _t = $(dom);
         if (_t.data('btype') === undefined) {
@@ -270,21 +275,27 @@ seajs.config({
             if (cName) {
                 _t.addClass(cName + '-hover');
                 _t.mouseenter(function() {
-                    $(this).addClass(cName + '-hover');
+                    _t.addClass(cName + '-hover');
                 }).mouseleave(function() {
-                    $(this).removeClass(cName + '-hover');
+                    _t.removeClass(cName + '-hover');
                 }).mousedown(function(e) {
                     if (e.which !== 1) return;
                     //解决鼠标拖动元素的时候
-                    var _btn = $(this);
-                    if (_btn.hasClass('active')) return;
+                    if (_t.hasClass('active')) return;
+                    //如果支持动画
+                    if (raf) {
+                        var dest = raf(_t, e);
+                    }
                     e.preventDefault();
-                    _btn.addClass(cName + '-active');
-                    $(document).one('mouseup', function(e) {
-                        _btn.removeClass(cName + '-active');
+                    _t.addClass(cName + '-active');
+                    $(document).one('mouseup', function() {
+                        _t.removeClass(cName + '-active');
+                        if (dest) {
+                            dest();
+                        }
                         //解决IE67 button 黑边
                         if (UI.browser.ie < 8) {
-                            _btn[0].blur();
+                            dom.blur();
                         }
                     });
                 });
@@ -304,7 +315,10 @@ seajs.config({
     UI.tabs = function(conf) {
         return UI($.extend(true, {
             active: function(n) {
-                this.tabs.find('a:eq(' + n + ')').trigger('click');
+                var tabLink = this.tabs.find('a').get(n);
+                if (tabLink) {
+                    this.events['click >.tab a'].call(tabLink, null, this);
+                }
             },
             onActive: $.noop,
             cache: {},
@@ -318,7 +332,7 @@ seajs.config({
                 if (id) {
                     if (cache[id]) {
                         return cache[id];
-                    } else if (id.indexOf('#') == 0) {
+                    } else if (id.indexOf('#') === 0) {
                         ret = $(id);
                     } else {
                         ret = this.el.children(id);
@@ -341,7 +355,7 @@ seajs.config({
                             //hide other panels
                             if (o === t) return;
                             var box = conf.getPanel(o);
-                            box && box.hide();
+                            if (box) box.hide();
                         });
                         //show current panel
                         panel.show();
@@ -350,7 +364,7 @@ seajs.config({
                         conf.tab = t;
                         conf.panel = panel;
                         conf.onActive(t, panel);
-                        e.preventDefault();
+                        if (e) e.preventDefault();
                     }
                 }
             },
@@ -362,6 +376,7 @@ seajs.config({
             }
         }, conf));
     };
+
     //navs
     UI.navs = function(conf) {
         return UI($.extend(true, {
@@ -400,10 +415,10 @@ seajs.config({
             toggle: function(a, force, speed) {
                 var t = $(a),
                     op = this.openCls,
-                    speed = speed === undefined ? this.speed : speed,
                     isOpen = t.hasClass(op);
+                speed = speed === undefined ? this.speed : speed;
                 //如果设置强制打开已经是打开状态
-                if (t.length == 0 || force === true && isOpen || t.next().length == 0) return;
+                if (t.length === 0 || force === true && isOpen || t.next().length == 0) return;
                 if (isOpen || false == force) {
                     t.removeClass(op).next().slideUp(speed);
                     this.onCollapse(t);
@@ -433,10 +448,6 @@ seajs.config({
             }
         }, conf));
     };
-    //layout([{}])
-    UI.layout = function() {
-
-    };
     //暴露全局调用
     window.UI = UI;
     //IE中插入flash的时候title自动变化修复 
@@ -445,91 +456,83 @@ seajs.config({
         document.attachEvent('onpropertychange', function(evt) {
             if (evt.propertyName === 'title' && document.title) {
                 setTimeout(function() {
-                    var b=document.title.indexOf('#');
-                    if(b!==-1){
-                        document.title = document.title.slice(0,b);
+                    var b = document.title.indexOf('#');
+                    if (b !== -1) {
+                        document.title = document.title.slice(0, b);
                     }
-                    
+
                 }, 1);
             }
         });
     }
-})(jQuery);
 
-
-
-//全局ajax处理
-$.ajaxSetup({
-    cache: false
-});
-$(document).ajaxSend(function(event, XMLHttpRequest, ajaxOptions) {
-    //多次点击只发送一次ajax请求
-    var t = ajaxOptions.target;
-    if (t) {
-        var xhr = $(t).data('_xhr_');
-        if (xhr) {
-            xhr.abort();
-        }
-        $(t).data('_xhr_', XMLHttpRequest);
-        if (t.tagName == 'BUTTON') {
-            t.disabled = true;
-        }
-    }
-    //loading
-    var tip = ajaxOptions.loadtip;
-    if (tip) {
-        seajs.use('ui/notify', function(notify) {
-            if (!ajaxOptions.loadtip) return; //已经完成无需弹出
-            ajaxOptions.loadtip = notify.loading(typeof tip == 'string' ? {
-                msg: tip
-            } : tip);
-        });
-    }
-}).ajaxSuccess(function(event, XMLHttpRequest, ajaxOptions) {
-    //TODO 过滤错误码
-    var v = XMLHttpRequest.responseJSON;
-    if (v && !v.success && v.data == 20000006) {
-        seajs.use('ui/notify', function(notify) {
-            notify.error('您还没有登录');
-            //清空user
-            $.removeCookie('user', {
-                path: '/'
-            });
-            _.delay(function() {
-                location = UI.server + 'login.html';
-            }, 3000);
-        });
-    }
-}).ajaxComplete(function(event, XMLHttpRequest, ajaxOptions) {
-    var t = ajaxOptions.target;
-    if (t && t.tagName == 'BUTTON') {
-        t.disabled = false;
-        $(t).data('_xhr_', null);
-    }
-    //loading,如果tip不是notify对象
-    var tip = ajaxOptions.loadtip;
-    if (tip) {
-        ajaxOptions.loadtip = 0;
-        tip.close && tip.close();
-    }
-});
-
-//console fix，生产环境用uglify去掉console
-(function() {
-    if (window.console) return;
-    var console = window.console = {};
-    _.each('assert clear count debug dir dirxml error exception group groupCollapsed groupEnd info log markTimeline profile profileEnd table time timeEnd timeStamp trace warn'.split(' '), function(o) {
-        console[o] = $.noop;
+    //全局ajax处理
+    $.ajaxSetup({
+        cache: false
     });
-})();
-//让IE6-8认识HTML5标签
-if (UI.browser.ie < 9) _.each("abbr article aside audio bdi canvas data datalist details dialog figcaption figure footer header hgroup main mark meter nav output picture progress section summary template time video".split(' '), function(o) {
-    document.createElement(o);
-});
-//金额计算
-//position
-//removeable
-//dragable
-//resizeable
-//selectable
-//sortable
+    $(document).ajaxSend(function(event, XMLHttpRequest, ajaxOptions) {
+        //多次点击只发送一次ajax请求
+        var t = ajaxOptions.target;
+        if (t) {
+            var xhr = $(t).data('_xhr_');
+            if (xhr) {
+                xhr.abort();
+            }
+            $(t).data('_xhr_', XMLHttpRequest);
+            if (t.tagName == 'BUTTON') {
+                t.disabled = true;
+            }
+        }
+        //loading
+        var tip = ajaxOptions.loadtip;
+        if (tip) {
+            seajs.use('ui/notify', function(notify) {
+                if (!ajaxOptions.loadtip) return; //已经完成无需弹出
+                ajaxOptions.loadtip = notify.loading(typeof tip == 'string' ? {
+                    msg: tip
+                } : tip);
+            });
+        }
+    }).ajaxSuccess(function(event, XMLHttpRequest, ajaxOptions) {
+        //TODO 过滤错误码
+        var v = XMLHttpRequest.responseJSON;
+        if (v && !v.success && v.data == 20000006) {
+            seajs.use('ui/notify', function(notify) {
+                notify.error('您还没有登录');
+                //清空user
+                $.removeCookie('user', {
+                    path: '/'
+                });
+                _.delay(function() {
+                    location = UI.server + 'login.html';
+                }, 2000);
+            });
+        }
+    }).ajaxComplete(function(event, XMLHttpRequest, ajaxOptions) {
+        var t = ajaxOptions.target;
+        if (t && t.tagName == 'BUTTON') {
+            t.disabled = false;
+            $(t).removeData('_xhr_');
+        }
+        //loading,如果tip不是notify对象
+        var tip = ajaxOptions.loadtip;
+        if (tip) {
+            ajaxOptions.loadtip = 0;
+            tip.close && tip.close();
+        }
+    });
+
+    //console fix
+    (function() {
+        if (window.console) return;
+        var console = window.console = {};
+        _.each('assert clear count debug dir dirxml error exception group groupCollapsed groupEnd info log markTimeline profile profileEnd table time timeEnd timeStamp trace warn'.split(' '), function(o) {
+            console[o] = $.noop;
+        });
+    })();
+    //让IE6-8认识HTML5标签
+    if (UI.browser.ie < 9) _.each("abbr article aside audio bdi canvas data datalist details dialog figcaption figure footer header hgroup main mark meter nav output picture progress section summary template time video".split(' '), function(o) {
+        document.createElement(o);
+    });
+
+})(jQuery);
