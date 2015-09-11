@@ -1370,7 +1370,8 @@ input.bl {
   background-color: #f6bb07;
   border-color: #f6bb07;
 }
-.care-hover {
+.care-hover,
+.care-active {
   background-color: #fbdf85;
 }
 .error-hover,
@@ -1399,6 +1400,7 @@ input.bl {
 .info-active,
 .note-active,
 .warn-active,
+.care-active,
 .error-active,
 .safe-active,
 .link-active,
@@ -1415,6 +1417,7 @@ input.bl {
   .info-active,
   .note-active,
   .warn-active,
+  .care-active,
   .error-active,
   .safe-active,
   .link-active,

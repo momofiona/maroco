@@ -220,6 +220,51 @@
      * @type {Array}
      */
     var btnClassNames = ['log', 'silver', 'note', 'info', 'safe', 'warn', 'care', 'error', 'link', 'dark'];
+    var raf = 'requestAnimationFrame' in window ? function(obj, e) {
+        var x = e.offsetX,
+            y = e.offsetY,
+            bc1 = obj[0],
+            bc2 = e.target;
+        if (x === undefined) {
+            //火狐没有offsetX
+            bc1 = bc1.getBoundingClientRect();
+            x = e.clientX - bc1.left;
+            y = e.clientY - bc1.top;
+        } else if (bc1 !== bc2) {
+            //有可能点击的是子元素
+            bc1 = bc1.getBoundingClientRect();
+            bc2 = bc2.getBoundingClientRect();
+            x += bc2.left - bc1.left;
+            y += bc2.top - bc1.top;
+        }
+        //
+        var prefix = browser.ms ? '-ms-' : browser.webkit ? '-webkit-' : browser.moz ? '-moz-' : '',
+            str = prefix + 'radial-gradient(' + x + 'px ' + y + 'px' + ',circle cover,',
+            scal = 0,
+            destroy, //进入自毁流程
+            speed = 5,
+            opacity = 0.14,
+            run = function() {
+                obj.css("background-image", str + 'rgba(0,0,0,' + opacity + ') ' + scal + '%,transparent ' + scal + '%)');
+                if (scal < 100) {
+                    if (destroy) {
+                        opacity /= 2;
+                    }
+                    scal += speed;
+                    requestAnimationFrame(run);
+                } else if (destroy) {
+                    obj.css("background-image", '');
+                }
+            };
+        run();
+        return function() {
+            if (scal < 100) {
+                destroy = true;
+            } else {
+                obj.css("background-image", '');
+            }
+        };
+    } : 0;
     var button = function(dom, cName) {
         //主动触发
         var _t = $(dom);
@@ -237,10 +282,17 @@
                     if (e.which !== 1) return;
                     //解决鼠标拖动元素的时候
                     if (_t.hasClass('active')) return;
+                    //如果支持动画
+                    if (raf) {
+                        var dest = raf(_t, e);
+                    }
                     e.preventDefault();
                     _t.addClass(cName + '-active');
                     $(document).one('mouseup', function() {
                         _t.removeClass(cName + '-active');
+                        if (dest) {
+                            dest();
+                        }
                         //解决IE67 button 黑边
                         if (UI.browser.ie < 8) {
                             dom.blur();
@@ -453,7 +505,7 @@
                 });
                 _.delay(function() {
                     location = UI.server + 'login.html';
-                }, 3000);
+                }, 2000);
             });
         }
     }).ajaxComplete(function(event, XMLHttpRequest, ajaxOptions) {
