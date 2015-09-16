@@ -18,7 +18,7 @@
                     hide();
                     return $(this);
                 case 'attach':
-                    return $(this).data('data-dropdown', data);
+                    return $(this).data('dropdown', data);
                 case 'detach':
                     hide();
                     return $(this).removeData('data-dropdown');
@@ -33,7 +33,7 @@
 
     function show(event, object) {
         var trigger = event ? $(this) : object,
-            attr = trigger.data('data-dropdown'),
+            attr = trigger.data('dropdown'),
             dropdown = attr ? $(attr) : trigger.next(),
             isOpen = trigger.hasClass('dropdown-open');
         // In some cases we don't want to show it

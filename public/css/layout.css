@@ -1150,8 +1150,9 @@ textarea.text[required] {
   color: #333;
   font-size: 13px;
   line-height: 30px;
-  min-width: 30px;
-  _width: 30px;
+  min-width: 28px;
+  _width: 28px;
+  padding: 0 1px;
   color: #4472A2;
   vertical-align: top;
 }
