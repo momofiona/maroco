@@ -31,7 +31,9 @@
  *      }]
  *  }]
  *})
+ *只支持borderlayout
  */
 define(function(require, exports, module) {
+	
 
 });
