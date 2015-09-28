@@ -1410,7 +1410,6 @@ input.bl {
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#55000000', endColorstr='#00000000',GradientType=0);
 }
 @media screen and (min-width: 0) {
-  /*\9\0  IE 8 9 10*/
   .b-active,
   .b:active,
   .log-active,
@@ -1423,7 +1422,25 @@ input.bl {
   .safe-active,
   .link-active,
   .dark-active {
-    filter: none\9\0;
+    box-shadow: inset 0 5px 10px -5px rgba(0, 0, 0, .3)\9;
+    filter: none;
+  }
+}
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  /* IE10+specific */
+  .b-active,
+  .b:active,
+  .log-active,
+  .silver-active,
+  .info-active,
+  .note-active,
+  .warn-active,
+  .care-active,
+  .error-active,
+  .safe-active,
+  .link-active,
+  .dark-active {
+    box-shadow: none;
   }
 }
 .link-active {

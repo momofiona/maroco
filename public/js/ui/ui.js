@@ -242,13 +242,13 @@
             str = prefix + 'radial-gradient(' + x + 'px ' + y + 'px' + ',circle cover,',
             scal = 0,
             destroy, //进入自毁流程
-            speed = 5,
-            opacity = 0.14,
+            speed = 3,
+            opacity = 0.1,
             run = function() {
                 obj.css("background-image", str + 'rgba(0,0,0,' + opacity + ') ' + scal + '%,transparent ' + scal + '%)');
                 if (scal < 100) {
                     if (destroy) {
-                        opacity /= 2;
+                        opacity *= .9;
                     }
                     scal += speed;
                     requestAnimationFrame(run);
