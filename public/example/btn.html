@@ -42,7 +42,7 @@
         <a class="b log">a</a>
         <a class="b note">a:href:note <i class="i i-loading"></i></a>
         <span class="b log">span</span>
-        <span class="b log">span中文</span>
+        <span class="b log w7">span中文</span>
         <button class="b log">button</button>
         <input class="b log" type="button" value="input">
         <input class="b log" type="submit" value="submit">
@@ -85,7 +85,7 @@
         <span class="group mr" id="demoBtnset">
         <button class="b link">button<i class="f f-arb"></i></button>
         <span class="b link link-active">span<i class="f f-arb"></i></span>
-        <a class="b link" href="#btn2">a<i class="f f-arb"></i></a>
+        <a class="b link" href="#">a<i class="f f-arb"></i></a>
         </span>
         <span class="group mr" id="demoBtnset2"></span>
         <span class="group ml">
@@ -101,23 +101,23 @@
     <p id="otherGroup">
         <span class="group mr">
             <a class="b log">a</a>
-            <span class="b log log-active">span</span>
+            <span class="b log active">span</span>
         </span>
         <span class="group mr">
             <a class="b info">a</a>
-            <span class="b info info-active">span</span>
+            <span class="b info active">span</span>
         </span>
         <span class="group mr">
     <a class="b warn">a</a>
-        <span class="b warn warn-active">span</span>
+        <span class="b warn active">span</span>
         </span>
         <span class="group mr">
     <a class="b safe" href="#">a #</a>
-        <span class="b safe safe-active">span</span>
+        <span class="b safe active">span</span>
         </span>
         <span class="group mr">
-    <a class="b note" href="http://momofiona.github.io/maroco/public/example/">a maroco</a>
-        <span class="b note note-active">span</span>
+    <a class="b note">a maroco</a>
+        <span class="b note active">span</span>
         </span>
     </p>
     <div class="footman"></div>
@@ -146,14 +146,11 @@ seajs.use('ui/buttonset', function(buttonset) {
             console.log(data, this);
         }
     });
-    $('#otherGroup').children().each(function() {
+    $('#otherGroup').children().each(function(i,o) {
         var _t = this;
         buttonset({
             el: _t,
-            //在初始化结束后设置cls
-            create: function() {
-                this.cls = this.el.children()[0].className.replace('b ', '');
-            }
+            cls:['log','info','warn','safe','note'][i]
         });
     });
 });

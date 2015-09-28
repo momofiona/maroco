@@ -242,15 +242,15 @@
             str = prefix + 'radial-gradient(' + x + 'px ' + y + 'px' + ',circle cover,',
             scal = 0,
             destroy, //进入自毁流程
-            speed = 3,
-            opacity = 0.1,
+            speed = 3, //scal越接近100，speed越小
+            opacity = 0.15, //scale越接近100 opacity越小
             run = function() {
                 obj.css("background-image", str + 'rgba(0,0,0,' + opacity + ') ' + scal + '%,transparent ' + scal + '%)');
                 if (scal < 100) {
                     if (destroy) {
                         opacity *= .9;
                     }
-                    scal += speed;
+                    scal += speed+(scal>80?(80-scal)/7:0);
                     requestAnimationFrame(run);
                 } else if (destroy) {
                     obj.css("background-image", '');
@@ -271,35 +271,33 @@
         if (_t.data('btype') === undefined) {
             cName = cName || _.find(btnClassNames, function(name) {
                 return _t.hasClass(name);
-            });
-            if (cName) {
+            }) || 'log';
+            _t.addClass(cName + '-hover');
+            _t.mouseenter(function() {
                 _t.addClass(cName + '-hover');
-                _t.mouseenter(function() {
-                    _t.addClass(cName + '-hover');
-                }).mouseleave(function() {
-                    _t.removeClass(cName + '-hover');
-                }).mousedown(function(e) {
-                    if (e.which !== 1) return;
-                    //解决鼠标拖动元素的时候
-                    if (_t.hasClass('active')) return;
-                    //如果支持动画
-                    if (raf) {
-                        var dest = raf(_t, e);
+            }).mouseleave(function() {
+                _t.removeClass(cName + '-hover');
+            }).mousedown(function(e) {
+                if (e.which !== 1) return;
+                //解决鼠标拖动元素的时候
+                if (_t.hasClass('active')) return;
+                //如果支持动画
+                if (raf) {
+                    var dest = raf(_t, e);
+                }
+                e.preventDefault();
+                _t.addClass(cName + '-active');
+                $(document).one('mouseup', function() {
+                    _t.removeClass(cName + '-active');
+                    if (dest) {
+                        dest();
                     }
-                    e.preventDefault();
-                    _t.addClass(cName + '-active');
-                    $(document).one('mouseup', function() {
-                        _t.removeClass(cName + '-active');
-                        if (dest) {
-                            dest();
-                        }
-                        //解决IE67 button 黑边
-                        if (UI.browser.ie < 8) {
-                            dom.blur();
-                        }
-                    });
+                    //解决IE67 button 黑边
+                    if (UI.browser.ie < 8) {
+                        dom.blur();
+                    }
                 });
-            }
+            });
             _t.data('btype', cName);
         }
         return _t;

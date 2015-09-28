@@ -1406,8 +1406,7 @@ input.bl {
 .safe-active,
 .link-active,
 .dark-active {
-  box-shadow: inset 0 5px 10px -5px rgba(0, 0, 0, 0.5);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#55000000', endColorstr='#00000000',GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#22000000', endColorstr='#00000000',GradientType=0);
 }
 @media screen and (min-width: 0) {
   .b-active,
@@ -1451,6 +1450,9 @@ input.bl {
   display: inline-block;
   vertical-align: middle;
   padding-left: 1px;
+}
+.group > .active {
+  box-shadow: inset 0 5px 10px -5px rgba(0, 0, 0, 0.3);
 }
 .group .b,
 .group .text {

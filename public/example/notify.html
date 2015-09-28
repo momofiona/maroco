@@ -6,7 +6,7 @@
     <p id="demoNotify">
         <span class="group">
             <b class="b silver ac-loading">loading</b>
-            <!-- <b class="b silver ac-loading-shutdown">loading shutdown</b> -->
+            <b class="b silver ac-loading-shutdown">loading shutdown</b>
             <b class="b info ac-clear"><i class="f f-bin"></i> 清空</b>
         </span>
         <span class="group">
@@ -168,9 +168,9 @@ seajs.use(['ui/notify'], function(notify) {
                     draggable: true
                 });
             },
-/*            'click .ac-loading-shutdown': function(e, config) {
+            'click .ac-loading-shutdown': function(e, config) {
                 loadingTip && loadingTip.close();
-            },*/
+            },
             'click .ac-loading2': function(e, config) {
                 notify.loading({
                     cls: 'note',
