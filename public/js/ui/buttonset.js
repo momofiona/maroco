@@ -5,9 +5,9 @@ define(function(require, exports, module) {
     var defaults = {
         cls: 'link',
         events: {
-            'click .b': function(e, config) {
+            'click >.b': function(e, config) {
                 var ac = config.cls + '-active active',
-                    data = config.data[$(this).attr('index')];
+                    data = config.data[$(this).data('index')];
                 if (config.multi) {
                     data.on = !data.on;
                     $(this).toggleClass(ac, data.on).removeClass(config.cls + '-hover');
@@ -23,21 +23,27 @@ define(function(require, exports, module) {
                 if (config.onselect) config.onselect.call(this, e, config, data);
             }
         },
-        tmp:_.dot('{{~it.data :v:i}}<b index="{{=i}}"{{?v.title}} title="{{=v.title}}"{{?}} class="b {{=v.cls||""}} {{=it.cls}}{{?v.on}} {{=it.cls}}-active active{{?}}">{{=v.label}}</b>{{~}}'),
+        tmp: _.dot('{{~it.data :v:i}}<b data-index="{{=i}}"{{?v.title}} title="{{=v.title}}"{{?}} class="b {{=v.cls||""}} {{=it.cls}}{{?v.on}} {{=it.cls}}-active active{{?}}">{{=v.label}}</b>{{~}}'),
         init: function() {
             this.el.addClass('group');
             if (this.data) {
                 this.el.html(this.tmp(this));
             } else {
-                var _d = this.data = [];
+                var cls = this.cls,
+                    _d = this.data = [],
+                    isOn;
                 this.el.children('.b').each(function(i, o) {
+                    isOn = $(o).data('index', i).hasClass('active');
+                    if (isOn) {
+                        $(o).addClass(cls + "-active");
+                    }
                     _d.push({
-                        on: $(o).attr('index', i).hasClass('active'),
+                        on: isOn,
                         label: $(o).text()
                     });
                 });
             }
-            //IE6禁止复制
+            //IE6禁止复制,忘了为啥要这样
             if (UI.browser.ie == 6) {
                 this.el.children().each(function() {
                     this.onselectstart = function() {
@@ -53,6 +59,6 @@ define(function(require, exports, module) {
         }
     }
     return function(config) {
-        return UI(_.create(defaults,config));
+        return UI(_.create(defaults, config));
     }
 });
