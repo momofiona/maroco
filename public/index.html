@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html class="noscroll">
+
+<head>
+    <meta charset="utf-8">
+    <title>Maroco UI</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/maroco.css">
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="css/icomoon/ie7/ie7.css">
+    <![endif]-->
+    <script src="maroco.js"></script>
+    <style type="text/css">
+    html,
+    body {
+        height: 100%;
+        overflow: hidden;
+        background-color: #fff;
+    }
+    
+    #sideMenu,
+    #mainbody,
+    #header {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        transition: left .3s;
+        -webkit-transition: left .3s;
+        -moz-transition: left .3s;
+        -ms-transition: left .3s;
+    }
+    
+    .closepen #header,
+    .closepen #mainbody {
+        left: 0;
+    }
+    
+    .closepen #sideMenu {
+        left: -200px;
+    }
+    
+    #header {
+        right: 0;
+        left: 199px;
+        padding: 0;
+        background: #fff;
+        border-bottom: 1px solid #d9d9d9;
+        /*box-shadow: 0 0 5px rgba(100, 100, 100, .2);*/
+        z-index: 300;
+    }
+    
+    #mainbody {
+        z-index: 100;
+        top: 37px;
+        right: 0;
+        left: 200px;
+    }
+    
+    #sideMenu {
+        z-index: 200;
+        padding: 0;
+        border-radius: 0;
+        width: 198px;
+        border-top-color: #fafafa;
+        overflow-x: hidden !important;
+        font-size: 12px;
+    }
+    
+    #sideMenu .acod {
+        margin: 0 -1px;
+    }
+    
+    #sideMenu .acod-item {
+        margin-bottom: -1px;
+        border-radius: 0
+    }
+    
+    #sideMenu .acod-title {
+        font-size: 13px;
+    }
+    
+    #sideMenu .nav a:hover {
+        background-color: #FBFDFF;
+        color: #f93;
+    }
+    
+    #sideMenu .nav a:before {
+        content: '\20';
+        border: solid 5px transparent;
+        border-color: transparent transparent transparent #f93;
+        width: 0;
+        height: 0;
+        position: absolute;
+        margin: 5px 0 0 -10px;
+    }
+    
+    #header .dropdown {
+        border-top: solid 2px #E69227;
+    }
+    
+    #header >.log {
+        border: none;
+        border-radius: 0;
+    }
+    
+    #header .pg-avanta {
+        border-left: solid 1px #ddd;
+    }
+    
+    #header .ac-closepen {
+        border-right: solid 1px #ddd;
+    }
+    
+    #header .ac-closepen em {
+        width: 20px;
+        display: block;
+        height: 2px;
+        overflow: hidden;
+        margin: 3px 0 4px;
+        background-color: #1871ca
+    }
+    /* tabs */
+    
+    #header .tabs {
+        position: absolute;
+        top: 0;
+        right: 120px;
+        overflow: hidden;
+        left: 47px;
+        font-size: 12px;
+    }
+    
+    #header .tab {
+        height: 36px;
+        white-space: nowrap;
+    }
+    
+    #header .tab .ac-close {
+        cursor: pointer;
+        position: absolute;
+        font-size: 12px;
+        right: 0px;
+        top: -20px;
+        transition: top .3s ease;
+        transform: scale(.8);
+        border-radius: 16px;
+        width: 18px;
+        height: 18px;
+        line-height: 18px;
+    }
+    
+    #header .tab li {
+        display: inline-block;
+        float: none;
+    }
+    
+    #header .tab li:hover .ac-close {
+        top: 0px;
+    }
+    
+    #header .tab .ac-close:hover {
+        color: #fff;
+        background: #f33;
+    }
+    
+    #header .tab a {
+        border-top: 0;
+        border-right: solid 1px #ddd;
+        border-left: solid 1px #ddd;
+        border-radius: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        max-width: 120px;
+        margin: 0 0 0 -1px;
+        background: #fafafa;
+    }
+    
+    #header .tab .active a {
+        background: #fff;
+    }
+    
+    #mainbody .main-container {
+        width: 100%;
+        height: 100%;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="header" class="toolbar p0">
+        <div class="tabs">
+            <ul class="tab"></ul>
+        </div>
+        <!-- profile -->
+        <span href="#" class="xr w4 b log pg-avanta" data-dropdown>
+            谭志凌
+            <i class="star error ml" title="剩余短信446条">446</i>
+            <i class="f f-arb"></i>
+        </span>
+        <div class="dropdown w5">
+            <ul class="menu dropdown-menu">
+                <li><a href="#"><i class="f f-gear"></i>修改密码</a></li>
+                <li><a href="#"><i class="f f-user"></i>个人资料</a></li>
+                <li class="devider"></li>
+                <li><a href="#" class="menu-error"><i class="f f-shutdown"></i>登出</a></li>
+            </ul>
+        </div>
+        <!-- /profile -->
+        <span class="b log xl ac-closepen">
+            <em class="before"></em>
+            <em class="middle"></em>
+            <em class="after"></em>
+        </span>
+    </div>
+    <!-- sideMenu -->
+    <div id="sideMenu" class="scroll log">
+        <img src="cloud/img/logo.png" width="100%" alt="" class="row">
+        <ul class="acod">
+            <li class="log acod-item">
+                <div class="acod-title">短信内容</div>
+                <ul class="acod-con nav">
+                    <li><a href="http://baidu.com">短信审核(群发)</a></li>
+                    <li><a href="#xxx2">短信审核(新签名)</a></li>
+                    <li><a href="#xxx3">短信内容列表</a></li>
+                </ul>
+            </li>
+            <li class="log acod-item">
+                <div class="acod-title">代理管理</div>
+                <ul class="acod-con nav">
+                    <li><a href="#xxx">代理信息查询</a></li>
+                    <li><a href="#xxx">充值记录</a></li>
+                    <li><a href="#xxx">消费记录</a></li>
+                </ul>
+            </li>
+            <li class="log acod-item">
+                <div class="acod-title">短信管理</div>
+                <ul class="acod-con nav">
+                    <li><a href="#xxx">短信群发</a></li>
+                    <li><a href="#xxx">超大文件群发</a></li>
+                    <li><a href="#xxx">我的发送记录</a></li>
+                    <li><a href="#xxx">我的接收记录</a></li>
+                    <li><a href="#xxx">按网关记录查询发送</a></li>
+                    <li><a href="#xxx">所有发送记录</a></li>
+                    <li><a href="#xxx">待审核发送记录</a></li>
+                    <li><a href="#xxx">审核不通过记录</a></li>
+                    <li><a href="#xxx">已删除发送记录</a></li>
+                    <li><a href="#xxx">所有发送记录</a></li>
+                    <li><a href="#xxx">未报备内容</a></li>
+                    <li><a href="#xxx">所有接收记录</a></li>
+                    <li><a href="#xxx">所有定时短信</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <!-- mainbody -->
+    <div id="mainbody"></div>
+    <!-- /mainbody -->
+    <script>
+    seajs.use(['ui/notify', 'ui/rollbar', 'mousewheel'], function() {
+        var mainbody = $('#mainbody'),
+            sideMenu = $('#sideMenu');
+        var navs = UI.navs({
+            el: sideMenu.children(".acod"),
+            accordion: true,
+            init: function() {
+                //改写事件绑定，去除对内容的影响
+                var e = this.events;
+                e['click .acod-title'] = e['click a'];
+                e['click a'] = function(e, conf) {
+                    if (!this.target) {
+                        tabs.open({
+                            title: this.innerHTML,
+                            url: $(this).attr('href')
+                        });
+                        return false;
+                    }
+                };
+                delete e['dblclick a']; //去除双击事件
+            },
+            //重写create
+            create: function() {
+                this.$('.acod-title').prepend('<b class="nav-cart f f-down"></b>');
+            }
+        });
+        navs.toggle(navs.$('.acod-title:eq(0)'));
+
+        //tabs
+        var tabs = window.tabs = UI.tabs({
+            el: $('#header .tabs'),
+            events: {
+                //关闭tab
+                'click >.tab .ac-close': function(e, conf) {
+                    conf.close($(this).next());
+                }
+            },
+            create: function() {
+                this.el.on('mousewheel', function(event, delta, deltaX, deltaY) {
+                    this.scrollLeft -= delta * 100;
+                });
+                //默认都是js模式
+                this.module.extend('js', {
+                    create: function() {
+                        var obj = this;
+                        seajs.use(this.url, function(mod) {
+                            mod.show(obj);
+                        });
+                    },
+                    reload: function() {
+                        this.destroy();
+                        this.panel.empty().off();
+                        this.create();
+                    }
+                });
+                //一般使用iframe模式
+                this.module.extend('iframe', {
+                    create: function() {
+                        this.iframe = $('<iframe class="main-container" src="' + this.url + '" frameborder="0"></iframe>').appendTo(this.panel)[0];
+                    },
+                    reload: function() {
+                        try {
+                            this.iframe.contentWindow.location.reload();
+                        } catch (e) {}
+                    }
+                });
+            },
+            //上一个tab
+            lastTab: null,
+            modCache: {},
+            //基础模式
+            module: {
+                defaults: {
+                    //创建
+                    create: $.noop,
+                    //刷新
+                    reload: $.noop,
+                    //销毁
+                    destroy: $.noop
+                },
+                extend: function(id, obj) {
+                    this[id] = _.create(this.defaults, obj);
+                },
+                //授权
+                set: function(obj) {
+                    var x = obj.url.lastIndexOf('.js') !== -1 ? this['js'] : this['iframe'];
+                    _.extend(obj, x);
+                    obj.create();
+                }
+            },
+            //开一个新标签
+            open: function(obj) {
+                //如果已经存在
+                if (this.modCache[obj.url]) {
+                    obj = this.modCache[obj.url];
+                    if (obj.tab === this.tab) {
+                        obj.reload();
+                    }
+                } else {
+                    this.lastTab = this.tab;
+                    var id = _.uniqueId("tab_"),
+                        title = obj.title,
+                        tab = $('<li><i class="f f-multiply ac-close"></i><a panel="#' + id + '" href="#" title="' + title + '">' + title + '</a></li>'),
+                        panel = $('<div>', {
+                            id: id,
+                            'class': 'main-container'
+                        });
+                    obj.panel = panel.appendTo(mainbody);
+                    obj.tab = tab.appendTo(this.tabs).find('a').data('url', obj.url)[0];
+                    this.modCache[obj.url] = obj;
+                    //授权
+                    this.module.set(obj);
+                }
+                //打开
+                this.active(obj.tab);
+            },
+            onActive: function(tab, panel) {
+                this.position(tab);
+            },
+            position: function(tab) {
+                tab = tab || this.tab;
+                if (tab) {
+                    tab.scrollIntoView();
+                }
+            },
+            //关闭一个标签
+            close: function(tab) {
+                var pid = tab.attr('panel'),
+                    url = tab.data('url'),
+                    mod = this.modCache[url];
+                delete this.modCache[url];
+                delete this.cache[pid];
+                //销毁
+                mod.destroy();
+                mod.panel.empty().remove();
+                mod.tab = mod.panel = mod.iframe = null;
+
+                var parent = tab.parent().animate({
+                    width: 0
+                }, 200, function() {
+                    $(this).remove();
+                });
+                //关闭之后自动打开lastTab或者最近的tab
+                if (tab[0] === this.lastTab) this.lastTab = null;
+                if (this.tab !== tab[0]) return;
+                if (this.lastTab) {
+                    this.active(this.lastTab);
+                    this.lastTab = null;
+                } else {
+                    var next = parent.next();
+                    if (!next.length) {
+                        next = parent.prev();
+                    }
+                    if (next.length) {
+                        this.active(next.find('a')[0]);
+                    }
+                }
+            }
+        });
+
+        //导航栏上的事件
+        UI({
+            el: $('#header'),
+            events: {
+                'click .ac-closepen': function(e, conf) {
+                    $('body').toggleClass('closepen');
+                }
+            }
+        });
+        //桌面通知
+        function notifyMe() {
+            // Let's check if the browser supports notifications
+            if (!("Notification" in window)) {
+                return;
+            }
+            var callback = function(pm) {
+                    var notification = new Notification("Hi there!", {
+                        icon: 'css/img/mail.png',
+                        body: '共有211条待审核',
+                        tag: {
+                            n: 12
+                        }
+                    });
+                    notification.onclick = function() {
+                        window.focus();
+                    }
+                }
+                // Let's check whether notification permissions have already been granted
+            if (Notification.permission === "granted") {
+                // If it's okay let's create a notification
+                callback();
+            }
+            // Otherwise, we need to ask the user for permission
+            else if (Notification.permission !== 'denied') {
+                Notification.requestPermission(function(permission) {
+                    // If the user accepts, let's create a notification
+                    if (permission === "granted") {
+                        callback();
+                    }
+                });
+            }
+        }
+        // setTimeout(notifyMe, 1000);
+
+    });
+    </script>
+</body>
+
+</html>

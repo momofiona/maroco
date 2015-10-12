@@ -197,82 +197,7 @@ abbr[title] {
     height: 2em;
     clear: both;
 }
-/*input[type=checkbox] {
-    width: 16px;
-    height: 16px;
-    &:after {
-        content: url(img/checkbox.png);
-        width: 24px;
-        height: 24px;
-        position: relative;
-        overflow: hidden;
-    }
-    &:hover:after {
-        content: url(img/checkbox-hover.png);
-    }
-    &:checked:after {
-        content: url(img/checkbox-checked.png);
-    }
-    &[disabled] {
-        content: url(img/checkbox-disabled.png);
-    }
-    &:checked[disabled] {
-        content: url(img/checkbox-checked-disabled.png);
-    }
-}*/
-input[type=checkbox],input[type=radio] {
-    width: 18px;
-    height: 18px;
-    padding:0 !important;
-    line-height: 18px !important;
-    -webkit-appearance: none;
-    border: solid 1px #bfbfbf;
-    border-top-color: #aaa;
-    // IE6-10系列去掉border
-    border:none\9;
-    background: #fff;
-    //IE7
-    *width:24px;
-    *height: 24px;
-    border-radius: @radius;
-    outline: none;
-    &:hover {
-        border-color: #aaa;
-    }
-    &:active {
-        background-color: #ddd;
-    }
-    &:checked:before {
-        content: '\e62e';
-        color: @safeColor;
-        // position: absolute;
-        margin-left:2px;
-        font-size: 14px;
-        font-family: icomoon;
-        border-radius: 20px;
-    }
-    &[disabled] {
-        background: #f4f4f4;
-        *background: none;
-    }
-    &[disabled]:before{
-        color: #aaa;
-    }
-}
-input[type=radio]{
-    border-radius: 20px;
-    &:checked:before{
-        content:'';
-        width:10px;
-        height: 10px;
-        margin:3px;
-        display: inline-block;
-        background: #444;
-    }
-    &[disabled]:before{
-        background: #bbb;
-    }
-}
+
 /*align*/
 
 .text-right {
@@ -993,12 +918,14 @@ textarea.text{
     }
     a{
         padding: 10px 15px;
-/*        border:solid 1px transparent;
-        _border-width:0;*/
+        border:solid 1px #fff;
+        border-bottom: none;
         border-radius: @radius @radius 0 0;
-        float: left;
+        display:block;
+        _float:left;
+        _zoom:1;
+        text-align: center;
         line-height: 16px;
-        margin-right: 2px;
         &[panel]{
             cursor: default;
         }
@@ -1009,9 +936,8 @@ textarea.text{
     .active{
         margin-bottom: -1px;
         a{
-            border:solid 1px #ddd;
-            border-bottom:solid 1px #fff;
-            padding: 9px 14px 11px;
+            border-color: #ddd;
+            border-bottom: solid 1px #fff;
             background: #fff;
             color: #444;
             cursor: default;

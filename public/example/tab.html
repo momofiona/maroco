@@ -1,35 +1,105 @@
 <div class="row m10">
     <h1>Tabs <small>Tabs</small></h1>
     <hr>
+    <style>
+
+    </style>
     <div class="tabs" id="acDemoTab">
-        <ul class="tab">
-            <li><a panel=".ac-myprofile" href="#">HTML</a></li>
-            <li><a panel="#atologin" href="#">Javascript</a></li>
+        <ul class="tab" style="zoom:1">
+            <li><a panel=".ac-myprofile" href="#">Readme</a></li>
+            <li><a panel="#atologin" href="#">Theme</a></li>
         </ul>
-        <div class="ac-myprofile p1">html</div>
+        <div class="ac-myprofile p tab-con">
+            <ol>
+                <li>tab标记为class的只能放在tabs容器内部</li>
+                <li>tab标记为ID的panel可放在任何位置</li>
+                <li>.tab-con可省略</li>
+                <li>均分tab的方法是给.tab li 加百分比宽度，去除a的float，设置display:block,注意在IE6，7上总宽为奇数的时候由于计算错误会造成换行哟</li>
+            </ol>
+        </div>
+        <div id="atologin" class="p tab-con">
+            <label>
+                <input type="checkbox" class="ac-style"> 小清新风格</label>
+        </div>
     </div>
-    <div id="atologin" class="p1">javascript</div>
     <textarea class="codemirror">
         <div class="tabs" id="acDemoTab">
             <ul class="tab">
                 <li><a panel=".ac-myprofile" href="#">HTML</a></li>
                 <li><a panel="#atologin" href="#">Javascript</a></li>
             </ul>
-            <div class="ac-myprofile tab-con p">html</div>
+            <div class="ac-myprofile tab-con  p">html</div>
+            <div id="atologin" class="tab-con  p">javascript</div>
         </div>
-        <div id="atologin" class="tab-con p">javascript</div>
         <script>
         UI.tabs({
             el: $('#acDemoTab'),
+            events: {
+                'click .ac-style': function(e, conf) {
+                    conf.el.toggleClass('tabs-tiny', this.checked);
+                }
+            },
             onActive: function(tab, panel) {}
         });
         </script>
     </textarea>
+    <h2>均分Tab</h2>
+    <style>
+    .pg-tab {
+        background: #fcfcfc;
+    }
+    .pg-tab li a {
+        _float: none;
+        border-color: #eee;
+    }
+    </style>
+    <div class="tabs" id="acDemoTab2" style="width:603px">
+        <ul class="tab pg-tab">
+            <li class="x3"><a panel=".ac-myprofile" href="#">左边</a></li>
+            <li class="x3"><a panel=".ac-center" href="#">中间</a></li>
+            <li class="x3"><a panel=".ac-rigt" href="#">右边</a></li>
+        </ul>
+        <div class="ac-myprofile p tab-con">
+            均分tab兼容IE67注意点
+            <ol>
+                <li>宽度必须可被整除，例如宽度801px/2个tab不能整除，所以在IE6，7中会错行</li>
+                <li>使用.x3格栅系统不会出现错行，但是无法整除情况下，IE6，7 右边缘对不齐</li>
+                <li>IE6中tab li a带了float:left，自行去除</li>
+            </ol>
+        </div>
+        <div class="p tab-con ac-center">
+            <h1>万恶的IE6,7,8,9,10,11,12,13</h1>
+        </div>
+        <div class="p tab-con ac-rigt">
+            <pre>
+            .pg-tab {
+                background: #fcfcfc;
+            }
+            .pg-tab li {
+                width: 33.33%;
+            }
+            .pg-tab li a {
+                _float: none;
+                border-color: #eee;
+            }
+            </pre>
+        </div>
+    </div>
+    <div class="footman"></div>
     <div class="footman"></div>
 </div>
 <script>
 UI.tabs({
     el: $('#acDemoTab'),
+    events: {
+        'change .ac-style': function(e, conf) {
+            conf.el.toggleClass('tabs-tiny', this.checked);
+        }
+    },
+    onActive: function(tab, panel) {}
+});
+UI.tabs({
+    el: $('#acDemoTab2'),
     onActive: function(tab, panel) {}
 });
 </script>
