@@ -250,7 +250,7 @@
                     if (destroy) {
                         opacity *= .9;
                     }
-                    scal += speed+(scal>80?(80-scal)/7:0);
+                    scal += speed + (scal > 80 ? (80 - scal) / 7 : 0);
                     requestAnimationFrame(run);
                 } else if (destroy) {
                     obj.css("background-image", '');
@@ -313,7 +313,7 @@
     UI.tabs = function(conf) {
         return UI($.extend(true, {
             active: function(n) {
-                var tabLink = this.tabs.find('a').get(n);
+                var tabLink = $.isNumeric(n) ? this.tabs.find('a').get(n) : n;
                 if (tabLink) {
                     this.events['click >.tab a'].call(tabLink, null, this);
                 }
@@ -343,7 +343,7 @@
             },
             events: {
                 'click >.tab a': function(e, conf) {
-                    if (this == conf.tab) return;
+                    if (this === conf.tab) return false;
                     var t = this,
                         tab = $(t),
                         panel = conf.getPanel(this);

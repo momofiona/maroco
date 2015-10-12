@@ -1,0 +1,81 @@
+<div class="m13">
+    <p class="warn">此grid是专为文件列表写的,不会出现横向滚动条,所以注意设置每一列宽度</p>
+    <div class="row ellipsis" id="tableDemo"></div>
+</div>
+<script>
+seajs.use(['ui/grid', 'ui/notify'], function(grid, notify) {
+    var tips = notify.tips;
+    //mock table列表
+    Mock.mock('fakedata_demo.json', {
+        "total|200": 12,
+        "result|20": [{
+            'id|+1': 12,
+            "cname": '@WORD',
+            "address": "@TITLE",
+            "thumb": '@IMAGE',
+            "from": '@STRING(3,8)',
+            "sender": '@NAME',
+            "sendtime": '@DATE("yyyy-MM-dd")'
+        }]
+    });
+    var cgrid = grid({
+        el: '#tableDemo',
+        cols: [{
+            title: '人员',
+            align: 'center',
+            style: "width: 40px"
+        }, {
+            title: '功能需求',
+            order: 'cname',
+            style: "width:  20%"
+        }, {
+            title: ' 方法调用',
+            style: "width:  20%",
+        }, {
+            title: '交单时间',
+            //需要排序k
+            order: 'sendtime',
+            style: "width:  20%"
+        }, {
+            title: '操作',
+            style: "width:  12%"
+        }],
+        events: {
+            'click .ac-getdata': function(e, conf) {
+                console.log(conf.getRowData(this));
+            }
+        },
+        //没有render方法的时候，执行cols内部的html
+        render: function(records) {
+            //这边返回table矩阵[[01,02,03],[11,12,13]] 用于输出的内容
+            return _.map(records, function(record, i) {
+                return [
+                    '<img width="30" class="va-m" height="30" src="'+record.thumb+'">',
+                    record.cname,
+                    record.address,
+                    record.sendtime,
+                    '<a data-index="' + i + '" href="javascript:;" class="ac-getdata">查看</a>'
+                ];
+            });
+        },
+        //处理从url返回的数据,无此参数则默认返回data.result;
+        parseData: function(data) {
+            //这里可以在数据显示前进行一些更改
+            return data.result;
+        },
+        checkbox: true,
+        height: function(table) {
+            return $(window).height() - table.offset().top;
+        },
+        //每页数量
+        count: 20,
+        //加载路径
+        url: 'fakedata_demo.json',
+        //需要固定提交的参数
+        baseparams: {
+            token: 'FFASLE*&EFFA^%$#ef'
+        }
+    });
+    cgrid.load();
+});
+</script>
