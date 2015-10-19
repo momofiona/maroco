@@ -8,9 +8,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/maroco.css">
-    <!--[if lt IE 8]>
-    <link rel="stylesheet" href="css/icomoon/ie7/ie7.css">
-    <![endif]-->
     <script src="maroco.js"></script>
     <style type="text/css">
     html,
@@ -20,7 +17,7 @@
         background-color: #fff;
     }
     
-    #sideMenu,
+    #sidebar,
     #mainbody,
     #header {
         position: absolute;
@@ -38,7 +35,7 @@
         left: 0;
     }
     
-    .closepen #sideMenu {
+    .closepen #sidebar {
         left: -200px;
     }
     
@@ -59,35 +56,35 @@
         left: 200px;
     }
     
-    #sideMenu {
+    #sidebar {
         z-index: 200;
         padding: 0;
+        border-width: 0 1px 0 0;
         border-radius: 0;
-        width: 198px;
-        border-top-color: #fafafa;
+        width: 199px;
         overflow-x: hidden !important;
         font-size: 12px;
     }
     
-    #sideMenu .acod {
+    #sidebar .acod {
         margin: 0 -1px;
     }
     
-    #sideMenu .acod-item {
+    #sidebar .acod-item {
         margin-bottom: -1px;
         border-radius: 0
     }
     
-    #sideMenu .acod-title {
+    #sidebar .acod-title {
         font-size: 13px;
     }
     
-    #sideMenu .nav a:hover {
+    #sidebar .nav a:hover {
         background-color: #FBFDFF;
         color: #f93;
     }
     
-    #sideMenu .nav a:before {
+    #sidebar .nav a:before {
         content: '\20';
         border: solid 5px transparent;
         border-color: transparent transparent transparent #f93;
@@ -173,6 +170,7 @@
         border-radius: 0;
         white-space: nowrap;
         overflow: hidden;
+        text-overflow: ellipsis;
         max-width: 120px;
         margin: 0 0 0 -1px;
         background: #fafafa;
@@ -202,8 +200,9 @@
         </span>
         <div class="dropdown w5">
             <ul class="menu dropdown-menu">
-                <li><a href="#"><i class="f f-gear"></i>修改密码</a></li>
                 <li><a href="#"><i class="f f-user"></i>个人资料</a></li>
+                <li><a href="#"><i class="f f-gear"></i>修改密码</a></li>
+                <li><a href="#"><i class="f f-user"></i>通讯录</a></li>
                 <li class="devider"></li>
                 <li><a href="#" class="menu-error"><i class="f f-shutdown"></i>登出</a></li>
             </ul>
@@ -215,9 +214,11 @@
             <em class="after"></em>
         </span>
     </div>
-    <!-- sideMenu -->
-    <div id="sideMenu" class="scroll log">
-        <img src="cloud/img/logo.png" width="100%" alt="" class="row">
+    <!-- sidebar -->
+    <div id="sidebar" class="scroll log">
+        <div class="pg-apps">
+            <span class="log"><i class="f f-multiple"></i></span>
+        </div>
         <ul class="acod">
             <li class="log acod-item">
                 <div class="acod-title">短信内容</div>
@@ -261,9 +262,9 @@
     <script>
     seajs.use(['ui/notify', 'ui/rollbar', 'mousewheel'], function() {
         var mainbody = $('#mainbody'),
-            sideMenu = $('#sideMenu');
+            sidebar = $('#sidebar');
         var navs = UI.navs({
-            el: sideMenu.children(".acod"),
+            el: sidebar.children(".acod"),
             accordion: true,
             init: function() {
                 //改写事件绑定，去除对内容的影响
@@ -287,6 +288,10 @@
         });
         navs.toggle(navs.$('.acod-title:eq(0)'));
 
+/*        //滚动条
+        sidebar.rollbar({
+            scroll:'vertical'
+        });*/
         //tabs
         var tabs = window.tabs = UI.tabs({
             el: $('#header .tabs'),
@@ -361,7 +366,7 @@
                     this.lastTab = this.tab;
                     var id = _.uniqueId("tab_"),
                         title = obj.title,
-                        tab = $('<li><i class="f f-multiply ac-close"></i><a panel="#' + id + '" href="#" title="' + title + '">' + title + '</a></li>'),
+                        tab = $('<li>'+(obj.block?'':'<i class="f f-multiply ac-close"></i>')+'<a panel="#' + id + '" href="#" title="' + title + '">' + title + '</a></li>'),
                         panel = $('<div>', {
                             id: id,
                             'class': 'main-container'
@@ -418,6 +423,12 @@
                 }
             }
         });
+        //导航页
+        tabs.open({
+            title:'短信',
+            block:true,
+            url:'main.html'
+        })
 
         //导航栏上的事件
         UI({

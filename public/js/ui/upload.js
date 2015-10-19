@@ -17,7 +17,7 @@ define(function(require, exports, module) {
     var notify = require('ui/notify'),
         dialog;
     return function(options) {
-        var uploader = new plupload.Uploader($.extend(true, {
+        var uploader = new plupload.Uploader(options = $.extend(true, {
             /*browse_button: [document.getElementById('pickfiles'), 'pickfiles2'],
             container: document.getElementById('container'),
             multi_selection: true,
@@ -151,7 +151,6 @@ define(function(require, exports, module) {
             BeforeUpload: $.noop,
             FileUploaded: $.noop,
             UploadComplete: $.noop
-
         }, options));
         uploader.init();
         return uploader;

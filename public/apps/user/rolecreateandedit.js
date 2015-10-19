@@ -1,7 +1,7 @@
 define(function(require, exports, module) {
     var tpl = _.dot(require('./rolecreateandedit.html'));
     var notify = require('ui/notify');
-    var validate = require('ui/validate');
+    var validate = require('ui/valid');
 
     exports.show = function(opt) {
         //根据opt.data.orgId获取继承和互斥数据
