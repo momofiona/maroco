@@ -16,7 +16,7 @@ define(function(require, exports, module) {
             valid: $.noop,
             label: function(msg, isSafe) {
                 if (isSafe) {
-                    return msg ? '<span class="c-safe"><i class="f f-checkmark"></i> ' + msg + '</span>' : '';
+                    return msg ? '<span class="c-safe"><i class="f f-done"></i> ' + msg + '</span>' : '';
                 }
                 if (msg.length) {
                     return '<span class="c-error"><i class="f f-warn"></i> ' + msg + '</span>';

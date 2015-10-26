@@ -156,38 +156,47 @@ b.i-close {
 .f-read:before {
   content: "\e606";
 }
-.f-doc:before {
-  content: "\f1c2";
+.f-menus:before {
+  content: "\e906";
 }
-.f-xls:before {
-  content: "\f1c3";
+.f-add:before {
+  content: "\e63a";
 }
-.f-ppt:before {
-  content: "\f1c4";
+.f-minus:before {
+  content: "\e63c";
 }
-.f-fly:before {
-  content: "\f1d9";
+.f-close:before {
+  content: "\e905";
 }
-.f-save:before {
-  content: "\f0c7";
+.f-multiply:before {
+  content: "\e60c";
 }
-.f-grid:before {
-  content: "\f009";
+.f-done:before {
+  content: "\e62e";
 }
-.f-down:before {
-  content: "\e604";
+.f-left:before {
+  content: "\e903";
 }
-.f-up:before {
-  content: "\e605";
+.f-right:before {
+  content: "\e904";
 }
-.f-txt:before {
-  content: "\e086";
+.f-mic:before {
+  content: "\e902";
+}
+.f-water:before {
+  content: "\e900";
 }
 .f-copy:before {
   content: "\e091";
 }
 .f-location:before {
   content: "\e608";
+}
+.f-filter:before {
+  content: "\e443";
+}
+.f-calendar:before {
+  content: "\e603";
 }
 .f-home:before {
   content: "\e002";
@@ -207,17 +216,35 @@ b.i-close {
 .f-pencil:before {
   content: "\e600";
 }
-.f-filter:before {
-  content: "\e443";
-}
 .f-warn:before {
   content: "\e601";
 }
-.f-calendar:before {
-  content: "\e603";
-}
 .f-share:before {
   content: "\e48c";
+}
+.f-download:before {
+  content: "\e909";
+}
+.f-upload:before {
+  content: "\e90a";
+}
+.f-grid:before {
+  content: "\e90b";
+}
+.f-list:before {
+  content: "\e90c";
+}
+.f-txt:before {
+  content: "\e086";
+}
+.f-tool:before {
+  content: "\e991";
+}
+.f-search:before {
+  content: "\e607";
+}
+.f-alert:before {
+  content: "\e950";
 }
 .f-org:before {
   content: "\e9bc";
@@ -225,29 +252,8 @@ b.i-close {
 .f-shutdown:before {
   content: "\e9b6";
 }
-.f-menus:before {
-  content: "\f05e";
-}
-.f-add:before {
-  content: "\e63a";
-}
-.f-minus:before {
-  content: "\e63c";
-}
-.f-multiply:before {
-  content: "\e60c";
-}
-.f-checkmark:before {
-  content: "\e62e";
-}
 .f-bin:before {
   content: "\f014";
-}
-.f-search:before {
-  content: "\e607";
-}
-.f-tool:before {
-  content: "\e991";
 }
 .f-info:before {
   content: "\e62b";
@@ -255,14 +261,8 @@ b.i-close {
 .f-question:before {
   content: "\e640";
 }
-.f-alert:before {
-  content: "\e950";
-}
 .f-buy:before {
   content: "\e639";
-}
-.f-denied:before {
-  content: "\e602";
 }
 .f-loop:before {
   content: "\ea2e";
@@ -288,18 +288,30 @@ b.i-close {
 .f-link:before {
   content: "\f05c";
 }
-.f-download:before {
-  content: "\e9c7";
-}
-.f-upload:before {
-  content: "\e9c8";
-}
-.f-list:before {
-  content: "\f00b";
-}
 .f-arb:before {
   content: "\f0d7";
 }
 .f-art:before {
   content: "\f0d8";
+}
+.f-save:before {
+  content: "\f0c7";
+}
+.f-down:before {
+  content: "\e604";
+}
+.f-up:before {
+  content: "\e605";
+}
+.f-ppt:before {
+  content: "\f1c4";
+}
+.f-doc:before {
+  content: "\f1c2";
+}
+.f-xls:before {
+  content: "\f1c3";
+}
+.f-fly:before {
+  content: "\f1d9";
 }

@@ -58,7 +58,7 @@ body {
   min-height: 100%;
 }
 body {
-  font-family: "Segoe UI", "Lucida Grande", Helvetica, Arial, "Microsoft YaHei", FreeSans, Arimo, "Droid Sans", "wenquanyi micro hei", "Hiragino Sans GB", "Hiragino Sans GB W3", sans-serif;
+  font-family: "Open Sans", "Segoe UI", "Lucida Grande", Helvetica, Arial, "Microsoft YaHei", FreeSans, Arimo, "Droid Sans", "wenquanyi micro hei", "Hiragino Sans GB", "Hiragino Sans GB W3", sans-serif;
   font-size: 13px;
   *font-family: "SimSun", "Segoe UI", "Lucida Grande", Helvetica, Arial, sans-serif;
   font-weight: 400;
@@ -1133,7 +1133,7 @@ textarea.text[required] {
 }
 .tab a {
   padding: 10px 15px;
-  border: solid 1px #fff;
+  border: solid 1px transparent;
   border-bottom: none;
   border-radius: 2px 2px 0 0;
   display: block;
