@@ -385,7 +385,7 @@
                         conf.toggle(this);
                         return false;
                     }
-                    if (conf.onClick(this) === false) return false;
+                    if (conf.onClick.call(this, e, conf) === false) return false;
                 },
                 'dblclick a': function(e, conf) {
                     conf.isCart(e, this) || conf.toggle(this);

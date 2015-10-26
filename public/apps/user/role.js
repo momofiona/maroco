@@ -198,7 +198,7 @@ define(function(require, exports, module) {
                     render: function(records) {
                         return $.map(records, function(record, i) {
                             return [
-                                ['<a href="#" class="f f-multiply m4 c-error xr ctable-hide ac-roleremove" title="删除"></a>' + '<a href="#" class="f f-pencil xr ctable-hide ac-roleedit" title="编辑"></a>' + _.escape(record.name)]
+                                ['<a href="#" class="f f-close m4 c-error xr ctable-hide ac-roleremove" title="删除"></a>' + '<a href="#" class="f f-pencil xr ctable-hide ac-roleedit" title="编辑"></a>' + _.escape(record.name)]
                             ];
                         });
                     },

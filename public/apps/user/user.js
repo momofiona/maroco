@@ -113,7 +113,7 @@ define(function(require, exports, module) {
                     _.each(data, function(v, k) {
                         if (!cache[v.orgId]) {
                             //生成容器包
-                            s += '<div class="info" style="margin-top:5px;" orgid="' + v.orgId + '"><i class="f f-multiply notify-close xr am-rotate ac-removeOrg" title="退出本部门"></i><div class="ac-toggle user-select"><i class="f m2 f-down ac-toggle-tip"></i> <span class="ac-orgname">' + v.orgName + '</span><input type="hidden" name="orgId" value="' + v.orgId + '"></div><ul style="margin:4px 0;border:0" class="menu log">';
+                            s += '<div class="info" style="margin-top:5px;" orgid="' + v.orgId + '"><i class="f f-close notify-close xr am-rotate ac-removeOrg" title="退出本部门"></i><div class="ac-toggle user-select"><i class="f m2 f-down ac-toggle-tip"></i> <span class="ac-orgname">' + v.orgName + '</span><input type="hidden" name="orgId" value="' + v.orgId + '"></div><ul style="margin:4px 0;border:0" class="menu log">';
                             _.each(v.roles, function(o, i) {
                                 var oLi = _t.otherRoleBox.find('#li' + o.id),
                                     checked;

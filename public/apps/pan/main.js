@@ -174,7 +174,7 @@ define(function(require, exports, module) {
                         return data.length == 1;
                     }
                 }, {
-                    label: '<i class="f f-checkmark c-safe"></i>白骨精 （选择多项时出现）',
+                    label: '<i class="f f-done c-safe"></i>白骨精 （选择多项时出现）',
                     cls: 'ac-kulo',
                     //当test返回true的时候显示
                     test: function(data) {

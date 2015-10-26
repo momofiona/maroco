@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="noscroll">
 
 <head>
     <meta charset="utf-8">
@@ -56,38 +56,48 @@
         left: 200px;
         overflow: hidden;
     }
-    #mainbody .main-container {
-        width: 100%;
-        height: 100%;
-    }
     
     #sidebar {
         z-index: 200;
+        padding: 0;
+        border-width: 0 1px 0 0;
         border-radius: 0;
         width: 199px;
         overflow-x: hidden !important;
         font-size: 12px;
     }
     
-    #sidebar .nav {
-        border-right: solid 1px #ddd;
+    #sidebar .acod {
         position: absolute;
+        border-top: solid 1px #fff;
         top: 37px;
-        left: 0;
-        right: 0;
+        left:-1px;
+        right:-1px;
         bottom: 0px;
-        padding: 5px;
     }
     
-    #sidebar .nav-cart {
-        left: 10px;
+    #sidebar .acod-item {
+        margin-bottom:-1px;
+        border-radius: 0
     }
     
-    #sidebar .nav-open .nav-cart {
-        filter: progid: DXImageTransform.Microsoft.BasicImage(rotation=1);
-        -webkit-transform: rotate(90deg);
-        -ms-transform: rotate(90deg);
-        transform: rotate(90deg);
+    #sidebar .acod-title {
+        font-size: 13px;
+    }
+    
+    #sidebar .nav a:hover {
+        background-color: #FBFDFF;
+        color: #f93;
+    }
+    
+    #sidebar .nav a:before {
+        content: '\20';
+        border: solid 5px transparent;
+        border-color: transparent transparent transparent #f93;
+        width: 0;
+        height: 0;
+        position: absolute;
+        margin: 5px 0 0 -10px;
     }
     
     #header .dropdown {
@@ -103,10 +113,10 @@
         border-left: solid 1px #ddd;
         white-space: nowrap;
     }
-    #header .pg-bdr {
+    
+    #header .ac-closepen {
         border-right: solid 1px #ddd;
     }
-    
     
     #header .ac-closepen em {
         width: 20px;
@@ -116,24 +126,89 @@
         margin: 3px 0 4px;
         background-color: #1871ca
     }
+    /* tabs */
     
-    
-    #sidebar .tabs {
-        background-color: #fafafa;
+    #header .tabs {
+        position: absolute;
+        top: 0;
+        right: 120px;
+        overflow: hidden;
+        left: 47px;
+        font-size: 12px;
     }
     
-    #sidebar .tab {
-        padding: 3px 3px 0;
+    #header .tab {
+        height: 36px;
+        white-space: nowrap;
     }
     
-    #sidebar .tab a {
-        padding: 8px 10px;
+    #header .tab .ac-close {
+        cursor: pointer;
+        position: absolute;
+        font-size: 12px;
+        right: 0px;
+        top: -20px;
+        transition: top .3s ease;
+        transform: scale(.8);
+        border-radius: 16px;
+        width: 18px;
+        height: 18px;
+        line-height: 18px;
+    }
+    
+    #header .tab li {
+        display: inline-block;
+        float: none;
+        vertical-align: top;
+    }
+    
+    #header .tab li:hover .ac-close {
+        top: 0px;
+    }
+    
+    #header .tab .ac-close:hover {
+        color: #fff;
+        background: #f33;
+    }
+    
+    #header .tab a {
+        border-top: 0;
+        border-right: solid 1px #ddd;
+        border-left: solid 1px #ddd;
+        border-radius: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 120px;
+        margin: 0 0 0 -1px;
+        background: #fafafa;
+    }
+    
+    #header .tab .active a {
+        background: #fff;
+    }
+    
+    #mainbody .main-container {
+        width: 100%;
+        height: 100%;
+    }
+    #sidebar .tabs{
+        margin-bottom: 1px;
+    }
+    #sidebar .tab{
+        padding:3px 3px 0;
+    }
+    #sidebar .tab a{
+        padding:8px 10px;
     }
     </style>
 </head>
 
 <body>
     <div id="header" class="toolbar p0">
+        <div class="tabs">
+            <ul class="tab"></ul>
+        </div>
         <!-- profile -->
         <span href="#" class="xr w5 b log pg-avanta" data-dropdown>
             谭志凌
@@ -150,100 +225,95 @@
             </ul>
         </div>
         <!-- /profile -->
-        <span class="b log xl ac-closepen pg-bdr">
+        <span class="b log xl ac-closepen">
             <em class="before"></em>
             <em class="middle"></em>
             <em class="after"></em>
         </span>
-        <a href="#" class="b log xl">控制台</a>
-        <a href="#" class="b log xl pg-bdr bi" data-dropdown><i class="f f-arb"></i></a>
-        <div class="dropdown w5">
-            <ul class="menu dropdown-menu">
-                <li><a href="#"><i class="f f-user"></i>个人资料</a></li>
-                <li><a href="#"><i class="f f-gear"></i>修改密码</a></li>
-                <li><a href="#"><i class="f f-user"></i>通讯录</a></li>
-                <li class="devider"></li>
-                <li><a href="#" class="menu-error"><i class="f f-shutdown"></i>登出</a></li>
-            </ul>
-        </div>
     </div>
     <!-- sidebar -->
-    <div id="sidebar">
+    <div id="sidebar" class="log">
         <div class="tabs">
             <ul class="tab text-center">
-                <li class="active x3"><a href="/?msg" title="短信"><i class="f f-chat"></i>短信</a></li>
-                <li class="x3"><a href="/index_tab.html" title="流量"><i class="f f-lg f-water"></i></a></li>
+                <li class="x3"><a href="/?msg" title="短信"><i class="f f-chat"></i></a></li>
+                <li class="active x3"><a href="/index_tab.html" title="流量"><i class="f f-lg f-water"></i>流量</a></li>
                 <li class="x3"><a href="/?gg" title="语音"><i class="f f-lg f-mic"></i></a></li>
             </ul>
         </div>
-        <ul class="nav scroll">
-            <li>
-                <a>短信内容</a>
-                <ul>
-                    <li><a href="#1">短信审核(群发)</a></li>
-                    <li><a href="#2">短信审核(新签名)</a></li>
-                    <li><a href="#3">短信内容列表</a></li>
+        <ul class="acod scroll">
+            <li class="log acod-item">
+                <div class="acod-title">短信内容</div>
+                <ul class="acod-con nav">
+                    <li><a href="http://baidu.com">短信审核(群发)</a></li>
+                    <li><a href="http://sina.com">短信审核(新签名)</a></li>
+                    <li><a href="http://qq.com">短信内容列表</a></li>
                 </ul>
             </li>
-            <li>
-                <a>代理管理</a>
-                <ul>
-                    <li><a href="#4">代理信息查询</a></li>
-                    <li><a href="#5">充值记录</a></li>
-                    <li><a href="#6">消费记录</a></li>
+            <li class="log acod-item">
+                <div class="acod-title">代理管理</div>
+                <ul class="acod-con nav">
+                    <li><a href="http://weibo.com">代理信息查询</a></li>
+                    <li><a href="#1">充值记录</a></li>
+                    <li><a href="#2">消费记录</a></li>
                 </ul>
             </li>
-            <li>
-                <a>短信管理</a>
-                <ul>
-                    <li><a href="#777">短信群发</a></li>
-                    <li><a href="#888">超大文件群发</a></li>
-                    <li><a href="#9">我的发送记录</a></li>
-                    <li><a href="#10">我的接收记录</a></li>
-                    <li><a href="#11">按网关记录查询发送</a></li>
-                    <li><a href="#12">所有发送记录</a></li>
-                    <li><a href="#13">待审核发送记录</a></li>
-                    <li><a href="#14">审核不通过记录</a></li>
-                    <li><a href="#15">已删除发送记录</a></li>
-                    <li><a href="#16">所有发送记录</a></li>
-                    <li><a href="#17">未报备内容</a></li>
-                    <li><a href="#18">所有接收记录</a></li>
-                    <li><a href="#19">所有定时短信</a></li>
+            <li class="log acod-item">
+                <div class="acod-title">短信管理</div>
+                <ul class="acod-con nav">
+                    <li><a href="#3">短信群发</a></li>
+                    <li><a href="#4">超大文件群发</a></li>
+                    <li><a href="#5">我的发送记录</a></li>
+                    <li><a href="#6">我的接收记录</a></li>
+                    <li><a href="#7">按网关记录查询发送</a></li>
+                    <li><a href="#8">所有发送记录</a></li>
+                    <li><a href="#9">待审核发送记录</a></li>
+                    <li><a href="#0">审核不通过记录</a></li>
+                    <li><a href="#-">已删除发送记录</a></li>
+                    <li><a href="#=">所有发送记录</a></li>
+                    <li><a href="#q">未报备内容</a></li>
+                    <li><a href="#w">所有接收记录</a></li>
+                    <li><a href="#e">所有定时短信</a></li>
                 </ul>
             </li>
+            <li><img src="cloud/img/logo.png" alt="" width="180"></li>
         </ul>
     </div>
     <!-- mainbody -->
     <div id="mainbody"></div>
     <!-- /mainbody -->
     <script>
-    seajs.use(['ui/notify', 'ui/router'], function(router) {
+    seajs.use(['ui/notify', 'ui/rollbar', 'mousewheel'], function() {
         var mainbody = $('#mainbody'),
             sidebar = $('#sidebar');
         var navs = UI.navs({
-            el: sidebar.children(".nav"),
+            el: sidebar.children(".acod"),
             accordion: true,
-            onClick: function(e, conf) {
-                if (!this.href) {
-                    return false;
-                }
-                //如果按了ctrl键
-                if (e.ctrlKey) {
-
-                } else {
-                    
-                    return false;
-                }
-                    return false;
+            init: function() {
+                //改写事件绑定，去除对内容的影响
+                var e = this.events;
+                e['click .acod-title'] = e['click a'];
+                e['click a'] = function(e, conf) {
+                    if (!this.target) {
+                        tabs.open({
+                            title: this.innerHTML,
+                            url: $(this).attr('href')
+                        });
+                        return false;
+                    }
+                };
+                delete e['dblclick a']; //去除双击事件
             },
-            cartCls: 'f f-lg f-right'
+            //重写create
+            create: function() {
+                this.$('.acod-title').prepend('<b class="nav-cart f f-down"></b>');
+            }
         });
-        navs.toggle(navs.$('a:eq(0)'));
+        navs.toggle(navs.$('.acod-title:eq(0)'));
 
-        /*        //滚动条
-                sidebar.rollbar({
-                    scroll:'vertical'
-                });*/
+/*        //滚动条
+        sidebar.rollbar({
+            scroll:'vertical'
+        });*/
         //tabs
         var tabs = window.tabs = UI.tabs({
             el: $('#header .tabs'),
@@ -318,7 +388,7 @@
                     this.lastTab = this.tab;
                     var id = _.uniqueId("tab_"),
                         title = obj.title,
-                        tab = $('<li>' + (obj.block ? '' : '<i class="f f-close ac-close"></i>') + '<a panel="#' + id + '" href="#" title="' + title + '">' + title + '</a></li>'),
+                        tab = $('<li>'+(obj.block?'':'<i class="f f-close ac-close"></i>')+'<a panel="#' + id + '" href="#" title="' + title + '">' + title + '</a></li>'),
                         panel = $('<div>', {
                             id: id,
                             'class': 'main-container'
@@ -377,9 +447,9 @@
         });
         //导航页
         tabs.open({
-            title: '控制台',
-            block: true,
-            url: 'main.html'
+            title:'控制台',
+            block:true,
+            url:'main.html'
         })
 
         //导航栏上的事件

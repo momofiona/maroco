@@ -153,6 +153,7 @@ define(function(require, exports, module) {
         defaults = {
             cls: 'log',
             type: 'notify',
+            anime: 'am-fadeup',
             icon: '',
             title: '',
             msg: '', //内容
@@ -170,8 +171,10 @@ define(function(require, exports, module) {
                 config = config || this;
                 //阻止冒泡关闭更上层的dialog或者notify，虽然这种情况很少出现
                 e && e.stopPropagation && e.stopPropagation();
+                //silent 不触发onclose回调
                 e !== true && config.onclose(e, config);
                 config.close = $.noop;
+                // config.el.removeClass(config.anime).addClass('am-popout');
                 config.el.remove();
                 delete config.el;
                 if (config.mask) {
@@ -201,7 +204,7 @@ define(function(require, exports, module) {
                     _t.type = 'dialog';
                     isDialog = true;
                 }
-                _t.anime = _t.anime ? _t.anime : 'am-fadeup';
+                // _t.anime = _t.anime ? _t.anime : 'am-fadeup';
                 //close event
                 var _ename = 'click .' + _t.type + '-close';
                 _t.events[_ename] = _t.events[_ename] || 'close';
@@ -267,7 +270,7 @@ define(function(require, exports, module) {
                 }
                 //drag & resize
                 if (_t.draggable) {
-                    require.async('draggable',function(){
+                    require.async('draggable', function() {
                         _t.el.draggable({
                             handle: isDialog ? ">.dialog-title" : '',
                             drag: function(event, ui) {
@@ -288,7 +291,7 @@ define(function(require, exports, module) {
         return UI(option);
     };
     _.extend(dialog, {
-        tips:tips,
+        tips: tips,
         loading: function(config) {
             return this(_.extend({
                 icon: '<i class="i i-loading m2"></i>',
@@ -306,7 +309,7 @@ define(function(require, exports, module) {
                         closeable: true,
                         mask: true,
                         oninit: function() {
-                            this.msg = '<span class="va-m" style="display:inline-block">' + this.msg + '</span><i class="f f-lg f-checkmark notify-checkmark" title="确定"></i>';
+                            this.msg = '<span class="va-m" style="display:inline-block">' + this.msg + '</span><i class="f f-lg f-done notify-checkmark" title="确定"></i>';
                             this.events = {
                                 'click .notify-checkmark': 'doVerify',
                                 'click .notify-close': 'doVerify'
@@ -329,7 +332,7 @@ define(function(require, exports, module) {
                 mask: true,
                 title: '请确认',
                 buttons: [{
-                    label: '<i class="f mr f-checkmark"></i>确定',
+                    label: '<i class="f mr f-done"></i>确定',
                     cls: 'note',
                     click: 'doComfirm'
                 }, {
@@ -344,15 +347,9 @@ define(function(require, exports, module) {
                     this.contentEl.css('padding', 20);
                 }
             }, config));
-        },
-        clear: function(silent) {
-            $('.notify').each(function() {
-                var c = $(this).data('_notify_');
-                c && c.close(silent);
-            });
         }
     });
-    var notifyIcon = 'info bell warn tool checkmark'.split(' ');
+    var notifyIcon = 'info bell warn tool done'.split(' ');
     _.each(['info', 'note', 'warn', 'error', 'safe'], function(o, i) {
         dialog[o] = function(msg, timeout) {
             if (_.isString(msg)) {
