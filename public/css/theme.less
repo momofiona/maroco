@@ -20,6 +20,7 @@ fieldset {
 input[type=checkbox],input[type=radio] {
     width: 18px;
     height: 18px;
+    font-size: 12px;
     padding:0 !important;
     // line-height: 18px !important;
     -webkit-appearance: none;
@@ -53,6 +54,7 @@ input[type=checkbox],input[type=radio] {
     &[disabled] {
         background: #f4f4f4;
         *background: none;
+        cursor: not-allowed;
     }
     &[disabled]:before{
         color: #aaa;
@@ -61,15 +63,12 @@ input[type=checkbox],input[type=radio] {
 input[type=radio]{
     border-radius: 20px;
     &:checked:before{
-        content:'';
-        width:10px;
-        height: 10px;
-        margin:3px;
-        display: inline-block;
+        color: #444;
         background: #444;
     }
     &[disabled]:before{
         background: #bbb;
+        color: #bbb;
     }
 }
 /* tabs */

@@ -11,7 +11,7 @@
   color: #ab2918 !important;
 }
 .c-info {
-  color: #4abffc !important;
+  color: #71c1ff !important;
 }
 .c-safe {
   color: #129324 !important;
@@ -20,7 +20,7 @@
   color: #478af8 !important;
 }
 .c-warn {
-  color: #f9c832 !important;
+  color: #fbd57d !important;
 }
 .c-gray {
   color: #888 !important;
@@ -75,14 +75,12 @@ button {
   -moz-osx-font-smoothing: grayscale;
   -moz-font-feature-settings: "liga", "kern";
 }
-input[disabled],
-select[disabled],
-textarea[disabled],
-input[readonly],
-select[readonly],
-textarea[readonly] {
-  background-color: #eee;
-}
+/* input, select, textarea {
+    &[disabled], &[readonly] {
+        // cursor: not-allowed !important;
+        // background-color: #eee;
+    }
+} */
 input::-ms-clear {
   display: none;
 }
@@ -370,8 +368,8 @@ a:hover {
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f3f4f5',GradientType=0 );
 }
 .info {
-  background-color: #4abffc;
-  border: 1px solid #4abffc;
+  background-color: #71c1ff;
+  border: 1px solid #71c1ff;
   color: #ffffff !important;
 }
 .note {
@@ -380,9 +378,9 @@ a:hover {
   color: #ffffff !important;
 }
 .warn {
-  background-color: #f9c832;
-  border: 1px solid #f9c832;
-  color: #722626 !important;
+  background-color: #fbd57d;
+  border: 1px solid #fbd57d;
+  color: #8b5f17 !important;
 }
 .error {
   background-color: #ab2918;
@@ -757,10 +755,10 @@ textarea.text[required] {
   border-color: #478af8;
 }
 .info .tip {
-  border-color: #4abffc;
+  border-color: #71c1ff;
 }
 .warn .tip {
-  border-color: #f9c832;
+  border-color: #fbd57d;
 }
 .error .tip {
   border-color: #ab2918;
@@ -1206,6 +1204,7 @@ input[type=checkbox],
 input[type=radio] {
   width: 18px;
   height: 18px;
+  font-size: 12px;
   padding: 0 !important;
   -webkit-appearance: none;
   border: solid 1px #bfbfbf;
@@ -1242,6 +1241,7 @@ input[type=checkbox][disabled],
 input[type=radio][disabled] {
   background: #f4f4f4;
   *background: none;
+  cursor: not-allowed;
 }
 input[type=checkbox][disabled]:before,
 input[type=radio][disabled]:before {
@@ -1251,15 +1251,12 @@ input[type=radio] {
   border-radius: 20px;
 }
 input[type=radio]:checked:before {
-  content: '';
-  width: 10px;
-  height: 10px;
-  margin: 3px;
-  display: inline-block;
+  color: #444;
   background: #444;
 }
 input[type=radio][disabled]:before {
   background: #bbb;
+  color: #bbb;
 }
 /* tabs */
 .tabs-tiny {

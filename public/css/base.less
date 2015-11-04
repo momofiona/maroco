@@ -13,9 +13,9 @@
 @fontColor: #434749;
 //背景色
 @logColor: #fafafa;
-@infoColor: #4abffc;
+@infoColor: #71C1FF;//#4abffc;
 @noteColor: #478af8;//#016EB1;
-@warnColor: #f9c832;
+@warnColor: #fbd57d;//#f9c832;
 @careColor: #fbdf85;//borderColor
 @errorColor: #ab2918;
 @safeColor: #129324;
@@ -92,12 +92,12 @@ body, input, textarea, select, button {
     -moz-osx-font-smoothing: grayscale;
     -moz-font-feature-settings: "liga", "kern";
 }
-input, select, textarea {
+/* input, select, textarea {
     &[disabled], &[readonly] {
         // cursor: not-allowed !important;
-        background-color: #eee;
+        // background-color: #eee;
     }
-}
+} */
 input::-ms-clear {
     display: none
 }
@@ -354,7 +354,7 @@ a:hover {
 }
 .warn {
     // .baseFactory(#fffded, #fbdf85, #9c6a3d);
-    .baseFactory(@warnColor, @warnColor, #722626);
+    .baseFactory(@warnColor, @warnColor, #8b5f17);
 }
 .error {
     .baseFactory(@errorColor, @errorColor);

@@ -343,7 +343,7 @@
             },
             events: {
                 'click >.tab a': function(e, conf) {
-                    if (this === conf.tab) return false;
+                    if (this === conf.tab) return;
                     var t = this,
                         tab = $(t),
                         panel = conf.getPanel(this);
@@ -438,6 +438,12 @@
             onExpand: $.noop,
             //收缩时回调
             onCollapse: $.noop,
+            expandAll:function(){
+                this.el.find('a+ul').show().prev().addClass(this.openCls);
+            },
+            collapseAll:function(){
+                this.el.find('a+ul').hide().prev().removeClass(this.openCls);
+            },
             //点击时触发
             onClick: $.noop,
             create: function() {

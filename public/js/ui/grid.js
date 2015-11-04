@@ -14,7 +14,7 @@ define(function(require, exports, module) {
                 return '共 ' + total + ' 条数据';
             },
             parseData: function(data) {
-                return data.result;
+                return data.data;
             },
             cache: null, //列表数据
             //一些回调

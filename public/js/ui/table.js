@@ -151,7 +151,7 @@ define(function(require, exports, module) {
                 return '共 ' + total + ' 条数据';
             },
             parseData: function(data) {
-                return data.result;
+                return data.data;
             }
         }
         //$.support.boxSizing=false时候所有宽度减去td的padding

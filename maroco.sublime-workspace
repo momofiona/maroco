@@ -1,0 +1,1890 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"d",
+				"disabled	Attr"
+			],
+			[
+				"over",
+				"overflow"
+			],
+			[
+				"margin",
+				"margin-top"
+			],
+			[
+				"back",
+				"background-color"
+			],
+			[
+				"nav",
+				"navs"
+			],
+			[
+				"padding",
+				"padding-bottom"
+			],
+			[
+				"font",
+				"font-size"
+			],
+			[
+				"mar",
+				"margin"
+			],
+			[
+				"App",
+				"APP"
+			],
+			[
+				"max",
+				"max-height"
+			],
+			[
+				"margi",
+				"margin-left"
+			],
+			[
+				"in",
+				"inside"
+			],
+			[
+				"ba",
+				"background-color"
+			],
+			[
+				"bor",
+				"border-width"
+			],
+			[
+				"backgr",
+				"background-color"
+			],
+			[
+				"inl",
+				"inline"
+			],
+			[
+				"fn",
+				"function"
+			],
+			[
+				"ac",
+				"active"
+			],
+			[
+				"trans",
+				"transparent"
+			],
+			[
+				"index",
+				"indexOf	jsArray"
+			],
+			[
+				"hi",
+				"hidden"
+			],
+			[
+				"content",
+				"contentWindow"
+			],
+			[
+				"unique",
+				"uniqueId"
+			],
+			[
+				"appen",
+				"append	jQuery"
+			],
+			[
+				"ap",
+				"appendTo	jQuery"
+			],
+			[
+				"pa",
+				"padding-left"
+			],
+			[
+				"closep",
+				"closepen"
+			],
+			[
+				"wid",
+				"width"
+			],
+			[
+				"proto",
+				"prototype	jsProp"
+			],
+			[
+				"setTime",
+				"setTimeout	jsWindow"
+			],
+			[
+				"font-s",
+				"font-size"
+			],
+			[
+				"background",
+				"background-image"
+			],
+			[
+				"padd",
+				"padding"
+			],
+			[
+				"po",
+				"position"
+			],
+			[
+				"white",
+				"white-space"
+			],
+			[
+				"no",
+				"normal"
+			],
+			[
+				"removeC",
+				"removeClass	jQuery"
+			],
+			[
+				"add",
+				"addClass	jQuery"
+			],
+			[
+				"verti",
+				"vertical-align"
+			],
+			[
+				"j",
+				"jwplayer"
+			],
+			[
+				"html",
+				"html5"
+			],
+			[
+				"live",
+				"live_url"
+			],
+			[
+				"sett",
+				"setTimeout	jsWindow"
+			],
+			[
+				"th",
+				"thumbnail"
+			],
+			[
+				"full",
+				"fullscreen"
+			],
+			[
+				"text",
+				"text-align"
+			],
+			[
+				"curr",
+				"currentIndex"
+			],
+			[
+				"cur",
+				"cursor"
+			],
+			[
+				"fon",
+				"font-weight"
+			],
+			[
+				"sidebar",
+				"sideBar"
+			],
+			[
+				"body",
+				"bodySlide"
+			],
+			[
+				"min",
+				"min-height"
+			],
+			[
+				"s",
+				"style	Attr"
+			],
+			[
+				"tr",
+				"transform"
+			],
+			[
+				"uniq",
+				"_.uniq	_array"
+			],
+			[
+				"line",
+				"line-height"
+			],
+			[
+				"list",
+				"list-style"
+			],
+			[
+				"pos",
+				"position"
+			],
+			[
+				"background-",
+				"background-size"
+			],
+			[
+				"snow",
+				"snowflake"
+			],
+			[
+				"li",
+				"linear"
+			],
+			[
+				"fl",
+				"float"
+			],
+			[
+				"dark",
+				"darkWalk"
+			],
+			[
+				"br",
+				"bright"
+			],
+			[
+				"vm",
+				"vm_powers"
+			],
+			[
+				"op",
+				"options"
+			],
+			[
+				"bac",
+				"background"
+			],
+			[
+				"ac-i",
+				"ac-ip"
+			],
+			[
+				"sessin",
+				"sessionId"
+			],
+			[
+				"rgba",
+				"rgba()"
+			],
+			[
+				"uniqu",
+				"uniqueId"
+			],
+			[
+				"append",
+				"appendChild	jsDOM"
+			],
+			[
+				"transform",
+				"transform: $1;	Property"
+			],
+			[
+				"z",
+				"z-index"
+			],
+			[
+				"prepen",
+				"prependTo	jQuery"
+			],
+			[
+				"taskD",
+				"taskData"
+			],
+			[
+				"get",
+				"getMilliseconds	jsDate"
+			],
+			[
+				"au",
+				"autoplay"
+			],
+			[
+				"re",
+				"requestAnimationFrame"
+			],
+			[
+				"vernu",
+				"vernumber"
+			],
+			[
+				"ac-his",
+				"ac-history-free"
+			],
+			[
+				"userI",
+				"userInfo"
+			],
+			[
+				"app",
+				"append"
+			],
+			[
+				"top",
+				"topBtnGroup"
+			],
+			[
+				"login",
+				"loginName"
+			],
+			[
+				"qr",
+				"qrCodeLogin"
+			],
+			[
+				"toggle",
+				"toggleClass"
+			],
+			[
+				"margn",
+				"margin-bottom"
+			],
+			[
+				"isP",
+				"isProjectOwner"
+			],
+			[
+				"comm",
+				"comments"
+			],
+			[
+				"user",
+				"userName"
+			],
+			[
+				"getP",
+				"getPreNode"
+			],
+			[
+				"up",
+				"uploader"
+			],
+			[
+				"json",
+				"jsonCookie"
+			],
+			[
+				"dele",
+				"delete-config"
+			],
+			[
+				"print",
+				"print_r"
+			],
+			[
+				"login_",
+				"login_flag"
+			],
+			[
+				"info",
+				"infos"
+			],
+			[
+				"str",
+				"stringify"
+			],
+			[
+				"form",
+				"formObj"
+			],
+			[
+				"ta",
+				"targetHash"
+			],
+			[
+				"fu",
+				"function"
+			],
+			[
+				"fi",
+				"firstFile"
+			],
+			[
+				"use",
+				"useData"
+			],
+			[
+				"cont",
+				"container"
+			],
+			[
+				"render",
+				"renderCopFiles"
+			],
+			[
+				"fileM",
+				"fileMsg"
+			],
+			[
+				"fb",
+				"fobj"
+			],
+			[
+				"ac-lis",
+				"ac-list2"
+			],
+			[
+				"ac-list",
+				"ac-list1"
+			],
+			[
+				"hash",
+				"hashs"
+			],
+			[
+				"tab",
+				"tabIndex"
+			],
+			[
+				"child",
+				"childMode"
+			],
+			[
+				"parent",
+				"parentData"
+			],
+			[
+				"lock",
+				"lockUser"
+			],
+			[
+				"ma",
+				"margin-bottom"
+			],
+			[
+				"load",
+				"loadtip"
+			],
+			[
+				"on",
+				"oninit"
+			],
+			[
+				"cl",
+				"clear"
+			],
+			[
+				"time",
+				"timeout	setTimeout function"
+			],
+			[
+				"filtL",
+				"fileList"
+			],
+			[
+				"userinfo",
+				"USERINFO"
+			],
+			[
+				"proje",
+				"projectData"
+			],
+			[
+				"project",
+				"projectData"
+			],
+			[
+				"bu",
+				"buttons"
+			],
+			[
+				"remove",
+				"removeNode"
+			],
+			[
+				"de",
+				"decodeURIComponent"
+			],
+			[
+				"ow",
+				"ownerIds"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "public/css/base.less",
+			"settings":
+			{
+				"buffer_size": 20465,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp/m/products.jsp",
+			"settings":
+			{
+				"buffer_size": 3357,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp/m/index.jsp",
+			"settings":
+			{
+				"buffer_size": 3550,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/static/js/ui/table.js",
+			"settings":
+			{
+				"buffer_size": 21485,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "public/js/ui/notify.js",
+			"settings":
+			{
+				"buffer_size": 13372,
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 265.0,
+		"last_filter": "save",
+		"selected_items":
+		[
+			[
+				"save",
+				"Project: Save As"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"add",
+				"Project: Add Folder"
+			],
+			[
+				"package",
+				"Package Control: Enable Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"listp",
+				"Package Control: List Packages"
+			],
+			[
+				"list",
+				"Package Control: List Packages"
+			],
+			[
+				"lsitp",
+				"Package Control: List Packages"
+			],
+			[
+				"list pa",
+				"Package Control: List Packages"
+			],
+			[
+				"listpackages",
+				"Package Control: List Packages"
+			],
+			[
+				"setsh",
+				"Set Syntax: HTML"
+			],
+			[
+				"ssja",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"ssys",
+				"Preferences: SublimeLinter Key Bindings – Default"
+			],
+			[
+				"remvoe",
+				"Package Control: Remove Package"
+			],
+			[
+				"disable",
+				"Package Control: Disable Package"
+			],
+			[
+				"dis",
+				"Package Control: Disable Package"
+			],
+			[
+				"remoe",
+				"Package Control: Remove Package"
+			],
+			[
+				"quote",
+				"Quote '<HTML>' + '</HTML>';"
+			],
+			[
+				"packa",
+				"Package Control: Install Package"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 512.0
+	},
+	"console":
+	{
+		"height": 218.0,
+		"history":
+		[
+			"view.run_command(\"jshint\" )",
+			"clear",
+			"import urllib.request,os; pr='Preferences.sublime-settings'; ip='ignored_packages'; n='Package Control'; s=sublime.load_settings(pr); ig=s.get(ip); ig.append(n); s.set(ip,ig); sublime.save_settings('Preferences.sublime-settings'); pf=n+'.sublime-package'; urllib.request.install_opener(urllib.request.build_opener(urllib.request.ProxyHandler())); by=urllib.request.urlopen('https://packagecontrol.io/'+pf.replace(' ','%20')).read(); open(os.path.join(sublime.installed_packages_path(),pf),'wb').write(by); ig.remove(n); s.set(ip,ig); sublime.save_settings(pr); print('Package Control: 3.0.0 upgrade successful!')",
+			" import urllib.request,os; pr='Preferences.sublime-settings'; ip='ignored_packages'; n='Package Control'; s=sublime.load_settings(pr); ig=s.get(ip); ig.append(n); s.set(ip,ig); sublime.save_settings('Preferences.sublime-settings'); pf=n+'.sublime-package'; urllib.request.install_opener(urllib.request.build_opener(urllib.request.ProxyHandler())); by=urllib.request.urlopen('https://packagecontrol.io/'+pf.replace(' ','%20')).read(); open(os.path.join(sublime.installed_packages_path(),pf),'wb').write(by); ig.remove(n); s.set(ip,ig); sublime.save_settings(pr); print('Package Control: 3.0.0 upgrade successful!')",
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp/m",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp/user",
+		"/D/workspace/o2o/code/ecology/ecology-admin-gprs/src/main/webapp",
+		"/D/workspace/o2o/code/ecology/ecology-admin-gprs/src/main/webapp/WEB-INF",
+		"/D/workspace/o2o/code/ecology/ecology-admin-gprs/src/main/webapp/WEB-INF/jsp",
+		"/D/workspace/o2o/code/ecology/ecology-admin-gprs/src/main/webapp/WEB-INF/jsp/gprs"
+	],
+	"file_history":
+	[
+		"/C/Users/momo/Desktop/全国省市区数据库/全国地名SQL-Server版.sql",
+		"/C/Users/momo/Desktop/全国省市区数据库/MySQL.sql",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/static/js/ui/ui.js",
+		"/D/github/maroco/public/js/ui/ui.js",
+		"/D/github/maroco/public/js/ui/valid.js",
+		"/D/github/maroco/public/css/tips.less",
+		"/D/github/maroco/public/css/nav.less",
+		"/D/github/maroco/public/css/theme.less",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/index.jsp",
+		"/D/github/maroco/public/js/ui/picasa.js",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/static/cloud/phonebook/vm_import.js",
+		"/D/github/maroco/public/js/ui/upload.js",
+		"/D/github/maroco/public/js/ui/notify.js",
+		"/D/github/maroco/public/example/searchbox.html",
+		"/D/github/maroco/public/js/ui/buttonset.js",
+		"/D/github/maroco/routes/upload.js",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/static/cloud/vm_phonebook_groups.js",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/static/cloud/vm_rename.js",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/static/cloud/o2o.js",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/static/cloud/home.less",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/static/cloud/o2o.less",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/static/index.html",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp/user/profile.jsp",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp/regist.jsp",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp/passback.jsp",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp/login.jsp",
+		"/D/workspace/o2o/code/ecology/ecology-admin-gprs/src/main/webapp/WEB-INF/jsp/gprs/index.jsp",
+		"/D/workspace/o2o/code/ecology/ecology-admin-gprs/src/main/webapp/WEB-INF/jsp/gprs/home.jsp",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp/include.inc.jsp",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp/user/passback.jsp",
+		"/D/github/maroco/public/css/btn.less",
+		"/D/github/maroco/public/css/base.less",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/static/css/base.less",
+		"/D/github/maroco/public/css/normalize.less",
+		"/D/github/maroco/public/css/maroco.less",
+		"/D/github/maroco/public/example/valid.html",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp/m/users.jsp",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/static/cloud/login.less",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp/m/phonebook.jsp",
+		"/D/github/maroco/public/example/table.html",
+		"/D/workspace/移动云主干/admin/org/department/_department.js",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/static/js/ui/table.js",
+		"/D/workspace/o2o/code/ecology/ecology-admin-gprs/src/main/webapp/WEB-INF/jsp/gprs/profile.jsp",
+		"/D/workspace/移动云主干/admin/org/department/edituser.js",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp/user/passchange.jsp",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/static/css/theme.less",
+		"/C/Users/momo/Desktop/rebel.xml",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp/m/index.jsp",
+		"/D/github/maroco/public/css/icon.less",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp/m/user/passback.jsp",
+		"/D/workspace/o2o/code/ecology/ecology-admin-gprs/src/main/webapp/WEB-INF/jsp/gprs/users.jsp",
+		"/D/workspace/o2o/code/ecology/ecology-admin-gprs/src/main/webapp/WEB-INF/web.xml",
+		"/D/github/maroco/public/js/ui/table.js",
+		"/D/github/maroco/public/js/ui/grid.js",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/static/js/ui/grid.js",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/static/css/animate.css",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/static/login.html",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp/master.jsp",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/static/js/ui/event.js",
+		"/D/workspace/o2o/code/ecology/out/WEB-INF/classes/META-INF/spring-context.xml",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/static/cloud/home.css",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/static/cloud/o2o.css",
+		"/D/github/maroco/public/index_tab.html",
+		"/D/github/maroco/public/index.html",
+		"/D/github/maroco/public/index2.html",
+		"/D/github/maroco/public/index3.html",
+		"/D/github/maroco/public/login2.html",
+		"/D/github/maroco/public/login.html",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/static/maroco.js",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/static/js/ui/router.js",
+		"/D/github/maroco/public/example/index.html",
+		"/D/github/maroco/public/js/ui/router.js",
+		"/D/github/maroco/public/css/anime.less",
+		"/D/github/maroco/public/css/maroco.css",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/static/cloud/com.js",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/master.jsp",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/gprs/menu.jsp",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/gprs/index.jsp",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/login.jsp",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/index.html",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/cloud/o2o.css",
+		"/D/apps/apache-tomcat-7.0.41/conf/server.xml",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/404.jsp",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/login.html",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/js/ui/ui.js",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/css/base.less",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/cloud/file.js",
+		"/D/github/maroco/public/css/layout.less",
+		"/D/apps/Sublime Text 3/Data/Packages/HTML-CSS-JS Prettify/HTMLPrettify.sublime-settings",
+		"/D/apps/apache-maven-3.2.1/conf/settings.xml",
+		"/D/github/maroco/maroco.sublime-project",
+		"/D/github/maroco/maroco.sublime-workspace",
+		"/C/Program Files/nodejs/node_modules/npm/npmrc",
+		"/D/sugon/移动云主干/index.html",
+		"/D/github/maroco/public/example/icon.html",
+		"/D/github/maroco/public/example/notify.html",
+		"/D/github/maroco/public/maroco.js",
+		"/D/github/maroco/public/css/icomoon/style.css",
+		"/D/github/maroco/public/apps/pan/main.js",
+		"/D/github/maroco/public/example/text.html",
+		"/D/github/maroco/public/temp/js/ui/notify.js",
+		"/D/github/maroco/public/temp/js/ui/valid.js",
+		"/D/github/maroco/public/apps/user/user.js",
+		"/D/github/maroco/public/apps/user/rolecreateandedit.js",
+		"/D/github/maroco/public/apps/user/role.js",
+		"/D/github/maroco/public/temp/js/ui/upload.js",
+		"/D/github/maroco/public/css/icomoon/bak/selection.json",
+		"/D/github/maroco/public/css/icomoon/demo-files/demo.js",
+		"/C/Users/Rong/AppData/Local/Temp/Temp1_icomoon (1).zip/ie7/ie7.css",
+		"/C/Users/Rong/Desktop/1.html",
+		"/D/360/blog/_config.yml",
+		"/D/sugon/phantom/test.js",
+		"/D/xampp/htdocs/index.php",
+		"/C/Users/Rong/Desktop/appframework-master/templates/drawer.html",
+		"/D/360/friends/x熊明威/layout/html/img/style.css",
+		"/D/360/friends/x熊明威/layout/html/index.html",
+		"/D/360/friends/k开云/晋商/微网站/assets/css/app.css",
+		"/D/360/friends/k开云/晋商/微网站/news.html",
+		"/D/360/friends/x熊明威/layout/html/vendor/jquery.ui.touch-punch.min.js",
+		"/D/sugon/移动云主干/css/maroco.css",
+		"/D/360/friends/x熊明威/layout/html/img/style.less",
+		"/D/360/friends/x熊明威/网站/html/index.html",
+		"/D/360/friends/x熊明威/layout/html/vendor/jquery-ui-1.11.4.custom/jquery-ui.structure.css",
+		"/D/360/friends/x熊明威/layout/html/vendor/jquery-ui-1.11.4.custom/jquery-ui.min.css",
+		"/D/360/friends/x熊明威/layout/html/vendor/jquery-ui-1.11.4.custom/external/jquery/jquery.js",
+		"/C/Users/Rong/Desktop/100.txt",
+		"/D/sugon/移动云主干/js/ui/upload.js",
+		"/D/github/webpack/webpack.config.js"
+	],
+	"find":
+	{
+		"height": 36.0
+	},
+	"find_in_files":
+	{
+		"height": 204.0,
+		"where_history":
+		[
+			"D:\\workspace\\o2o\\code\\ecology\\ecology-admin-web\\src\\main\\webapp",
+			"D:\\workspace\\o2o\\code\\ecology\\ecology-admin-web\\src\\main\\webapp\\WEB-INF",
+			"D:\\github\\maroco\\public",
+			"D:\\360\\friends\\x熊明威\\网站\\html",
+			"D:\\sugon\\移动云主干",
+			"D:\\sugon\\费控工程\\staticresource\\",
+			"D:\\sugon\\移动云主干\\js\\vendor\\eCharts",
+			"D:\\sugon\\移动云主干\\admin",
+			"D:\\sugon\\移动云主干",
+			"D:\\github\\maroco\\public",
+			"D:\\sugon\\移动云主干",
+			"D:\\360\\blog\\themes\\yilia",
+			"D:\\360\\blog\\node_modules",
+			"D:\\360\\blog",
+			"D:\\xampp\\htdocs",
+			"D:\\360\\blog",
+			"D:\\sugon\\移动云主干\\example",
+			"D:\\xampp\\htdocs\\phpcms\\modules\\member",
+			"D:\\xampp\\htdocs\\phpcms\\modules",
+			"D:\\xampp\\htdocs\\",
+			"D:\\sugon\\移动云主干",
+			"D:\\sugon\\移动云主干\\admin\\org\\notice",
+			"D:\\xampp\\htdocs\\phpcms",
+			"D:\\sugon\\移动云\\v2",
+			"D:\\sugon\\移动云\\v2\\apps\\notice",
+			"D:\\sugon\\移动云\\v2",
+			"D:\\github\\maroco\\public\\css",
+			"D:\\sugon\\移动云\\v2\\apps",
+			"D:\\sugon\\移动云\\v2\\apps\\pan",
+			"D:\\sugon\\移动云\\v2",
+			"D:\\sugon\\移动云\\v2\\apps\\projectManage",
+			"D:\\workspace\\sugon_channel\\joiner.webapp.joiner\\src\\main\\webapp\\statics",
+			"D:\\sugon\\移动云\\v2\\",
+			"D:\\sugon\\移动云\\v2\\apps",
+			"D:\\sugon\\移动云\\v2\\apps\\projectManage",
+			"D:\\sugon\\移动云\\v2\\apps",
+			"D:\\xampp\\htdocs\\phpcms\\templates",
+			"D:\\sugon\\移动云",
+			"D:\\sugon\\移动云\\v2\\apps\\projectManage",
+			"D:\\sugon\\移动云\\",
+			"D:\\sugon\\移动云\\v2",
+			"D:\\xampp\\htdocs\\",
+			"D:\\xampp\\htdocs\\phpcms\\modules",
+			"D:\\xampp\\htdocs\\phpcms\\modules\\content",
+			"D:\\sugon\\移动云\\",
+			"D:\\sugon\\移动云\\v2",
+			"D:\\xampp\\htdocs",
+			"D:\\sugon\\移动云\\v2",
+			"D:\\xampp\\htdocs",
+			"D:\\sugon\\移动云\\resources\\js",
+			"D:\\xampp\\htdocs",
+			"D:\\sugon\\移动云",
+			"D:\\xampp\\htdocs",
+			"D:\\github\\maroco\\public",
+			"D:\\xampp\\htdocs",
+			"D:\\github\\maroco",
+			"D:\\sugon\\移动云",
+			"D:\\xampp\\htdocs\\phpcms",
+			"D:\\xampp\\htdocs",
+			"D:\\sugon\\移动云\\v2",
+			"D:\\sugon\\移动云",
+			"D:\\sugon\\费控\\staticresource",
+			"D:\\xampp\\htdocs\\phpcms",
+			"D:\\sugon\\webapp",
+			"D:\\xampp\\htdocs\\phpcms",
+			"D:\\xampp\\htdocs\\phpcms\\model",
+			"D:\\sugon\\webapp\\resources",
+			"D:\\sugon\\webapp",
+			"D:\\xampp\\htdocs",
+			"D:\\sugon\\webapp\\v2",
+			"D:\\github\\maroco\\public\\css",
+			"D:\\github\\maroco\\public",
+			"D:\\xampp\\htdocs\\wp-content\\themes\\d82",
+			"D:\\xampp\\htdocs\\",
+			"D:\\xampp\\htdocs\\wp-content\\themes\\d8",
+			"D:\\sugon\\webapp\\resources",
+			"D:\\xampp\\htdocs\\wp-content\\plugins\\ml-slider",
+			"D:\\xampp\\htdocs",
+			"D:\\github\\maroco",
+			"D:\\sugon\\webapp\\taxadmin",
+			"D:\\sugon\\webapp\\",
+			"D:\\sugon\\webapp\\resources\\js",
+			"D:\\sugon\\webapp",
+			"D:\\sugon\\webapp37",
+			"D:\\xampp\\htdocs",
+			"D:\\sugon\\webapp",
+			"D:\\xampp\\htdocs",
+			"C:\\Users\\Rong\\Desktop\\gallery\\files",
+			"D:\\xampp\\htdocs",
+			"D:\\sugon\\webapp",
+			"D:\\workspace\\mycloud1.0\\war",
+			"D:\\github\\maroco\\public",
+			"D:\\github\\maroco",
+			"C:\\Users\\Rong\\Desktop\\codemirror-4.12",
+			"D:\\workspace\\zhoushancsp2\\src\\main\\webapp\\statics\\csp\\js",
+			"D:\\workspace\\zhoushancsp2\\src\\main\\webapp\\statics\\csp",
+			"D:\\workspace\\zhoushancsp2\\src\\main\\webapp\\statics\\css",
+			"D:\\github\\maroco\\public",
+			"D:\\github\\maroco",
+			"D:\\xampp\\htdocs",
+			"D:\\workspace\\cloudview\\js",
+			"D:\\github\\maroco\\public",
+			"D:\\github\\maroco",
+			"D:\\sugon\\staticresource",
+			"D:\\xampp\\htdocs\\e",
+			"C:\\Users\\Rong\\Desktop\\WEB-INF",
+			"D:\\xampp\\htdocs",
+			"D:\\xampp\\htdocs\\wp-content\\themes\\d8",
+			"D:\\sugon\\code3\\staticresource",
+			"D:\\xampp\\htdocs\\wp-content\\themes\\d8",
+			"D:\\sugon\\code3\\staticresource",
+			"D:\\360\\sugon\\cases\\20140924曙光渠道网站\\曙光渠道网站",
+			"C:\\Users\\Rong\\Desktop\\曙光渠道网站",
+			"D:\\sugon\\code3\\staticresource",
+			"D:\\workspace\\feikong\\staticresource",
+			"C:\\Users\\Rong\\Desktop\\曙光渠道网站",
+			"D:\\sugon\\code3\\staticresource",
+			"D:\\xampp\\htdocs",
+			"D:\\sugon\\code3\\staticresource",
+			"D:\\xampp\\htdocs",
+			"D:\\sugon\\code3\\staticresource",
+			"D:\\xampp\\htdocs",
+			"D:\\360\\sugon\\上海财经CRM\\shanghai"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"/m/products?pid=",
+			"/m/products?pid=1",
+			"navs",
+			" class=\"menu\"",
+			"<b class=\"f f-down mr\"></b>",
+			"class=\"log\"",
+			"div",
+			"navs",
+			"xr ",
+			" tab-con",
+			"right",
+			" nav-open",
+			"down",
+			"nav-cart ",
+			"nav",
+			"navs",
+			"a",
+			"td",
+			"index",
+			" data-index=\"0\"",
+			"td>",
+			"td",
+			"行业",
+			" class=\" \"",
+			"class=\"\" ",
+			"ctable",
+			"iframe",
+			"validateField",
+			"showLabel",
+			"within",
+			"msg",
+			"tips",
+			"lt",
+			"of",
+			"tips",
+			"valid",
+			"showLabel",
+			"allRules",
+			"showLabel",
+			"msg",
+			"tips",
+			"GUID",
+			"callback",
+			"oninput",
+			"opt",
+			"valid:",
+			"loadtip",
+			"..",
+			"href",
+			"include.inc.jsp",
+			"找回",
+			"valid",
+			"notify",
+			"valid",
+			"disabled",
+			"w10",
+			"w8",
+			"w14",
+			"w5",
+			"w10",
+			"14",
+			"h3",
+			"h2",
+			"h1",
+			"span",
+			"loginForm",
+			"isAdmin",
+			"loginForm",
+			"w8",
+			"h3",
+			"h2",
+			"h1",
+			"div",
+			"copyright",
+			"clients",
+			"<i class=\"mr f f-done\"></i>",
+			"div",
+			"注册",
+			"panel",
+			"注册",
+			"user",
+			"append",
+			",",
+			" record.",
+			"append",
+			"120",
+			"ctable",
+			"table",
+			"form",
+			"input",
+			"profile_form",
+			"checkbox",
+			"radio",
+			"icon",
+			"text",
+			"sex",
+			"profile",
+			"m xl ",
+			"force",
+			"toggle",
+			"log",
+			"/gprs/home",
+			"gps",
+			"../m/#",
+			"../gprs/#",
+			"../m/",
+			"loading",
+			"active",
+			"控制台",
+			"#",
+			"#/",
+			"#",
+			"parsed'",
+			"parsed",
+			"parseData",
+			".data",
+			".code",
+			"ar-b",
+			"disabld",
+			"aaa",
+			"div",
+			"flipInX",
+			"flip",
+			"am-popin",
+			"fadeup",
+			"class",
+			"div",
+			"130px"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": true,
+		"regex": false,
+		"replace_history":
+		[
+			"f-done",
+			"f-close",
+			"A、$1B、$2C、$3D、$4E、$4\\n",
+			"A、$1B、$2C、$3D、$4\\n",
+			"（   ）",
+			"$1",
+			"class=\"m-layer\" data-backdrop=\"false\"",
+			"关注我 &raquo;	",
+			"关注我&gt;",
+			"<a href=\"aboutus.html\">联系曙光</a>",
+			"代理商",
+			"href=\"joind.html\"",
+			"<a href=\"joind.html\" class=\"rbtn\">注册</a>",
+			"href=\"joind.html\">加盟曙光</a>",
+			"toolbar everyBillTotal m",
+			""
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "public/css/base.less",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 20465,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								297,
+								297
+							]
+						],
+						"settings":
+						{
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/LESS/LESS.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp/m/products.jsp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3357,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								343,
+								343
+							]
+						],
+						"settings":
+						{
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/Java/Java Server Pages (JSP).tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp/m/index.jsp",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 3550,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/Java/Java Server Pages (JSP).tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/static/js/ui/table.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 21485,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6950,
+								6952
+							]
+						],
+						"settings":
+						{
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2865.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "public/js/ui/notify.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 13372,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3009,
+								3013
+							]
+						],
+						"settings":
+						{
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2261.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 28.0
+	},
+	"input":
+	{
+		"height": 35.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 211.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "maroco.sublime-project",
+	"replace":
+	{
+		"height": 52.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"ui.js",
+				"webapp\\static\\js\\ui\\ui.js"
+			],
+			[
+				"nav.less",
+				"maroco\\public\\css\\nav.less"
+			],
+			[
+				"theme.less",
+				"maroco\\public\\css\\theme.less"
+			],
+			[
+				"base.less",
+				"maroco\\public\\css\\base.less"
+			],
+			[
+				"table.js",
+				"webapp\\static\\js\\ui\\table.js"
+			],
+			[
+				"picasa.js",
+				"maroco\\public\\js\\ui\\picasa.js"
+			],
+			[
+				"tips.less",
+				"maroco\\public\\css\\tips.less"
+			],
+			[
+				"notify",
+				"maroco\\public\\js\\ui\\notify.js"
+			],
+			[
+				"valid.js",
+				"maroco\\public\\js\\ui\\valid.js"
+			],
+			[
+				"notify.js",
+				"maroco\\public\\js\\ui\\notify.js"
+			],
+			[
+				"upload.js",
+				"maroco\\public\\js\\ui\\upload.js"
+			],
+			[
+				"buttonset.js",
+				"maroco\\public\\js\\ui\\buttonset.js"
+			],
+			[
+				"searchbox.html",
+				"maroco\\public\\example\\searchbox.html"
+			],
+			[
+				"btn.les",
+				"maroco\\public\\css\\btn.less"
+			],
+			[
+				"normalize.less",
+				"maroco\\public\\css\\normalize.less"
+			],
+			[
+				"maroco.less",
+				"maroco\\public\\css\\maroco.less"
+			],
+			[
+				"valid.html",
+				"maroco\\public\\example\\valid.html"
+			],
+			[
+				"index.jsp",
+				"webapp\\index.jsp"
+			],
+			[
+				"login.jsp",
+				"webapp\\WEB-INF\\jsp\\login.jsp"
+			],
+			[
+				"table.html",
+				"maroco\\public\\example\\table.html"
+			],
+			[
+				"icon.less",
+				"maroco\\public\\css\\icon.less"
+			],
+			[
+				"home.less",
+				"webapp\\static\\cloud\\home.less"
+			],
+			[
+				"index.html",
+				"webapp\\static\\index.html"
+			],
+			[
+				"m/index.j",
+				"webapp\\WEB-INF\\jsp\\m\\index.jsp"
+			],
+			[
+				"grid.js",
+				"maroco\\public\\js\\ui\\grid.js"
+			],
+			[
+				"login.html",
+				"webapp\\static\\login.html"
+			],
+			[
+				"maroco.js",
+				"webapp\\static\\maroco.js"
+			],
+			[
+				"index_tab.html",
+				"maroco\\public\\index_tab.html"
+			],
+			[
+				"index3.html",
+				"maroco\\public\\index3.html"
+			],
+			[
+				"router.js",
+				"maroco\\public\\js\\ui\\router.js"
+			],
+			[
+				"example/index",
+				"maroco\\public\\example\\index.html"
+			],
+			[
+				"example/inde",
+				"maroco\\public\\example\\index.html"
+			],
+			[
+				"event.js",
+				"webapp\\static\\js\\ui\\event.js"
+			],
+			[
+				"route.js",
+				"webapp\\static\\js\\ui\\router.js"
+			],
+			[
+				"maroco.cs",
+				"maroco\\public\\css\\maroco.css"
+			],
+			[
+				"anime.less",
+				"maroco\\public\\css\\anime.less"
+			],
+			[
+				"com.js",
+				"webapp\\static\\cloud\\com.js"
+			],
+			[
+				"index.hml",
+				"webapp\\static\\index.html"
+			],
+			[
+				"login.",
+				"webapp\\static\\login.html"
+			],
+			[
+				"layout.less",
+				"public\\css\\layout.less"
+			],
+			[
+				"index_",
+				"public\\index_tab.html"
+			],
+			[
+				"notify.html",
+				"maroco\\public\\example\\notify.html"
+			],
+			[
+				"icon.html",
+				"maroco\\public\\example\\icon.html"
+			],
+			[
+				"ui.sj",
+				"maroco\\public\\js\\ui\\ui.js"
+			],
+			[
+				"maroco.css",
+				"移动云主干\\css\\maroco.css"
+			],
+			[
+				"rolecrea",
+				"maroco\\public\\apps\\user\\rolecreateandedit.js"
+			],
+			[
+				"watch.js",
+				"maroco\\public\\js\\ui\\watch.js"
+			],
+			[
+				"tab.html",
+				"maroco\\public\\example\\tab.html"
+			],
+			[
+				"jshint",
+				"maroco\\.jshintrc"
+			],
+			[
+				"rollbar.js",
+				"maroco\\public\\js\\ui\\rollbar.js"
+			],
+			[
+				"gulp",
+				"maroco\\public\\gulpfile.js"
+			],
+			[
+				"ui.",
+				"maroco\\public\\js\\ui\\ui.js"
+			],
+			[
+				"rollbar",
+				"maroco\\public\\js\\ui\\rollbar.js"
+			],
+			[
+				"sea.config.",
+				"maroco\\public\\js\\sea.config.js"
+			],
+			[
+				"home",
+				"移动云主干\\home.html"
+			],
+			[
+				"sea.",
+				"maroco\\public\\js\\sea.config.js"
+			],
+			[
+				"nav.html",
+				"maroco\\public\\example\\nav.html"
+			],
+			[
+				"grid.html",
+				"maroco\\public\\example\\grid.html"
+			],
+			[
+				"grid.less",
+				"移动云主干\\css\\grid.less"
+			],
+			[
+				"main_pan",
+				"移动云主干\\apps\\pan\\main_pan.js"
+			],
+			[
+				"example/table.html",
+				"移动云主干\\example\\table.html"
+			],
+			[
+				"table.less",
+				"移动云主干\\css\\table.less"
+			],
+			[
+				"pager.js",
+				"移动云主干\\js\\ui\\pager.js"
+			],
+			[
+				"page.html",
+				"移动云主干\\cloud\\page.html"
+			],
+			[
+				"admin/org/department/edituser.js",
+				"移动云主干\\admin\\org\\department\\edituser.js"
+			],
+			[
+				"admin/org/department/edituser",
+				"移动云主干\\admin\\org\\department\\edituser.html"
+			],
+			[
+				"admin/org/setting.js",
+				"移动云主干\\admin\\org\\setting.js"
+			],
+			[
+				"admin/org/setting",
+				"移动云主干\\admin\\org\\setting.html"
+			],
+			[
+				"orgindex.html",
+				"移动云主干\\admin\\orgIndex.html"
+			],
+			[
+				"btn.less",
+				"maroco\\public\\css\\btn.less"
+			],
+			[
+				"maroco",
+				"移动云主干\\maroco.js"
+			],
+			[
+				"btn.html",
+				"移动云主干\\example\\btn.html"
+			],
+			[
+				"video",
+				"移动云主干\\video_player.html"
+			],
+			[
+				"ctable.less",
+				"移动云主干\\css\\table.less"
+			],
+			[
+				"department",
+				"移动云主干\\admin\\org\\department\\_department.js"
+			],
+			[
+				"cloud/loadtree",
+				"移动云主干\\cloud\\loadTree.js"
+			],
+			[
+				"common.js",
+				"移动云主干\\admin\\utils\\common.js"
+			],
+			[
+				"home.html",
+				"移动云主干\\home.html"
+			],
+			[
+				"vid",
+				"移动云主干\\video_player.html"
+			],
+			[
+				"video_play",
+				"移动云主干\\video_player.html"
+			],
+			[
+				"jquery.min.js",
+				"移动云主干\\js\\vendor\\jquery.min.js"
+			],
+			[
+				"seajs-css.js",
+				"移动云主干\\js\\vendor\\seajs-css.js"
+			],
+			[
+				"dot.min.js",
+				"maroco\\bower_components\\doT\\doT.min.js"
+			],
+			[
+				"gulpf",
+				"移动云主干\\gulpfile.js"
+			],
+			[
+				"list.js",
+				"移动云主干\\apps\\projectManage\\list.js"
+			],
+			[
+				"file.js",
+				"移动云主干\\cloud\\file.js"
+			],
+			[
+				"file.css",
+				"移动云主干\\cloud\\file.css"
+			],
+			[
+				"searchbox.js",
+				"移动云主干\\js\\ui\\searchbox.js"
+			],
+			[
+				"example/index.html",
+				"移动云主干\\example\\index.html"
+			],
+			[
+				"layout.js",
+				"maroco\\public\\js\\ui\\layout.js"
+			],
+			[
+				"layout.html",
+				"移动云主干\\example\\layout.html"
+			],
+			[
+				"fulp",
+				"htdocs\\fullcalendar2\\fullcalendar.print.css"
+			],
+			[
+				"home.js",
+				"移动云主干\\cloud\\home.js"
+			],
+			[
+				"vm_",
+				"移动云主干\\cloud\\vm_cooperation.js"
+			],
+			[
+				"systeminfo",
+				"移动云主干\\admin\\org\\statistics\\systemInfo.js"
+			],
+			[
+				"config.js",
+				"移动云主干\\apps\\projectManage\\config.js"
+			],
+			[
+				"uploader.js",
+				"移动云主干\\js\\ui\\uploader.js"
+			],
+			[
+				"main_s",
+				"移动云主干\\apps\\pan\\main_sharesyn.js"
+			],
+			[
+				"menu.js",
+				"移动云主干\\js\\ui\\menu.js"
+			],
+			[
+				"vm_coo",
+				"移动云主干\\cloud\\vm_cooperation.js"
+			],
+			[
+				"base.css",
+				"移动云主干\\css\\base.css"
+			],
+			[
+				"vm_rename",
+				"移动云主干\\cloud\\vm_rename.js"
+			],
+			[
+				"pan",
+				"maroco\\public\\js\\codemirror\\addon\\display\\panel.js"
+			],
+			[
+				"history.js",
+				"移动云主干\\apps\\pan\\history.js"
+			],
+			[
+				"ztree",
+				"移动云主干\\css\\zTree\\zTreeStyle.css"
+			],
+			[
+				"base.html",
+				"移动云主干\\admin\\base.html"
+			],
+			[
+				"searchbox",
+				"移动云主干\\example\\searchbox.html"
+			],
+			[
+				"simplepagination",
+				"移动云主干\\js\\vendor\\simplePagination.js"
+			],
+			[
+				"securety/set_",
+				"移动云主干\\apps\\securety\\sect_cup.js"
+			],
+			[
+				"log/",
+				"移动云主干\\apps\\log\\main.js"
+			],
+			[
+				"pan/main.js",
+				"移动云主干\\apps\\pan\\main.js"
+			],
+			[
+				"main_pan.js",
+				"移动云主干\\apps\\pan\\main_pan.js"
+			],
+			[
+				"login.js",
+				"移动云主干\\cloud\\login.js"
+			],
+			[
+				"main.js",
+				"移动云主干\\apps\\projectManage\\main.js"
+			],
+			[
+				"features",
+				"移动云主干\\admin\\sys\\features\\_features.html"
+			],
+			[
+				"characteristic",
+				"移动云主干\\admin\\org\\characteristic\\_characteristic.js"
+			],
+			[
+				"task.html",
+				"移动云主干\\apps\\projectManage\\task.html"
+			],
+			[
+				"picasa.less",
+				"移动云主干\\css\\picasa.less"
+			],
+			[
+				"public.html",
+				"移动云主干\\cloud\\public.html"
+			],
+			[
+				"vm_p",
+				"移动云主干\\cloud\\vm_powers.js"
+			],
+			[
+				"projectmanage/main.js",
+				"移动云主干\\apps\\projectManage\\main.js"
+			],
+			[
+				"public",
+				"移动云主干\\cloud\\public.html"
+			],
+			[
+				"sea.confi",
+				"maroco\\public\\js\\sea.config.js"
+			],
+			[
+				"girlfr",
+				"移动云主干\\example\\girlfriend.html"
+			],
+			[
+				"menuj.s",
+				"移动云主干\\js\\ui\\menu.js"
+			],
+			[
+				"js/vendor/plupload/plupload",
+				"移动云主干\\js\\vendor\\plupload\\plupload.dev.js"
+			],
+			[
+				"main_",
+				"移动云主干\\apps\\pan\\main_pan.js"
+			],
+			[
+				"uploader",
+				"移动云主干\\js\\ui\\uploader.js"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 392.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 392.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 242.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
