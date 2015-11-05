@@ -180,11 +180,15 @@
      * @param  {[type]} config [description]
      * @return {[type]}        [description]
      */
-    UI.loader = function(config) {
-        config = $.extend({
-            baseparams: {},
+    UI.loader = function(conf) {
+        conf = $.extend({
+            baseparams:{},
             beforeLoad: $.noop,
             afterLoad: $.noop,
+            alias:{
+                page:'page',
+                count:'count'
+            },
             load: function(_filter) {
                 if (!this.url) return;
                 if (this.xhr) this.xhr.abort();
@@ -195,24 +199,26 @@
                     if (this.count) this.page = _filter.page || 1;
                 }
                 this.beforeLoad(_filter);
+                var pager={};
+                pager[this.alias.count]=this.count;
+                pager[this.alias.page]=this.page;
                 this.xhr = $.ajax({
                     url: this.url,
                     type: this.loadtype,
                     loadtip: this.loadtip,
-                    data: $.extend({}, this.baseparams, {
-                        page: this.page,
-                        count: this.count
-                    }, this.filter),
+                    data: $.extend({}, this.baseparams, pager, this.filter),
                     dataType: 'JSON',
                     success: function(data) {
-                        config.afterLoad(data);
+                        conf.afterLoad(data);
                     }
                 });
             }
-        }, config);
-        //分页
-        if (config.count && !config.page) config.page = 1;
-        return config;
+        }, conf);
+        //如果开启了，默认第一页面
+        if (conf[conf.alias.count] && !conf[conf.alias.page]) {
+            conf[conf.alias.page] = 1;
+        }
+        return conf;
     };
 
     /**

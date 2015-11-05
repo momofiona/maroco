@@ -531,7 +531,15 @@
 			"file": "/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp/m/products.jsp",
 			"settings":
 			{
-				"buffer_size": 3357,
+				"buffer_size": 3359,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp/m/products_remaining.jsp",
+			"settings":
+			{
+				"buffer_size": 2269,
 				"line_ending": "Windows"
 			}
 		},
@@ -540,14 +548,6 @@
 			"settings":
 			{
 				"buffer_size": 3550,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/static/js/ui/table.js",
-			"settings":
-			{
-				"buffer_size": 21485,
 				"line_ending": "Windows"
 			}
 		},
@@ -701,6 +701,14 @@
 	],
 	"file_history":
 	[
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp/o2o/province",
+		"/C/Users/momo/Desktop/react-0.14.2/examples/basic/index.html",
+		"/D/github/node_modules/react/addons.js",
+		"/D/github/node_modules/react/lib/ReactWithAddons.js",
+		"/C/Users/momo/Desktop/react-0.14.2/build/react-dom.js",
+		"/C/Users/momo/Desktop/react-0.14.2/build/react-with-addons.js",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/static/js/ui/table.js",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp/m/product_gprs_config.jsp",
 		"/C/Users/momo/Desktop/全国省市区数据库/全国地名SQL-Server版.sql",
 		"/C/Users/momo/Desktop/全国省市区数据库/MySQL.sql",
 		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/static/js/ui/ui.js",
@@ -742,7 +750,6 @@
 		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp/m/phonebook.jsp",
 		"/D/github/maroco/public/example/table.html",
 		"/D/workspace/移动云主干/admin/org/department/_department.js",
-		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/static/js/ui/table.js",
 		"/D/workspace/o2o/code/ecology/ecology-admin-gprs/src/main/webapp/WEB-INF/jsp/gprs/profile.jsp",
 		"/D/workspace/移动云主干/admin/org/department/edituser.js",
 		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp/user/passchange.jsp",
@@ -821,14 +828,7 @@
 		"/D/360/friends/k开云/晋商/微网站/news.html",
 		"/D/360/friends/x熊明威/layout/html/vendor/jquery.ui.touch-punch.min.js",
 		"/D/sugon/移动云主干/css/maroco.css",
-		"/D/360/friends/x熊明威/layout/html/img/style.less",
-		"/D/360/friends/x熊明威/网站/html/index.html",
-		"/D/360/friends/x熊明威/layout/html/vendor/jquery-ui-1.11.4.custom/jquery-ui.structure.css",
-		"/D/360/friends/x熊明威/layout/html/vendor/jquery-ui-1.11.4.custom/jquery-ui.min.css",
-		"/D/360/friends/x熊明威/layout/html/vendor/jquery-ui-1.11.4.custom/external/jquery/jquery.js",
-		"/C/Users/Rong/Desktop/100.txt",
-		"/D/sugon/移动云主干/js/ui/upload.js",
-		"/D/github/webpack/webpack.config.js"
+		"/D/360/friends/x熊明威/layout/html/img/style.less"
 	],
 	"find":
 	{
@@ -969,6 +969,61 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"> <",
+			"group",
+			",",
+			"， ，",
+			"， ， ， ，",
+			"， ， ，",
+			"<.*?>",
+			"<option value=\"\">",
+			"新疆",
+			"青海",
+			"陕西",
+			"贵州",
+			"重庆",
+			"广西",
+			"广东",
+			"湖南",
+			"湖北",
+			"江西",
+			"河南",
+			"山东",
+			"黑龙江",
+			"香港",
+			"澳门",
+			"台湾",
+			"湖北",
+			"山东",
+			"福建",
+			"安徽",
+			"浙江",
+			"江苏",
+			"上海",
+			"辽宁",
+			"内蒙古",
+			"山西",
+			"河北",
+			"天津",
+			"北京",
+			"河南",
+			"广东",
+			"重庆",
+			"贵州",
+			"四川",
+			"广西",
+			"海南",
+			"山东",
+			"上海",
+			"天津",
+			"北京",
+			"},{",
+			",\"name\"",
+			"\"id\":",
+			"[{\"id\":",
+			"、",
+			"\n                <option value=\"1\">江苏</option>",
+			"、",
 			"/m/products?pid=",
 			"/m/products?pid=1",
 			"navs",
@@ -1041,67 +1096,12 @@
 			"h3",
 			"h2",
 			"h1",
-			"div",
-			"copyright",
-			"clients",
-			"<i class=\"mr f f-done\"></i>",
-			"div",
-			"注册",
-			"panel",
-			"注册",
-			"user",
-			"append",
-			",",
-			" record.",
-			"append",
-			"120",
-			"ctable",
-			"table",
-			"form",
-			"input",
-			"profile_form",
-			"checkbox",
-			"radio",
-			"icon",
-			"text",
-			"sex",
-			"profile",
-			"m xl ",
-			"force",
-			"toggle",
-			"log",
-			"/gprs/home",
-			"gps",
-			"../m/#",
-			"../gprs/#",
-			"../m/",
-			"loading",
-			"active",
-			"控制台",
-			"#",
-			"#/",
-			"#",
-			"parsed'",
-			"parsed",
-			"parseData",
-			".data",
-			".code",
-			"ar-b",
-			"disabld",
-			"aaa",
-			"div",
-			"flipInX",
-			"flip",
-			"am-popin",
-			"fadeup",
-			"class",
-			"div",
-			"130px"
+			"div"
 		],
 		"highlight": true,
 		"in_selection": false,
 		"preserve_case": true,
-		"regex": false,
+		"regex": true,
 		"replace_history":
 		[
 			"f-done",
@@ -1130,7 +1130,7 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 3,
 			"sheets":
 			[
 				{
@@ -1161,7 +1161,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
@@ -1170,15 +1170,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3357,
+						"buffer_size": 3359,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								343,
-								343
+								2933,
+								2933
 							]
 						],
 						"settings":
@@ -1190,11 +1190,40 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
 					"buffer": 2,
+					"file": "/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp/m/products_remaining.jsp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2269,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1147,
+								1147
+							]
+						],
+						"settings":
+						{
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/Java/Java Server Pages (JSP).tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 360.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
 					"file": "/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp/m/index.jsp",
 					"semi_transient": true,
 					"settings":
@@ -1206,8 +1235,8 @@
 						"selection":
 						[
 							[
-								0,
-								0
+								738,
+								738
 							]
 						],
 						"settings":
@@ -1221,38 +1250,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/static/js/ui/table.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 21485,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								6950,
-								6952
-							]
-						],
-						"settings":
-						{
-							"origin_encoding": "UTF-8",
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 2865.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
@@ -1342,6 +1340,10 @@
 		"selected_items":
 		[
 			[
+				"table.js",
+				"webapp\\static\\js\\ui\\table.js"
+			],
+			[
 				"ui.js",
 				"webapp\\static\\js\\ui\\ui.js"
 			],
@@ -1356,10 +1358,6 @@
 			[
 				"base.less",
 				"maroco\\public\\css\\base.less"
-			],
-			[
-				"table.js",
-				"webapp\\static\\js\\ui\\table.js"
 			],
 			[
 				"picasa.js",

@@ -137,24 +137,24 @@ define(function(require, exports, module) {
             var label = labels[0];
             //如果不是数字
             if (!$.isNumeric(num)) error = 1;
-            if (rg[0] && rg[1]) {
+            if ($.isNumeric(rg[0]) && $.isNumeric(rg[1])) {
                 label = labels[3];
                 if (error || num < rg[0] || num > rg[1]) {
                     error = 1;
                 }
-            } else if (rg[1]) {
+            } else if ($.isNumeric(rg[1])) {
                 label = labels[2];
                 if (error || num > rg[1]) {
                     error = 1;
                 }
-            } else if (rg[0]) {
+            } else if ($.isNumeric(rg[0])) {
                 label = labels[1];
                 if (error || num < rg[0]) {
                     error = 1;
                 }
             }
             //第三个附加参数标记小数位
-            if (rg[2]) {
+            if ($.isNumeric(rg[2])) {
                 label += ', ' + labels[4];
                 if (error || num.replace(/.*\./, '').length > rg[2]) {
                     error = 1;

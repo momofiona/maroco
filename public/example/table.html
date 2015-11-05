@@ -1,7 +1,7 @@
 <div class="m13">
     <p class="warn">暂时不要使用table的editable接口，过于复杂，正在优化中...,下面是列冻结示例，实际上是用了两个table实例联合成的</p>
     <div class="row ellipsis">
-        <div class="x" id="tableDemoLeft"></div>
+        <div class="x" id="tableDemoLeft" style="margin-right: -1px;z-index: 5;position: relative;"></div>
         <div class="row" id="tableDemo"></div>
     </div>
 </div>
@@ -11,7 +11,7 @@ seajs.use(['ui/table', 'ui/notify'], function(table, notify) {
     //mock table列表
     Mock.mock('fakedata_demo.json', {
         "total|200": 12,
-        "result|20": [{
+        "data|20": [{
             'id|+1': 12,
             "cname": '@WORD',
             "address": "@TITLE",
@@ -23,7 +23,7 @@ seajs.use(['ui/table', 'ui/notify'], function(table, notify) {
     });
     //mock 单条更新
     Mock.mock('fakedata_demo_update.json', {
-        "result": {
+        "data": {
             'id|+1': 12,
             "cname": '@WORD',
             "address": "@TITLE",
@@ -41,17 +41,10 @@ seajs.use(['ui/table', 'ui/notify'], function(table, notify) {
             //当有变化的时候触发
             update: function(event, ui) {
                 var tbody = ui.item.parent();
-                var data = ctable.getData();
-                var thisdata = ctable.getData(ui.item.data('index'));
-                //忽略新增行动作,新增行的数据只有一个__index__标识
-                if (!thisdata.id) return;
-                var orders = [];
+                var data = ctable.cache;
+                var thisdata = data[ui.item.data('index')];
                 tbody.find('tr').each(function(i, o) {
-                    var _data = data[$(o).data('index')];
-                    //忽略新增行,新增行的数据只有一个__index__标识
-                    if (!_data.id) return true;
-                    orders.push(_data.id);
-                    $(o).find('td:eq(2)').html(orders.length);
+                    $(o).find('td:eq(2)').html(i+1);
                 });
                 notify.safe('成功更改排序');
             }
@@ -67,10 +60,10 @@ seajs.use(['ui/table', 'ui/notify'], function(table, notify) {
         }],
         events: {
             'mouseenter tr': function(e, tr, data, config) {
-                ctable.getBody().children().eq($(tr).index()).trigger('mouseenter',{silent:true});
+                ctable.tbody.children().eq($(tr).index()).trigger('mouseenter',{silent:true});
             },
             'mouseleave tr': function(e, tr, data, config) {
-                ctable.getBody().children().eq($(tr).index()).trigger('mouseleave',{silent:true});
+                ctable.tbody.children().eq($(tr).index()).trigger('mouseleave',{silent:true});
             }
         },
         //没有render方法的时候，执行cols内部的html
@@ -99,89 +92,14 @@ seajs.use(['ui/table', 'ui/notify'], function(table, notify) {
                 ctable.contentEl.trigger('rollbar', [v, h, 1]);
             }
         },
-        create: function(api) {
-            api.contentEl = this.find('.rollbar-content');
-            this.find('.pager').hide();
-            this.find('.rollbar-path-vertical').remove();
+        create: function() {
+            this.contentEl = this.table.find('.rollbar-content');
+            this.foot.find('.pager').hide();
+            this.body.find('.rollbar-path-vertical').remove();
         }
     });
     var ctable = table({
         container: '#tableDemo',
-        //编辑选项
-        /*        editable: {
-                    beforeAdd: function() {
-                        var a = this.find('.ac-tr-save');
-                        if (a.length) {
-                            // notify.error('请先保存');
-                            notify.error({
-                                msg: '请先保存',
-                                id: 'notify_q2',
-                                shadow: false,
-                                tips: {
-                                    of: a,
-                                    dir: 'lc'
-                                }
-                            });
-                            return false;
-                        }
-
-                    },
-                    beforeEdit: function() {},
-                    create: function(inputElements, data, fx, config) {
-                        var tr = this;
-
-                    },
-                    post: function(data, config) {
-                        var changeData = {},
-                            isNew;
-                        if (data.__index__) {
-                            //新增的
-                            changeData = data;
-                            isNew = true;
-                        } else {
-                            _.extendOwn(changeData, data);
-                        }
-                        var tr = this;
-                        notify.confirm({
-                            test: isNew,
-                            msg: '确定更新?',
-                            callback: function(b) {
-                                if (!b) return;
-                                $.ajax({
-                                    url: 'fakedata_demo_update.json',
-                                    type: 'post',
-                                    dataType: 'json',
-                                    data: changeddata,
-                                    success: function(v) {
-                                        ctable.update(tr, v.result);
-                                    }
-                                });
-                            }
-                        })
-                    },
-                    remove: function(data, config) {
-                        //this是tr
-                        var tr = this;
-                        notify.confirm({
-                            msg: '确定删除?' + data.id,
-                            callback: function(b) {
-                                if (!b) return;
-                                $.ajax({
-                                    url: 'fakedata_demo_update.json',
-                                    type: 'post',
-                                    dataType: 'json',
-                                    data: {
-                                        id: data.id
-                                    },
-                                    success: function(v) {
-                                        //ps:cache中依然存在此data数据 可考虑使用 ctable.load()刷新
-                                        tr.remove();
-                                    }
-                                });
-                            }
-                        })
-                    }
-                },*/
         //列配置,title,width,sortable...
         cols: [{
             title: '人员',
@@ -193,31 +111,10 @@ seajs.use(['ui/table', 'ui/notify'], function(table, notify) {
             // colgroup: "组合",
             //需要排序
             order: 'cname',
-            //编辑选项
-            field: {
-                //值通过其他字段计算得出
-                fx: function() {
-                    return this.from + this.address
-                }
-            },
             width: 120
         }, {
             title: ' 方法调用',
-            width: 420,
-            // colgroup: "组合",
-            field: {
-                //带name的表示可编辑字段,必须和后端返回的值一样，用post传递到后端
-                name: 'address',
-                //自定义输入框
-                render: function(editableConfig, suggestRender) {
-                    return '<div class="text-auto">\
-                            <select name="address" class="text">\
-                            <option value="API1">API1</option>\
-                            <option value="2">2</option>\
-                            <option value="3">3</option>\
-                            </select></div>';
-                }
-            }
+            width: 920
         }, {
             title: '交单时间',
             //需要排序k
@@ -232,10 +129,10 @@ seajs.use(['ui/table', 'ui/notify'], function(table, notify) {
                 console.log(data);
             },
             'mouseenter tr': function(e, tr, data, config) {
-                leftTable.getBody().children().eq($(tr).index()).trigger('mouseenter',{silent:true});
+                leftTable.tbody.children().eq($(tr).index()).trigger('mouseenter',{silent:true});
             },
             'mouseleave tr': function(e, tr, data, config) {
-                leftTable.getBody().children().eq($(tr).index()).trigger('mouseleave',{silent:true});
+                leftTable.tbody.children().eq($(tr).index()).trigger('mouseleave',{silent:true});
             }
         },
         //没有render方法的时候，执行cols内部的html
@@ -251,16 +148,10 @@ seajs.use(['ui/table', 'ui/notify'], function(table, notify) {
                 ];
             });
         },
-        //处理从url返回的数据,无此参数则默认返回data.result;
-        parseData: function(data) {
-            //这里可以在数据显示前进行一些更改
-            return data.result;
-        },
         status: $.noop,
         //数据加载后执行
         afterLoad: function(data, cache) {
-            // leftTable.append(data.result);
-            leftTable.config.loader.afterLoad(data);
+            leftTable.loader.afterLoad(data);
         },
         //自适应屏幕
         // height: 'window',
@@ -283,8 +174,8 @@ seajs.use(['ui/table', 'ui/notify'], function(table, notify) {
         baseparams: {
             token: 'FFASLE*&EFFA^%$#ef'
         },
-        create: function(api) {
-            api.contentEl = this.find('.rollbar-content');
+        create: function() {
+            this.contentEl = this.body.find('.rollbar-content');
         }
     });
     ctable.load();

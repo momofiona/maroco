@@ -147,7 +147,7 @@ define(function(require, exports, module) {
                 cls: 'grid-date',
                 order: 'date'
             }],
-            events: {},
+            // events: {},
             url: '/json/members',
             count: 10,
             //高度值如果是函数，函数会绑定到window.resize上
@@ -220,26 +220,21 @@ define(function(require, exports, module) {
                         date: '修改日期'
                     },
                     order: baseparams.order || 'fileName',
-                    asc: baseparams.asc,
+                    asc: baseparams.asc || 'desc',
                     onclick: function() {
                         //更改grid排序
-                        t.resetOrder(this);
+                        t.setOrder(this.order,this.asc);
                     }
-                });
-            },
-            //点表头排序的回调函数
-            onOrderChange: function() {
-                sortableSwitch.reset({
-                    order: this.baseparams.order,
-                    asc: this.baseparams.asc
                 });
             },
             //当有数据选中的时候
             onSelected: function(data) {
                 tools.find('.ac-sel-show').toggleClass('vhide', data.length == 0);
+            },
+            beforeLoad:function(data,cache){
+                sortableSwitch.reset(this.getOrder());
             }
         });
-
         //tabs
         UI.tabs({
             el: HTML.find('.tabs'),

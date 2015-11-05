@@ -16,11 +16,38 @@ define(function(require, exports, module) {
             parseData: function(data) {
                 return data.data;
             },
+            //别名
+            alias:{
+                page: 'page', //页码
+                count: 'count', //每页条数
+                order:'order',  //排序列
+                asc:'asc'       //升序降序
+            },
+            /**
+             * 设置列表排序
+             * @param  {String} order [colFieldName]
+             * @param  {String} asc   [asc|desc]
+             */
+            setOrder: function(order, asc) {
+                //去除其余列图标,找出需要排序的那列
+                var orderCol = this.head.find('.order').removeClass('asc desc').filter('[order=' + order + ']');
+                if (orderCol.length) {
+                    this.baseparams[this.alias.order] = order;
+                    this.baseparams[this.alias.asc] = asc;
+                    orderCol.addClass(asc === 'asc' ? 'asc' : 'asc desc');
+                    this.loader.load();
+                }
+            },
+            getOrder: function() {
+                return {
+                    order: this.baseparams[this.alias.order],
+                    asc: this.baseparams[this.alias.asc]
+                };
+            },
             cache: null, //列表数据
             //一些回调
             onSelected: $.noop,
             afterLoad: $.noop,
-            onOrderChange: $.noop,
             baseparams: {},
             events: {
                 //hover 注意.grid-row 前两个空格
@@ -66,40 +93,9 @@ define(function(require, exports, module) {
                 },
                 //排序 order-asc 升序 order-desc 降序 
                 'click  .order': function(e, config) {
-                    var t = $(this),
-                        asc = 'asc';
-                    if (t.hasClass('desc')) {
-                        t.removeClass('desc');
-                    } else if (t.hasClass('asc')) {
-                        asc = 'desc';
-                        t.addClass('desc');
-                    } else {
-                        t.addClass('asc');
-                    }
-                    //去除其余列图标
-                    t.siblings().removeClass('asc desc');
-                    _.extend(config.baseparams, {
-                        order: t.attr('order'),
-                        asc: asc
-                    });
-                    config.onOrderChange();
-                    config.load();
+                    //优先使用desc排序
+                    config.setOrder($(this).attr('order'), $(this).hasClass('desc') ? 'asc' : 'desc');
                 }
-            },
-            resetOrder: function(conf) {
-                var orderClass,
-                    baseparams = this.baseparams;
-                baseparams.order = conf.order;
-                if (conf.asc === 'desc') {
-                    orderClass = 'asc desc';
-                    baseparams.asc = 'desc';
-                } else {
-                    baseparams.asc = orderClass = 'asc';
-                }
-                this.loader.page = 1;
-                var sort = this.head.children('.order').removeClass('asc desc');
-                sort.filter('[order=' + conf.order + ']').addClass(orderClass);
-                this.load();
             },
             //检查是否全选了
             isSelectAll: function(sta) {
@@ -196,9 +192,12 @@ define(function(require, exports, module) {
                     baseparams: config.baseparams,
                     loadtip: config.loadtip,
                     loadtype: config.loadtype,
+                    alias:config.alias,
                     count: config.count,
                     url: config.url,
-                    beforeLoad: config.beforeLoad,
+                    beforeLoad: function(filter){
+                        config.beforeLoad(filter);
+                    },
                     afterLoad: function(data) {
                         var cache = config.cache = config.parseData(data) || [];
                         //如果page不是第一页但是返回数据为0，则自动刷新到前一页

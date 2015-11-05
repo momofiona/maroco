@@ -5,7 +5,7 @@
     //test
     Mock.mock('/json/members', 'get', {
         "total|200": 12,
-        "result|2-10": [{
+        "data|2-10": [{
             'id|+1': 12,
             "cname": '@WORD',
             "address": "@TITLE",

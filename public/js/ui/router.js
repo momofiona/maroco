@@ -14,7 +14,6 @@
         });
  */
 define(function(require, exports, module) {
-    var eve = require('ui/event');
     var _oldHash,
         all = /\*.*$/,
         part = /([^\/]?)\:[^\/]*/g,

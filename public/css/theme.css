@@ -452,8 +452,7 @@ a:hover {
   white-space: nowrap;
   cursor: default;
 }
-.toolbar .cap,
-.cutebar .cap {
+.cap {
   float: left;
   padding: 0 1em;
   margin: 0 -1px 0 0;
@@ -732,6 +731,7 @@ textarea.text[required] {
   *display: inline;
   *zoom: 1;
   transition: top .3s,left .3s;
+  white-space: nowrap;
 }
 .tips .tip {
   position: absolute;
