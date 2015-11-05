@@ -3,15 +3,12 @@
  * @param  {Object} config [description]
  * config
  *     container        Object  插入点
- *     hidehead         false   隐藏头部
  *     checkbox         true    是否开启多选
  *     alias            设置参数别名
  *     skin             table skin style
- *     events           绑定事件
- *     editable         是否允许编辑行列,整理中...
- *         create       新增行之后的回调
- *         post         新增或编辑之后向后端提交的方法；
- *         remove       
+ *     events           绑定事件   
+ *     height           高度
+ *     minWidth         最小宽度，少于此宽度出现滚动条
  *     cols
  *         colgroup     表头分组名
  *         width        Number列宽
@@ -43,13 +40,9 @@
  */
 define(function(require, exports, module) {
     "use strict";
-    require('mousewheel');
-    require('ui/rollbar');
     //分页
     var pager = require('ui/pager');
-    // var editOver = '<b class="i i-safe ac-tr-save m2" title="保存"></b><b class="i i-close ac-tr-cancel" title="取消"></b>';
-    // var inputs = 'input:not([type]),input[type="color"],input[type="date"],input[type="datetime"],input[type="datetime-local"],input[type="email"],input[type="file"],input[type="hidden"],input[type="month"],input[type="number"],input[type="password"],input[type="range"],input[type="search"],input[type="tel"],input[type="text"],input[type="time"],input[type="url"],input[type="week"],textarea, select, input[type="checkbox"],input[type="radio"]';
-    // var editInput = _.dot('<div class="text-auto-wrap"><input name="{{=it.name}}" value="{{=it.value}}" data-trim="true" data-describedby="tooltip" type="text" class="text-auto" {{=it.attr}}></div>');
+
     var _colgroup = '{{?it.sortable}}<col width="10">{{?}}\
         {{?it.checkbox}}<col width="34">{{?}}\
         {{~it.cols :col:index}}<col class="{{=col.cls||""}}" width="{{=col.width||""}}" {{?col.background}}style="background:{{=col.background}}"{{?}}>{{~}}';
@@ -80,9 +73,9 @@ define(function(require, exports, module) {
         </tr>\
         {{?}}</thead>';
     var _table = _.dot('<div class="ctable {{=it.skin||""}}" id="{{=it.id}}">\
-        {{?!it.hidehead}}<div class="ctable-head"><table>' + _colgroup + _thead + '</table></div>{{?}}\
-        <div class="ctable-body" id="{{=it.id}}_body"><table>' + _colgroup + '<tbody></tbody></table></div>\
-        {{?!it.hidefoot}}<div class="ctable-foot"><div class="ctable-status"></div>{{?it.count}}<div class="pager"></div>{{?}}</div>{{?}}\
+        <div class="ctable-head"><div class="ctable-head-inner"><table{{?it.minWidth}} style="min-width:{{=it.minWidth}}px"{{?}}>' + _colgroup + _thead + '</table></div></div>\
+        <div class="ctable-body{{?it.height}} scroll{{?}}"><div class="ctable-body-inner"><table{{?it.minWidth}} style="min-width:{{=it.minWidth}}px"{{?}}>' + _colgroup + '<tbody></tbody></table></div></div>\
+        <div class="ctable-foot"><div class="ctable-status"></div>{{?it.count}}<div class="pager"></div>{{?}}</div>\
         </div>');
     var _tbody = _.dot('{{~it.data :trdata:index}}\
         <tr class="{{=index%2==0?"even":"odd"}}" data-index="{{=(it.__appendIndex__||0)+index}}">\
@@ -96,9 +89,6 @@ define(function(require, exports, module) {
         checkbox: false,
         //开启排序
         sortable: false,
-        //隐藏头尾
-        hidehead: false,
-        hidefoot: false,
         //别名
         alias: {
             page: 'page', //页码
@@ -202,7 +192,27 @@ define(function(require, exports, module) {
         //确保baseparams有内存地址，并且不允许重定义baseparams更改地址，不如会影响下面loader参数
         baseparams: {},
         //数据列缓存
-        cache: []
+        cache: [],
+        scrollBarWidth: 0,
+        scrollBarHeight: 0,
+        //检查是否存在滚动条
+        //fullwidth的时候右侧有边线
+        //scrolld的时候右侧有边线
+        isScrolling: function() {
+            var b = this.body[0],
+                sw = b.offsetWidth - b.clientWidth - 2;
+            if (this.scrollBarWidth !== sw) {
+                this.headInner.css('margin-right', this.scrollBarWidth = sw);
+            }
+            //暴露滚动条高度
+            this.scrollBarHeight = b.offsetHeight - b.clientHeight-2;
+            return sw > 0;
+        },
+        //调整高度以适应窗体
+        layout: function() {
+            this.body.height((_.isFunction(this.height) ? this.height(this.body) : this.height) - this.foot.height() - 2);
+            this.isScrolling();
+        }
     };
     //$.support.boxSizing=false时候所有宽度减去td的padding
     return function(config) {
@@ -237,7 +247,9 @@ define(function(require, exports, module) {
         //mark doms
         var table = config.table = $(_table(config)),
             head = config.head = table.find('>.ctable-head'),
+            headInner = config.headInner = head.find('>.ctable-head-inner'),
             body = config.body = table.find('>.ctable-body'),
+            bodyInner = config.bodyInner = body.find('>.ctable-body-inner'),
             foot = config.foot = table.find('>.ctable-foot'),
 
             thead = config.thead = head.find('thead'),
@@ -248,6 +260,25 @@ define(function(require, exports, module) {
             checkall = config.checkall = thead.find('.ctable-checkall')[0];
         $(config.container).append(table);
 
+        //body scroll
+        var shadowed;
+        body.on('scroll', function(e) {
+            var st = this.scrollTop,
+                sl = this.scrollLeft;
+            if (st === 0) {
+                if (shadowed) {
+                    head.removeClass('ctable-shadow');
+                    shadowed = false;
+                }
+            } else {
+                if (!shadowed) {
+                    head.addClass('ctable-shadow');
+                    shadowed = true;
+                }
+            }
+            config.headInner[0].scrollLeft = sl;
+            config.onscroll(st, sl);
+        });
         //排序
         thead.on('click', '.order', function(e) {
             //优先使用desc排序
@@ -316,48 +347,25 @@ define(function(require, exports, module) {
         if (config.height) {
             //TODO support function & '#selector - 100'
             if (_.isFunction(config.height)) {
-                var _throttle = _.throttle(function() {
+                var _throttle = function() {
                     if (document.getElementById(config.id)) {
-                        height(config.height(table));
+                        config.layout();
                     } else {
                         $(window).off('resize', _throttle);
                     }
-                }, 500, {
-                    leading: false
-                });
+                };
                 $(window).on('resize', _throttle);
-                height(config.height(table));
-            } else if (config.height) {
-                height(config.height);
             }
+            config.layout();
             //是否cols全部设置了宽度
             if (_fullWidth) {
+                table.addClass('ctable-fullwidth');
                 thead.parent().width(_fullWidth);
                 tbody.parent().width(_fullWidth);
             }
-            $('#' + config.id + '_body').rollbar({
-                scrollamount: config.scrollamount || 100,
-                shadow: true,
-                onscroll: function(v, h) {
-                    if (h !== undefined) {
-                        head[0].scrollLeft = h;
-                    }
-                    config.onscroll(v, h);
-                }
-            });
-        }
-        //重新计算长宽
-        function height(h) {
-            table.height(h);
-            if (!config.hidehead) {
-                h -= thead.height();
-            }
-            if (!config.hidefoot) {
-                h -= 30;
-            }
-            body.height(h);
-        }
 
+        }
+	
         //loader and pager
         var paging = pager({
             el: pagebar,
@@ -392,17 +400,17 @@ define(function(require, exports, module) {
                 if (checkall) {
                     checkall.checked = false;
                 }
-                //延时插入，否则IE10、IE11页面元素无法选中，select无法点出菜单
-                setTimeout(function() {
-                    tbody.html(tbodyHtml);
-                    config.afterLoad(data, cache);
-                }, 20);
+                //延时插入，否则win8 IE10、IE11页面元素无法选中，select无法点出菜单
+                tbody.html(tbodyHtml);
+                //检查滚动条
+                config.isScrolling();
                 //paging
                 if (config.count) {
                     paging.render(data.total, loader.page, loader.count);
                 }
                 //如果返回了总数
                 statubar.html(config.status(data.total, loader.page, loader.count));
+                config.afterLoad(data, cache);
             }
         });
 

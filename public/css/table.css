@@ -1,16 +1,16 @@
 /* ctable */
-.ctable,
-.ctable table {
-  background-color: #fff;
-  *zoom: 1;
-  width: 100%;
-  line-height: 21px;
+.ctable table,
+table.ctable {
   table-layout: fixed;
   border-collapse: collapse;
   border: none;
+  width: 100%;
 }
 .ctable {
+  line-height: 21px;
   clear: both;
+  overflow: hidden;
+  background-color: #fff;
 }
 .ctable td,
 .ctable th {
@@ -46,16 +46,13 @@
 .ctable .ctable-hover {
   background: #ffffcb;
 }
+.ctable .ctable-hover .vhide {
+  visibility: visible;
+}
 .ctable .chandler {
   padding: 0;
   font-size: 0;
-}
-.ctable-ebtn {
-  margin: 0 3px;
-  cursor: pointer;
-}
-.ctable-hover .vhide {
-  visibility: visible;
+  width: 10px;
 }
 .ctable .ctable-selected {
   background-color: #039ACC;
@@ -68,29 +65,51 @@
 .ctable .ctable-selected a {
   color: #fff;
 }
-.ctable-head {
+.ctable-head,
+.ctable-body {
+  border: solid 1px #ddd;
   position: relative;
+  overflow: hidden;
+}
+.ctable-head th,
+.ctable-body th,
+.ctable-head td,
+.ctable-body td {
+  border-width: 0 1px 1px 0;
+}
+.ctable-head table,
+.ctable-body table {
+  margin-bottom: -1px;
+}
+.ctable-head {
   z-index: 1;
+  margin-bottom: -1px;
+  background-color: #f5f5f5;
+}
+.ctable-head th:last-child {
+  border-right-width: 0;
+}
+.ctable-head-inner {
   overflow: hidden;
 }
 .ctable-body {
-  margin-top: -1px;
-  overflow: hidden;
-  position: relative;
+  background-size: 50px 76px;
+  background-image: linear-gradient(transparent 50%, #fcfcfc 50%, #fcfcfc);
 }
 .ctable-body .chandler {
   background: #f5f5f5 url(img/handler.png) repeat-y;
   cursor: move;
 }
-.ctable-body .rollbar-content {
-  float: left;
+.ctable-body .ui-sortable-helper td {
+  border-width: 1px !important;
+}
+.ctable-body td:last-child {
+  border-right-width: 0;
 }
 .ctable-foot {
   height: 30px;
   overflow: hidden;
   line-height: 30px;
-  border-top: solid 1px #ddd;
-  margin-top: -1px;
   position: relative;
   z-index: 10;
 }
@@ -105,3 +124,21 @@
 .ctable-checkbox {
   vertical-align: bottom;
 }
+.ctable-shadow {
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+}
+.ctable-fullwidth thead th:last-child,
+.ctable-fullwidth tbody td:last-child {
+  border-right: solid 1px #ddd;
+}
+/* .ctable-frozen {
+    .ctable-body{
+        overflow: hidden !important;
+    }
+    .ctable-foot .pager {
+        display: none;
+    }
+    & thead th:last-child,& tbody td:last-child{
+        border-right-width:0;
+    }
+} */

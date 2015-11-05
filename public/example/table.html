@@ -1,5 +1,5 @@
 <div class="m13">
-    <p class="warn">暂时不要使用table的editable接口，过于复杂，正在优化中...,下面是列冻结示例，实际上是用了两个table实例联合成的</p>
+    <p class="warn">缩小窗口查看列冻结实例</p>
     <div class="row ellipsis">
         <div class="x" id="tableDemoLeft" style="margin-right: -1px;z-index: 5;position: relative;"></div>
         <div class="row" id="tableDemo"></div>
@@ -7,11 +7,11 @@
 </div>
 <script>
 seajs.use(['ui/table', 'ui/notify'], function(table, notify) {
-    var tips=notify.tips;
+    var tips = notify.tips;
     //mock table列表
     Mock.mock('fakedata_demo.json', {
         "total|200": 12,
-        "data|20": [{
+        "data|15": [{
             'id|+1': 12,
             "cname": '@WORD',
             "address": "@TITLE",
@@ -36,19 +36,7 @@ seajs.use(['ui/table', 'ui/notify'], function(table, notify) {
     // 更多ctable配置接口详见 ui/table.js
     var leftTable = table({
         container: '#tableDemoLeft',
-        //排序,参考jqueryui sortable
-        sortable: {
-            //当有变化的时候触发
-            update: function(event, ui) {
-                var tbody = ui.item.parent();
-                var data = ctable.cache;
-                var thisdata = data[ui.item.data('index')];
-                tbody.find('tr').each(function(i, o) {
-                    $(o).find('td:eq(2)').html(i+1);
-                });
-                notify.safe('成功更改排序');
-            }
-        },
+        skin:'ctable-frozen',
         //列配置,title,width,sortable...
         cols: [{
             title: 'ID',
@@ -60,10 +48,14 @@ seajs.use(['ui/table', 'ui/notify'], function(table, notify) {
         }],
         events: {
             'mouseenter tr': function(e, tr, data, config) {
-                ctable.tbody.children().eq($(tr).index()).trigger('mouseenter',{silent:true});
+                ctable.tbody.children().eq($(tr).index()).trigger('mouseenter', {
+                    silent: true
+                });
             },
             'mouseleave tr': function(e, tr, data, config) {
-                ctable.tbody.children().eq($(tr).index()).trigger('mouseleave',{silent:true});
+                ctable.tbody.children().eq($(tr).index()).trigger('mouseleave', {
+                    silent: true
+                });
             }
         },
         //没有render方法的时候，执行cols内部的html
@@ -81,21 +73,14 @@ seajs.use(['ui/table', 'ui/notify'], function(table, notify) {
         },
         //是否启用checkbox
         checkbox: true,
-        count: 20,
         //自适应屏幕
-        height: function(table) {
-            return $(window).height() - table.offset().top;
-        },
-        //滚动同步
-        onscroll: function(v, h) {
-            if (v !== undefined) {
-                ctable.contentEl.trigger('rollbar', [v, h, 1]);
-            }
+        height: function(body) {
+            return $(window).height() - body.offset().top;
         },
         create: function() {
-            this.contentEl = this.table.find('.rollbar-content');
             this.foot.find('.pager').hide();
-            this.body.find('.rollbar-path-vertical').remove();
+            this.body.removeClass('scroll');
+            this.table.removeClass('ctable-fullwidth');
         }
     });
     var ctable = table({
@@ -107,14 +92,15 @@ seajs.use(['ui/table', 'ui/notify'], function(table, notify) {
             width: 120
         }, {
             title: '功能需求',
-            width: 200,
+            width: 520,
             // colgroup: "组合",
             //需要排序
-            order: 'cname',
-            width: 120
+            order: 'cname'
         }, {
             title: ' 方法调用',
-            width: 920
+            width: 520,
+            // colgroup: "组合",
+            cls: 'ellipsis'
         }, {
             title: '交单时间',
             //需要排序k
@@ -122,17 +108,22 @@ seajs.use(['ui/table', 'ui/notify'], function(table, notify) {
             width: 120
         }, {
             title: '操作',
-            width: 520
+            width: 120
         }],
+        minWidth: 800,
         events: {
             'click .ac-getdata': function(event, tr, data, config) {
                 console.log(data);
             },
             'mouseenter tr': function(e, tr, data, config) {
-                leftTable.tbody.children().eq($(tr).index()).trigger('mouseenter',{silent:true});
+                leftTable.tbody.children().eq($(tr).index()).trigger('mouseenter', {
+                    silent: true
+                });
             },
             'mouseleave tr': function(e, tr, data, config) {
-                leftTable.tbody.children().eq($(tr).index()).trigger('mouseleave',{silent:true});
+                leftTable.tbody.children().eq($(tr).index()).trigger('mouseleave', {
+                    silent: true
+                });
             }
         },
         //没有render方法的时候，执行cols内部的html
@@ -153,18 +144,15 @@ seajs.use(['ui/table', 'ui/notify'], function(table, notify) {
         afterLoad: function(data, cache) {
             leftTable.loader.afterLoad(data);
         },
-        //自适应屏幕
-        // height: 'window',
         //是否启用checkbox
         checkbox: false,
-        height: function(table) {
-            return $(window).height() - table.offset().top;
+        height: function(body) {
+            return $(window).height() - body.offset().top;
         },
         //滚动同步
-        onscroll: function(v, h) {
-            if (v !== undefined) {
-                leftTable.contentEl.trigger('rollbar', [v, h, 1]);
-            }
+        onscroll: function(st, sl) {
+            leftTable.bodyInner.css('margin-bottom',this.scrollBarHeight);
+            leftTable.body[0].scrollTop = st;
         },
         //每页数量
         count: 20,
@@ -173,9 +161,6 @@ seajs.use(['ui/table', 'ui/notify'], function(table, notify) {
         //需要固定提交的参数
         baseparams: {
             token: 'FFASLE*&EFFA^%$#ef'
-        },
-        create: function() {
-            this.contentEl = this.body.find('.rollbar-content');
         }
     });
     ctable.load();
