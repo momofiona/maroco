@@ -5,7 +5,7 @@
     //test
     Mock.mock('/json/members', 'get', {
         "total|200": 12,
-        "result|2-10": [{
+        "data|2-10": [{
             'id|+1': 12,
             "cname": '@WORD',
             "address": "@TITLE",
@@ -37,7 +37,7 @@
     //Random.image('200x100', '#ffcc33', '#FFF', 'png', '!')
     Mock.mock('/json/getUserByOrgId', 'get', {
         "total|200": 12,
-        "result|20": [{
+        "data|20": [{
             'id': '@GUID',
             "sex|0-1": '@integer',
             "userName": '@WORD',

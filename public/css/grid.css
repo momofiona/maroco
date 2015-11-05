@@ -1,0 +1,294 @@
+/* grid */
+.grid-head {
+  background: #f8f8f8;
+  height: 36px;
+  line-height: 36px;
+}
+.grid-body {
+  line-height: 42px;
+  position: relative;
+}
+.grid-body .grid-hover {
+  background: #F3F6FC;
+  border-color: #DCE6F2;
+}
+.grid-body .grid-selected {
+  background: #ebf0fa;
+  border-color: #d5e1ef;
+}
+.grid-col {
+  float: left;
+  height: 100%;
+}
+.grid-row {
+  clear: both;
+  height: 42px;
+  border: solid 1px transparent;
+  border-width: 1px 0;
+  padding: 1px 0;
+  border-bottom-color: #EDF2F8;
+  margin: 0 0 -1px;
+  position: relative;
+  _border-color: #EDF2F8;
+  /*    _border-color: tomato;
+    _filter: chroma(color=tomato);*/
+}
+.grid-check {
+  padding: 0 8px;
+  width: 15px;
+}
+.grid-check i {
+  background: url(img/check.png) no-repeat;
+  vertical-align: top;
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  margin-top: 14px;
+  /*        .grid-hover & {
+            background-position: 0 -25px;
+        }*/
+}
+.grid-selected .grid-check i {
+  background-position: 0 -52px;
+}
+.grid-head .grid-check i {
+  margin-top: 11px;
+}
+.grid-hover .vhide {
+  visibility: visible;
+}
+.grid-foot {
+  clear: both;
+  padding: 0 0 0 8px;
+  height: 30px;
+  line-height: 30px;
+}
+.grid-foot .pager {
+  float: right;
+}
+.grid-statu {
+  float: left;
+}
+.grid-boxselector {
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: default;
+  background: #6BB0C9;
+  border: 1px dotted #072246;
+  opacity: .25;
+  filter: alpha(opacity=25);
+  z-index: 125058687;
+  overflow: hidden;
+}
+.fcon {
+  display: inline-block;
+  background: url(img/fcon20.png) no-repeat;
+  width: 20px;
+  height: 20px;
+  margin: 11px 8px 0 0;
+  vertical-align: top;
+  *margin-top: -2px;
+  _margin-top: 11px;
+}
+.grid-row .filename {
+  _zoom: 1;
+}
+.grid-name {
+  width: 65%;
+}
+.grid-size {
+  width: 13%;
+}
+.grid-date {
+  width: 15%;
+}
+/* 20 small */
+.fcon_doc {
+  background-position: 0px 0px;
+}
+.fcon_node {
+  background-position: 0px -20px;
+}
+.fcon_folder {
+  background-position: 0px -40px;
+}
+.fcon_group {
+  background-position: 0px -60px;
+}
+.fcon_groupuser {
+  background-position: 0px -80px;
+}
+.fcon_jpg {
+  background-position: 0px -100px;
+}
+.fcon_mp3 {
+  background-position: 0px -120px;
+}
+.fcon_mp4 {
+  background-position: 0px -140px;
+}
+.fcon_myshare {
+  background-position: 0px -160px;
+}
+.fcon_departmentShare {
+  background-position: 0px -180px;
+}
+.fcon_othershare {
+  background-position: 0px -200px;
+}
+.fcon_pdf {
+  background-position: 0px -220px;
+}
+.fcon_personalSyn {
+  background-position: 0px -240px;
+}
+.fcon_ppt {
+  background-position: 0px -260px;
+}
+.fcon_rar {
+  background-position: 0px -280px;
+}
+.fcon_txt {
+  background-position: 0px -300px;
+}
+.fcon_unknow {
+  background-position: 0px -320px;
+}
+.fcon_xls {
+  background-position: 0px -340px;
+}
+.fcon_doc_lock {
+  background-position: 0px -360px;
+}
+.fcon_ppt_lock {
+  background-position: 0px -380px;
+}
+.fcon_xls_lock {
+  background-position: 0px -400px;
+}
+.fcon_folder_node {
+  background-image: url(../cloud/img/20/node.png);
+}
+/* 64 big*/
+.thumb-view {
+  /*    .grid-check {
+        position: absolute;
+        padding: 5px;
+        height: auto;
+        line-height: 1;
+        i{
+            margin-top: 0;
+        }
+    }*/
+}
+.thumb-view .fcon {
+  background: url(img/fcon80.png) no-repeat;
+  _background-image: url(img/fcon80.8.png);
+  width: 80px;
+  height: 80px;
+  margin: 10px auto;
+  display: block;
+}
+.thumb-view .fcon_doc {
+  background-position: 0px 0px;
+}
+.thumb-view .fcon_node {
+  background-position: 0px -80px;
+}
+.thumb-view .fcon_folder {
+  background-position: 0px -160px;
+}
+.thumb-view .fcon_group {
+  background-position: 0px -240px;
+}
+.thumb-view .fcon_groupuser {
+  background-position: 0px -320px;
+}
+.thumb-view .fcon_jpg {
+  background-position: 0px -400px;
+}
+.thumb-view .fcon_mp3 {
+  background-position: 0px -480px;
+}
+.thumb-view .fcon_mp4 {
+  background-position: 0px -560px;
+}
+.thumb-view .fcon_myshare {
+  background-position: 0px -640px;
+}
+.thumb-view .fcon_departmentShare {
+  background-position: 0px -720px;
+}
+.thumb-view .fcon_othershare {
+  background-position: 0px -800px;
+}
+.thumb-view .fcon_pdf {
+  background-position: 0px -880px;
+}
+.thumb-view .fcon_personalSyn {
+  background-position: 0px -960px;
+}
+.thumb-view .fcon_ppt {
+  background-position: 0px -1040px;
+}
+.thumb-view .fcon_rar {
+  background-position: 0px -1120px;
+}
+.thumb-view .fcon_txt {
+  background-position: 0px -1200px;
+}
+.thumb-view .fcon_unknow {
+  background-position: 0px -1280px;
+}
+.thumb-view .fcon_xls {
+  background-position: 0px -1360px;
+}
+.thumb-view .fcon_doc_lock {
+  background-position: 0px -1440px;
+}
+.thumb-view .fcon_ppt_lock {
+  background-position: 0px -1420px;
+}
+.thumb-view .fcon_xls_lock {
+  background-position: 0px -1600px;
+}
+.thumb-view .fcon_folder_node {
+  background-image: url(../cloud/img/80/node.png);
+}
+.thumb-view .grid-head,
+.thumb-view .grid-col {
+  display: none;
+  height: auto;
+  float: none;
+}
+.thumb-view .grid-name {
+  display: block;
+  width: auto !important;
+}
+.thumb-view .grid-row {
+  float: left;
+  border-width: 1px;
+  border-radius: 3px;
+  margin: 0 5px 10px 0;
+  clear: none;
+  height: auto;
+  width: 112px;
+  height: 120px;
+  border-bottom-color: transparent;
+  _border-color: #fff;
+}
+.thumb-view .grid-hover,
+.thumb-view .grid-selected {
+  border-color: #DCE6F2;
+  /*        .grid-check {
+            display: block;
+        }*/
+}
+.thumb-view .filename {
+  width: 100px;
+  text-align: center;
+  position: absolute;
+  bottom: 0;
+  left: 5px;
+}

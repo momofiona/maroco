@@ -87,7 +87,7 @@ define(function(require, exports, module) {
                 return;
             }
             _rollbar.checkScroll();
-        }
+        };
         if (setting.checkTimer) {
             lazytimer = setInterval(_resize, setting.checkTimer)
         } else {

@@ -1,17 +1,14 @@
 /**
  * 小型grid
  * @param  {Object} config [description]
- * @return {String}      table html
  * config
  *     container        Object  插入点
- *     hidehead         false   隐藏头部
  *     checkbox         true    是否开启多选
+ *     alias            设置参数别名
  *     skin             table skin style
- *     events           绑定事件
- *     editable         是否允许编辑行列,整理中...
- *         create       新增行之后的回调
- *         post         新增或编辑之后向后端提交的方法；
- *         remove       
+ *     events           绑定事件   
+ *     height           高度
+ *     minWidth         最小宽度，少于此宽度出现滚动条
  *     cols
  *         colgroup     表头分组名
  *         width        Number列宽
@@ -25,13 +22,6 @@
  *      baseparams      需要固定提交的参数
  *      sortable        开启行拖动排序
  *
- * return {
- *     load(extend)     加载
- *     config           配置
- *     getData(index)   获取数据
- *     update
- *     append
- * }
  * @example
  *      ctable({
             cols:[{
@@ -50,48 +40,24 @@
  */
 define(function(require, exports, module) {
     "use strict";
-    require('mousewheel');
-    require('ui/rollbar');
     //分页
     var pager = require('ui/pager');
-    var editOver = '<b class="i i-safe ac-tr-save m2" title="保存"></b><b class="i i-close ac-tr-cancel" title="取消"></b>';
-    var inputs = 'input:not([type]),input[type="color"],input[type="date"],input[type="datetime"],input[type="datetime-local"],input[type="email"],input[type="file"],input[type="hidden"],input[type="month"],input[type="number"],input[type="password"],input[type="range"],input[type="search"],input[type="tel"],input[type="text"],input[type="time"],input[type="url"],input[type="week"],textarea, select, input[type="checkbox"],input[type="radio"]';
-    var editInput = _.dot('<div class="text-auto-wrap"><input name="{{=it.name}}" value="{{=it.value}}" data-trim="true" data-describedby="tooltip" type="text" class="text-auto" {{=it.attr}}></div>');
-    var _colgroup = '{{?it.sortable}}\
-            <col width="10">\
-        {{?}}\
-        {{?it.checkbox}}\
-            <col width="34">\
-        {{?}}\
-        {{~it.cols :col:index}}\
-            <col class="{{=col.cls||""}}" width="{{=col.width||""}}" {{?col.background}}style="background:{{=col.background}}"{{?}}>\
-        {{~}}\
-        {{?it.editable}}\
-            <col width="80">\
-        {{?}}';
+
+    var _colgroup = '{{?it.sortable}}<col width="10">{{?}}\
+        {{?it.checkbox}}<col width="34">{{?}}\
+        {{~it.cols :col:index}}<col class="{{=col.cls||""}}" width="{{=col.width||""}}" {{?col.background}}style="background:{{=col.background}}"{{?}}>{{~}}';
     var _thead = '<thead>{{?!it._colgroup}}\
         <tr>\
-            {{?it.sortable}}\
-            <th class="chandler"></th>\
-            {{?}}\
-            {{?it.checkbox}}\
-            <th align=left><input type="checkbox" class="ctable-checkall"></th>\
-            {{?}}\
+            {{?it.sortable}}<th class="chandler"></th>{{?}}\
+            {{?it.checkbox}}<th align=left><input type="checkbox" class="ctable-checkall"></th>{{?}}\
             {{~it.cols :col:index}}\
             <th align="{{=col.align||"left"}}" class="{{=col.cls||""}} {{=col.order?"order":""}}"{{?col.order}} order="{{=col.order}}"{{?}}{{?col.style}} style="{{=col.style}}"{{?}}>{{=col.title||""}}{{?col.order}} <i class="order-tip"></i>{{?}}</th>\
             {{~}}\
-            {{?it.editable}}\
-            <th class="text-center"><b class="f f-add ac-tr-add"></b></th>\
-            {{?}}\
         </tr>\
         {{??}}\
         <tr>\
-            {{?it.sortable}}\
-            <th class="chandler" rowspan="2"></th>\
-            {{?}}\
-            {{?it.checkbox}}\
-            <th rowspan="2" align=left><input type="checkbox" class="ctable-checkall"></th>\
-            {{?}}\
+            {{?it.sortable}}<th class="chandler" rowspan="2"></th>{{?}}\
+            {{?it.checkbox}}<th rowspan="2" align=left><input type="checkbox" class="ctable-checkall"></th>{{?}}\
             {{~it.cols :col:index}}\
                 {{?col.colspan}}\
                 <th index="{{=index+=col.colspan-1}}" colspan="{{=col.colspan}}" class="ctable-colgroup" align="center">{{=col.colgroup}}</th>\
@@ -99,72 +65,164 @@ define(function(require, exports, module) {
                 <th rowspan="2" align="{{=col.align||"left"}}" class="{{=col.cls||""}} {{=col.order?"order":""}}"{{?col.order}} order="{{=col.order}}"{{?}}{{?col.style}} style="{{=col.style}}"{{?}}>{{=col.title||""}}{{?col.order}} <i class="order-tip"></i>{{?}}</th>\
                 {{?}}\
             {{~}}\
-            {{?it.editable}}\
-            <th rowspan="2" class="text-center"><b class="f f-add ac-tr-add"></b></th>\
-            {{?}}\
         </tr>\
         <tr>\
-            {{~it.cols :col:index}}\
-            {{?col.colgroup}}\
+            {{~it.cols :col:index}}{{?col.colgroup}}\
             <th align="{{=col.align||"left"}}" class="ctable-colgroup {{=col.cls||""}} {{=col.order?"order":""}}"{{?col.order}} order="{{=col.order}}"{{?}}{{?col.style}} style="{{=col.style}}"{{?}}>{{=col.title||""}}{{?col.order}} <i class="order-tip"></i>{{?}}</th>\
-            {{?}}\
-            {{~}}\
+            {{?}}{{~}}\
         </tr>\
-        {{?}}\
-        </thead>';
-    var _table = _.dot('<div class="ctable {{=it.skin||""}}" id="{{=it.id||""}}">\
-        {{?!it.hidehead}}\
-        <div class="ctable-head"><table>' + _colgroup + _thead + '</table></div>\
-        {{?}}\
-        <div class="ctable-body" id="{{=it.cscrollId}}">\
-        <table>' + _colgroup + '<tbody></tbody></table>\
-        </div>\
-        {{?it.count}}\
-        <div class="ctable-foot">\
-        <div class="ctable-status"></div>\
-        <div class="pager"></div></div>\
-        {{?}}\
+        {{?}}</thead>';
+    var _table = _.dot('<div class="ctable {{=it.skin||""}}" id="{{=it.id}}">\
+        <div class="ctable-head"><div class="ctable-head-inner"><table{{?it.minWidth}} style="min-width:{{=it.minWidth}}px"{{?}}>' + _colgroup + _thead + '</table></div></div>\
+        <div class="ctable-body{{?it.height}} scroll{{?}}"><div class="ctable-body-inner"><table{{?it.minWidth}} style="min-width:{{=it.minWidth}}px"{{?}}>' + _colgroup + '<tbody></tbody></table></div></div>\
+        <div class="ctable-foot"><div class="ctable-status"></div>{{?it.count}}<div class="pager"></div>{{?}}</div>\
         </div>');
     var _tbody = _.dot('{{~it.data :trdata:index}}\
-        <tr class="{{=index%2==0?"even":"odd"}}" data-index="{{=trdata.__index__||(it.__appendIndex__||0)+index}}">\
-        {{?it.sortable}}\
-            <td class="chandler"></td>\
-        {{?}}\
-        {{?it.checkbox}}\
-            <td><input type="checkbox" class="ctable-checkbox"{{?it.checkbox(trdata)}} checked{{?}}></td>\
-        {{?}}\
+        <tr class="{{=index%2==0?"even":"odd"}}" data-index="{{=(it.__appendIndex__||0)+index}}">\
+        {{?it.sortable}}<td class="chandler"></td>{{?}}\
+        {{?it.checkbox}}<td><input type="checkbox" class="ctable-checkbox" value="{{=(it.__appendIndex__||0)+index}}"></td>{{?}}\
         {{~it.cols :col:colindex}}\
-            <td {{?col.align}}align="{{=col.align}}"{{?}} {{?col.cls}}class="{{=col.cls||""}}"{{?}} {{?col.style}}style="{{=col.style}}"{{?}}>{{=trdata[colindex]===undefined||trdata[colindex]===null?"":trdata[colindex]}}</td>\
-        {{~}}\
-        {{?it.editable}}\
-            <td class="p0 text-center">{{?trdata.__index__!==undefined}}' + editOver + '{{??}}\
-            <b class="f f-pencil ac-tr-edit c-note m2 ctable-hide" title="编辑"></b>\
-            <b class="f f-bin ac-tr-remove c-error ctable-hide" title="删除"></b>\
-            {{?}}</td>\
-        {{?}}\
-        </tr>\
-        {{~}}');
+            <td{{?col.align}} align="{{=col.align}}"{{?}}{{?col.cls}} class="{{=col.cls}}"{{?}}{{?col.style}} style="{{=col.style}}"{{?}}>{{=trdata[colindex]}}</td>\
+        {{~}}</tr>{{~}}');
     var defaults = {
-            checked: false,
-            sortable: false,
-            status: function(total, page, count) {
-                return '共 ' + total + ' 条数据';
-            },
-            parseData: function(data) {
-                return data.result;
+        //开启行选择
+        checkbox: false,
+        //开启排序
+        sortable: false,
+        //别名
+        alias: {
+            page: 'page', //页码
+            count: 'count', //每页条数
+            order: 'order', //排序列
+            asc: 'asc' //升序降序
+        },
+        /**
+         * 设置列表排序
+         * @param  {String} order [colFieldName]
+         * @param  {String} asc   [asc|desc]
+         */
+        setOrder: function(order, asc) {
+            //去除其余列图标,找出需要排序的那列
+            var orderCol = this.head.find('.order').removeClass('asc desc').filter('[order=' + order + ']');
+            if (orderCol.length) {
+                this.baseparams[this.alias.order] = order;
+                this.baseparams[this.alias.asc] = asc;
+                orderCol.addClass(asc === 'asc' ? 'asc' : 'asc desc');
+                this.loader.load();
             }
+        },
+        getOrder: function() {
+            return {
+                order: this.baseparams[this.alias.order],
+                asc: this.baseparams[this.alias.asc]
+            };
+        },
+        //状态栏
+        status: function(total, page, count) {
+            return '共 ' + total + ' 条数据';
+        },
+        //数据策略
+        parseData: function(data) {
+            //这里需要确定data.total
+            return data.data;
+        },
+        //数据加载入口
+        load: function(filter, toBase) {
+            if (toBase) {
+                _.extend(this.loader.baseparams, toBase === true ? filter : toBase);
+            }
+            this.loader.load(filter);
+        },
+        /**
+         * 获取数据
+         * @return {[type]} [description]
+         */
+        getSelected: function() {
+            var data = [],
+                cache = this.cache;
+            this.tbody.find('.ctable-checkbox').each(function(i, o) {
+                if (o.checked) {
+                    data.push(cache[o.value]);
+                };
+            });
+            return data;
+        },
+        /**
+         * 获取某行数据
+         * @param  {jQueryElement} tr [tr节点]
+         * @return {Object}    [某行的数据]
+         */
+        getRowData: function(tr) {
+            return this.cache[tr.attr('data-index')];
+        },
+        /**
+         * 添加数据
+         * @param  {Array} datas [description]
+         * @return {[type]}       [description]
+         */
+        append: function(datas) {
+            if (!datas.length) return;
+            //已经存在的数量
+            this.__appendIndex__ = this.cache.length;
+            //写入cache
+            this.cache = this.cache.concat(datas);
+            //装入渲染池造数据矩阵
+            this.data = this.render(datas);
+            //生成html
+            var tr = $(_tbody(this)).appendTo(this.tbody);
+            delete this.__appendIndex__;
+            //去除全选
+            if (this.checkall) {
+                this.checkall.checked = false;
+            }
+            return tr;
+        },
+        //更新行
+        updateRow: function(tr, newdata) {
+            var data = this.getRowData(tr);
+            $.extend(data, newdata);
+            this.data = this.render([data]);
+            tr.html($(_tbody(this)).html());
+        },
+        create: $.noop, //刚创建时
+        onselect: $.noop, //勾选动作时
+        onscroll: $.noop, //滚动内容时
+        beforeLoad: $.noop,
+        afterLoad: $.noop,
+        //确保baseparams有内存地址，并且不允许重定义baseparams更改地址，不如会影响下面loader参数
+        baseparams: {},
+        //数据列缓存
+        cache: [],
+        scrollBarWidth: 0,
+        scrollBarHeight: 0,
+        //检查是否存在滚动条
+        //fullwidth的时候右侧有边线
+        //scrolld的时候右侧有边线
+        isScrolling: function() {
+            var b = this.body[0],
+                sw = b.offsetWidth - b.clientWidth - 2;
+            if (this.scrollBarWidth !== sw) {
+                this.headInner.css('margin-right', this.scrollBarWidth = sw);
+            }
+            //暴露滚动条高度
+            this.scrollBarHeight = b.offsetHeight - b.clientHeight-2;
+            return sw > 0;
+        },
+        //调整高度以适应窗体
+        layout: function() {
+            this.body.height((_.isFunction(this.height) ? this.height(this.body) : this.height) - this.foot.height() - 2);
+            this.isScrolling();
         }
-        //$.support.boxSizing=false时候所有宽度减去td的padding
+    };
+    //$.support.boxSizing=false时候所有宽度减去td的padding
     return function(config) {
-        config = _.extend({}, defaults, config, {
-            skipIndex: (config.checkbox ? 1 : 0) + (config.sortable ? 1 : 0),
-            cscrollId: _.uniqueId("tableRoll")
-        });
-        var skipIndex = config.skipIndex;
+        config = $.extend(true, {}, defaults, config);
+        //动态ID
+        config.id = config.id || _.uniqueId("ctable");
+
         //预处理表头分组
         config._colgroup = false;
-        var _colgroupCache;
-        var _fullWidth = 0;
+        var _colgroupCache, _fullWidth = 0;
         $.each(config.cols, function(i, o) {
             // IE67校准宽度,去掉padding的宽度
             if (_.isNumber(o.width) && UI.browser.ie < 8) {
@@ -185,44 +243,49 @@ define(function(require, exports, module) {
             }
         });
 
-        //checkbox参数
-        if (config.checkbox && !$.isFunction(config.checkbox)) {
-            config.checkbox = $.noop;
-        }
-        //(config.height || config.maxHeight) ? $(_table(config)) : $(_tableNormal(config))
-        var table = $(_table(config)),
-            scrollBody = table.find('>.ctable-body'),
-            theadContainer = table.find('>.ctable-head'),
-            thead = theadContainer.find('thead'),
-            tbody = scrollBody.find('tbody'),
-            tfoot = table.find('>.ctable-foot'),
-            statubar = tfoot.find('.ctable-status'),
-            spaging = tfoot.find('.pager'),
-            selectAll = thead.find('.ctable-checkall')[0] || {};
+
+        //mark doms
+        var table = config.table = $(_table(config)),
+            head = config.head = table.find('>.ctable-head'),
+            headInner = config.headInner = head.find('>.ctable-head-inner'),
+            body = config.body = table.find('>.ctable-body'),
+            bodyInner = config.bodyInner = body.find('>.ctable-body-inner'),
+            foot = config.foot = table.find('>.ctable-foot'),
+
+            thead = config.thead = head.find('thead'),
+            tbody = config.tbody = body.find('tbody'),
+
+            statubar = config.statubar = foot.find('.ctable-status'),
+            pagebar = config.pagebar = foot.find('.pager'),
+            checkall = config.checkall = thead.find('.ctable-checkall')[0];
         $(config.container).append(table);
 
-        thead.on('click', '.order', function(e) {
-            //排序
-            e.stopPropagation();
-            var asc = 'asc',
-                t = $(this);
-            if (t.hasClass('desc')) {
-                t.removeClass('desc');
-            } else if (t.hasClass('asc')) {
-                asc = 'desc';
-                t.addClass('desc');
+        //body scroll
+        var shadowed;
+        body.on('scroll', function(e) {
+            var st = this.scrollTop,
+                sl = this.scrollLeft;
+            if (st === 0) {
+                if (shadowed) {
+                    head.removeClass('ctable-shadow');
+                    shadowed = false;
+                }
             } else {
-                t.addClass('asc');
+                if (!shadowed) {
+                    head.addClass('ctable-shadow');
+                    shadowed = true;
+                }
             }
-            //去除其余列图标
-            t.siblings().removeClass('asc desc');
-            _.extend(config.baseparams, {
-                order: t.attr('order'),
-                asc: asc
-            });
-            loader.load();
+            config.headInner[0].scrollLeft = sl;
+            config.onscroll(st, sl);
         });
         //排序
+        thead.on('click', '.order', function(e) {
+            //优先使用desc排序
+            config.setOrder($(this).attr('order'), $(this).hasClass('desc') ? 'asc' : 'desc');
+
+        });
+        //拖动排序
         if (config.sortable) {
             require.async('sortable', function() {
                 tbody.sortable($.extend({
@@ -236,17 +299,14 @@ define(function(require, exports, module) {
         }
         //多选
         if (config.checkbox) {
-            $(selectAll).on('click', function(e) {
+            $(checkall).on('click', function(e) {
                 //全选
                 e.stopPropagation();
                 var ck = this.checked;
                 tbody.find('.ctable-checkbox').each(function(i, o) {
                     o.checked = ck;
                 });
-                // selectAll.checked = ck;
-                if (config.onselect) {
-                    config.onselect.call(this, this.checked ? cache : []);
-                }
+                config.onselect.call(this, this.checked ? config.cache : []);
             });
             tbody.on('click', '.ctable-checkbox', function(e) {
                 //全选
@@ -258,106 +318,11 @@ define(function(require, exports, module) {
                         return false;
                     }
                 });
-                selectAll.checked = ckall;
-
-                if (config.onselect) {
-                    var tr = $(this).closest('tr').attr('data-index');
-                    config.onselect.call(this, api.getData('selected'), cache[tr]);
-                }
-            })
-        }
-        var generateInputString = function(editconfig, data) {
-                if (editconfig && editconfig.name) {
-                    if (editconfig.render) {
-                        var tmp = editconfig.render(editconfig, editInput, data);
-                        if (tmp) return tmp;
-                    }
-                    var value = data ? data[editconfig.name] : '';
-                    value = value === undefined || value === null ? '' : value;
-                    return editInput({
-                        name: editconfig.name,
-                        attr: editconfig.attr || '',
-                        value: value
-                    })
-                }
-                return ''
-            }
-            //是否可编辑
-        var _editable = config.editable;
-        if (_editable) {
-            _.defaults(_editable, {
-                beforeAdd: $.noop,
-                beforeEdit: $.noop,
-                create: $.noop,
-                post: $.noop,
-                remove: $.noop
-            });
-            thead.on('click', '.ac-tr-add', function() {
-                //新增一行
-                if (_editable.beforeAdd.call(table) === false) return false;
-                var _fakeObj = {};
-                var fakedata = $.map(config.cols, function(o, i) {
-                    return generateInputString(o.field);
-                });
-                fakedata.__index__ = _fakeObj.__index__ = cache.length;
-                cache[fakedata.__index__] = _fakeObj;
-                config.data = [fakedata];
-                var tr = $(_tbody(config)).prependTo(tbody);
-                _editable.create.call(tr, _fakeObj, config);
-            });
-            tbody.on('click', '.ac-tr-edit', function(e) {
-                //判断是否是
-                //编辑,搞复杂了，以后改成MVVM
-                e.stopPropagation();
-                //忽略 checkbox
-                var tr = $(this).closest('tr'),
-                    data = cache[tr.attr('data-index')];
-                if (_editable.beforeEdit.call(tr, data) === false) return false;
-                var _data = _.create(data),
-                    tds = tr.find('>td');
-                //保存模板用于取消编辑
-                data.__html__ = tr.html();
-                //用于记录修改过的地方
-                data.__param__ = _data;
-                //换按钮
-                $(this).parent().html(editOver);
-                //换编辑input
-                $.each(config.cols, function(i, o) {
-                    var fieldInfo = o.field;
-                    //带name的为需要编辑的
-                    if (fieldInfo && fieldInfo.name) {
-                        var inputString = generateInputString(fieldInfo, data);
-                        var input = tds.eq(i + skipIndex).html(inputString);
-                    }
-                });
-                _editable.create.call(tr, _data, config);
-            }).on('click', '.ac-tr-save', function() {
-                //保存修改
-                var tr = $(this).closest('tr');
-                var index = tr.attr('data-index');
-                var data = cache[index];
-                _editable.post.call(tr, data, config);
-
-            }).on('click', '.ac-tr-cancel', function() {
-                //取消修改
-                var tr = $(this).closest('tr');
-                var data = cache[tr.attr('data-index')];
-                //如果当前tr是新增的
-                if ($.isNumeric(data.__index__)) {
-                    tr.remove();
-                    return;
-                }
-                tr.html(data.__html__);
-                delete data.__html__;
-                delete data.__param__;
-            }).on('click', '.ac-tr-remove', function() {
-                //删除
-                var tr = $(this).closest('tr');
-                var index = tr.attr('data-index');
-                var data = cache[index];
-                config.remove.call(tr, data, config);
+                checkall.checked = ckall;
+                config.onselect.call(this, config.getSelected(), config.cache[this.value]);
             });
         }
+        //row hover effect
         tbody.on('mouseenter', 'tr', function() {
             $(this).addClass('ctable-hover');
         }).on('mouseleave', 'tr', function() {
@@ -366,103 +331,62 @@ define(function(require, exports, module) {
         //监控tbody事件
         if (config.events) {
             $.each(config.events, function(k, v) {
+                k = $.trim(k);
                 var s = k.indexOf(' ');
                 if (s < 2) return;
                 tbody.on(k.substr(0, s), k.substr(s + 1), function(event, obj) {
+                    //这是为了两个table mouseenter同步的时候不继续触发回调
                     if (obj && obj.silent) return;
                     var tr = $(this).closest('tr');
-                    var index = tr.attr('data-index');
-                    var data = cache[index];
-                    if (v.call(this, event, tr, data, config, cache) === false) return false;
+                    v.call(this, event, tr, config.getRowData(tr), config);
                 });
-            })
+            });
         }
 
-        //缓存
-        var cache = [];
         //是否设置了宽高
         if (config.height) {
             //TODO support function & '#selector - 100'
             if (_.isFunction(config.height)) {
-                var _throttle = _.throttle(function() {
-                    if (!document.getElementById(config.cscrollId)) {
-                        $(window).off('resize', _throttle);
+                var _throttle = function() {
+                    if (document.getElementById(config.id)) {
+                        config.layout();
                     } else {
-                        height(config.height(table));
+                        $(window).off('resize', _throttle);
                     }
-                }, 500, {
-                    leading: false
-                });
+                };
                 $(window).on('resize', _throttle);
-                height(config.height(table));;
-            } else if (config.height) {
-                height(config.height);
             }
+            config.layout();
             //是否cols全部设置了宽度
             if (_fullWidth) {
+                table.addClass('ctable-fullwidth');
                 thead.parent().width(_fullWidth);
                 tbody.parent().width(_fullWidth);
             }
-            $('#' + config.cscrollId).rollbar({
-                scrollamount: config.scrollamount || 100,
-                shadow: true,
-                onscroll: function(v, h) {
-                    if (h !== undefined) {
-                        theadContainer[0].scrollLeft = h;
-                    }
-                    config.onscroll && config.onscroll(v, h);
-                }
-            }); //.find('>.rollbar-content');
-        }
-        //重新计算长宽
 
-        function height(h) {
-            table.height(h);
-            if (!config.hidehead) {
-                h -= thead.height();
-            }
-            if (config.count) {
-                h -= 30;
-            }
-            scrollBody.height(h);
         }
-        //局部更新
-        var update = function(tr, newdata) {
-                var index = tr.attr('data-index');
-                cache[index] = _.extend(cache[index], newdata);
-                config.data = config.render([cache[index]]);
-                tr.html($(_tbody(config)).html());
-            }
-            /*            //局部fx计算
-                    var fx = function(tr, data) {
-                            var tds = tr.find('>td');
-                            $.each(config.cols, function(i, o) {
-                                var fieldInfo = o.field;
-                                if (fieldInfo && fieldInfo.fx) {
-                                    tds.eq(i + skipIndex).html(fieldInfo.fx.call(data));
-                                }
-                            });
-                        }*/
-            //loader and pager
+	
+        //loader and pager
         var paging = pager({
-            el: spaging,
+            el: pagebar,
             onPageClick: function(e, page) {
                 loader.page = page;
                 loader.load();
             }
         });
-        if (!config.count) spaging.hide();
+        if (!config.count) pagebar.hide();
         var loader = config.loader = UI.loader({
             baseparams: config.baseparams,
-            count: config.count,
+            alias: config.alias,
             loadtip: config.loadtip,
+            count: config.count,
             url: config.url,
             beforeLoad: function(filter) {
-                config.beforeLoad && config.beforeLoad.call(table, filter, config);
+                config.beforeLoad(filter);
             },
             afterLoad: function(data) {
 
-                cache = config.parseData(data) || [];
+                var cache = config.cache = config.parseData(data) || [];
                 //如果page不是第一页但是返回数据为0，则自动刷新到前一页
                 if (cache.length === 0 && this.page > 1) {
                     this.page = this.page - 1;
@@ -473,81 +397,24 @@ define(function(require, exports, module) {
                 var tbodyHtml = _tbody(config);
 
                 //去除全选
-                selectAll.checked = false;
-                //延时插入，否则IE10、IE11页面元素无法选中，select无法点出菜单
-                setTimeout(function() {
-                    tbody.html(tbodyHtml);
-                    config.afterLoad && config.afterLoad.call(table, data, cache);
-                }, 20);
+                if (checkall) {
+                    checkall.checked = false;
+                }
+                //延时插入，否则win8 IE10、IE11页面元素无法选中，select无法点出菜单
+                tbody.html(tbodyHtml);
+                //检查滚动条
+                config.isScrolling();
                 //paging
                 if (config.count) {
                     paging.render(data.total, loader.page, loader.count);
                 }
                 //如果返回了总数
-                statubar.html(config.status(data.total, loader.page, loader.count) || '');
+                statubar.html(config.status(data.total, loader.page, loader.count));
+                config.afterLoad(data, cache);
             }
         });
 
-        var api = {
-            config: config,
-            table: table,
-            load: function(filter, toBase) {
-                if (toBase) {
-                    _.extend(loader.baseparams, toBase === true ? filter : toBase);
-                }
-                loader.load(filter);
-            },
-            getBody: function() {
-                return tbody;
-            },
-            getData: function(n) {
-                if ($.isNumeric(n)) {
-                    return cache[n];
-                }
-                var result = [];
-                if (n === "selected") {
-                    tbody.find('.ctable-checkbox').each(function(i, o) {
-                        if (o.checked) result.push(cache[i]);
-                    });
-                    return result;
-                }
-                tbody.children().each(function(i, o) {
-                    result.push(cache[$(o).attr('data-index')]);
-                });
-                return result;
-            },
-            getSelectedRow: function() {
-                return tbody.find('.ctable-checkbox:checked').parent().parent();
-            },
-            update: update,
-            append: function(datas) {
-                if (!(datas instanceof Array)) {
-                    datas = [datas];
-                }
-                if (datas.length == 0) return;
-                config.__appendIndex__ = cache.length;
-                //写入cache
-                $.each(datas, function(i, data) {
-                    cache[cache.length] = data;
-                });
-                //装入渲染池
-                config.data = config.render(datas);
-                //生成html
-                var tr = $(_tbody(config)).appendTo(tbody);
-                delete config.__appendIndex__;
-                //去除全选
-                selectAll.checked = false;
-                return tr;
-            },
-            //清空数据
-            reset: function() {
-                cache = [];
-                tbody.empty();
-                statubar.empty();
-                paging.render(0);
-            }
-        }
-        config.create && config.create.call(table, api);
-        return api;
-    }
+        config.create();
+        return config;
+    };
 });

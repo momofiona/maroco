@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Maroco UI</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/maroco.css">
+    <link rel="stylesheet" href="cloud/o2o.css">
+    <script src="maroco.js"></script>
+    <style type="text/css">
+    html,
+    body {
+        height: 100%;
+        overflow: hidden;
+        background-color: #fff;
+    }
+    
+    #sidebar,
+    #mainbody,
+    #header {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        transition: left .3s;
+        -webkit-transition: left .3s;
+        -moz-transition: left .3s;
+        -ms-transition: left .3s;
+    }
+    
+    .closepen #header,
+    .closepen #mainbody {
+        left: 0;
+    }
+    
+    .closepen #sidebar {
+        left: -200px;
+    }
+    
+    #header {
+        right: 0;
+        left: 199px;
+        padding: 0;
+        background: #fafafa;
+        border-bottom: 1px solid #d9d9d9;
+        z-index: 300;
+    }
+    
+    #header .dropdown {
+        border-top: solid 2px #E69227;
+    }
+    
+    #header >.log {
+        border: none;
+        border-radius: 0;
+    }
+    
+    #header .pg-avanta {
+        border-left: solid 1px #ddd;
+        white-space: nowrap;
+    }
+    
+    #header .pg-bdr {
+        border-right: solid 1px #ddd;
+    }
+    
+    #header .ac-closepen em {
+        width: 20px;
+        display: block;
+        height: 2px;
+        overflow: hidden;
+        margin: 3px 0 4px;
+        background-color: #1871ca
+    }
+    
+    #mainbody {
+        z-index: 100;
+        top: 37px;
+        right: 0;
+        left: 200px;
+        overflow: hidden;
+    }
+    
+    #mainbody .main-container {
+        width: 100%;
+        height: 100%;
+    }
+    
+    #sidebar {
+        z-index: 200;
+        border-radius: 0;
+        width: 199px;
+        overflow-x: hidden !important;
+        font-size: 12px;
+    }
+    
+    #sidebar .nav {
+        border-right: solid 1px #ddd;
+        background-color: #fafafa;
+        padding: 0;
+        border-top: solid 1px #fff;
+        position: absolute;
+        top: 37px;
+        left: 0;
+        right: 0;
+        bottom: 0px;
+    }
+    
+    #sidebar .nav a {
+        border-radius: 0;
+        margin-right: 1px;
+        color: #333;
+    }
+    
+    #sidebar .nav a i {
+        margin-left: -18px;
+    }
+    
+    #sidebar .nav a:hover {
+        background: #fff;
+    }
+    
+    #sidebar .nav a.active {
+        background: #eee;
+    }
+    
+    #sidebar .nav-cart {
+        left: 11px;
+    }
+    
+    #sidebar .nav ul {
+        padding: 0;
+        margin-left: 24px;
+        border-left: dotted 1px #ccc;
+    }
+    
+    #sidebar .tabs {
+        background-color: #fafafa;
+    }
+    
+    #sidebar .tab {
+        padding: 2px 0 0 3px;
+        height: 34px;
+    }
+    
+    #sidebar .tab a {
+        padding: 8px 0 9px;
+    }
+    
+    #sidebar .tab a i {
+        margin-right: 2px;
+    }
+    
+    #sitemap {
+        padding: 0;
+        margin: 0;
+        line-height: 30px;
+    }
+    
+    #sitemap li {
+        clear: both;
+        list-style: none;
+    }
+    
+    #sitemap ul {
+        padding: 0 10px;
+    }
+    
+    #sitemap ul li {
+        float: left;
+        width: 100px;
+        clear: none;
+        padding: 0 10px;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="header" class="toolbar p0">
+        <!-- profile -->
+        <span href="#" class="xr w5 b log pg-avanta" data-dropdown>
+            谭志凌
+            <i class="star error ml" title="余额235,523元">￥235,523</i>
+            <i class="f f-arb"></i>
+        </span>
+        <div class="dropdown w5">
+            <ul class="menu dropdown-menu">
+                <li><a href="#"><i class="f f-user"></i>个人资料</a></li>
+                <li><a href="#"><i class="f f-gear"></i>修改密码</a></li>
+                <li><a href="#"><i class="f f-user"></i>通讯录</a></li>
+                <li class="devider"></li>
+                <li><a href="#" class="menu-error"><i class="f f-shutdown"></i>登出</a></li>
+            </ul>
+        </div>
+        <!-- /profile -->
+        <span class="b log xl ac-closepen pg-bdr">
+            <em class="before"></em>
+            <em class="middle"></em>
+            <em class="after"></em>
+        </span>
+        <a href="#" class="b log xl">控制台</a>
+        <a href="#" class="b log xl pg-bdr bi" data-dropdown><i class="f f-arb"></i></a>
+        <div class="dropdown w20 p" position=" right top,right bottom ">
+            <div class="row">
+                <ul class="dropdown-menu" id="sitemap">loading...</ul>
+            </div>
+        </div>
+    </div>
+    <!-- sidebar -->
+    <div id="sidebar">
+        <div class="tabs">
+            <ul class="tab text-center">
+                <li class="x3"><a href="index.html" title="短信"><i class="f f-chat"></i>短信</a></li>
+                <li class="x3"><a href="index2.html" title="流量"><i class="f f-water"></i>流量</a></li>
+                <li class="active x3"><a href="index3.html" title="语音"><i class="f f-mic"></i>语音</a></li>
+            </ul>
+        </div>
+        <ul class="nav scroll">
+            <li>
+                <li><a href="#/mo/mo1">流量派发</a></li>
+                <li><a href="#2">派发记录</a></li>
+            </li>
+            <li>
+                <a class="nav-trigger">活动管理</a>
+                <ul>
+                    <li><a href="#4">活动列表</a></li>
+                    <li><a href="#5">创建活动</a></li>
+                </ul>
+            </li>
+            <li>
+                <a class="nav-trigger">发票管理</a>
+                <ul>
+                    <li><a href="#777">发票索取</a></li>
+                    <li><a href="#777">发票信息管理</a></li>
+                    <li><a href="#777">发票列表</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <!-- mainbody -->
+    <div id="mainbody"></div>
+    <!-- /mainbody -->
+    <script>
+    seajs.use(['ui/notify', 'ui/router'], function(notify,router) {
+        'use strict';
+        var mainbody = $('#mainbody'),
+            sidebar = $('#sidebar'),
+            nav = sidebar.children(".nav");
+        //sitemap
+        $('#sitemap').html("sitemap");
+        var APP = UI.navs({
+            el: nav,
+            route:function(path){
+                // alert(path);/
+            },
+            onExpand: function(t) {
+                t.find('i').addClass('rotate1');
+            },
+            onCollapse: function(t) {
+                t.find('i').removeClass('rotate1');
+            },
+            create: function() {
+                //添加toggle按钮
+                this.$('.nav-trigger').prepend('<i class="f f-right"></i>');
+                // navs.toggle(navs.$('.nav-trigger:eq(0)'));
+            }
+        });
+
+        // route
+        router({
+            //sms gprs vop等情况下ok
+            '/*': function(mod) {
+                APP.route(mod);
+            },
+            '/*': function(mod) {
+                APP.route(UI.server+mod);
+            },
+            '/*': function(mod) {
+                APP.route(mod);
+            },
+            '*': function(mod) {
+                //其他情况一律返回控制台
+                APP.route('home');
+            }
+        });
+
+        //导航栏上的事件
+        UI({
+            el: $('#header'),
+            events: {
+                'click .ac-closepen': function(e, conf) {
+                    $('body').toggleClass('closepen');
+                }
+            }
+        });
+
+    });
+    </script>
+</body>
+
+</html>

@@ -8,107 +8,98 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/maroco.css">
-    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
-    <!--[if lt IE 8]>
-    <link rel="stylesheet" href="css/icomoon/ie7/ie7.css">
-    <![endif]-->
     <script src="maroco.js"></script>
     <style type="text/css">
+    body {
+        background: #f0f0f0;
+        color: #666
+    }
+    
     #loginForm {
+        margin: 70px auto 50px;
+        width: 700px;
+        background-color: #fff;
+        border-radius: 4px;
+        box-shadow: 0 1px 0 rgba(0, 0, 0, .05);
+    }
+    
+    #loginForm .moon {
+        position: absolute;
+        top: 35px;
+        left: 50%;
+        margin-left: -40px;
+        width: 80px;
+        height: 80px;
+        padding: 0;
+        line-height: 80px;
+        font-size: 40px;
+        text-align: center;
+    }
+    
+    .form-part {
         width: 300px;
-        margin: auto;
-        background: #fff;
-        background: rgba(255, 255, 255, .98);
-        border-radius: 5px;
-        box-shadow: 0 3px 8px rgba(0, 0, 0, .55);
+        padding: 15px 0 30px;
+        margin: 0 auto;
+    }
+    
+    #loginForm .footer {
+        background: #fcfcfc;
+        border-top: 1px solid #eeeff2;
+        color: #777;
+        padding: 15px 0;
+        border-radius: 0 0 4px 4px;
+    }
+    
+    #loginForm .footer a {
+        color: #999;
+    }
+    
+    #loginForm .footer a:hover {
+        color: #666;
     }
     
     #loginForm .tab {
-        border: none;
-        border-radius: 5px 5px 0 0;
+        padding-top: 80px;
+        width: 300px;
+        margin: auto;
         overflow: hidden;
-    }
-    
-    #loginForm .tab li {
-        width: 50%;
+        border: none;
     }
     
     #loginForm .tab a {
         border: none;
-        display: block;
-        float: none;
-        margin: 0;
-        padding: 0;
-        height: 40px;
-        line-height: 40px;
         font-size: 16px;
-        background: #f4f4f4;
-        color: #666;
-        background: linear-gradient(#f4f4f4, #e1e1e1, #e8e8e8);
+        color: #999;
+    }
+    
+    #loginForm .tab a i {
+        visibility: hidden;
     }
     
     #loginForm .tab .active a {
-        background: none;
-        color: #bbb;
+        color: #666;
+        border-bottom: solid 3px #E68B3D;
     }
     
-    #brand {
-        height: 110px;
-        margin-top: 30px;
-        overflow: hidden;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-image: url(cloud/img/logo.png);
+    #loginForm .tab .active a i {
+        color: #E68B3D;
+    }
+    
+    #loginForm .tab .active a i {
+        visibility: visible;
     }
     
     .clients,
     .copyright {
-        padding-top: 20px;
+        padding-bottom: 15px;
         text-align: center;
-        color: #ddd;
-    }
-    
-    .clients a {
-        color: #ddd;
-    }
-    
-    .clients a:hover {
-        text-decoration: underline;
-    }
-    
-    .copyright {
         font-size: 12px;
-        opacity: .8;
-    }
-    
-    .form-part,
-    #welcome {
-        width: 240px;
-        margin: 0 auto;
-        *zoom: 1;
-    }
-    
-    .form-part {
-        padding: 0 0 10px;
-        min-height: 200px;
-        _height: 200px;
-    }
-    
-    #welcome {
-        padding: 15px 0;
-        font-weight: 800;
-        font-size: 14px;
-        line-height: 29px;
-        height: 29px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+        color: #999;
     }
     
     .form-line {
-        margin-bottom: 10px;
+        margin-bottom: 15px;
         clear: both;
-        *zoom: 1;
     }
     
     .form-line i {
@@ -118,7 +109,7 @@
     }
     
     .form-line .text {
-        width: 240px;
+        width: 300px;
         padding-left: 33px;
         border-color: #ebebeb;
         background: #fff;
@@ -131,60 +122,22 @@
     }
     
     .form-line .verifycode {
-        width: 90px;
+        width: 100px;
         padding-left: 8px;
-    }
-    
-    #errorLabel {
-        min-height: 18px;
-        _height: 18px;
-        line-height: 18px;
-    }
-    
-    .qcode-part table,
-    .qcode-part canvas {
-        margin: auto;
-        display: block;
-    }
-    /*首页客户端图标*/
-    
-    .icon_android,
-    .icon_qrcode,
-    .icon_apple,
-    .icon_win8 {
-        display: inline-block;
-        width: 16px;
-        height: 16px;
-        background-image: url(cloud/img/client.png);
-        _background-image: url(cloud/img/client.8.png);
-    }
-    
-    .icon_android {
-        background-position: -18px 0px
-    }
-    
-    .icon_apple {
-        background-position: -36px 0px
-    }
-    
-    .icon_win8 {
-        background-position: -54px 0px
     }
     </style>
 </head>
 
 <body>
-    <!-- logo -->
-    <div id="brand"></div>
     <!-- login -->
-    <div id="loginForm" class="tabs">
-        <ul class="tab text-center">
-            <li><a href="#" panel=".ac-account">账号登录</a></li>
-            <li><a href="#" panel=".ac-qcode">二维码登录</a></li>
+    <div id="loginForm" class="w12 tabs">
+        <div class="note moon"><i class="f f-user"></i></div>
+        <ul class="tab">
+            <li class="x2"><a href="#" panel=".ac-fake"><i class="mr f f-done"></i>用户登录</a></li>
+            <li class="x2"><a href="#" panel=".ac-fake"><i class="mr f f-done"></i>管理登录</a></li>
         </ul>
-        <div id="welcome">欢迎使用曙光企业移动办公！</div>
         <!-- password -->
-        <form class="fpr form-part ac-account" autocomplete="on" onsubmit="return false;">
+        <form class="form-part ac-fake" autocomplete="on" onsubmit="return false;">
             <div class="form-line">
                 <i class="f f-user"></i>
                 <input tabindex="2" class="text ac-userName" placeholder="用户名（邮箱）" name="userName" required>
@@ -193,110 +146,75 @@
                 <i class="f f-lock"></i>
                 <input tabindex="3" class="text" type="password" placeholder="密码" name="password" required>
             </div>
-            <div class="form-line hide">
-                <input tabindex="4" data-dir="lc" name="verifyCode" required data-valid="len(4,4)" disabled="disabled" maxlength="4" class="mr verifycode w3 text ac-verifycode"><img height="35" class="va-t mr"><a href="#">换一个</a>
+            <div class="form-line">
+                <input tabindex="4" data-dir="lc" name="verifyCode" required data-valid="len(4,4)" maxlength="4" class="mr verifycode w3 text ac-verifycode"><img height="35" class="va-t mr"><a href="#">换一个</a>
             </div>
             <div class="form-line">
                 <a href="#" class="xr ac-forget">忘记密码</a>
                 <label>
-                    <input type="checkbox" name="strcheck" class="mr va-b ac-autologin">自动登录</label>
+                    <input type="checkbox" name="strcheck" class="mr va-b ac-autologin">记住用户名</label>
             </div>
             <div class="form-line p1 clear">
-                <a href="#" class="b link xr w3 ac-reg" target="_blank">注册</a>
-                <button tabindex="5" type="submit" class="b note w4 xl">登录</button>
+                <button tabindex="5" type="submit" class="b note w10 xl">登录</button>
             </div>
-            <div class="c-error" id="errorLabel"></div>
+            <p class="c-error" id="errorLabel"></p>
         </form>
-        <!-- qcode -->
-        <div class="form-part qcode-part ac-qcode" style="display:none;"></div>
+        <!-- footer -->
+        <div class="row footer text-center">
+            <div class="x2">
+                <a href="#"><i class="mr f f-left"></i>登录有问题？请咨询我们的客服美眉</a>
+            </div>
+            <div class="x2">
+                <a href="#">快速注册<i class="f f-right"></i></a>
+            </div>
+        </div>
     </div>
     <div class="clients">
-        <a class="m2" href="setup/SugonClientSetup.exe"><i class="icon_win8 op_icon va-t mr"></i>PC同步客户端</a>
-        <a class="m2" href="https://appsto.re/cn/2ZHn1.i" target="_balank"><i class="icon_apple op_icon va-t mr"></i>iPhone手机</a>
-        <a class="m2" href="setup/CloudMobile.apk"><i class="icon_android op_icon va-t mr"></i>Android手机</a>
-        <a href="#" class="dropdown-ignorex"><i class="icon_qrcode op_icon va-t mr"></i>手机扫描二维码</a>
-        <div id="qrcode" class="dropdown p menu" position="center bottom,center top-5"></div>
+        <span class="m10"><i class="icon_win8 f f-msg mr"></i>行业短信</span>
+        <span class="m10"><i class="icon_apple f f-chat mr"></i>营销短信</span>
+        <span class="m10"><i class="icon_android f f-water mr"></i>流量派发</span>
+        <span class="m10"><i class="icon_qrcode f f-mic mr"></i>语音消息</span>
     </div>
-    <div class="copyright">Maroco CO. ©2014-2015 苏ICP备1598721号</div>
+    <div class="copyright">O2O ©2014-2015 苏ICP备1598721号</div>
     <div class="footman"></div>
     <script>
     $(function() {
-        //拿cookie
-        //用户信息，有sid表示已经登录
-        var userInfo = {
-            uname: $.cookie('uname'),
-            sid: $.cookie('sid')
-        };
-        //如果已经登录，需要拦截器拦截然后跳转
-
-
-        //背景图片
-        var login_bg = UI.server + 'cloud/img/127.jpg';
-        if (UI.browser.ie < 9) {
-            $('body').attr('style', "filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='" + login_bg + "',sizingMethod='scale')");
-        } else {
-            $('body').attr('style', 'background: url(' + login_bg + ') center center no-repeat;background-size: cover;');
-        }
-
-        //二维码
-        seajs.use('js/vendor/qrcode/jquery.qrcode.min.js', function() {
-            $("#qrcode").qrcode({
-                render: UI.browser.ie < 9 ? 'table' : 'canvas', //table或canvas方式 
-                width: 150, //宽度 
-                height: 150, //高度 
-                text: UI.server + "client.html"
-            }).prev().on('mouseenter', function(e) {
-                $(this).dropdown('show');
-            }).on('mouseleave', function(e) {
-                $(this).dropdown('hide');
-            }).on('click', function(e) {
-                if($(this).hasClass('dropdown-open')){
-                    e.stopPropagation();
-                    e.preventDefault();
-                };
-            });
-        });
-
+        //用户信息
+        var uname = $.cookie('uname');
+        //是否是管理员
+        var isAdmin;
         //登录tab
         var tab = UI.tabs({
             el: '#loginForm',
             onActive: function(tab, panel) {
-                if (!this.qcodeInited && panel.hasClass('ac-qcode')) {
-                    this.qcodeInited = 1;
-                    //二维码
-                    seajs.use('js/vendor/qrcode/jquery.qrcode.min.js', function() {
-                        panel.qrcode({
-                            render: UI.browser.ie < 9 ? 'table' : 'canvas',
-                            width: 180, //宽度
-                            height: 180, //高度
-                            text: 'js/vendor/qrcode/jquery.qrcode.min.js'
-                        });
-                    });
-                    return;
-                }
-                if (!this.form) {
-                    this.form = panel;
-                    //验证码
-                    this.varifyCode = panel.find('.ac-verifycode');
-                    //初始化塞值
-                    if (userInfo.uname) {
-                        panel.find('.ac-userName').val(userInfo.uname);
-                    }
-                }
+                isAdmin = $(tab).parent().index() == 1;
             }
         });
+        //表单
+        var form = $('#loginForm form');
+
+        //记住用户名
+        if (uname) {
+            panel.find('.ac-userName').val(uname);
+        }
+
+        //验证码
+        var codeImg = form.find('.ac-verifycode');
+        codeImg.next().andSelf().click(function() {
+            codeImg.attr('src', UI.server + "userManage/captcha-image?" + _.now());
+        });
+        codeImg.attr('src', UI.server + "userManage/captcha-image?" + _.now());
 
         //表单验证
         seajs.use(['ui/notify', 'ui/valid'], function(notify, valid) {
             valid({
-                form: tab.form,
+                form: form,
                 valid: function() {
                     var params = this.serializeObject(true);
                     login(params);
                 }
             });
         });
-        var loginErrorTimes = 0; //登错次数
 
         /**
          * 登录方法
@@ -310,48 +228,18 @@
                 loadtip: true,
                 dataType: "json",
                 type: "POST",
-                data: _.extend({
-                    verifyCode: formObj.verifyCode,
-                    isVerify: !!formObj.verifyCode,
-                    _token_: "1d7717db9be01565471ce860f71c9bb7"
-                }, formObj),
+                data: formObj,
                 success: function(temp) {
                     if (temp.success) {
-                        var user = temp.data;
-                        user.password = formObj.password;
                         $.cookie('uname', user.uname, {
-                            expires: 30
+                            expires: formObj.strcheck ? 30 : undefined
                         });
-                        //勾选自动登录的话记住30天
-                        $.cookie('sid', JSON.stringify(user), {
-                            expires: formObj.strcheck ? 30 : undefined,
-                            path: '/'
-                        });
-                        jumpControl(user.userInfo, targetHash);
+                        location.href = "home.html" + (hash ? '#' + hash : '');
                     } else {
                         $('#errorLabel').html('<i class="f f-warn"></i> ' + temp.msg);
-                        //3次登录失败要求填验证码，当然刷新下页面就没了
-                        if (temp.data) {
-                            if (++loginErrorTimes == 3) {
-                                var codeImg = tab.varifyCode.attr('disabled', false).next();
-                                codeImg.next().andSelf().click(function() {
-                                    codeImg.attr('src', UI.server + "userManage/captcha-image?" + _.now());
-                                }).parent().removeClass('hide');
-                                codeImg.trigger('click');
-                            }
-                        }
                     }
                 }
             });
-        }
-
-        /**
-         * 控制登录后页面跳转
-         * @param  {Object} userInfo userObject
-         * @param  {String} hash 跳转hash
-         */
-        function jumpControl(userInfo, hash) {
-            location.href = "home.html" + (hash ? '#' + hash : '');
         }
 
     });

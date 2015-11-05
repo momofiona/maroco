@@ -228,7 +228,7 @@
         }
         //#开始的匹配hash
         router({
-            '#!apps/*': function(mod) {
+            '!apps/*': function(mod) {
                 seajs.use('apps/' + mod, function(view) {
                     view.show({
                         container: mainbody.empty()
@@ -236,7 +236,7 @@
                 });
                 this.hashMap('apps/' + mod);
             },
-            "#!*": function(mod) {
+            "!*": function(mod) {
                 if (_.indexOf(legalMod, '#!' + mod) > -1) {
                     mainbody.empty().load(mod + '.html', function(res, state, xhr) {
                         if (state == 'error') {
@@ -249,10 +249,11 @@
                     location.hash = legalMod[0];
                 }
             },
-            '#*':function(mod){
+            '*':function(mod){
                 //其他的东西;
                 if(mod=="") location.hash = '!layout';
-            },
+            }
+        },{
             //不以#开头的不去匹配hash
             hashMap: function(mod) {
                 var as=navs.active('[href$="#!' + mod + '"]');

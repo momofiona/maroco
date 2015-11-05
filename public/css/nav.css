@@ -1,0 +1,96 @@
+.nav {
+  list-style: none;
+  overflow: visible;
+  padding: 0;
+  margin: 0;
+  line-height: 20px;
+}
+.nav ul {
+  padding: 0 0 0 14px;
+  margin: 0;
+  display: none;
+}
+.nav ul a {
+  padding: 3px 15px 3px 30px;
+}
+.nav li {
+  margin: 1px 0;
+  list-style: none;
+  *zoom: 1;
+  *position: relative;
+}
+.nav a {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  position: relative;
+  display: block;
+  cursor: pointer;
+  color: #555;
+  text-decoration: none;
+  padding: 5px 15px 5px 34px;
+  _height: 20px;
+  white-space: nowrap;
+  border-radius: 4px;
+}
+.nav a:hover {
+  background-color: #5d5d5d;
+  color: #FFF;
+}
+.nav a.active {
+  background-color: #08C;
+  color: #FFF;
+}
+.nav .nav-cart,
+.nav i {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  line-height: 16px;
+  text-align: center;
+  top: 50%;
+}
+.nav i {
+  margin: -8px 0 0 -26px;
+}
+.nav-cart {
+  padding: 5px;
+  margin-top: -13px;
+  right: 2px;
+  transition: -webkit-transform 0.3s;
+}
+.nav-cart:hover {
+  text-shadow: 0 0 10px #fff;
+}
+.acod {
+  padding: 0;
+  margin: 0 ;
+  list-style: none;
+}
+.acod-item {
+  padding: 0;
+  margin-bottom: 1px;
+}
+.acod-title {
+  clear: both;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+.acod-title .nav-cart {
+  position: static;
+  float: right;
+  padding: 0;
+  margin: 0;
+}
+.acod-con {
+  clear: both;
+  display: none;
+  padding: 5px;
+  margin: 0;
+  list-style: none;
+  background: #fff;
+  color: #333;
+}
+.log .acod-con,
+.silver .acod-con {
+  border-top: solid 1px #eee;
+}

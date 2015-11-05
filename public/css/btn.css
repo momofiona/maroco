@@ -11,7 +11,7 @@
   color: #ab2918 !important;
 }
 .c-info {
-  color: #4abffc !important;
+  color: #71c1ff !important;
 }
 .c-safe {
   color: #129324 !important;
@@ -20,7 +20,7 @@
   color: #478af8 !important;
 }
 .c-warn {
-  color: #f9c832 !important;
+  color: #fbd57d !important;
 }
 .c-gray {
   color: #888 !important;
@@ -76,14 +76,12 @@ button {
   -moz-osx-font-smoothing: grayscale;
   -moz-font-feature-settings: "liga", "kern";
 }
-input[disabled],
-select[disabled],
-textarea[disabled],
-input[readonly],
-select[readonly],
-textarea[readonly] {
-  background-color: #eee;
-}
+/* input, select, textarea {
+    &[disabled], &[readonly] {
+        // cursor: not-allowed !important;
+        // background-color: #eee;
+    }
+} */
 input::-ms-clear {
   display: none;
 }
@@ -371,8 +369,8 @@ a:hover {
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f3f4f5',GradientType=0 );
 }
 .info {
-  background-color: #4abffc;
-  border: 1px solid #4abffc;
+  background-color: #71c1ff;
+  border: 1px solid #71c1ff;
   color: #ffffff !important;
 }
 .note {
@@ -381,9 +379,9 @@ a:hover {
   color: #ffffff !important;
 }
 .warn {
-  background-color: #f9c832;
-  border: 1px solid #f9c832;
-  color: #722626 !important;
+  background-color: #fbd57d;
+  border: 1px solid #fbd57d;
+  color: #8b5f17 !important;
 }
 .error {
   background-color: #ab2918;
@@ -455,8 +453,7 @@ a:hover {
   white-space: nowrap;
   cursor: default;
 }
-.toolbar .cap,
-.cutebar .cap {
+.cap {
   float: left;
   padding: 0 1em;
   margin: 0 -1px 0 0;
@@ -735,6 +732,7 @@ textarea.text[required] {
   *display: inline;
   *zoom: 1;
   transition: top .3s,left .3s;
+  white-space: nowrap;
 }
 .tips .tip {
   position: absolute;
@@ -758,10 +756,10 @@ textarea.text[required] {
   border-color: #478af8;
 }
 .info .tip {
-  border-color: #4abffc;
+  border-color: #71c1ff;
 }
 .warn .tip {
-  border-color: #f9c832;
+  border-color: #fbd57d;
 }
 .error .tip {
   border-color: #ab2918;
@@ -1257,7 +1255,9 @@ input.bl {
 .b[disabled] {
   background: #f4f4f4 !important;
   color: #aaa !important;
-  border-color: #dddddd !important;
+  border-color: #ddd !important;
+  border: solid 1px #ccc !important;
+  cursor: not-allowed !important;
 }
 /*.b[data-dropdown]{
     padding-left: .5em;
@@ -1280,8 +1280,8 @@ input.bl {
 }
 .info-hover,
 .info-active {
-  background-color: #1daffb;
-  border-color: #1daffb;
+  background-color: #43adff;
+  border-color: #43adff;
 }
 .note-hover,
 .note-active {
@@ -1290,8 +1290,8 @@ input.bl {
 }
 .warn-hover,
 .warn-active {
-  background-color: #f6bb07;
-  border-color: #f6bb07;
+  background-color: #fac750;
+  border-color: #fac750;
 }
 .care-hover,
 .care-active {

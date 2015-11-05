@@ -1,0 +1,19 @@
+{
+	"folders":
+	[
+		{
+			"folder_exclude_patterns":
+			[
+				"node_modules",
+				".idea"
+			],
+			"path": "."
+		},
+		{
+			"path": "D:\\workspace\\o2o\\code\\ecology\\ecology-admin-web\\src\\main\\webapp"
+		},
+		{
+			"path": "D:\\workspace\\o2o\\code\\ecology\\ecology-admin-gprs\\src\\main\\webapp"
+		}
+	]
+}

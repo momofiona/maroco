@@ -1,15 +1,16 @@
 <!DOCTYPE html>
-<html class="noscroll">
+<html>
 
 <head>
     <meta charset="utf-8">
-    <title>Maroco UI</title>
+    <title>线上线下移动管理平台</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/maroco.css">
+    <link rel="stylesheet" href="cloud/o2o.css">
     <script src="maroco.js"></script>
-    <style type="text/css">
+    <style>
     html,
     body {
         height: 100%;
@@ -43,9 +44,8 @@
         right: 0;
         left: 199px;
         padding: 0;
-        background: #fff;
+        background: #fafafa;
         border-bottom: 1px solid #d9d9d9;
-        /*box-shadow: 0 0 5px rgba(100, 100, 100, .2);*/
         z-index: 300;
     }
     
@@ -57,47 +57,54 @@
         overflow: hidden;
     }
     
+    #mainbody .main-container {
+        width: 100%;
+        height: 100%;
+    }
+    
     #sidebar {
         z-index: 200;
-        padding: 0;
-        border-width: 0 1px 0 0;
         border-radius: 0;
         width: 199px;
         overflow-x: hidden !important;
         font-size: 12px;
     }
     
-    #sidebar .acod {
-        position: absolute;
+    #sidebar .nav {
+        border-right: solid 1px #ddd;
+        background-color: #fafafa;
+        padding: 0;
         border-top: solid 1px #fff;
+        position: absolute;
         top: 37px;
-        left:-1px;
-        right:-1px;
+        left: 0;
+        right: 0;
         bottom: 0px;
     }
     
-    #sidebar .acod-item {
-        margin-bottom:-1px;
-        border-radius: 0
+    #sidebar .nav .log {
+        margin: -2px 0 0;
+        border-radius: 0;
+        border-width: 1px 0;
     }
     
-    #sidebar .acod-title {
-        font-size: 13px;
+    #sidebar .nav .log:hover {
+        background: #fafafa;
     }
     
-    #sidebar .nav a:hover {
-        background-color: #FBFDFF;
-        color: #f93;
+    #sidebar .nav ul {
+        background-color: #fff;
+        padding: 5px 5px 5px 14px;
     }
     
-    #sidebar .nav a:before {
+    #sidebar .nav ul a:before {
         content: '\20';
-        border: solid 5px transparent;
+        border: solid 4px transparent;
         border-color: transparent transparent transparent #f93;
         width: 0;
         height: 0;
         position: absolute;
-        margin: 5px 0 0 -10px;
+        margin: 6px 0 0 -10px;
     }
     
     #header .dropdown {
@@ -114,7 +121,7 @@
         white-space: nowrap;
     }
     
-    #header .ac-closepen {
+    #header .pg-bdr {
         border-right: solid 1px #ddd;
     }
     
@@ -126,14 +133,13 @@
         margin: 3px 0 4px;
         background-color: #1871ca
     }
-    /* tabs */
     
     #header .tabs {
         position: absolute;
         top: 0;
-        right: 120px;
+        right: 210px;
         overflow: hidden;
-        left: 47px;
+        left: 74px;
         font-size: 12px;
     }
     
@@ -172,7 +178,6 @@
     }
     
     #header .tab a {
-        border-top: 0;
         border-right: solid 1px #ddd;
         border-left: solid 1px #ddd;
         border-radius: 0;
@@ -186,20 +191,31 @@
     
     #header .tab .active a {
         background: #fff;
+        border-top-color: #E46D1C;
     }
     
-    #mainbody .main-container {
-        width: 100%;
-        height: 100%;
+    #sidebar .tabs {
+        background-color: #fafafa;
     }
-    #sidebar .tabs{
-        margin-bottom: 1px;
+    
+    #sidebar .tab {
+        padding: 3px 0 0 3px;
+        height: 33px;
     }
-    #sidebar .tab{
-        padding:3px 3px 0;
+    
+    #sidebar .tab a {
+        padding: 8px 0 9px;
     }
-    #sidebar .tab a{
-        padding:8px 10px;
+    
+    #sidebar .tab a i {
+        margin-right: 2px;
+    }
+    
+    #sitemap {
+        padding: 0;
+        margin: 0;
+        line-height: 30px;
+        max-height: 400px;
     }
     </style>
 </head>
@@ -221,101 +237,80 @@
                 <li><a href="#"><i class="f f-gear"></i>修改密码</a></li>
                 <li><a href="#"><i class="f f-user"></i>通讯录</a></li>
                 <li class="devider"></li>
-                <li><a href="#" class="menu-error"><i class="f f-shutdown"></i>登出</a></li>
+                <li><a href="login.html" class="menu-error"><i class="f f-shutdown"></i>退出</a></li>
             </ul>
         </div>
         <!-- /profile -->
-        <span class="b log xl ac-closepen">
+        <span href="#" class="xr w2 b log ac-msg" style="white-space:nowrap">
+            <i class="f f-bell"></i>
+            <i class="star error">101</i>
+        </span>
+        <span class="b log xl ac-closepen pg-bdr">
             <em class="before"></em>
             <em class="middle"></em>
             <em class="after"></em>
         </span>
+        <a href="#" class="b log xl pg-bdr bi" data-dropdown><i class="f f-arb"></i></a>
+        <div id="sitemap" class="dropdown scroll p">loading...</div>
     </div>
     <!-- sidebar -->
-    <div id="sidebar" class="log">
+    <div id="sidebar">
         <div class="tabs">
             <ul class="tab text-center">
-                <li class="x3"><a href="/?msg" title="短信"><i class="f f-chat"></i></a></li>
-                <li class="active x3"><a href="/index_tab.html" title="流量"><i class="f f-lg f-water"></i>流量</a></li>
-                <li class="x3"><a href="/?gg" title="语音"><i class="f f-lg f-mic"></i></a></li>
+                <li class="x3"><a href="index.html" title="短信"><i class="f f-chat"></i>短信</a></li>
+                <li class="active x3"><a href="index2.html" title="流量"><i class="f f-water"></i>流量</a></li>
+                <li class="x3"><a href="index3.html" title="语音"><i class="f f-mic"></i>语音</a></li>
             </ul>
         </div>
-        <ul class="acod scroll">
-            <li class="log acod-item">
-                <div class="acod-title">短信内容</div>
-                <ul class="acod-con nav">
-                    <li><a href="http://baidu.com">短信审核(群发)</a></li>
-                    <li><a href="http://sina.com">短信审核(新签名)</a></li>
-                    <li><a href="http://qq.com">短信内容列表</a></li>
+        <!-- 菜单  -->
+        <ul class="nav scroll">
+            <li>
+                <li><a href="#/mo/mo1">流量派发</a></li>
+                <li><a href="#2">派发记录</a></li>
+            </li>
+            <li>
+                <a class="log">活动管理</a>
+                <ul>
+                    <li><a href="#4">活动列表</a></li>
+                    <li><a href="#5">创建活动</a></li>
                 </ul>
             </li>
-            <li class="log acod-item">
-                <div class="acod-title">代理管理</div>
-                <ul class="acod-con nav">
-                    <li><a href="http://weibo.com">代理信息查询</a></li>
-                    <li><a href="#1">充值记录</a></li>
-                    <li><a href="#2">消费记录</a></li>
+            <li>
+                <a class="log">发票管理</a>
+                <ul>
+                    <li><a href="#777">发票索取</a></li>
+                    <li><a href="#777">发票信息管理</a></li>
+                    <li><a href="#777">发票列表</a></li>
                 </ul>
             </li>
-            <li class="log acod-item">
-                <div class="acod-title">短信管理</div>
-                <ul class="acod-con nav">
-                    <li><a href="#3">短信群发</a></li>
-                    <li><a href="#4">超大文件群发</a></li>
-                    <li><a href="#5">我的发送记录</a></li>
-                    <li><a href="#6">我的接收记录</a></li>
-                    <li><a href="#7">按网关记录查询发送</a></li>
-                    <li><a href="#8">所有发送记录</a></li>
-                    <li><a href="#9">待审核发送记录</a></li>
-                    <li><a href="#0">审核不通过记录</a></li>
-                    <li><a href="#-">已删除发送记录</a></li>
-                    <li><a href="#=">所有发送记录</a></li>
-                    <li><a href="#q">未报备内容</a></li>
-                    <li><a href="#w">所有接收记录</a></li>
-                    <li><a href="#e">所有定时短信</a></li>
-                </ul>
-            </li>
-            <li><img src="cloud/img/logo.png" alt="" width="180"></li>
         </ul>
     </div>
     <!-- mainbody -->
     <div id="mainbody"></div>
     <!-- /mainbody -->
     <script>
-    seajs.use(['ui/notify', 'ui/rollbar', 'mousewheel'], function() {
+    seajs.use(['ui/notify', 'ui/router'], function(notify, router) {
         var mainbody = $('#mainbody'),
             sidebar = $('#sidebar');
         var navs = UI.navs({
-            el: sidebar.children(".acod"),
-            accordion: true,
-            init: function() {
-                //改写事件绑定，去除对内容的影响
-                var e = this.events;
-                e['click .acod-title'] = e['click a'];
-                e['click a'] = function(e, conf) {
-                    if (!this.target) {
-                        tabs.open({
-                            title: this.innerHTML,
-                            url: $(this).attr('href')
-                        });
-                        return false;
-                    }
-                };
-                delete e['dblclick a']; //去除双击事件
-            },
-            //重写create
-            create: function() {
-                this.$('.acod-title').prepend('<b class="nav-cart f f-down"></b>');
+            el: sidebar.children(".nav"),
+            accordion: true
+        });
+        navs.toggle(navs.$('.log:eq(0)'));
+
+
+        //导航栏上的事件
+        UI({
+            el: $('#header'),
+            events: {
+                'click .ac-closepen': function(e, conf) {
+                    $('body').toggleClass('closepen');
+                }
             }
         });
-        navs.toggle(navs.$('.acod-title:eq(0)'));
 
-/*        //滚动条
-        sidebar.rollbar({
-            scroll:'vertical'
-        });*/
         //tabs
-        var tabs = window.tabs = UI.tabs({
+        var APP = window.APP = UI.tabs({
             el: $('#header .tabs'),
             events: {
                 //关闭tab
@@ -341,7 +336,16 @@
                         this.create();
                     }
                 });
-                //一般使用iframe模式
+                //html模式
+                this.module.extend('html', {
+                    create: function() {
+                        this.panel.load(this.url);
+                    },
+                    reload: function() {
+                        this.panel.empty().load(this.url);
+                    }
+                });
+                //iframe模式
                 this.module.extend('iframe', {
                     create: function() {
                         this.iframe = $('<iframe class="main-container" src="' + this.url + '" frameborder="0"></iframe>').appendTo(this.panel)[0];
@@ -371,7 +375,7 @@
                 },
                 //授权
                 set: function(obj) {
-                    var x = obj.url.lastIndexOf('.js') !== -1 ? this['js'] : this['iframe'];
+                    var x = obj.url.lastIndexOf('.js') !== -1 ? this['js'] : this['html'];
                     _.extend(obj, x);
                     obj.create();
                 }
@@ -388,7 +392,7 @@
                     this.lastTab = this.tab;
                     var id = _.uniqueId("tab_"),
                         title = obj.title,
-                        tab = $('<li>'+(obj.block?'':'<i class="f f-close ac-close"></i>')+'<a panel="#' + id + '" href="#" title="' + title + '">' + title + '</a></li>'),
+                        tab = $('<li>' + (obj.block ? '' : '<i class="f f-close ac-close"></i>') + '<a panel="#' + id + '" href="#" title="' + title + '">' + title + '</a></li>'),
                         panel = $('<div>', {
                             id: id,
                             'class': 'main-container'
@@ -445,56 +449,24 @@
                 }
             }
         });
-        //导航页
-        tabs.open({
-            title:'控制台',
-            block:true,
-            url:'main.html'
-        })
 
-        //导航栏上的事件
-        UI({
-            el: $('#header'),
-            events: {
-                'click .ac-closepen': function(e, conf) {
-                    $('body').toggleClass('closepen');
-                }
-            }
+        //导航页,这是短信的模式，多tab
+        APP.open({
+            title: '控制台',
+            block: true,
+            url: '/gprs/home/'
         });
-        //桌面通知
-        function notifyMe() {
-            // Let's check if the browser supports notifications
-            if (!("Notification" in window)) {
-                return;
+
+        // 这是其余模块的模式
+/*        router({
+            //sms gprs vop等情况下ok
+            '/*': function(mod) {
+                $('#mainbody').load(mod);
+            },
+            '*': function(mod) {
+                location.hash = '/home';
             }
-            var callback = function(pm) {
-                    var notification = new Notification("Hi there!", {
-                        icon: 'css/img/mail.png',
-                        body: '共有211条待审核',
-                        tag: {
-                            n: 12
-                        }
-                    });
-                    notification.onclick = function() {
-                        window.focus();
-                    }
-                }
-                // Let's check whether notification permissions have already been granted
-            if (Notification.permission === "granted") {
-                // If it's okay let's create a notification
-                callback();
-            }
-            // Otherwise, we need to ask the user for permission
-            else if (Notification.permission !== 'denied') {
-                Notification.requestPermission(function(permission) {
-                    // If the user accepts, let's create a notification
-                    if (permission === "granted") {
-                        callback();
-                    }
-                });
-            }
-        }
-        // setTimeout(notifyMe, 1000);
+        });*/
 
     });
     </script>
