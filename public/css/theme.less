@@ -84,3 +84,33 @@ input[type=radio]{
         }
     }
 }
+
+/* scroll  */
+
+.noscroll, .noscroll body {
+    height: 100%;
+    overflow: hidden;
+    .sidebar, .mainbody {
+        height: 100%;
+    }
+}
+//https://css-tricks.com/custom-scrollbars-in-webkit/
+.scroll::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 10px;
+    height: 10px;
+}
+.scroll::-webkit-scrollbar-thumb {
+    min-height: 2rem;
+    background: rgba(0, 0, 0, 0.3);
+    background-clip: padding-box;
+    border: 3px solid transparent;
+    border-radius: 5px;
+}
+.scroll::-webkit-scrollbar-button {
+    display: none;
+}
+.scroll::-webkit-scrollbar-corner {
+    background: transparent;
+}
+// .scroll::-webkit-scrollbar-track {}

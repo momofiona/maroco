@@ -194,6 +194,7 @@ define(function(require, exports, module) {
                         title: '角色',
                         width: 100
                     }],
+                    minWidth:1000,
                     checkbox: true,
                     height: function(grid) {
                         return $(window).height() - $(grid).offset().top;

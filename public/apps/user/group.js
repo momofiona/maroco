@@ -36,7 +36,9 @@ define(function(require, exports, module) {
                     users.load(treeNode);
                 }else{
                     this.groupMenu.hide().next().show();
-                    users.table.reset();
+                    users.table.loader.afterLoad({
+                        total:0
+                    });
                 }
                 this.toolbar.find('.ac-onselect').addClass('hide');
             },

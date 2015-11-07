@@ -145,22 +145,18 @@ h5 {
   font-weight: 600;
 }
 blockquote {
-  padding: 5px 5px 5px 15px;
-  border-left: 4px solid #ddd;
+  padding: 5px 5px 5px 15px !important;
+  border-color: #ddd;
+  border-width: 0 0 0 4px !important;
+  border-style: solid;
   margin: 10px 0;
 }
 mark {
-  background: #eee;
   padding: 0 .5em !important;
-  margin: 0 .3em !important;
-  *zoom: 1;
 }
 code {
-  padding: 2px 4px;
-  font-size: 90%;
   color: #c7254e;
   background-color: #f9f2f4;
-  border-radius: 4px;
 }
 abbr[title] {
   cursor: help;
@@ -218,39 +214,9 @@ abbr[title] {
   white-space: nowrap;
   word-wrap: normal;
 }
-/* scroll */
-.noscroll,
-.noscroll body {
-  height: 100%;
-  overflow: hidden;
-}
-.noscroll .sidebar,
-.noscroll body .sidebar,
-.noscroll .mainbody,
-.noscroll body .mainbody {
-  height: 100%;
-}
 .scroll {
   *zoom: 1;
   overflow: auto !important;
-}
-.scroll::-webkit-scrollbar {
-  -webkit-appearance: none;
-  width: 10px;
-  height: 10px;
-}
-.scroll::-webkit-scrollbar-thumb {
-  min-height: 2rem;
-  background: rgba(0, 0, 0, 0.3);
-  background-clip: padding-box;
-  border: 3px solid transparent;
-  border-radius: 5px;
-}
-.scroll::-webkit-scrollbar-button {
-  display: none;
-}
-.scroll::-webkit-scrollbar-corner {
-  background: transparent;
 }
 .linear {
   background: #f3f4f5 !important;
@@ -275,6 +241,12 @@ abbr[title] {
   text-align: center;
   display: inline-block;
   vertical-align: text-bottom;
+}
+.r {
+  border-radius: 2px !important;
+}
+.r0 {
+  border-radius: 0 !important;
 }
 .r1 {
   border-radius: 0 0 2px 2px !important;
@@ -348,16 +320,18 @@ a:hover {
 .dark,
 .care {
   padding: .3em .5em;
+  border-width: 1px;
+  border-style: solid;
   border-radius: 2px;
 }
 .log {
   background-color: #fafafa;
-  border: 1px solid #eeeeee;
+  border-color: #eeeeee;
   color: #434749 !important;
 }
 .silver {
   background-color: #fafafa;
-  border: 1px solid #eeeeee;
+  border-color: #eeeeee;
   color: #434749 !important;
   background: #f3f4f5;
   background-image: -moz-linear-gradient(top, #ffffff 0%, #f3f4f5 100%);
@@ -370,42 +344,42 @@ a:hover {
 }
 .info {
   background-color: #71c1ff;
-  border: 1px solid #71c1ff;
+  border-color: #71c1ff;
   color: #ffffff !important;
 }
 .note {
   background-color: #478af8;
-  border: 1px solid #478af8;
+  border-color: #478af8;
   color: #ffffff !important;
 }
 .warn {
   background-color: #fbd57d;
-  border: 1px solid #fbd57d;
+  border-color: #fbd57d;
   color: #8b5f17 !important;
 }
 .error {
   background-color: #ab2918;
-  border: 1px solid #ab2918;
+  border-color: #ab2918;
   color: #ffffff !important;
 }
 .safe {
   background-color: #129324;
-  border: 1px solid #129324;
+  border-color: #129324;
   color: #ffffff !important;
 }
 .link {
   background-color: #ffffff;
-  border: 1px solid #478af8;
+  border-color: #478af8;
   color: #478af8 !important;
 }
 .dark {
   background-color: #000000;
-  border: 1px solid #000000;
+  border-color: #000000;
   color: #ffffff !important;
 }
 .care {
   background-color: #fffded;
-  border: 1px solid #fbdf85;
+  border-color: #fbdf85;
   color: #9c6a3d !important;
 }
 /*toolbar*/
@@ -682,13 +656,13 @@ textarea.text[required] {
   min-width: 100px;
   list-style: none;
   overflow: visible;
-  padding: 0;
+  padding: 2px 0;
   margin: 0;
+  line-height: 20px;
 }
 .menu li {
   list-style: none;
   padding: 0;
-  line-height: 20px;
   _zoom: 1;
 }
 .menu input {
@@ -699,7 +673,7 @@ textarea.text[required] {
   cursor: pointer;
   color: #555;
   text-decoration: none;
-  padding: 5px 15px 5px 30px;
+  padding: 7px 15px 7px 30px;
   white-space: nowrap;
 }
 .menu a i {
@@ -707,7 +681,7 @@ textarea.text[required] {
   margin-left: -21px;
 }
 .menu a:hover {
-  background-color: #08c;
+  background-color: #3b88c3;
   color: #fff;
 }
 .menu a.menu-error {
@@ -715,10 +689,10 @@ textarea.text[required] {
 }
 .menu a.menu-error:hover {
   background-color: #ab2918;
-  color: #FFF;
+  color: #fff;
 }
 .menu-noicon a {
-  padding-left: 15px;
+  padding-left: 10px;
 }
 .devider {
   font-size: 1px;
@@ -937,7 +911,6 @@ textarea.text[required] {
   border-radius: 2px;
   background: #FFF;
   border: solid 1px #eee;
-  border-color: rgba(0, 0, 0, 0.15);
   box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.02);
   z-index: 1000;
 }

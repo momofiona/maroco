@@ -149,22 +149,18 @@ h3, h4, h5 {
     font-weight: 600;
 }
 blockquote {
-    padding: 5px 5px 5px 15px;
-    border-left: 4px solid #ddd;
+    padding: 5px 5px 5px 15px !important;
+    border-color: #ddd;
+    border-width: 0 0 0 4px !important;
+    border-style: solid;
     margin: 10px 0;
 }
 mark {
-    background: #eee;
     padding: 0 .5em !important;
-    margin: 0 .3em !important;
-    *zoom: 1;
 }
 code {
-    padding: 2px 4px;
-    font-size: 90%;
     color: #c7254e;
     background-color: #f9f2f4;
-    border-radius: 4px;
 }
 abbr[title] {
     cursor: help;
@@ -216,39 +212,12 @@ abbr[title] {
     //解决scroll继承下来的word-break问题
     word-wrap:normal;
 }
-/* scroll */
 
-.noscroll, .noscroll body {
-    height: 100%;
-    overflow: hidden;
-    .sidebar, .mainbody {
-        height: 100%;
-    }
-}
 .scroll {
     *zoom:1;
     overflow: auto !important;
 }
-//https://css-tricks.com/custom-scrollbars-in-webkit/
-.scroll::-webkit-scrollbar {
-    -webkit-appearance: none;
-    width: 10px;
-    height: 10px;
-}
-.scroll::-webkit-scrollbar-thumb {
-    min-height: 2rem;
-    background: rgba(0, 0, 0, 0.3);
-    background-clip: padding-box;
-    border: 3px solid transparent;
-    border-radius: 5px;
-}
-.scroll::-webkit-scrollbar-button {
-    display: none;
-}
-.scroll::-webkit-scrollbar-corner {
-    background: transparent;
-}
-// .scroll::-webkit-scrollbar-track {}
+
 .linear {
     .linear-gradient() !important;
 }
@@ -265,6 +234,12 @@ abbr[title] {
     text-align: center;
     display: inline-block;
     vertical-align: text-bottom;
+}
+.r {
+    border-radius: @radius !important;
+}
+.r0 {
+    border-radius: 0 !important;
 }
 .r1 {
     border-radius: 0 0 @radius @radius !important;
@@ -325,6 +300,9 @@ a:hover {
 .nobg {
     background: none !important;
 }
+.shadow{
+   
+}
 .noshadow{
     box-shadow: none !important;
 }
@@ -332,11 +310,13 @@ a:hover {
 
 .log, .silver, .info, .note, .warn, .error, .safe, .link, .dark,.care{
     padding: .3em .5em;
+    border-width: 1px;
+    border-style: solid;
     border-radius: @radius;
 }
 .baseFactory(@baseColor, @baseBdColor, @baseFontColor: #fff) {
     background-color: @baseColor;
-    border: 1px solid @baseBdColor;
+    border-color:@baseBdColor;
     color: @baseFontColor !important;
 }
 .log {
@@ -659,13 +639,13 @@ textarea.text{
     // max-width: 360px;
     list-style: none;
     overflow: visible;
-    padding: 0;
+    padding: @radius 0;
     margin: 0;
+    //重要,影响li高度
+    line-height: 20px;
     li {
         list-style: none;
         padding: 0;
-        line-height: 20px;
-        //重要,影响li高度
         _zoom:1;
     }
     input {
@@ -676,27 +656,27 @@ textarea.text{
         cursor: pointer;
         color: #555;
         text-decoration: none;
-        padding: 5px 15px 5px 30px;
+        padding: 7px 15px 7px 30px;
         white-space: nowrap;
         i{
             margin-right: 5px;
             margin-left: -21px;
         }
         &:hover {
-            background-color: #08c;
+            background-color: #3b88c3;
             color: #fff;
         }
         &.menu-error {
             color: @errorColor;
             &:hover {
                 background-color: @errorColor;
-                color: #FFF;
+                color: #fff;
             }
         }
     }
 }
 .menu-noicon a{
-    padding-left: 15px;
+    padding-left: 10px;
 }
 
 .devider {
@@ -718,7 +698,6 @@ textarea.text{
     border-radius: @radius;
     background: #FFF;
     border: solid 1px #eee;
-    border-color:rgba(0, 0, 0, 0.15);
     box-shadow: 0 0 0 3px rgba(0, 0, 0, .02);
     z-index: 1000;
 }
