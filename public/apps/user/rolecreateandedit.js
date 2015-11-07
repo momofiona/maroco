@@ -56,7 +56,7 @@ define(function(require, exports, module) {
                     dataType: 'json',
                     success: function(v) {
                         var s = '<ul class="menu">',
-                            cache = v.result[0].roles;
+                            cache = v.data[0].roles;
                         //这里需要错误处理
                         _.each(cache, function(o, i) {
                             s += '<li style="padding:5px 10px;"><label' + (o.power ? ' class="c-safe"' : '') + '><input type="checkbox" value="' + i + '"> ' + o.name + ' (' + o.orgName + ')</label></li>';

@@ -164,7 +164,6 @@ define(function(require, exports, module) {
                         },
                         //编辑权限
                         'click .ac-roleedit': function(e, tr, data, conf) {
-                            e.stopPropagation();
                             seajs.use(['apps/user/rolecreateandedit'], function(edit) {
                                 edit.show({
                                     isEdit: true,
@@ -174,11 +173,11 @@ define(function(require, exports, module) {
                                     }
                                 });
                             });
-                            return false;
                         },
                         //删除权限
                         'click .ac-roleremove': function(e, tr, data, conf) {
                             e.stopPropagation();
+                            e.preventDefault();
                             notify.confirm({
                                 msg:'确定要删除: '+data.name+' ?',
                                 callback:function(b){
@@ -191,7 +190,6 @@ define(function(require, exports, module) {
                                     }
                                 }
                             });
-                            return false;
                         }
                     },
                     //转换 
@@ -203,14 +201,14 @@ define(function(require, exports, module) {
                         });
                     },
                     create: function() {
-                        this.find('.ac-addrole').click(function() {
+                        this.table.find('.ac-addrole').click(function() {
                             console.log(this.title);
                         });
                     },
                     afterLoad: function(data, cache) {
                         //选中第一个点击
-                        this.find('tbody tr').first().trigger('click');
-                        roles.roleNum.html(data.result.length);
+                        this.tbody.children().first().trigger('click');
+                        roles.roleNum.html(data.data.length);
                     },
                     url: '/json/getRoleByOrgIds',
                     baseparams: {}
@@ -332,7 +330,7 @@ define(function(require, exports, module) {
                     this.loader = UI.loader({
                         url: '/json/getPowers',
                         afterLoad: function(data) {
-                            _powers.render(data.result);
+                            _powers.render(data.data);
                         }
                     });
                 }
@@ -360,7 +358,7 @@ define(function(require, exports, module) {
             <td><label class="log xl"><input type="checkbox" class="ac-check-model va-tb"> {{=model.name}}</label></td>\
             <td class="p11">{{~model.funs :fun:n}}<label class="xl w4 m5{{?fun.power}} c-safe{{?}}"><input type="checkbox" value="{{=fun.id}}"{{?fun.power}} checked{{?}} class="ac-check-fun va-tb"> {{=fun.name}}</label>{{~}}</td>\
             </tr>{{~}}</tbody>{{~}}</table>\
-            <p class="p text-right"><b class="b note ac-save w6 m2"><i class="f f-save"></i>  保存更改</b> <input type="reset" class="b log m4" value="重置"> </p></form>'),
+            <p class="p text-right"><b class="b note ac-save w6 m2"><i class="f f-save mr"></i>保存更改</b> <input type="reset" class="b log m4" value="重置"> </p></form>'),
             render: function(data) {
                 this.el.html(this.template(data));
             },

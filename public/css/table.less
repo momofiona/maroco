@@ -1,6 +1,7 @@
 /* ctable */
-
-.ctable table,table.ctable{
+@ctableGray:#f5f5f5;
+.ctable table,
+table.ctable {
     table-layout: fixed;
     border-collapse: collapse;
     border: none;
@@ -21,11 +22,15 @@
     th {
         color: #333;
         font-size: 13px;
-        background-color: #f5f5f5;
+        background-color: @ctableGray;
         font-weight: normal;
         text-shadow: 1px 1px 0px #FFF;
         box-shadow: inset 1px 1px 0px #FFF;
     }
+    .scroll::-webkit-scrollbar {
+        background: @ctableGray;
+    }
+    //line
     .line {
         padding: 8px;
         margin: -9px -8px 9px;
@@ -45,9 +50,9 @@
     }
     .ctable-hover {
         background: #ffffcb;
-    .vhide {
-        visibility: visible;
-    }
+        .vhide {
+            visibility: visible;
+        }
     }
     .chandler {
         &:extend(.user-select);
@@ -68,7 +73,6 @@
     }
 }
 
-
 .ctable-head,
 .ctable-body {
     border: solid 1px #ddd;
@@ -86,7 +90,7 @@
 .ctable-head {
     z-index: 1;
     margin-bottom: -1px;
-    background-color: #f5f5f5;
+    background-color: @ctableGray;
     & th:last-child {
         border-right-width: 0;
     }
@@ -100,7 +104,7 @@
     background-size: 50px 76px;
     background-image: linear-gradient(transparent 50%, #fcfcfc 50%, #fcfcfc);
     .chandler {
-        background: #f5f5f5 url(img/handler.png) repeat-y;
+        background: @ctableGray url(img/handler.png) repeat-y;
         cursor: move;
     }
     .ui-sortable-helper td {
