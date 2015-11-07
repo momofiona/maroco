@@ -6,11 +6,11 @@
             seajs.use(['ui', 'ui/router'], function(UI, router) {
                 //IE67当第一次调用router的时候
                 router({
-                    //以#开头的属性会和hash去匹配
-                    '#layout/:id': "method",
-                    "#*": function(mod) {
+                    'layout/:id': "method",
+                    "*": function(mod) {
                         //从上到下匹配，取第一个执行，没有则不执行
                     },
+                },{
                     //自定义属性，不参加匹配
                     method:function(){}
                 })

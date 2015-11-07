@@ -77,7 +77,7 @@
     //根据组织ID返回所有权限(role.js用到)
     Mock.mock(/\/json\/getRoleByOrgIds(\?.*)?/, 'get', {
         "total": 12,
-        "result|2-5": [{
+        "data|2-5": [{
             "id": "@GUID",
             "name": "@WORD",
             "power": '@boolean',
@@ -96,7 +96,7 @@
     //根据组织ID返回所有权限(map形式返回)
     Mock.mock(/\/json\/getRoleMapByOrgIds(\?.*)?/, 'get', {
         "total": 12,
-        "result|2-5": [{
+        "data|2-5": [{
             'orgId':'org1',
             'orgName':'@WORD',
             'roles|3-6':[{
@@ -130,7 +130,7 @@
     //根据角色ID返回所有权限 app  model fun
     Mock.mock(/\/json\/getPowers(\?.*)?/, 'get', {
         "total": 12,
-        "result|1-2": [{
+        "data|1-2": [{
             "id": "@GUID",
             "name": "@WORD",
             "models|3-9": [{

@@ -4,20 +4,56 @@
 		"selected_items":
 		[
 			[
+				"back",
+				"background"
+			],
+			[
+				"margin",
+				"margin-bottom"
+			],
+			[
+				"scroll",
+				"scrollbar"
+			],
+			[
+				"text",
+				"text-shadow"
+			],
+			[
+				"con",
+				"config"
+			],
+			[
+				"remove",
+				"removeClass"
+			],
+			[
+				"order",
+				"orderCol"
+			],
+			[
+				"base",
+				"baseparams"
+			],
+			[
+				"ali",
+				"alias"
+			],
+			[
+				"ba",
+				"baseparams"
+			],
+			[
+				"cou",
+				"countAlias"
+			],
+			[
 				"d",
 				"disabled	Attr"
 			],
 			[
 				"over",
 				"overflow"
-			],
-			[
-				"margin",
-				"margin-top"
-			],
-			[
-				"back",
-				"background-color"
 			],
 			[
 				"nav",
@@ -50,10 +86,6 @@
 			[
 				"in",
 				"inside"
-			],
-			[
-				"ba",
-				"background-color"
 			],
 			[
 				"bor",
@@ -182,10 +214,6 @@
 			[
 				"full",
 				"fullscreen"
-			],
-			[
-				"text",
-				"text-align"
 			],
 			[
 				"curr",
@@ -486,34 +514,6 @@
 			[
 				"filtL",
 				"fileList"
-			],
-			[
-				"userinfo",
-				"USERINFO"
-			],
-			[
-				"proje",
-				"projectData"
-			],
-			[
-				"project",
-				"projectData"
-			],
-			[
-				"bu",
-				"buttons"
-			],
-			[
-				"remove",
-				"removeNode"
-			],
-			[
-				"de",
-				"decodeURIComponent"
-			],
-			[
-				"ow",
-				"ownerIds"
 			]
 		]
 	},
@@ -523,39 +523,7 @@
 			"file": "public/css/base.less",
 			"settings":
 			{
-				"buffer_size": 20465,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp/m/products.jsp",
-			"settings":
-			{
-				"buffer_size": 3359,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp/m/products_remaining.jsp",
-			"settings":
-			{
-				"buffer_size": 2269,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp/m/index.jsp",
-			"settings":
-			{
-				"buffer_size": 3550,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "public/js/ui/notify.js",
-			"settings":
-			{
-				"buffer_size": 13372,
+				"buffer_size": 20410,
 				"line_ending": "Windows"
 			}
 		}
@@ -693,7 +661,6 @@
 		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF",
 		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp",
 		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp/m",
-		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp/user",
 		"/D/workspace/o2o/code/ecology/ecology-admin-gprs/src/main/webapp",
 		"/D/workspace/o2o/code/ecology/ecology-admin-gprs/src/main/webapp/WEB-INF",
 		"/D/workspace/o2o/code/ecology/ecology-admin-gprs/src/main/webapp/WEB-INF/jsp",
@@ -701,19 +668,55 @@
 	],
 	"file_history":
 	[
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/static/js/ui/valid.js",
+		"/D/github/maroco/public/apps/user/user.js",
+		"/D/github/maroco/public/apps/user/rolecreateandedit.js",
+		"/D/github/maroco/public/example/api.js",
+		"/D/github/maroco/public/apps/user/role.js",
+		"/D/github/maroco/public/apps/pan/main.js",
+		"/D/github/maroco/public/js/ui/grid.js",
+		"/D/github/maroco/public/js/ui/table.js",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/static/js/ui/ui.js",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/static/js/ui/router.js",
+		"/D/github/maroco/public/example/router.html",
+		"/D/github/maroco/public/js/ui/notify.js",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp/product/list.jsp",
+		"/D/github/maroco/public/css/layout.less",
+		"/D/github/maroco/public/css/base.less",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp/m/products_remaining.jsp",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp/login.jsp",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp/index.jsp",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp/include.inc.jsp",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp/homeTemplate.jsp",
+		"/D/workspace/o2o/code/ecology/ecology-admin-gprs/src/main/webapp/WEB-INF/jsp/gprs/prise.jsp",
+		"/D/github/maroco/public/css/table.less",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp/m/products - 副本.jsp",
+		"/C/Users/momo/Desktop/111.tsex",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/static/js/ui/table.js",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp/m/products.jsp",
+		"/D/workspace/移动云主干/apps/pan/main_pan.js",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/static/js/ui/grid.js",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/static/js/ui/event.js",
+		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/static/js/ui/rollbar.js",
+		"/D/github/maroco/public/apps/user/main.js",
+		"/D/github/maroco/public/example/table.html",
+		"/D/github/maroco/README.md",
+		"/D/github/maroco/public/home.html",
+		"/D/github/maroco/public/apps/pan/main.html",
+		"/D/github/maroco/public/js/ui/rollbar.js",
+		"/D/workspace/移动云主干/apps/pan/main.js",
+		"/D/github/maroco/public/js/ui/valid.js",
+		"/D/github/maroco/public/js/ui/router.js",
 		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp/o2o/province",
 		"/C/Users/momo/Desktop/react-0.14.2/examples/basic/index.html",
 		"/D/github/node_modules/react/addons.js",
 		"/D/github/node_modules/react/lib/ReactWithAddons.js",
 		"/C/Users/momo/Desktop/react-0.14.2/build/react-dom.js",
 		"/C/Users/momo/Desktop/react-0.14.2/build/react-with-addons.js",
-		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/static/js/ui/table.js",
 		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp/m/product_gprs_config.jsp",
 		"/C/Users/momo/Desktop/全国省市区数据库/全国地名SQL-Server版.sql",
 		"/C/Users/momo/Desktop/全国省市区数据库/MySQL.sql",
-		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/static/js/ui/ui.js",
 		"/D/github/maroco/public/js/ui/ui.js",
-		"/D/github/maroco/public/js/ui/valid.js",
 		"/D/github/maroco/public/css/tips.less",
 		"/D/github/maroco/public/css/nav.less",
 		"/D/github/maroco/public/css/theme.less",
@@ -721,7 +724,6 @@
 		"/D/github/maroco/public/js/ui/picasa.js",
 		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/static/cloud/phonebook/vm_import.js",
 		"/D/github/maroco/public/js/ui/upload.js",
-		"/D/github/maroco/public/js/ui/notify.js",
 		"/D/github/maroco/public/example/searchbox.html",
 		"/D/github/maroco/public/js/ui/buttonset.js",
 		"/D/github/maroco/routes/upload.js",
@@ -734,13 +736,10 @@
 		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp/user/profile.jsp",
 		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp/regist.jsp",
 		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp/passback.jsp",
-		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp/login.jsp",
 		"/D/workspace/o2o/code/ecology/ecology-admin-gprs/src/main/webapp/WEB-INF/jsp/gprs/index.jsp",
 		"/D/workspace/o2o/code/ecology/ecology-admin-gprs/src/main/webapp/WEB-INF/jsp/gprs/home.jsp",
-		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp/include.inc.jsp",
 		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp/user/passback.jsp",
 		"/D/github/maroco/public/css/btn.less",
-		"/D/github/maroco/public/css/base.less",
 		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/static/css/base.less",
 		"/D/github/maroco/public/css/normalize.less",
 		"/D/github/maroco/public/css/maroco.less",
@@ -748,7 +747,6 @@
 		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp/m/users.jsp",
 		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/static/cloud/login.less",
 		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp/m/phonebook.jsp",
-		"/D/github/maroco/public/example/table.html",
 		"/D/workspace/移动云主干/admin/org/department/_department.js",
 		"/D/workspace/o2o/code/ecology/ecology-admin-gprs/src/main/webapp/WEB-INF/jsp/gprs/profile.jsp",
 		"/D/workspace/移动云主干/admin/org/department/edituser.js",
@@ -760,13 +758,9 @@
 		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp/m/user/passback.jsp",
 		"/D/workspace/o2o/code/ecology/ecology-admin-gprs/src/main/webapp/WEB-INF/jsp/gprs/users.jsp",
 		"/D/workspace/o2o/code/ecology/ecology-admin-gprs/src/main/webapp/WEB-INF/web.xml",
-		"/D/github/maroco/public/js/ui/table.js",
-		"/D/github/maroco/public/js/ui/grid.js",
-		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/static/js/ui/grid.js",
 		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/static/css/animate.css",
 		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/static/login.html",
 		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp/master.jsp",
-		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/static/js/ui/event.js",
 		"/D/workspace/o2o/code/ecology/out/WEB-INF/classes/META-INF/spring-context.xml",
 		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/static/cloud/home.css",
 		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/static/cloud/o2o.css",
@@ -777,9 +771,7 @@
 		"/D/github/maroco/public/login2.html",
 		"/D/github/maroco/public/login.html",
 		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/static/maroco.js",
-		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/static/js/ui/router.js",
 		"/D/github/maroco/public/example/index.html",
-		"/D/github/maroco/public/js/ui/router.js",
 		"/D/github/maroco/public/css/anime.less",
 		"/D/github/maroco/public/css/maroco.css",
 		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/static/cloud/com.js",
@@ -795,7 +787,6 @@
 		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/js/ui/ui.js",
 		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/css/base.less",
 		"/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/cloud/file.js",
-		"/D/github/maroco/public/css/layout.less",
 		"/D/apps/Sublime Text 3/Data/Packages/HTML-CSS-JS Prettify/HTMLPrettify.sublime-settings",
 		"/D/apps/apache-maven-3.2.1/conf/settings.xml",
 		"/D/github/maroco/maroco.sublime-project",
@@ -804,31 +795,7 @@
 		"/D/sugon/移动云主干/index.html",
 		"/D/github/maroco/public/example/icon.html",
 		"/D/github/maroco/public/example/notify.html",
-		"/D/github/maroco/public/maroco.js",
-		"/D/github/maroco/public/css/icomoon/style.css",
-		"/D/github/maroco/public/apps/pan/main.js",
-		"/D/github/maroco/public/example/text.html",
-		"/D/github/maroco/public/temp/js/ui/notify.js",
-		"/D/github/maroco/public/temp/js/ui/valid.js",
-		"/D/github/maroco/public/apps/user/user.js",
-		"/D/github/maroco/public/apps/user/rolecreateandedit.js",
-		"/D/github/maroco/public/apps/user/role.js",
-		"/D/github/maroco/public/temp/js/ui/upload.js",
-		"/D/github/maroco/public/css/icomoon/bak/selection.json",
-		"/D/github/maroco/public/css/icomoon/demo-files/demo.js",
-		"/C/Users/Rong/AppData/Local/Temp/Temp1_icomoon (1).zip/ie7/ie7.css",
-		"/C/Users/Rong/Desktop/1.html",
-		"/D/360/blog/_config.yml",
-		"/D/sugon/phantom/test.js",
-		"/D/xampp/htdocs/index.php",
-		"/C/Users/Rong/Desktop/appframework-master/templates/drawer.html",
-		"/D/360/friends/x熊明威/layout/html/img/style.css",
-		"/D/360/friends/x熊明威/layout/html/index.html",
-		"/D/360/friends/k开云/晋商/微网站/assets/css/app.css",
-		"/D/360/friends/k开云/晋商/微网站/news.html",
-		"/D/360/friends/x熊明威/layout/html/vendor/jquery.ui.touch-punch.min.js",
-		"/D/sugon/移动云主干/css/maroco.css",
-		"/D/360/friends/x熊明威/layout/html/img/style.less"
+		"/D/github/maroco/public/maroco.js"
 	],
 	"find":
 	{
@@ -839,6 +806,9 @@
 		"height": 204.0,
 		"where_history":
 		[
+			"D:\\workspace\\o2o\\code\\ecology\\ecology-admin-web\\src\\main\\webapp\\WEB-INF\\jsp",
+			"D:\\github\\maroco\\public\\js\\ui",
+			"D:\\github\\maroco\\public",
 			"D:\\workspace\\o2o\\code\\ecology\\ecology-admin-web\\src\\main\\webapp",
 			"D:\\workspace\\o2o\\code\\ecology\\ecology-admin-web\\src\\main\\webapp\\WEB-INF",
 			"D:\\github\\maroco\\public",
@@ -969,139 +939,139 @@
 		"case_sensitive": false,
 		"find_history":
 		[
-			"> <",
-			"group",
-			",",
-			"， ，",
-			"， ， ， ，",
-			"， ， ，",
-			"<.*?>",
-			"<option value=\"\">",
-			"新疆",
-			"青海",
-			"陕西",
-			"贵州",
-			"重庆",
-			"广西",
-			"广东",
-			"湖南",
-			"湖北",
-			"江西",
-			"河南",
-			"山东",
-			"黑龙江",
-			"香港",
-			"澳门",
-			"台湾",
-			"湖北",
-			"山东",
-			"福建",
-			"安徽",
-			"浙江",
-			"江苏",
-			"上海",
-			"辽宁",
-			"内蒙古",
-			"山西",
-			"河北",
-			"天津",
-			"北京",
-			"河南",
-			"广东",
-			"重庆",
-			"贵州",
-			"四川",
-			"广西",
-			"海南",
-			"山东",
-			"上海",
-			"天津",
-			"北京",
-			"},{",
-			",\"name\"",
-			"\"id\":",
-			"[{\"id\":",
-			"、",
-			"\n                <option value=\"1\">江苏</option>",
-			"、",
-			"/m/products?pid=",
-			"/m/products?pid=1",
-			"navs",
-			" class=\"menu\"",
-			"<b class=\"f f-down mr\"></b>",
-			"class=\"log\"",
-			"div",
-			"navs",
-			"xr ",
-			" tab-con",
-			"right",
-			" nav-open",
-			"down",
-			"nav-cart ",
-			"nav",
-			"navs",
-			"a",
-			"td",
-			"index",
-			" data-index=\"0\"",
-			"td>",
-			"td",
-			"行业",
-			" class=\" \"",
-			"class=\"\" ",
+			"右键",
+			"click",
+			"context",
+			"template",
+			"events",
+			"ac-roleedit",
+			"url",
+			"m_products_table",
+			"5",
+			".mr",
+			"m/products_remaining",
 			"ctable",
-			"iframe",
-			"validateField",
-			"showLabel",
-			"within",
-			"msg",
-			"tips",
-			"lt",
-			"of",
-			"tips",
-			"valid",
-			"showLabel",
-			"allRules",
-			"showLabel",
-			"msg",
-			"tips",
-			"GUID",
-			"callback",
-			"oninput",
-			"opt",
-			"valid:",
-			"loadtip",
-			"..",
-			"href",
-			"include.inc.jsp",
-			"找回",
-			"valid",
-			"notify",
-			"valid",
-			"disabled",
-			"w10",
-			"w8",
-			"w14",
-			"w5",
-			"w10",
-			"14",
-			"h3",
-			"h2",
-			"h1",
-			"span",
-			"loginForm",
-			"isAdmin",
-			"loginForm",
-			"w8",
-			"h3",
-			"h2",
-			"h1",
-			"div"
+			"<table>",
+			"#f5f5f5",
+			".scroll",
+			"url:",
+			"(window).height() -",
+			"x:",
+			".ctable-fullwidth",
+			"520",
+			"isScrolling",
+			"30",
+			"100",
+			"offsetWidth",
+			"sbh",
+			"isScrolling",
+			"layout",
+			">",
+			"head",
+			"ctable-head-inner",
+			"headInner",
+			"head",
+			"head-inner",
+			"ui.",
+			"chandler",
+			"head",
+			"border-right: none;",
+			"padding",
+			"滚动同步",
+			"event",
+			"onscroll",
+			"_fullWidth",
+			"shadow",
+			">table",
+			"layout",
+			"body",
+			"table",
+			"height",
+			"isScrolling",
+			"layout",
+			"height",
+			"isScrolling",
+			"rollbar-content",
+			"fdfdfd",
+			"transparent",
+			"74",
+			"first",
+			"fakedata_demo.json",
+			"ctable-head",
+			"body.height",
+			"height(",
+			"height",
+			"hidef",
+			"hidehead",
+			"ebtn",
+			"scroll",
+			"_body",
+			"rollbar",
+			"beforeLoad",
+			"sortableSwitch",
+			"beforeLoad",
+			"afterLoad",
+			"result",
+			"api",
+			"parseData",
+			"url",
+			".json",
+			"url",
+			"parseData",
+			"'),\n",
+			"reset",
+			"cache =",
+			"config.cache",
+			"thead",
+			"update",
+			"tr",
+			"getRowData",
+			"getSelectedData",
+			"loader",
+			"setOrder",
+			" .order",
+			".order",
+			"thead",
+			"onOrderChange",
+			"order",
+			"alias",
+			"\n    ",
+			"height(",
+			"height",
+			"getData",
+			"data-index",
+			"getRowData",
+			"data-index",
+			"index",
+			"data-index",
+			"hidefoot",
+			"checkall",
+			"spaging",
+			"paging",
+			"spaging",
+			"foot",
+			"tfoot",
+			"scrollBody",
+			"silen",
+			"checked",
+			"checkbox",
+			"config",
+			"this",
+			"contentEl",
+			"getBody()",
+			"silent",
+			"ctable.getBody()",
+			"events",
+			"selectAll",
+			"tbody",
+			"config",
+			"append",
+			"cache"
 		],
 		"highlight": true,
 		"in_selection": false,
 		"preserve_case": true,
-		"regex": true,
+		"regex": false,
 		"replace_history":
 		[
 			"f-done",
@@ -1130,7 +1100,7 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 0,
 			"sheets":
 			[
 				{
@@ -1139,15 +1109,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 20465,
+						"buffer_size": 20410,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								297,
-								297
+								7383,
+								7383
 							]
 						],
 						"settings":
@@ -1158,130 +1128,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp/m/products.jsp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3359,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2933,
-								2933
-							]
-						],
-						"settings":
-						{
-							"origin_encoding": "UTF-8",
-							"syntax": "Packages/Java/Java Server Pages (JSP).tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp/m/products_remaining.jsp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2269,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1147,
-								1147
-							]
-						],
-						"settings":
-						{
-							"origin_encoding": "UTF-8",
-							"syntax": "Packages/Java/Java Server Pages (JSP).tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 360.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "/D/workspace/o2o/code/ecology/ecology-admin-web/src/main/webapp/WEB-INF/jsp/m/index.jsp",
-					"semi_transient": true,
-					"settings":
-					{
-						"buffer_size": 3550,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								738,
-								738
-							]
-						],
-						"settings":
-						{
-							"origin_encoding": "UTF-8",
-							"syntax": "Packages/Java/Java Server Pages (JSP).tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 6845.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "public/js/ui/notify.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 13372,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3009,
-								3013
-							]
-						],
-						"settings":
-						{
-							"origin_encoding": "UTF-8",
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 2261.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
 					"type": "text"
 				}
 			]
@@ -1340,12 +1190,96 @@
 		"selected_items":
 		[
 			[
+				"main.js",
+				"maroco\\public\\apps\\pan\\main.js"
+			],
+			[
+				"grid.js",
+				"maroco\\public\\js\\ui\\grid.js"
+			],
+			[
+				"api.js",
+				"maroco\\public\\example\\api.js"
+			],
+			[
 				"table.js",
-				"webapp\\static\\js\\ui\\table.js"
+				"maroco\\public\\js\\ui\\table.js"
+			],
+			[
+				"roleedit",
+				"maroco\\public\\apps\\user\\rolecreateandedit.js"
 			],
 			[
 				"ui.js",
 				"webapp\\static\\js\\ui\\ui.js"
+			],
+			[
+				"role.js",
+				"maroco\\public\\apps\\user\\role.js"
+			],
+			[
+				"user.js",
+				"maroco\\public\\apps\\user\\user.js"
+			],
+			[
+				"route.html",
+				"maroco\\public\\example\\router.html"
+			],
+			[
+				"route.js",
+				"webapp\\static\\js\\ui\\router.js"
+			],
+			[
+				"valid.",
+				"webapp\\static\\js\\ui\\valid.js"
+			],
+			[
+				"notify.js",
+				"maroco\\public\\js\\ui\\notify.js"
+			],
+			[
+				"layout.less",
+				"maroco\\public\\css\\layout.less"
+			],
+			[
+				"base.less",
+				"maroco\\public\\css\\base.less"
+			],
+			[
+				"prise.",
+				"webapp\\WEB-INF\\jsp\\gprs\\prise.jsp"
+			],
+			[
+				"ctable",
+				"maroco\\public\\css\\table.less"
+			],
+			[
+				"ctable.less",
+				"maroco\\public\\css\\table.less"
+			],
+			[
+				"table.html",
+				"maroco\\public\\example\\table.html"
+			],
+			[
+				"rollbar.js",
+				"webapp\\static\\js\\ui\\rollbar.js"
+			],
+			[
+				"rollbar",
+				"maroco\\public\\js\\ui\\rollbar.js"
+			],
+			[
+				"event.js",
+				"webapp\\static\\js\\ui\\event.js"
+			],
+			[
+				"valid.js",
+				"webapp\\static\\js\\ui\\valid.js"
+			],
+			[
+				"route",
+				"webapp\\static\\js\\ui\\router.js"
 			],
 			[
 				"nav.less",
@@ -1354,10 +1288,6 @@
 			[
 				"theme.less",
 				"maroco\\public\\css\\theme.less"
-			],
-			[
-				"base.less",
-				"maroco\\public\\css\\base.less"
 			],
 			[
 				"picasa.js",
@@ -1369,14 +1299,6 @@
 			],
 			[
 				"notify",
-				"maroco\\public\\js\\ui\\notify.js"
-			],
-			[
-				"valid.js",
-				"maroco\\public\\js\\ui\\valid.js"
-			],
-			[
-				"notify.js",
 				"maroco\\public\\js\\ui\\notify.js"
 			],
 			[
@@ -1416,10 +1338,6 @@
 				"webapp\\WEB-INF\\jsp\\login.jsp"
 			],
 			[
-				"table.html",
-				"maroco\\public\\example\\table.html"
-			],
-			[
 				"icon.less",
 				"maroco\\public\\css\\icon.less"
 			],
@@ -1434,10 +1352,6 @@
 			[
 				"m/index.j",
 				"webapp\\WEB-INF\\jsp\\m\\index.jsp"
-			],
-			[
-				"grid.js",
-				"maroco\\public\\js\\ui\\grid.js"
 			],
 			[
 				"login.html",
@@ -1468,14 +1382,6 @@
 				"maroco\\public\\example\\index.html"
 			],
 			[
-				"event.js",
-				"webapp\\static\\js\\ui\\event.js"
-			],
-			[
-				"route.js",
-				"webapp\\static\\js\\ui\\router.js"
-			],
-			[
 				"maroco.cs",
 				"maroco\\public\\css\\maroco.css"
 			],
@@ -1494,10 +1400,6 @@
 			[
 				"login.",
 				"webapp\\static\\login.html"
-			],
-			[
-				"layout.less",
-				"public\\css\\layout.less"
 			],
 			[
 				"index_",
@@ -1536,20 +1438,12 @@
 				"maroco\\.jshintrc"
 			],
 			[
-				"rollbar.js",
-				"maroco\\public\\js\\ui\\rollbar.js"
-			],
-			[
 				"gulp",
 				"maroco\\public\\gulpfile.js"
 			],
 			[
 				"ui.",
 				"maroco\\public\\js\\ui\\ui.js"
-			],
-			[
-				"rollbar",
-				"maroco\\public\\js\\ui\\rollbar.js"
 			],
 			[
 				"sea.config.",
@@ -1630,10 +1524,6 @@
 			[
 				"video",
 				"移动云主干\\video_player.html"
-			],
-			[
-				"ctable.less",
-				"移动云主干\\css\\table.less"
 			],
 			[
 				"department",
@@ -1792,10 +1682,6 @@
 				"移动云主干\\cloud\\login.js"
 			],
 			[
-				"main.js",
-				"移动云主干\\apps\\projectManage\\main.js"
-			],
-			[
 				"features",
 				"移动云主干\\admin\\sys\\features\\_features.html"
 			],
@@ -1814,42 +1700,6 @@
 			[
 				"public.html",
 				"移动云主干\\cloud\\public.html"
-			],
-			[
-				"vm_p",
-				"移动云主干\\cloud\\vm_powers.js"
-			],
-			[
-				"projectmanage/main.js",
-				"移动云主干\\apps\\projectManage\\main.js"
-			],
-			[
-				"public",
-				"移动云主干\\cloud\\public.html"
-			],
-			[
-				"sea.confi",
-				"maroco\\public\\js\\sea.config.js"
-			],
-			[
-				"girlfr",
-				"移动云主干\\example\\girlfriend.html"
-			],
-			[
-				"menuj.s",
-				"移动云主干\\js\\ui\\menu.js"
-			],
-			[
-				"js/vendor/plupload/plupload",
-				"移动云主干\\js\\vendor\\plupload\\plupload.dev.js"
-			],
-			[
-				"main_",
-				"移动云主干\\apps\\pan\\main_pan.js"
-			],
-			[
-				"uploader",
-				"移动云主干\\js\\ui\\uploader.js"
 			]
 		],
 		"width": 0.0
