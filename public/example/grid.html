@@ -40,6 +40,9 @@ seajs.use(['ui/grid', 'ui/notify'], function(grid, notify) {
             title: '操作',
             style: "width:  12%"
         }],
+        beforeLoad: function() {
+
+        },
         events: {
             'click .ac-getdata': function(e, conf) {
                 console.log(conf.getRowData(this));
@@ -50,7 +53,7 @@ seajs.use(['ui/grid', 'ui/notify'], function(grid, notify) {
             //这边返回table矩阵[[01,02,03],[11,12,13]] 用于输出的内容
             return _.map(records, function(record, i) {
                 return [
-                    '<img width="30" class="va-m" height="30" src="'+record.thumb+'">',
+                    '<img width="30" class="va-m" height="30" src="' + record.thumb + '">',
                     record.cname,
                     record.address,
                     record.sendtime,
@@ -74,7 +77,47 @@ seajs.use(['ui/grid', 'ui/notify'], function(grid, notify) {
         //需要固定提交的参数
         baseparams: {
             token: 'FFASLE*&EFFA^%$#ef'
-        }
+        },
+        //contextmenu 右键菜单
+        contextmenu: {
+            events: {
+                'click .ac-pig': function(e, conf) {
+                    alert('老猪来娶你了~' + conf.data[0].cname);
+                    console.log(conf.data);
+                },
+                'click .ac-kulo': function(e, conf) {
+                    console.log(conf.data);
+                }
+            },
+            menus: [{
+                label: '猪八戒 (选择多项时隐藏)',
+                cls: 'ac-pig',
+                //当test返回true的时候显示
+                test: function(data) {
+                    //这里禁止对data进行修改
+                    return data.length == 1;
+                }
+            }, {
+                label: '<i class="f f-done c-safe"></i>白骨精 （选择多项时出现）',
+                cls: 'ac-kulo',
+                //当test返回true的时候显示
+                test: function(data) {
+                    //这里禁止对data进行修改
+                    return data.length > 1;
+                }
+            }, {
+                label: '蜘蛛精',
+                //添加新页面打开外链的方法，注意总共有3个双引号
+                href: 'http://baidu.com/s?wd=蜘蛛精" target="_blank"'
+            }, '', {
+                label: '<i class="f f-location"></i>蜘猪精',
+                cls: 'menu-error',
+                //动态添加链接也是可以的
+                href: function(data) {
+                    return 'https://github.com/momofiona/maroco" target="_blank"';
+                }
+            }]
+        },
     });
     cgrid.load();
 });

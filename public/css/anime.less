@@ -3,10 +3,6 @@
 //IE6 SizingMethod="auto expand"
 .rotateFactory(@rotation) {
     filter: ~"progid:DXImageTransform.Microsoft.BasicImage(rotation=@{rotation})";
-    -webkit-transform: rotate(@rotation*90deg);
-    -moz-transform: rotate(@rotation*90deg);
-    -ms-transform: rotate(@rotation*90deg);
-    -o-transform: rotate(@rotation*90deg);
     transform: rotate(@rotation*90deg);
 }
 .rotate1 {

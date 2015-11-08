@@ -70,14 +70,13 @@
     <section>
         <h2>日期选择 <small>My97</small></h2>
         <p>
-            <input class="text"  onFocus="WdatePicker({isShowWeek:true,dateFmt:'yyyy-MM'})">
-            <input class="text"  onFocus="WdatePicker({dateFmt:'yyyy-MM-dd'})">
-            <input class="text"  onFocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})">
-
+            <input class="text" onFocus="WdatePicker({isShowWeek:true,dateFmt:'yyyy-MM'})">
+            <input class="text" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd'})">
+            <input class="text" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})">
         </p>
         <script>
-        seajs.use('my97',function(laydate) {
-            
+        seajs.use('my97', function(laydate) {
+
         });
         </script>
     </section>
@@ -95,23 +94,23 @@
         </p>
         <pre class="codemirror" source="#clipboardSource" mode="javascript"></pre>
         <script id="clipboardSource">
-        seajs.use(['ui/clipboard','ui/notify'],function(clip,notify) {
+        seajs.use(['ui/clipboard', 'ui/notify'], function(clip, notify) {
             //直接绑定
-            clip('#copy',function(copy){
-                var txt=this.innerHTML;
-                if(copy(txt)){
-                    notify.safe(txt,1);
+            clip('#copy', function(copy) {
+                var txt = this.innerHTML;
+                if (copy(txt)) {
+                    notify.safe(txt, 1);
                 }
             });
 
             //代理绑定
-            clip('#proxyBtns','button',function(copy){
-                var txt=this.innerHTML;
-                if(copy(txt)){
-                    notify.safe(txt,1);
+            clip('#proxyBtns', 'button', function(copy) {
+                var txt = this.innerHTML;
+                if (copy(txt)) {
+                    notify.safe(txt, 1);
                 }
             });
-            
+
         });
         </script>
     </section>
@@ -176,7 +175,7 @@
         <p>在ajax option中增加两个参数： </p>
         <ol>
             <li>target: [dom]（注意不是jQuery对象），作用是这个ajax在发起新的请求时会忽略上一次ajax请求，并且自动管理target的disabled</li>
-            <li>loadtip：[String | Object]  作为notify.loading的参数使用，请求时会弹出loading层</li>
+            <li>loadtip：[String | Object] 作为notify.loading的参数使用，请求时会弹出loading层</li>
         </ol>
         <button id="ajaxThrottleTestBtn" class="b note">试试呢</button>
         <pre class="codemirror" source="#ajaxThrottleTestScript" mode="javascript"></pre>
@@ -186,7 +185,7 @@
             $('#ajaxThrottleTestBtn').click(function() {
                 $.ajax({
                     url: 'http://www.thedivergentseries.com/js/main.min.js',
-                    loadtip:'努力加载中....',//默认：加载中
+                    loadtip: '努力加载中....', //默认：加载中
                     target: this
                 });
             });
