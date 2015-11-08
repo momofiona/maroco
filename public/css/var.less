@@ -1,0 +1,39 @@
+//http://www.lesscss.net/features/#extend-feature
+//Less 函数手册 http://less.toobug.net/article/reference.html
+/**
+ * hack
+ * \9 IE10以下 IE678910
+ * \0 IE8以上  IE89 10 11 opera(?)
+ * \9\0 IE89 10
+ * _ IE6
+ * * IE67
+ */
+/* variable */
+@distance: 10px;
+@fontColor: #434749;
+//背景色
+@logColor: #fafafa;
+@infoColor: #71C1FF;//#4abffc;
+@noteColor: #478af8;//#016EB1;
+@warnColor: #fbd57d;//#f9c832;
+@careColor: #fbdf85;//borderColor
+@errorColor: #ab2918;
+@safeColor: #129324;
+@linkColor: @noteColor;
+@darkColor: #000;
+@btnHeight: 36px;
+@cubic:cubic-bezier(.23,1,.32,1);
+@radius: 2px; //log b-log text
+.linear-gradient(@from: #fff, @to: #f3f4f5) {
+    // Old browsers 
+    background: @to;
+    background-image: -moz-linear-gradient(top, @from 0%, @to 100%); // FF3.6+ 
+    // Chrome,Safari4+ 
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, @from), color-stop(100%, @to)); // Chrome10+,Safari5.1+ 
+    background-image: -webkit-linear-gradient(top, @from 0%, @to 100%);
+    background-image: -o-linear-gradient(top, @from 0%, @to 100%); // Opera 11.10+ 
+    background-image: -ms-linear-gradient(top, @from 0%, @to 100%); // IE10+ 
+    background-image: linear-gradient(to bottom, @from 0%, @to 100%); // W3C 
+    // IE6-8 不幸IE9也认识
+    filter:~"progid:DXImageTransform.Microsoft.gradient( startColorstr='@{from}', endColorstr='@{to}',GradientType=0 )";
+}
