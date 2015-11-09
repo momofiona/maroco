@@ -280,7 +280,7 @@ a:hover {
 /* 基本样式，不设置layout */
 
 .log, .silver, .info, .note, .warn, .error, .safe, .link, .dark,.care{
-    padding: .3em .5em;
+    padding: .3em;
     border-width: 1px;
     border-style: solid;
     border-radius: @radius;
@@ -324,19 +324,18 @@ a:hover {
 }
 /*toolbar*/
 
-.toolbar,.cutebar{
+.toolbar{
     &:extend(.clear all);
     clear: both;
     margin: 0 0 1px;
     padding: 6px @distance 6px 0;
     height: @btnHeight;
-    line-height: @btnHeight;
     // z-index: 20;
     position: relative;
     .wall {
         // float: left;
         height: @btnHeight;
-        margin: 0 .6em 0 .5em;
+        margin: 0 .5em;
         display: inline-block;
         width: 1px;
         background: #f4f4f4;
@@ -348,21 +347,30 @@ a:hover {
         font-family: simsun;
         margin-right: 0 @distance 0 @distance/2;
     }
-    .caption, .rock {
-        // float: left;
-        margin: 0 .2em 0 0;
-        vertical-align: top;
-    }
     .caption {
         float: left;
-        color: #4472A2;
         padding-left: .5em;
-        margin-right: .5em;
+        margin:3px .5em 0 0;
+        line-height: 30px;
+        font-size: 1.2em;
+        border-left:solid 2px #ff7233;
+
+        vertical-align: top;
+
         display: inline-block;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-        cursor: default;
+    }
+    &.tiny{
+        height: 30px;
+        .wall {
+            height: 26px;
+            margin: 2px .6em 0 .5em;
+        }
+        .caption {
+            margin-top:0;
+        }
     }
 }
 
@@ -380,23 +388,11 @@ a:hover {
     color: #888;
     text-shadow: 0 1px #fff;
 }
-.cutebar{
-    height: 30px;
-    line-height: 30px;
-    .wall {
-        height: 26px;
-        margin: 2px .6em 0 .5em;
-        display: inline-block;
-        width: 1px;
-        background: #eee;
-        vertical-align: top;
-    }
-}
 /* input text */
 
 .text, .searchbox {
     border: solid 1px #bfbfbf;
-    // vertical-align: middle;
+    vertical-align: middle;
     border-radius: @radius;
     padding: 6.5px 5px;
     height: @btnHeight;
@@ -412,7 +408,7 @@ textarea.text{
 .searchbox-focus,.text:focus{
     border: 1px solid #8FB3E1;
 }
-.tiny{
+.text.tiny{
     padding:3px 5px;
     height: @btnHeight - 6px;
 }
@@ -464,14 +460,18 @@ textarea.text{
         background: #fafafa;
         // box-shadow: 3px 0 6px -5px;
     }
-}
-.tiny{
-    .i-cancel {
-        top: 2px;
-    }
-    .text {
+    &.tiny{
         height: 30px;
-        padding:0;
+        .search-filter {
+            line-height: 30px;
+        }
+        .i-cancel {
+            top: 2px;
+        }
+        .text {
+            height: 30px;
+            padding:0;
+        }
     }
 }
 .invalid {
@@ -931,7 +931,8 @@ textarea.text{
 .steps{
     padding:0;
     margin: 0;
-    line-height: 40px !important;
+    line-height: 36px;
+    height: 36px;
     overflow: hidden;
     list-style: inside decimal;
     border-radius: @radius;
@@ -942,7 +943,7 @@ textarea.text{
         border:0;
         &:after,&:before{
             content:'\20';
-            border:solid 20px #eee;
+            border:solid 18px #eee;
             width: 0;
             height: 0;
             float: left;
@@ -953,8 +954,21 @@ textarea.text{
         }
         &:after{
             float: right;
-            margin-right:-20px;
+            margin-right:-18px;
             border-color:#fff #fff #fff transparent;
         }
+    }
+    &.tiny{
+        line-height: 30px;
+        height: 30px;
+        li{
+            &:after,&:before{
+                border-width:15px;
+            }
+            &:after{
+                margin-right:-15px;
+            }
+        }
+
     }
 }

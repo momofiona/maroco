@@ -1,7 +1,9 @@
-<div class="row m4">
+<div class="m13">
     <h1>数据监控 <small>Watch</small></h1>
     <hr>
-    <p>由于IE6-8不支持Object.defineProperties,使用了VBS类来偷龙转凤，所以返回值和标准的defineProperties有质的差别：</p>
+    <blockquote class="info">
+        由于IE6-8不支持Object.defineProperties,参考avalon使用了VBS类来偷龙转凤，所以返回值和标准的defineProperties有质的差别, 但是呢，这个方便的东西容易造成死循环，还没想好怎么使用这个特性。
+    </blockquote>
     <pre class="codemirror" mode="javascript">
         seajs.use(['ui/watch'], function(watch) {
             var proto={c:'not fine'},
@@ -32,5 +34,8 @@
 
         });
         </pre>
+    <blockquote class="care">
+        顺便提下watch的伙伴 ui/event.js，给对象注册事件，观察者模式。但是呢，已经有jQuery的event了，这个暂时还没想到合适的应用场景。
+    </blockquote>
 </div>
 <div class="footman"></div>

@@ -78,7 +78,7 @@ define(function(require, exports, module) {
         <div class="ctable-foot"><div class="ctable-status"></div>{{?it.count}}<div class="pager"></div>{{?}}</div>\
         </div>');
     var _tbody = _.dot('{{~it.data :trdata:index}}\
-        <tr class="{{=index%2==0?"even":"odd"}}" data-index="{{=(it.__appendIndex__||0)+index}}">\
+        <tr class="{{=index%2==0?"even":"odd"}}{{?it.__appendIndex__}} ctable-hover{{?}}" data-index="{{=(it.__appendIndex__||0)+index}}">\
         {{?it.sortable}}<td class="chandler"></td>{{?}}\
         {{?it.checkbox}}<td><input type="checkbox" class="ctable-checkbox" value="{{=(it.__appendIndex__||0)+index}}"></td>{{?}}\
         {{~it.cols :col:colindex}}\
@@ -160,7 +160,7 @@ define(function(require, exports, module) {
          * @param  {Array} datas [description]
          * @return {[type]}       [description]
          */
-        append: function(datas) {
+        append: function(datas,prepend) {
             if (!datas.length) return;
             //已经存在的数量
             this.__appendIndex__ = this.cache.length;
@@ -169,7 +169,7 @@ define(function(require, exports, module) {
             //装入渲染池造数据矩阵
             this.data = this.render(datas);
             //生成html
-            var tr = $(_tbody(this)).appendTo(this.tbody);
+            var tr = $(_tbody(this))[prepend?'prependTo':'appendTo'](this.tbody);
             delete this.__appendIndex__;
             //去除全选
             if (this.checkall) {

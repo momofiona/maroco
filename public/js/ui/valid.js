@@ -244,7 +244,8 @@ define(function(require, exports, module) {
                 field.data('__tipid__', _.uniqueId('validTip_'));
                 field.on('keyup.' + nameSpace, function(event) {
                     //屏蔽tab键影响
-                    if (event.which !== 9) validateField.call(this, event, options);
+                    //屏蔽回车提交影响
+                    if (event.which !== 9&&event.which !== 13) validateField.call(this, event, options);
                 });
             }
             //data-valid going

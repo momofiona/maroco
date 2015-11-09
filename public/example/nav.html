@@ -177,19 +177,19 @@ $(function() {
         //当前活动链接标记，自定义的
         curA: null,
         //三个回调
-        onExpand: function(a) {
-            console.log('onExpand', a);
+        onExpand: function(e,conf) {
+            console.log('onExpand', this);
         },
-        onCollapse: function(a) {
-            console.log('onCollapse', a);
+        onCollapse: function(e,conf) {
+            console.log('onCollapse', this);
         },
-        onClick: function(a) {
+        onClick: function(e,conf) {
+            e.preventDefault();
             //双击的时候会触发两次，所以加了curA避免重复触发
-            if (this.curA == a) return false;
-            this.curA = a;
-            console.log('onClick',this.getData(a));
-            this.active(a);
-            return false;
+            if (this === conf.curA) return false;
+            conf.curA = this;
+            console.log('onClick',conf.getData(this));
+            conf.active($(this));
         },
         //data和template展示了如何使用dot模板引擎递归生成整个nav的html，包括左边距，和本插件无任何关系，不熟不建议使用。
         //父ID 的 key

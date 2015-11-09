@@ -108,7 +108,7 @@
     }
     
     #header .dropdown {
-        border-top: solid 2px #E69227;
+        border-top: solid 1px #E69227;
     }
     
     #header >.log {
@@ -257,8 +257,8 @@
     <div id="sidebar">
         <div class="tabs">
             <ul class="tab text-center">
-                <li class="x3"><a href="index.html" title="短信"><i class="f f-chat"></i>短信</a></li>
-                <li class="active x3"><a href="index2.html" title="流量"><i class="f f-water"></i>流量</a></li>
+                <li class="active x3"><a href="index.html" title="短信"><i class="f f-chat"></i>短信</a></li>
+                <li class="x3"><a href="index2.html" title="流量"><i class="f f-water"></i>流量</a></li>
                 <li class="x3"><a href="index3.html" title="语音"><i class="f f-mic"></i>语音</a></li>
             </ul>
         </div>
