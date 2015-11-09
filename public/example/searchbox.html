@@ -1,13 +1,20 @@
-<div class="row m10">
+<div class="row m13">
     <h1>搜索框 <small>SearchBox</small></h1>
     <hr>
     <div id="searchBox"></div>
+    <div class="toolbar">
+        <span class="caption">steps,searchbox,toolbar,text可以使用.tiny来缩小。按钮使用.bs 来缩小</span>
+        <span class="group">
+            <b class="link b active">正常版</b>
+            <b class="link b ac-tiny">迷你版</b>
+        </span>
+    </div>
     <textarea class="codemirror" mode="javascript" source="#searchBoxScript"></textarea>
     <div class="footman"></div>
 </div>
 <script id="searchBoxScript">
-seajs.use('ui/searchbox', function() {
-    $('#searchBox').searchbox({
+seajs.use(['ui/buttonset','ui/searchbox'], function(btnSet) {
+    var searchbox=$('#searchBox').searchbox({
         placeholder: '在当前部门下查找',
         value: '',
         delay:0,//默认500毫秒,0表示不启用延迟
@@ -27,6 +34,13 @@ seajs.use('ui/searchbox', function() {
             //键入内容时触发
             console.log('input:',value, filter)
         }
-    })
+    });
+    //缩小胶囊 .tiny，还适用于toolbar,text。按钮使用.bs 来缩小高度
+    btnSet({
+        el:searchbox.next().find('.group'),
+        onselect: function(e, config, data) {
+            searchbox.toggleClass('tiny',$(this).hasClass('ac-tiny'));
+        }
+    });
 });
 </script>

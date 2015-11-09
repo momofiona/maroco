@@ -3,284 +3,114 @@
 
 <head>
     <meta charset="utf-8">
-    <title>线上线下移动管理平台</title>
+    <title>Maroco UI</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/maroco.css">
-    <link rel="stylesheet" href="cloud/o2o.css">
+    <link rel="stylesheet" href="cloud/home.css">
     <script src="maroco.js"></script>
-    <style>
-    html,
-    body {
-        height: 100%;
-        overflow: hidden;
-        background-color: #fff;
-    }
-    
-    #sidebar,
-    #mainbody,
-    #header {
-        position: absolute;
-        left: 0;
-        top: 0;
-        bottom: 0;
-        transition: left .3s;
-        -webkit-transition: left .3s;
-        -moz-transition: left .3s;
-        -ms-transition: left .3s;
-    }
-    
-    .closepen #header,
-    .closepen #mainbody {
-        left: 0;
-    }
-    
-    .closepen #sidebar {
-        left: -200px;
-    }
-    
-    #header {
-        right: 0;
-        left: 199px;
-        padding: 0;
-        background: #fafafa;
-        border-bottom: 1px solid #d9d9d9;
-        z-index: 300;
-    }
-    
-    #mainbody {
-        z-index: 100;
-        top: 37px;
-        right: 0;
-        left: 200px;
-        overflow: hidden;
-    }
-    
-    #mainbody .main-container {
-        width: 100%;
-        height: 100%;
-    }
-    
-    #sidebar {
-        z-index: 200;
-        border-radius: 0;
-        width: 199px;
-        overflow-x: hidden !important;
-        font-size: 12px;
-    }
-    
-    #sidebar .nav {
-        border-right: solid 1px #ddd;
-        background-color: #fafafa;
-        padding: 0;
-        border-top: solid 1px #fff;
-        position: absolute;
-        top: 37px;
-        left: 0;
-        right: 0;
-        bottom: 0px;
-    }
-    
-    #sidebar .nav .log {
-        margin: -2px 0 0;
-        border-radius: 0;
-        border-width: 1px 0;
-    }
-    
-    #sidebar .nav .log:hover {
-        background: #fafafa;
-    }
-    
-    #sidebar .nav ul {
-        background-color: #fff;
-        padding: 5px 5px 5px 14px;
-    }
-    
-    #sidebar .nav ul a:before {
-        content: '\20';
-        border: solid 4px transparent;
-        border-color: transparent transparent transparent #f93;
-        width: 0;
-        height: 0;
-        position: absolute;
-        margin: 6px 0 0 -10px;
-    }
-    
-    #header .dropdown {
-        border-top: solid 1px #E69227;
-    }
-    
-    #header >.log {
-        border: none;
-        border-radius: 0;
-    }
-    
-    #header .pg-avanta {
-        border-left: solid 1px #ddd;
-        white-space: nowrap;
-    }
-    
-    #header .pg-bdr {
-        border-right: solid 1px #ddd;
-    }
-    
-    #header .ac-closepen em {
-        width: 20px;
-        display: block;
-        height: 2px;
-        overflow: hidden;
-        margin: 3px 0 4px;
-        background-color: #1871ca
-    }
-    
-    #header .tabs {
-        position: absolute;
-        top: 0;
-        right: 210px;
-        overflow: hidden;
-        left: 74px;
-        font-size: 12px;
-    }
-    
-    #header .tab {
-        height: 36px;
-        white-space: nowrap;
-    }
-    
-    #header .tab .ac-close {
-        cursor: pointer;
-        position: absolute;
-        font-size: 12px;
-        right: 0px;
-        top: -20px;
-        transition: top .3s ease;
-        transform: scale(.8);
-        border-radius: 16px;
-        width: 18px;
-        height: 18px;
-        line-height: 18px;
-    }
-    
-    #header .tab li {
-        display: inline-block;
-        float: none;
-        vertical-align: top;
-    }
-    
-    #header .tab li:hover .ac-close {
-        top: 0px;
-    }
-    
-    #header .tab .ac-close:hover {
-        color: #fff;
-        background: #f33;
-    }
-    
-    #header .tab a {
-        border-right: solid 1px #ddd;
-        border-left: solid 1px #ddd;
-        border-radius: 0;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        max-width: 120px;
-        margin: 0 0 0 -1px;
-        background: #fafafa;
-    }
-    
-    #header .tab .active a {
-        background: #fff;
-        border-top-color: #E46D1C;
-    }
-    
-    #sidebar .tabs {
-        background-color: #fafafa;
-    }
-    
-    #sidebar .tab {
-        padding: 3px 0 0 3px;
-        height: 33px;
-    }
-    
-    #sidebar .tab a {
-        padding: 8px 0 9px;
-    }
-    
-    #sidebar .tab a i {
-        margin-right: 2px;
-    }
-    
-    #sitemap {
-        padding: 0;
-        margin: 0;
-        line-height: 30px;
-        max-height: 400px;
-    }
-    </style>
 </head>
 
 <body>
     <div id="header" class="toolbar p0">
-        <div class="tabs">
-            <ul class="tab"></ul>
-        </div>
         <!-- profile -->
-        <span href="#" class="xr w5 b log pg-avanta" data-dropdown>
-            谭志凌
+        <span href="#" class="xr w5 b pg-avanta" data-dropdown>
+            Mai Nishida
             <i class="star error ml" title="余额235,523元">￥235,523</i>
             <i class="f f-arb"></i>
         </span>
         <div class="dropdown w5">
             <ul class="menu dropdown-menu">
-                <li><a href="#"><i class="f f-user"></i>个人资料</a></li>
-                <li><a href="#"><i class="f f-gear"></i>修改密码</a></li>
-                <li><a href="#"><i class="f f-user"></i>通讯录</a></li>
+                <li><a href="#/user/profile"><i class="f f-user"></i>个人资料</a></li>
+                <li><a href="#/user/passchange"><i class="f f-gear"></i>修改密码</a></li>
+                <li><a href="#/contact"><i class="f f-user"></i>我的联系人</a></li>
                 <li class="devider"></li>
-                <li><a href="login.html" class="menu-error"><i class="f f-shutdown"></i>退出</a></li>
+                <li><a href="#/logout" class="menu-error"><i class="f f-shutdown"></i>退出</a></li>
             </ul>
         </div>
         <!-- /profile -->
-        <span href="#" class="xr w2 b log ac-msg" style="white-space:nowrap">
+        <span class="xr w2 b ac-msg" style="white-space:nowrap">
             <i class="f f-bell"></i>
-            <i class="star error">101</i>
+            <i class="star error">12</i>
         </span>
-        <span class="b log xl ac-closepen pg-bdr">
+        <span class="b xl home-closepen">
             <em class="before"></em>
             <em class="middle"></em>
             <em class="after"></em>
         </span>
-        <a href="#" class="b log xl pg-bdr bi" data-dropdown><i class="f f-arb"></i></a>
-        <div id="sitemap" class="dropdown scroll p">loading...</div>
+        <b class="b xl pg-bdr bi" data-dropdown><i class="f f-arb"></i></b>
+        <ul id="sitemapHome" class="dropdown scroll p nav w20">sitemap</ul>
+    </div>
+    <div id="appbar">
+        <div class="tabs">
+            <ul class="tab text-center">
+                <li class="active x1"><a href="#/darshboard"><i class="f f-water"></i>demo</a></li>
+                <li class="x1"><a href="login.html"><i class="f f-user"></i>登录</a></li>
+            </ul>
+        </div>
     </div>
     <!-- sidebar -->
     <div id="sidebar">
-        <div class="tabs">
-            <ul class="tab text-center">
-                <li class="active x3"><a href="index.html" title="短信"><i class="f f-chat"></i>短信</a></li>
-                <li class="x3"><a href="index2.html" title="流量"><i class="f f-water"></i>流量</a></li>
-                <li class="x3"><a href="index3.html" title="语音"><i class="f f-mic"></i>语音</a></li>
-            </ul>
+        <div class="brand">
+            <img src="cloud/img/logo.png">
         </div>
         <!-- 菜单  -->
         <ul class="nav scroll">
             <li>
-                <li><a href="#/mo/mo1">流量派发</a></li>
-                <li><a href="#2">派发记录</a></li>
-            </li>
-            <li>
-                <a class="log">活动管理</a>
+                <a class="nav-trigger"><i class="f f-user"></i>User Center</a>
                 <ul>
-                    <li><a href="#4">活动列表</a></li>
-                    <li><a href="#5">创建活动</a></li>
+                    <li><a href="#apps/user/main"><i>☭</i>组织管理</a></li>
+                    <li><a href="#apps/user/group"><i>♝</i>用户组管理</a></li>
+                    <li><a href="#apps/user/role"><i>♞</i>角色管理</a></li>
+                    <li><a href="#apps/user/resource"><i>♜</i>资源管理</a></li>
+                    <li><a href="#apps/pan/main"><i>☁</i>移动云</a></li>
                 </ul>
             </li>
             <li>
-                <a class="log">发票管理</a>
+                <a class="nav-trigger"><i class="f f-star"></i>UI Component</a>
                 <ul>
-                    <li><a href="#777">发票索取</a></li>
-                    <li><a href="#777">发票信息管理</a></li>
-                    <li><a href="#777">发票列表</a></li>
+                    <li><a href="#/layout"><i>☵</i>Layout</a></li>
+                    <li><a href="#/text"><i>☷</i>Text</a></li>
+                    <li><a href="#/icon"><i>✌</i>Icon</a></li>
+                    <li><a href="#/btn"><i>☛</i>Button</a></li>
+                    <li><a href="#/notify"><i>✦</i>Notify</a></li>
+                    <li><a href="#/tips"><i>✦</i>Tips</a></li>
+                    <li><a href="#/tab"><i>✦</i>Tab</a></li>
+                    <li><a href="#/searchbox"><i>▦</i>searchbox</a></li>
+                    <li><a href="#/table"><i>❤</i>Table</a></li>
+                    <li><a href="#/grid"><i>▦</i>Grid</a></li>
+                    <li><a href="#/nav"><i>▦</i>nav</a></li>
+                    <li><a href="#/watch"><i>☻</i>Watch(beta)</a></li>
+                    <li><a href="#/router"><i>♆</i>Router</a></li>
+                    <li><a href="#/valid"><i>✓</i>Valid</a></li>
+                    <li><a href="#/upload"><i>❤</i>Upload</a></li>
+                    <li><a href="#/picasa"><i>❤</i>Picasa</a></li>
+                </ul>
+            </li>
+            <li>
+                <a class="nav-trigger" href="#/girlfriend"><i class="f f-read"></i>杂七杂八</a>
+            </li>
+            <li>
+                <a class="nav-trigger" href="#/css3"><i class="f f-fly"></i>Animate</a>
+            </li>
+            <li>
+                <a class="nav-trigger"><i class="f f-alert"></i>Todo</a>
+                <ul>
+                    <li><a href="#/selector"><i>♨</i>selector</a>
+                    </li>
+                    <li><a href="#/autocomplete"><i>♨</i>Autocomplete</a>
+                    </li>
+                    <li><a href="#/vm"><i>♨</i>Vm</a>
+                    </li>
+                    <li><a href="#/viewport"><i class="f f-alert"></i>Viewport</a>
+                    </li>
+                    <li><a href="#/charts"><i class="f f-alert"></i>Chart</a>
+                    </li>
+                    <li><a href="#/standard"><i class="f f-alert"></i>Standard</a>
+                    </li>
+                    <li><a href="#/datepicker"><i class="f f-alert"></i>Datepicker</a>
+                    </li>
                 </ul>
             </li>
         </ul>
@@ -296,180 +126,120 @@
             el: sidebar.children(".nav"),
             accordion: true
         });
-        navs.toggle(navs.$('.log:eq(0)'));
+        //缓存导航上的所有链接，用于快速查询当前menu
+        navs.links = navs.$('a');
 
 
         //导航栏上的事件
         UI({
             el: $('#header'),
             events: {
-                'click .ac-closepen': function(e, conf) {
+                //show/hide left #sidebar
+                'click .home-closepen': function(e, conf) {
                     $('body').toggleClass('closepen');
                 }
             }
         });
 
-        //tabs
-        var APP = window.APP = UI.tabs({
-            el: $('#header .tabs'),
-            events: {
-                //关闭tab
-                'click >.tab .ac-close': function(e, conf) {
-                    conf.close($(this).next());
-                }
-            },
-            create: function() {
-                this.el.on('mousewheel', function(event, delta, deltaX, deltaY) {
-                    this.scrollLeft -= delta * 100;
-                });
-                //默认都是js模式
-                this.module.extend('js', {
-                    create: function() {
-                        var obj = this;
-                        seajs.use(this.url, function(mod) {
-                            mod.show(obj);
-                        });
-                    },
-                    reload: function() {
-                        this.destroy();
-                        this.panel.empty().off();
-                        this.create();
-                    }
-                });
-                //html模式
-                this.module.extend('html', {
-                    create: function() {
-                        this.panel.load(this.url);
-                    },
-                    reload: function() {
-                        this.panel.empty().load(this.url);
-                    }
-                });
-                //iframe模式
-                this.module.extend('iframe', {
-                    create: function() {
-                        this.iframe = $('<iframe class="main-container" src="' + this.url + '" frameborder="0"></iframe>').appendTo(this.panel)[0];
-                    },
-                    reload: function() {
-                        try {
-                            this.iframe.contentWindow.location.reload();
-                        } catch (e) {}
-                    }
-                });
-            },
-            //上一个tab
-            lastTab: null,
-            modCache: {},
-            //基础模式
-            module: {
-                defaults: {
-                    //创建
-                    create: $.noop,
-                    //刷新
-                    reload: $.noop,
-                    //销毁
-                    destroy: $.noop
-                },
-                extend: function(id, obj) {
-                    this[id] = _.create(this.defaults, obj);
-                },
-                //授权
-                set: function(obj) {
-                    var x = obj.url.lastIndexOf('.js') !== -1 ? this['js'] : this['html'];
-                    _.extend(obj, x);
-                    obj.create();
-                }
-            },
-            //开一个新标签
-            open: function(obj) {
-                //如果已经存在
-                if (this.modCache[obj.url]) {
-                    obj = this.modCache[obj.url];
-                    if (obj.tab === this.tab) {
-                        obj.reload();
-                    }
-                } else {
-                    this.lastTab = this.tab;
-                    var id = _.uniqueId("tab_"),
-                        title = obj.title,
-                        tab = $('<li>' + (obj.block ? '' : '<i class="f f-close ac-close"></i>') + '<a panel="#' + id + '" href="#" title="' + title + '">' + title + '</a></li>'),
-                        panel = $('<div>', {
-                            id: id,
-                            'class': 'main-container'
-                        });
-                    obj.panel = panel.appendTo(mainbody);
-                    obj.tab = tab.appendTo(this.tabs).find('a').data('url', obj.url)[0];
-                    this.modCache[obj.url] = obj;
-                    //授权
-                    this.module.set(obj);
-                }
-                //打开
-                this.active(obj.tab);
-            },
-            onActive: function(tab, panel) {
-                this.position(tab);
-            },
-            position: function(tab) {
-                tab = tab || this.tab;
-                if (tab) {
-                    tab.scrollIntoView();
-                }
-            },
-            //关闭一个标签
-            close: function(tab) {
-                var pid = tab.attr('panel'),
-                    url = tab.data('url'),
-                    mod = this.modCache[url];
-                delete this.modCache[url];
-                delete this.cache[pid];
-                //销毁
-                mod.destroy();
-                mod.panel.empty().remove();
-                mod.tab = mod.panel = mod.iframe = null;
-
-                var parent = tab.parent().animate({
-                    width: 0
-                }, 200, function() {
-                    $(this).remove();
-                });
-                //关闭之后自动打开lastTab或者最近的tab
-                if (tab[0] === this.lastTab) this.lastTab = null;
-                if (this.tab !== tab[0]) return;
-                if (this.lastTab) {
-                    this.active(this.lastTab);
-                    this.lastTab = null;
-                } else {
-                    var next = parent.next();
-                    if (!next.length) {
-                        next = parent.prev();
-                    }
-                    if (next.length) {
-                        this.active(next.find('a')[0]);
-                    }
-                }
-            }
-        });
-
-        //导航页,这是短信的模式，多tab
-        APP.open({
-            title: '控制台',
-            block: true,
-            url: '/gprs/home/'
-        });
-
         // 这是其余模块的模式
-/*        router({
-            //sms gprs vop等情况下ok
+        router({
+            //seajs 加载模式
+            'apps/*': function(mod) {
+                mainbody.empty();
+                seajs.use('apps/' + mod, function(view) {
+                    view.show({
+                        container: mainbody
+                    })
+                });
+                this.hashMap('#apps/' + mod);
+            },
+            //html直插模式
             '/*': function(mod) {
-                $('#mainbody').load(mod);
+                mainbody.empty();
+                $.ajax({
+                    url: UI.server + 'example/' + mod + '.html',
+                    loadtip: true,
+                    success: function(v) {
+                        mainbody.html(v);
+                        previewCode();
+                    },
+                    error: function(e, a, b) {
+                        mainbody.html('<div style="margin:100px"><h1>:( </h1><p>服务器' + e.status + '错误</p><p class="error p tips"><i class="tip tip-tl"></i><i class="f f-tool mr"></i> ' + mod + " " + b + ' </p></div>');
+                    }
+                });
+                mod = mod.split('?')[0];
+                this.hashMap('#/' + mod);
             },
             '*': function(mod) {
-                location.hash = '/home';
+                location.hash = '/darshboard';
             }
-        });*/
+        }, {
+            //menu 选中状态
+            hashMap: function(mod) {
+                navs.links.each(function(i, o) {
+                    if (o.hash === mod) {
+                        var trig = $(o).addClass('active').parent().parent().prev().addClass('active');
+                        //参数: 可打开的a节点,是否强制打开,打开速度
+                        navs.toggle(trig, true, 0);
+                        if (o.scrollIntoViewIfNeeded) {
+                            o.scrollIntoViewIfNeeded();
+                        }
+                    } else {
+                        $(o).removeClass('active');
+                    }
+                });
+            }
+        });
+        //快速导航
+        $('#sitemapHome').html('sitemap');
 
     });
     </script>
+    <!-- 假数据 -->
+    <script src="js/vendor/mock-min.js"></script>
+    <script src="example/api.js"></script>
+    <!-- /假数据 -->
+    <!--  js 代码高亮 -->
+    <script>
+    var previewCode = function() {
+        $('#mainbody .codemirror').each(function() {
+            var win = $('<div class="m1">').insertAfter(this),
+                that = $(this).remove(),
+                source = that.attr('source'),
+                mode = that.attr('mode') || 'text/html',
+                value = "";
+            if (source) {
+                value = $(source).html();
+            } else {
+                value = this.value || this.innerHTML;
+            }
+            value = value.replace(/^(\n+\s*)+|(\n+\s*)+$/, '');
+            var pt = value.match(/^\s+/);
+            if (pt) {
+                pt = new RegExp('\n' + pt[0], 'g');
+                value = $.trim(value).replace(pt, '\n');
+            }
+
+            CodeMirror(win[0], {
+                value: value,
+                mode: mode,
+                indentUnit: 4,
+                lineNumbers: true,
+                styleActiveLine: true,
+                indentWithTabs: true
+            });
+        });
+    }
+    </script>
+    <link rel="stylesheet" href="../js/codemirror/codemirror.css">
+    <script src="../js/codemirror/codemirror.js"></script>
+    <script src="../js/codemirror/mode/xml/xml.js"></script>
+    <script src="../js/codemirror/mode/javascript/javascript.js"></script>
+    <script src="../js/codemirror/mode/css/css.js"></script>
+    <script src="../js/codemirror/mode/vbscript/vbscript.js"></script>
+    <script src="../js/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+    <script src="../js/codemirror/addon/selection/active-line.js"></script>
+    <!-- / js 代码高亮 -->
 </body>
 
 </html>

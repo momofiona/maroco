@@ -162,10 +162,10 @@
         <!-- footer -->
         <div class="row footer text-center">
             <div class="x2">
-                <a href="#"><i class="mr f f-left"></i>登录有问题？请咨询我们的客服美眉</a>
+                <a href="login_view.html"><i class="mr f f-left"></i>登录有问题？要不换个登录页试试</a>
             </div>
             <div class="x2">
-                <a href="#">快速注册<i class="f f-right"></i></a>
+                <a href="#" title="注册按钮应该放在更醒目位置">快速注册<i class="f f-right"></i></a>
             </div>
         </div>
     </div>
@@ -211,7 +211,8 @@
                 form: form,
                 valid: function() {
                     var params = this.serializeObject(true);
-                    login(params);
+                    // login(params);
+                    location.href='index.html';
                 }
             });
         });
@@ -224,9 +225,8 @@
         function login(formObj, targetHash) {
             $('#errorLabel').empty();
             $.ajax({
-                url: UI.server + 'userManage/loginOrRegister/login',
+                url: UI.server + 'login',
                 loadtip: true,
-                dataType: "json",
                 type: "POST",
                 data: formObj,
                 success: function(temp) {

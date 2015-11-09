@@ -93,7 +93,7 @@ define(function(require, exports, module) {
                     if (k == order) return;
                     s += '<li><a href="#" order="' + k + '"><i class="f f-up"></i>' + v + '</a></li>';
                 });
-                this.el.html(cur + '<div class="dropdown text-left" style="top:-2px;left:-10px;"><ul class="menu order"><li>' + cur + '</li>' + s + '</ul></div>').find('>a').css('color', '#454647');
+                this.el.html(cur + '<div class="dropdown text-left" style="top:-5px;left:-10px;"><ul class="menu order"><li>' + cur + '</li>' + s + '</ul></div>').find('>a').css('color', '#454647');
             },
             //重置内容
             reset: function(conf) {
@@ -103,32 +103,6 @@ define(function(require, exports, module) {
             },
             create: function() {}
         });
-
-        /*        //上传,异步加载
-                require.async(['ui/upload', 'ui/notify'], function(upload, notify) {
-                    var btn = HTML.find('.ac-upload')[0];
-                    upload({
-                        browse_button: btn,
-                        container: btn.parentNode,
-                        url: '/upload',
-                        FilesAdded: function(up, files) {
-                            $.each(files, function(i, o) {
-                                o.url = '/upload'; //可为每个批上传设置不同的上传路径
-                            })
-                        },
-                        BeforeUpload: function(up, file) {
-                            up.settings.url = file.url; //配合FilesAdded 更改上传路径
-                        },
-                        FileUploaded: function(up, file, data) {
-
-                        },
-                        //上传结束后
-                        UploadComplete: function(up, files) {
-                            notify.safe('上传完毕');
-                            fileList.load();
-                        }
-                    });
-                });*/
 
         //我的文档列表
         var fileList = grid({
@@ -184,13 +158,13 @@ define(function(require, exports, module) {
                 }, {
                     label: '蜘蛛精',
                     //添加新页面打开外链的方法，注意总共有3个双引号
-                    href: 'http://baidu.com/s?wd=蜘蛛精" target="_blank"'
+                    href: 'http://momofiona.github.io/maroco/public/" target="_blank"'
                 }, '', {
-                    label: '<i class="f f-location"></i>蜘猪精',
+                    label: '<i class="f f-location"></i>老东家无锡曙光公司',
                     cls: 'menu-error',
                     //动态添加链接也是可以的
                     href: function(data) {
-                        return 'https://github.com/momofiona/maroco" target="_blank"';
+                        return 'http://www.isugon.com/" target="_blank" title="企业私有云文件解决方案"';
                     }
                 }]
             },
@@ -258,7 +232,7 @@ define(function(require, exports, module) {
             caption: HTML.find('.caption'),
             onActive: function(tab, panel) {
                 //面包屑栏目
-                this.caption.html('<i class="f f-home"></i> ' + tab.innerHTML);
+                this.caption.html('<i class="f f-browse mr"></i>' + tab.innerHTML);
                 //刷新文件列表
                 fileList.load();
             }

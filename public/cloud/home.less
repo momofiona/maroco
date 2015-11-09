@@ -1,0 +1,227 @@
+@appbarWidth: 50px;
+@sidebarWidth: 180px;
+@sidebarBgColor: #fafafa;
+@appBgColor: #293038;
+@appFontColor: #aeb9c2;
+html,
+body {
+    height: 100%;
+    overflow: hidden;
+    background-color: @appBgColor;
+}
+
+#appbar,
+#sidebar,
+#mainbody,
+#header {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    transition: left .3s;
+}
+
+#appbar {
+    width: @appbarWidth;
+    color: @appFontColor;
+    .tabs {
+        margin-top: 66px;
+    }
+    .tab {
+        border: none;
+        a {
+            border-color: transparent;
+            border-radius: 3px 0 0 3px;
+            color: @appFontColor;
+            padding: 10px 0;
+            cursor: pointer;
+            &:hover {
+                background: darken(@appBgColor, 5%);
+            }
+            i {
+                display: block;
+                margin-bottom: 3px;
+            }
+        }
+        .active {
+            margin: 0;
+            a {
+                background: @sidebarBgColor;
+                color: #000;
+            }
+        }
+    }
+}
+
+#mainbody {
+    z-index: 100;
+    top: 36px;
+    right: 0;
+    left: @appbarWidth + @sidebarWidth;
+    background: #fff;
+    overflow: auto;
+    .closepen & {
+        left: 0;
+    }
+    .main-container {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+#header {
+    right: 0;
+    left: @appbarWidth+@sidebarWidth;
+    padding: 0;
+    color: #fbe9d2;
+    // background: @sidebarBgColor;
+    border-bottom: 1px solid #d9d9d9;
+    z-index: 300;
+    .closepen & {
+        left: 0;
+    }
+    .dropdown {
+        border-top: solid 2px #E69227;
+        color: #333;
+    }
+    >.log {
+        border: none;
+        border-radius: 0;
+    }
+    .pg-avanta {
+        border-left: solid 1px darken(@appBgColor, 5%);
+        white-space: nowrap;
+    }
+    .pg-bdr {
+        border-right: solid 1px darken(@appBgColor, 5%);
+    }
+    .home-closepen {
+        margin-left: -46px;
+        transition: margin .3s;
+        em {
+            width: 20px;
+            display: block;
+            height: 2px;
+            overflow: hidden;
+            margin: 3px 0 4px;
+            background-color: #fbe9d2;//#FBE9D2;
+
+        }
+        .closepen & {
+            margin-left: 0;
+        }
+    }
+    .tabs {
+        position: absolute;
+        top: 0;
+        right: 210px;
+        overflow: hidden;
+        left: 74px;
+        font-size: 12px;
+    }
+    .tab {
+        height: 36px;
+        white-space: nowrap;
+        .ac-close {
+            cursor: pointer;
+            position: absolute;
+            font-size: 12px;
+            right: 0px;
+            top: -20px;
+            transition: top .3s ease;
+            transform: scale(.8);
+            border-radius: 16px;
+            width: 18px;
+            height: 18px;
+            line-height: 18px;
+            :hover {
+                :hover {
+                    color: #fff;
+                    background: #f33;
+                }
+            }
+        }
+        li {
+            display: inline-block;
+            float: none;
+            vertical-align: top;
+            &:hover .ac-close {
+                top: 0px;
+            }
+        }
+        a {
+            border-right: solid 1px #ddd;
+            border-left: solid 1px #ddd;
+            border-radius: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 120px;
+            margin: 0 0 0 -1px;
+            background: @sidebarBgColor;
+        }
+        .active a {
+            background: #fff;
+            border-top-color: #E46D1C;
+        }
+    }
+}
+
+#sidebar {
+    left: @appbarWidth;
+    z-index: 200;
+    border-radius: 0;
+    width: @sidebarWidth;
+    overflow-x: hidden !important;
+    font-size: 12px;
+    .closepen & {
+        left: -@sidebarWidth;
+    }
+    .brand {
+        height: 36px;
+        overflow: hidden;
+        img {
+            height: 100%;
+        }
+    }
+    .nav {
+        padding: 0 0 10px;
+        background-color: @sidebarBgColor;
+        position: absolute;
+        border-right: solid 1px #ddd;
+        border-radius: 3px 0 0;
+        top: 36px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        .nav-trigger {
+            font-size: 13px;
+            padding-left: 40px;
+        }
+        a {
+            border-radius: 0;
+            &:hover {
+                background-color: #eee;
+                color: #333;
+            }
+            &.active {
+                background-color: #1871ca;
+                color: #fff;
+            }
+            &.nav-open {
+                background-color: #eee;
+                color: #333;
+            }
+        }
+    }
+}
+
+#sitemapHome {
+    padding: 0;
+    margin: 0;
+    line-height: 30px;
+    max-height: 400px;
+    a {
+        padding: 0 10px 0 30px;
+    }
+}
