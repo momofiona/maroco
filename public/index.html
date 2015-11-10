@@ -157,7 +157,9 @@
             '/*': function(mod) {
                 mainbody.empty();
                 $.ajax({
-                    url: UI.server + 'example/' + mod + '.html',
+                    url: UI.server + 'example/' + mod + '.html?_='+Math.floor(_.now()/1000/600),
+                    //做10分钟的缓存
+                    cache:true,
                     loadtip: true,
                     success: function(v) {
                         mainbody.html(v);

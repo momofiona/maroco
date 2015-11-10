@@ -10,11 +10,14 @@
         <dd>page —— 页码</dd>
         <dd>count —— 每页数量</dd>
         <dt>后端返回：data</dt>
-        <dd>data.result —— 主要数据</dd>
+        <dd>data.data —— 主要数据</dd>
         <dd>data.error —— 错误码</dd>
         <dd>data.msg —— 返回消息</dd>
         <dd>data.total —— 请求的数据源总数量，一般用于分页计算总页数： totalPages=Math.ceil(total/count)</dd>
     </dl>
+    <blockquote class="care">
+        table和grid插件有别名机制，通过config.alias配置，data.data在config.parseData中处理
+    </blockquote>
     <section>
         <h2>IE条件注释 <small>Hack</small></h2>
         <textarea class="codemirror">
@@ -31,6 +34,9 @@
             <li>_ + * \9 \0 \9\0</li>
             <li>media IE9+</li>
         </ol>
+        <blockquote class="care">
+            注意：上面的条件注释做兼容性的方案会改变css优先级别，要想清楚
+        </blockquote>
     </section>
     <section>
         <h2>HTML规范 <small>HTML</small></h2>

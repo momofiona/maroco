@@ -160,7 +160,7 @@ define(function(require, exports, module) {
          * @param  {Array} datas [description]
          * @return {[type]}       [description]
          */
-        append: function(datas,prepend) {
+        append: function(datas, prepend) {
             if (!datas.length) return;
             //已经存在的数量
             this.__appendIndex__ = this.cache.length;
@@ -169,14 +169,32 @@ define(function(require, exports, module) {
             //装入渲染池造数据矩阵
             this.data = this.render(datas);
             //生成html
-            var tr = $(_tbody(this))[prepend?'prependTo':'appendTo'](this.tbody);
+            var tr = $(_tbody(this))[prepend ? 'prependTo' : 'appendTo'](this.tbody);
             delete this.__appendIndex__;
             //去除全选
             if (this.checkall) {
                 this.checkall.checked = false;
             }
+            this.isScrolling();
             return tr;
         },
+
+        /**
+         * 删除行
+         * @param  {jQuery} tr tr对象
+         */
+        removeRow: function(tr) {
+            delete this.cache[tr.attr('data-index')];
+            tr.fadeOut(function() {
+                $(this).remove();
+            });
+            //去除全选
+            if (this.checkall) {
+                this.checkall.checked = false;
+            }
+            this.isScrolling();
+        },
+
         //更新行
         updateRow: function(tr, newdata) {
             var data = this.getRowData(tr);
@@ -205,7 +223,7 @@ define(function(require, exports, module) {
                 this.headInner.css('margin-right', this.scrollBarWidth = sw);
             }
             //暴露滚动条高度
-            this.scrollBarHeight = b.offsetHeight - b.clientHeight-2;
+            this.scrollBarHeight = b.offsetHeight - b.clientHeight - 2;
             return sw > 0;
         },
         //调整高度以适应窗体
@@ -365,7 +383,7 @@ define(function(require, exports, module) {
             }
 
         }
-	
+
         //loader and pager
         var paging = pager({
             el: pagebar,

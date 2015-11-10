@@ -23,39 +23,40 @@
 }
 
 .tip {
-    .log & {
+    .log > & {
         border-color: #ddd;
     }
-    .silver & {
+    .silver > & {
         border-color: #eee;
     }
-    .note & {
+    .note > & {
         border-color: @noteColor;
     }
-    .info & {
+    .info > & {
         border-color: @infoColor;
     }
-    .warn & {
+    .warn > & {
         border-color: @warnColor;
     }
-    .error & {
+    .error > & {
         border-color: @errorColor;
     }
-    .safe & {
+    .safe > & {
         border-color: @safeColor;
     }
-    .link & {
+    .link > & {
         border-color: @linkColor;
     }
-    .dark & {
+    .dark > & {
         border-color: @darkColor;
     }
-    .care & {
+    .care > & {
         border-color: @careColor;
     }
 }
 
 .tips {
+    position: absolute;
     //top
     .tip-t {
         border-top-color: transparent;

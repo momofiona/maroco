@@ -320,7 +320,9 @@ a:hover {
     .baseFactory(@darkColor, @darkColor);
 }
 .care{
-    .baseFactory(#fffded, @careColor, #9c6a3d);
+    //.baseFactory(#fffded, @careColor, #9c6a3d);
+    .baseFactory(#FFF5D0, @careColor, #9c6a3d);
+    
 }
 /*toolbar*/
 
@@ -328,12 +330,11 @@ a:hover {
     &:extend(.clear all);
     clear: both;
     margin: 0 0 1px;
-    padding: 6px @distance 6px 0;
+    padding: 6px 0;
     height: @btnHeight;
     // z-index: 20;
     position: relative;
     .wall {
-        // float: left;
         height: @btnHeight;
         margin: 0 .5em;
         display: inline-block;
@@ -489,6 +490,9 @@ textarea.text{
     background:#fff url(img/req.png) no-repeat right center;
     textarea&{
         background-position: right 5px;
+    }
+    select&{
+        background-position: right 1px;
     }
 }
 /* notify */
