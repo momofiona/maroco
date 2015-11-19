@@ -6,7 +6,8 @@ seajs.config({
         my97: 'js/vendor/my97/WdatePicker.js',
         draggable: 'js/vendor/jqueryui/jquery.ui.draggable.min.js',
         sortable: 'js/vendor/jqueryui/jquery.ui.sortable.min.js',
-        mousewheel:'js/vendor/jquery.mousewheel'
+        mousewheel:'js/vendor/jquery.mousewheel',
+        moment:'js/vendor/moment/moment.min.js'
     },
     paths: {
         'ui': 'js/ui'

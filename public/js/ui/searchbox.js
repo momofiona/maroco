@@ -1,8 +1,8 @@
 define(function(require, exports, module) {
-    $.fn.searchbox = function(option) {
-        if (this.length != 1) return this;
+    'use strict';
+    return function(option) {
         var filter, oldValue;
-        UI($.extend({
+        return UI($.extend({
             value: '',
             el: this,
             cls: 'searchbox',
@@ -14,13 +14,13 @@ define(function(require, exports, module) {
             input: $.noop,
             init: function() {
                 var t = this;
-                t.el.attr('tabindex',-1).addClass(t.cls).html('<input value="' + t.value + '" class="text" placeholder="' + t.placeholder + '"><i class="i i-cancel am-rotate"></i>');
+                t.el.attr('tabindex', -1).addClass(t.cls).html('<input value="' + t.value + '" class="text" placeholder="' + t.placeholder + '"><i class="i i-cancel am-rotate"></i>');
 
                 //如果带了分类选择
                 if (t.filter) {
                     t.events['click .ac-filter'] = function(e, conf) {
                         filter = conf.filter[$(this).attr('index')];
-                        t.tip.html('<i class="f f-search m2"></i>'+filter.label);
+                        t.tip.html('<i class="f f-search m2"></i>' + filter.label);
                         conf.el.css('padding-left', t.tip.outerWidth() + 10);
                         t.tip.dropdown('hide');
                         return false;
@@ -40,7 +40,15 @@ define(function(require, exports, module) {
                         input.trigger('input');
                         t.search.call(input, '', filter);
                     });
-                if (oldValue = t.value) cancel.show();
+                //reset
+                t.reset = function() {
+                    cancel.hide();
+                    input.val('');
+                };
+
+                if (oldValue = t.value) {
+                    cancel.show();
+                }
                 var callInput = function(input, value, filter) {
                     if (oldValue !== value) {
                         t.input.call(input, value, filter);
@@ -60,10 +68,10 @@ define(function(require, exports, module) {
                     if (e.keyCode == "13") {
                         t.search.call(input, this.value, filter);
                     }
-                }).focus(function(){
+                }).focus(function() {
                     t.el.addClass('searchbox-focus');
                     t.focus(true);
-                }).blur(function(){
+                }).blur(function() {
                     t.el.removeClass('searchbox-focus');
                     t.focus();
                 });
@@ -72,6 +80,5 @@ define(function(require, exports, module) {
                 this.filter && this.dropdown.find('a:eq(0)').click();
             }
         }, option));
-        return this;
     }
 });

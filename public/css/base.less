@@ -146,6 +146,7 @@ abbr[title] {
 }
 .xc {
     clear: both;
+    float: none !important;
 }
 .clear {
     *zoom: 1;
@@ -277,6 +278,27 @@ a:hover {
 .noshadow{
     box-shadow: none !important;
 }
+
+//little trick to hide the column
+.dog{
+    .rabit{
+        display: none;
+    }
+}
+
+//dropdown 放到基本样式前面
+[data-dropdown] {
+    cursor: pointer !important;
+}
+.dropdown {
+    position: absolute !important;
+    display: none;
+    border-radius: @radius;
+    background: #FFF;
+    border: solid 1px #eee;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, .02);
+    z-index: 1000;
+}
 /* 基本样式，不设置layout */
 
 .log, .silver, .info, .note, .warn, .error, .safe, .link, .dark,.care{
@@ -375,20 +397,6 @@ a:hover {
     }
 }
 
-.cap {
-    float: left;
-    padding: 0 1em;
-    margin: 0 -1px 0 0;
-    height: @btnHeight+-2;
-    line-height: @btnHeight+-2;
-    border-radius: 2px 0 0 2px;
-    border: solid 1px #bfbfbf;
-    border-right: 0;
-    display: inline-block;
-    background: #f8f8f8;
-    color: #888;
-    text-shadow: 0 1px #fff;
-}
 /* input text */
 
 .text, .searchbox {
@@ -420,10 +428,33 @@ textarea.text{
 .text-auto {
     *zoom: 1;
     *margin-right: 14px;
-    .text {
+    .text{
         width: 100%;
     }
 }
+
+
+.cap {
+    &:extend(.text);
+    margin: 0 -5px 0 0;
+    border-right: 0;
+    border-radius: 2px 0 0 2px;
+    display: inline-block;
+    background: #f8f8f8;
+    color: #888;
+    text-shadow: 0 1px #fff;
+    &.tiny{
+        &:extend(.text.tiny);
+    }
+    &,&.tiny{
+        padding-left: 1em;
+        padding-right: 1em;
+    }
+    &.xl{
+        margin-right: -1px;
+    }
+}
+
 .searchbox {
     position: relative;
     padding: 0 25px 0 30px;
@@ -663,19 +694,6 @@ textarea.text{
 
 // @import "tips.less";
 
-//dropdown
-[data-dropdown] {
-    cursor: pointer !important;
-}
-.dropdown {
-    position: absolute !important;
-    display: none;
-    border-radius: @radius;
-    background: #FFF;
-    border: solid 1px #eee;
-    box-shadow: 0 0 0 3px rgba(0, 0, 0, .02);
-    z-index: 1000;
-}
 
 .formtable {
     width: 100%;
@@ -945,20 +963,23 @@ textarea.text{
     li{
         padding:0;
         border:0;
+        border-radius: 0;
         &:after,&:before{
             content:'\20';
-            border:solid 18px #eee;
+            border-style: solid;
+            border-width: 18px 15px 18px 18px;
             width: 0;
             height: 0;
             float: left;
             border-color: transparent transparent transparent #fff;
         }
         &:first-child:before,&:last-child:after{
-            border: solid 10px transparent;
+            border-color:transparent;
+            border-right:0;
         }
         &:after{
             float: right;
-            margin-right:-18px;
+            border-right: 0;
             border-color:#fff #fff #fff transparent;
         }
     }
@@ -967,10 +988,7 @@ textarea.text{
         height: 30px;
         li{
             &:after,&:before{
-                border-width:15px;
-            }
-            &:after{
-                margin-right:-15px;
+                border-width: 15px 10px 15px 15px;
             }
         }
 
