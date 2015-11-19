@@ -3,6 +3,7 @@
  * @param  {Object} config [description]
  * config
  *     container        Object  插入点
+ *     radiobox         true    开启单选
  *     checkbox         true    是否开启多选
  *     alias            设置参数别名
  *     skin             table skin style
@@ -17,7 +18,7 @@
  *         style        嵌入td中的css
  *      parseData       对ajax返回的数据预处理
  *      render          渲染方法,把后端取得的数据转换成table矩阵
- *      count           每页数量,自动启用分页
+ *      count           每页数量,自动启用分页 
  *      url             加载路径
  *      baseparams      需要固定提交的参数
  *      sortable        开启行拖动排序
@@ -49,7 +50,7 @@ define(function(require, exports, module) {
     var _thead = '<thead>{{?!it._colgroup}}\
         <tr>\
             {{?it.sortable}}<th class="chandler"></th>{{?}}\
-            {{?it.checkbox}}<th align=left><input type="checkbox" class="ctable-checkall"></th>{{?}}\
+            {{?it.checkbox}}<th align=left>{{?!it.radiobox}}<input type="checkbox" class="ctable-checkall">{{?}}</th>{{?}}\
             {{~it.cols :col:index}}\
             <th align="{{=col.align||"left"}}" class="{{=col.cls||""}} {{=col.order?"order":""}}"{{?col.order}} order="{{=col.order}}"{{?}}{{?col.style}} style="{{=col.style}}"{{?}}>{{=col.title||""}}{{?col.order}} <i class="order-tip"></i>{{?}}</th>\
             {{~}}\
@@ -78,15 +79,17 @@ define(function(require, exports, module) {
         <div class="ctable-foot"><div class="ctable-status"></div>{{?it.count}}<div class="pager"></div>{{?}}</div>\
         </div>');
     var _tbody = _.dot('{{~it.data :trdata:index}}\
-        <tr class="{{=index%2==0?"even":"odd"}}{{?it.__appendIndex__}} ctable-hover{{?}}" data-index="{{=(it.__appendIndex__||0)+index}}">\
+        <tr class="{{=index%2==0?"even":"odd"}}{{?it.__appendIndex__}} am-fadeinright{{?}}" data-index="{{=(it.__appendIndex__||0)+index}}">\
         {{?it.sortable}}<td class="chandler"></td>{{?}}\
-        {{?it.checkbox}}<td><input type="checkbox" class="ctable-checkbox" value="{{=(it.__appendIndex__||0)+index}}"></td>{{?}}\
+        {{?it.checkbox}}<td><input type="{{?it.radiobox}}radio{{??}}checkbox{{?}}" name="cr{{=it.id}}" class="ctable-checkbox" value="{{=(it.__appendIndex__||0)+index}}"></td>{{?}}\
         {{~it.cols :col:colindex}}\
             <td{{?col.align}} align="{{=col.align}}"{{?}}{{?col.cls}} class="{{=col.cls}}"{{?}}{{?col.style}} style="{{=col.style}}"{{?}}>{{=trdata[colindex]}}</td>\
         {{~}}</tr>{{~}}');
     var defaults = {
         //开启行选择
         checkbox: false,
+        //开启单选
+        radiobox: false,
         //开启排序
         sortable: false,
         //别名
@@ -161,6 +164,10 @@ define(function(require, exports, module) {
          * @return {[type]}       [description]
          */
         append: function(datas, prepend) {
+            //如果不是数组，转换成数组
+            if (!(datas instanceof Array)) {
+                datas = [datas];
+            }
             if (!datas.length) return;
             //已经存在的数量
             this.__appendIndex__ = this.cache.length;
@@ -175,7 +182,9 @@ define(function(require, exports, module) {
             if (this.checkall) {
                 this.checkall.checked = false;
             }
-            this.isScrolling();
+            if (this.isScrolling() && tr[0].scrollIntoViewIfNeeded) {
+                tr[0].scrollIntoViewIfNeeded();
+            };
             return tr;
         },
 
@@ -237,7 +246,9 @@ define(function(require, exports, module) {
         config = $.extend(true, {}, defaults, config);
         //动态ID
         config.id = config.id || _.uniqueId("ctable");
-
+        if (config.radiobox) {
+            config.checkbox = true;
+        }
         //预处理表头分组
         config._colgroup = false;
         var _colgroupCache, _fullWidth = 0;
@@ -276,7 +287,7 @@ define(function(require, exports, module) {
             statubar = config.statubar = foot.find('.ctable-status'),
             pagebar = config.pagebar = foot.find('.pager'),
             checkall = config.checkall = thead.find('.ctable-checkall')[0];
-        $(config.container).append(table);
+        config.container = $(config.container).append(table);
 
         //body scroll
         var shadowed;
@@ -317,18 +328,20 @@ define(function(require, exports, module) {
         }
         //多选
         if (config.checkbox) {
-            $(checkall).on('click', function(e) {
-                //全选
-                e.stopPropagation();
-                var ck = this.checked;
-                tbody.find('.ctable-checkbox').each(function(i, o) {
-                    o.checked = ck;
+            if (config.radiobox) {
+                $(checkall).on('click', function(e) {
+                    //全选
+                    // e.stopPropagation();
+                    var ck = this.checked;
+                    tbody.find('.ctable-checkbox').each(function(i, o) {
+                        o.checked = ck;
+                    });
+                    config.onselect.call(this, this.checked ? config.cache : []);
                 });
-                config.onselect.call(this, this.checked ? config.cache : []);
-            });
+            }
             tbody.on('click', '.ctable-checkbox', function(e) {
                 //全选
-                e.stopPropagation();
+                // e.stopPropagation();
                 var ckall = true;
                 tbody.find('.ctable-checkbox').each(function(i, o) {
                     if (!o.checked) {
@@ -336,7 +349,9 @@ define(function(require, exports, module) {
                         return false;
                     }
                 });
-                checkall.checked = ckall;
+                if (checkall) {
+                    checkall.checked = ckall;
+                }
                 config.onselect.call(this, config.getSelected(), config.cache[this.value]);
             });
         }

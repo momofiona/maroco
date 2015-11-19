@@ -271,14 +271,16 @@
             }
         };
     } : 0;
-    var button = function(dom, cName) {
+    var button = UI.button = function(dom, cName, hover) {
         //主动触发
         var _t = $(dom);
         if (_t.data('btype') === undefined) {
             cName = cName || _.find(btnClassNames, function(name) {
                 return _t.hasClass(name);
             }) || 'log';
-            _t.addClass(cName + '-hover');
+            if(hover){
+                _t.addClass(cName + '-hover');
+            }
             _t.mouseenter(function() {
                 _t.addClass(cName + '-hover');
             }).mouseleave(function() {
@@ -310,7 +312,7 @@
     };
     //被动触发
     $(document).on('mouseenter', '.b.' + btnClassNames.join(',.b.'), function() {
-        button(this);
+        button(this,false,true);
     }).on('click', 'a[href="#"]', function(e) {
         e.preventDefault();
     });

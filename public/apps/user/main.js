@@ -277,7 +277,8 @@ define(function(require, exports, module) {
 
                 //search
                 //no filter
-                this.$('.ac-search').searchbox({
+                searchbox({
+                    el:this.$('.ac-search'),
                     placeholder: '在当前部门下查找',
                     value: '',
                     search: function(value, filter) {

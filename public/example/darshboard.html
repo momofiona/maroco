@@ -90,18 +90,113 @@
         </div>
     </div>
     <div class="clear"></div>
+    <div class="m1 row">
+        <h3>API定义规则：@e.g. 联系人contact </h3>
+        <blockquote class="care">
+            <li>页面不使用MVC：接口遵循REST</li>
+            <li>页面使用MVC：/contact/ 来路由联系人页面,/api/contact/ 来获取联系人列表</li>
+            <li>页面使用MVC并且不要"/api/"命名空间：使用MVC URL; MVC页面路由不能以 get、post、put、delete、patch 结尾</li>
+        </blockquote>
+        <table class="ctable">
+            <tbody>
+                <tr>
+                    <th align="left">资源</th>
+                    <th>RESTFUL postType</th>
+                    <th>RESTFUL URL</th>
+                    <th>MVC postType</th>
+                    <th>MVC URL</th>
+                </tr>
+                <tr>
+                    <th align="left">获取联系人列表</th>
+                    <td>GET</td>
+                    <td>/contact/</td>
+                    <td>GET</td>
+                    <td>/contact/get/</td>
+                </tr>
+                <tr>
+                    <th align="left">获取某一分类下的联系人列表</th>
+                    <td>GET</td>
+                    <td>/contact/?type=23</td>
+                    <td>GET</td>
+                    <td>/contact/get/?gid=23</td>
+                </tr>
+                <tr>
+                    <th align="left">添加联系人</th>
+                    <td>POST</td>
+                    <td>/contact/</td>
+                    <td>POST</td>
+                    <td>/contact/post/</td>
+                </tr>
+                <tr>
+                    <th align="left">编辑联系人(ID: 12)</th>
+                    <td>PUT / PATCH</td>
+                    <td>/contact/12/</td>
+                    <td>POST</td>
+                    <td>/contact/put/</td>
+                </tr>
+                <tr>
+                    <th align="left">删除联系人</th>
+                    <td>DELETE</td>
+                    <td>/contact/12/</td>
+                    <td>POST</td>
+                    <td>/contact/delete/</td>
+                </tr>
+                <tr>
+                    <th colspan="5"></th>
+                </tr>
+                <tr>
+                    <th align="left">批量导入联系人</th>
+                    <td>POST</td>
+                    <td>/contact/?action=import</td>
+                    <td>POST</td>
+                    <td>/contact/post/?action=import</td>
+                </tr>
+                <tr>
+                    <th colspan="5"></th>
+                </tr>
+                <tr>
+                    <th align="left">获取联系人分组</th>
+                    <td>GET</td>
+                    <td>/contact/group/</td>
+                    <td>GET</td>
+                    <td>/contact/group/get/</td>
+                </tr>
+                <tr>
+                    <th align="left">添加联系人分组</th>
+                    <td>POST</td>
+                    <td>/contact/group/</td>
+                    <td>POST</td>
+                    <td>/contact/group/post/</td>
+                </tr>
+                <tr>
+                    <th align="left">编辑联系人分组(ID: 23)</th>
+                    <td>PUT/ PATCH</td>
+                    <td>/contact/group/23/</td>
+                    <td>POST</td>
+                    <td>/contact/group/put/?gid=23</td>
+                </tr>
+                <tr>
+                    <th align="left">删除联系人分组</th>
+                    <td>DELETE</td>
+                    <td>/contact/group/23/</td>
+                    <td>POST</td>
+                    <td>/contact/group/delete/</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
     <ul class="steps m1">
-        <li class="x4 note">完成公司的三个平台</li>
-        <li class="x4">打完星际2所有战役</li>
-        <li class="x4">玩转电钢琴</li>
-        <li class="x4">交朋友</li>
+        <li class="x5 note">完成公司的三个平台</li>
+        <li class="x5">打完星际2所有战役</li>
+        <li class="x5">玩转电钢琴</li>
+        <li class="x5">游历交友</li>
+        <li class="x5">出家</li>
     </ul>
     <blockquote class="error clear">
         <img src="cloud/img/wxcard.png" class="w5 xr m4" title="扫我捐红包">
-        <p>User Center里那几个案例的bug不解了，很老的代码，没有参考价值。</p>
-        <p>由于Components还有改进的空间，一直么有写很具体的使用文档，目前1.0版本支持IE6，2.0版本开始不再继续维护IE67，按照目前win7的IE8为维护底线，而且会慢慢删除原来的IE67 hack，瞟一瞟还蛮多。</p>
-        <p>未来时间要重新安排下，好好调整下生活，所以2.0版本后要歇一段时间。从小养成独自承担的坏毛病，EQ点错了技能点，对集体活动没兴趣，懒得客套敷衍，和所有人和睦但保持距离，经过这几年时间发现，这不是想要的自己，歇一歇把自己放出来【解禁 :)】，马老师说：没有人能改变他人，所有改变都是从自己开始的。</p>
-        <p>马老师还说：如果自己没条件建起创业团队，就要去找有条件的团队，加入他们一起干。这就是我这次离职的导火线，听起来和先前那句话构成了悖论，总之让我发觉IQ高了不是好事，要停下来补补EQ。</p>
+        <p style="text-indent:2em">User Center里那几个案例的bug不解了，很老的代码，没有参考价值。由于Components还有改进的空间，一直么有写很具体的使用文档，目前1.0版本支持IE6，2.0版本开始不再继续维护IE67，按照目前win7的IE8为维护底线，而且会慢慢删除原来的IE67 hack，瞟一瞟还蛮多。</p>
+        <p style="text-indent:2em">经过这几年时间发现自己人生点错技能点了，独立思考独立解决的能力就是小家子格局，对集体活动没兴趣，懒得客套敷衍，和所有人和睦且保持距离，这不是想要的自己，要停下来补补EQ。未来时间要重新安排下，所以2.0版本后要歇一歇把自己放出来【解禁 :)】，好好调整下生活。</p>
+        <p style="text-indent:2em">马老师说：“没有人能改变他人，所有改变都是从自己开始的；如果自己没条件建起创业团队，就要去找有条件的团队，加入他们一起干”。这就是我最近这次离职的导火线，和前半句话话构成了悖论，总之：IQ会买菜就好，EQ再高不嫌少，所以决定把过去那些年想做而没有去做的事情做一遍，除了把妹，其他的都应该不用跪搓衣板吧。</p>
     </blockquote>
     <div class="footman"></div>
     <script>

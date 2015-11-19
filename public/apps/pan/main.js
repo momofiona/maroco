@@ -36,7 +36,8 @@ define(function(require, exports, module) {
         });
 
         //搜索框
-        HTML.find('.ac-search').searchbox({
+        searchbox({
+            el:HTML.find('.ac-search'),
             placeholder: '搜索我的文件',
             value: '',
             search: function(value, filter) {

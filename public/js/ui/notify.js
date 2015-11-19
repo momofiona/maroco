@@ -333,14 +333,14 @@ define(function(require, exports, module) {
                 title: '请确认',
                 buttons: [{
                     label: '<i class="f mr f-done"></i>确定',
-                    cls: 'note',
+                    cls: config.okCls||'note',
                     click: 'doComfirm'
                 }, {
                     label: '取消',
                     click: 'doComfirm'
                 }],
                 doComfirm: function(e, _config, op) {
-                    config.callback && config.callback(!!op.cls);
+                    _config.callback && _config.callback(!!op.cls);
                     _config.close(e, _config);
                 },
                 create: function() {
