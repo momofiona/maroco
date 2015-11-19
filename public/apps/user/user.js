@@ -162,7 +162,8 @@ define(function(require, exports, module) {
                 this.reset();
                 this.el.appendTo(opt.container);
                 //searchbox
-                this.$('.ac-role-search').searchbox({
+                searchbox({
+                    el:this.$('.ac-role-search'),
                     placeholder: '筛选角色',
                     value: '',
                     input: function(value, filter) {

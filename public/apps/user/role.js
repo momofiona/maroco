@@ -234,7 +234,8 @@ define(function(require, exports, module) {
             init: function() {
                 var _user = this;
                 //search
-                this.seachbox = userManeger.$('.ac-search').searchbox({
+                this.seachbox = searchbox({
+                    el:userManeger.$('.ac-search'),
                     placeholder: '在当部门和角色下查找',
                     value: '',
                     search: function(value, filter) {
