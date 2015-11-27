@@ -110,7 +110,7 @@ define(function(require, exports, module) {
                 },
                 FileUploaded: function(up, file, data) {
                     data = JSON.parse(data.response);
-                    //服务器自定义错误，切换到错误模式
+/*                    //服务器自定义错误，切换到错误模式
                     if (!data.success) {
                         up.trigger('Error', {
                             code: 'sugon',
@@ -118,7 +118,7 @@ define(function(require, exports, module) {
                             file: file
                         });
                         return;
-                    }
+                    }*/
                     file.dom.fadeOut(function() {
                         $(this).remove();
                     }).find('.ac-cancel').remove();
