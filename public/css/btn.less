@@ -24,6 +24,9 @@
     .f, .i {
         vertical-align: text-bottom; //chrome
     }
+    div&{
+        display: block;
+    }
     /*
     问题：在ie6中，当文字和img、input、textarea、select、object等对象在同一个容器中的时候，line-height属性失效。
 只有全文字时，line-height属性才有效。
@@ -174,7 +177,6 @@ vertical-align:middle;
 .group {
     display: inline-block;
     vertical-align: middle;
-    padding-left: 1px;
     >.active{
         box-shadow: inset 0 5px 10px -5px rgba(0, 0, 0, .3);
     }
@@ -189,6 +191,7 @@ vertical-align:middle;
     }
     :first-child {
         border-radius: @radius 0 0 @radius;
+        margin-left: 0;
     }
     :last-child {
         border-radius: 0 @radius @radius 0;

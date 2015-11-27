@@ -212,7 +212,7 @@ define(function(require, exports, module) {
             tr.html($(_tbody(this)).html());
         },
         create: $.noop, //刚创建时
-        onselect: $.noop, //勾选动作时
+        onSelected: $.noop, //勾选动作时
         onscroll: $.noop, //滚动内容时
         beforeLoad: $.noop,
         afterLoad: $.noop,
@@ -336,7 +336,7 @@ define(function(require, exports, module) {
                     tbody.find('.ctable-checkbox').each(function(i, o) {
                         o.checked = ck;
                     });
-                    config.onselect.call(this, this.checked ? config.cache : []);
+                    config.onSelected(this.checked ? config.cache : []);
                 });
             }
             tbody.on('click', '.ctable-checkbox', function(e) {
@@ -352,7 +352,7 @@ define(function(require, exports, module) {
                 if (checkall) {
                     checkall.checked = ckall;
                 }
-                config.onselect.call(this, config.getSelected(), config.cache[this.value]);
+                config.onSelected(ckall ? config.cache : config.getSelected());
             });
         }
         //row hover effect
@@ -444,6 +444,7 @@ define(function(require, exports, module) {
                 //如果返回了总数
                 statubar.html(config.status(data.total, loader.page, loader.count));
                 config.afterLoad(data, cache);
+                config.onSelected([]);
             }
         });
 
