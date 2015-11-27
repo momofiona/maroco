@@ -328,7 +328,7 @@ define(function(require, exports, module) {
         }
         //多选
         if (config.checkbox) {
-            if (config.radiobox) {
+            if (!config.radiobox) {
                 $(checkall).on('click', function(e) {
                     //全选
                     // e.stopPropagation();

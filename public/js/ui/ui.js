@@ -155,13 +155,14 @@
         return this.on('input', handler);
     };
     //扩展serializeObject
-    $.fn.serializeObject = function(trim) {
+    $.fn.serializeObject = function(trim, filterBlank) {
         var params = this.serializeArray(),
             res = {},
             tmp, v, un;
         _.each(params, function(o) {
             tmp = res[o.name];
             v = trim ? $.trim(o.value) : o.value;
+            if (filterBlank && v === "") return;
             if (tmp !== un) {
                 if (_.isArray(tmp)) {
                     tmp.push(v);
@@ -182,12 +183,12 @@
      */
     UI.loader = function(conf) {
         conf = $.extend({
-            baseparams:{},
+            baseparams: {},
             beforeLoad: $.noop,
             afterLoad: $.noop,
-            alias:{
-                page:'page',
-                count:'count'
+            alias: {
+                page: 'page',
+                count: 'count'
             },
             load: function(_filter) {
                 if (!this.url) return;
@@ -199,9 +200,9 @@
                     if (this.count) this.page = _filter.page || 1;
                 }
                 this.beforeLoad(_filter);
-                var pager={};
-                pager[this.alias.count]=this.count;
-                pager[this.alias.page]=this.page;
+                var pager = {};
+                pager[this.alias.count] = this.count;
+                pager[this.alias.page] = this.page;
                 this.xhr = $.ajax({
                     url: this.url,
                     type: this.loadtype,
@@ -278,7 +279,7 @@
             cName = cName || _.find(btnClassNames, function(name) {
                 return _t.hasClass(name);
             }) || 'log';
-            if(hover){
+            if (hover) {
                 _t.addClass(cName + '-hover');
             }
             _t.mouseenter(function() {
@@ -312,7 +313,7 @@
     };
     //被动触发
     $(document).on('mouseenter', '.b.' + btnClassNames.join(',.b.'), function() {
-        button(this,false,true);
+        button(this, false, true);
     }).on('click', 'a[href="#"]', function(e) {
         e.preventDefault();
     });
@@ -446,10 +447,10 @@
             onExpand: $.noop,
             //收缩时回调
             onCollapse: $.noop,
-            expandAll:function(){
+            expandAll: function() {
                 this.el.find('a+ul').show().prev().addClass(this.openCls);
             },
-            collapseAll:function(){
+            collapseAll: function() {
                 this.el.find('a+ul').hide().prev().removeClass(this.openCls);
             },
             //点击时触发

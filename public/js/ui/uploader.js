@@ -126,7 +126,7 @@ define(function(require, exports, module) {
                             },
                             FileUploaded: function(up, file, data) {
                                 data = JSON.parse(data.response);
-                                //服务器自定义错误，切换到错误模式
+/*                                //服务器自定义错误，切换到错误模式
                                 if (data.code) {
                                     up.trigger('Error', {
                                         code: 'sugon',
@@ -134,7 +134,7 @@ define(function(require, exports, module) {
                                         file: file
                                     });
                                     return;
-                                }
+                                }*/
                                 up.removeFile(file);
                                 var settings = up.settings;
                                 file.bar.parent().parent().html('<img style="position:absolute;margin:-22px 0 0 -22px;" src="' + UI.server + 'cloud/img/ok.png">' + '成功上传' + dialog.ellipsis(settings.uploadPath, 30));
