@@ -296,7 +296,7 @@ define(function(require, exports, module) {
                             ];
                         });
                     },
-                    onselect: function(selectedData, thisData) {
+                    onSelected: function(selectedData) {
                         userManeger.toolbar.find('.ac-onselect').toggleClass('hide', !selectedData.length)
                     },
                     count: UI.count,
