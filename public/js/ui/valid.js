@@ -14,6 +14,10 @@ define(function(require, exports, module) {
             eachValidField: $.noop,
             invalid: $.noop,
             valid: $.noop,
+            //检查制定的元素
+            validField:function(field){
+                return validateField.call(field,{},this).isValid;
+            },
             label: function(msg, isSafe) {
                 if (isSafe) {
                     return msg ? '<span class="c-safe"><i class="f f-done"></i> ' + msg + '</span>' : '';

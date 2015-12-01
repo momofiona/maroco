@@ -328,6 +328,7 @@
                 }
             },
             onActive: $.noop,
+            onClick: $.noop,
             cache: {},
             getPanel: function(o) {
                 //IE67对于js插入的a标签，取.attr('href')会带上location.href
@@ -352,6 +353,7 @@
             },
             events: {
                 'click >.tab a': function(e, conf) {
+                    conf.onClick.call(this, e, conf);
                     if (this === conf.tab) return;
                     var t = this,
                         tab = $(t),
