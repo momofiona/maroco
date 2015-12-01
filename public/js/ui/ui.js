@@ -353,7 +353,9 @@
             },
             events: {
                 'click >.tab a': function(e, conf) {
-                    conf.onClick.call(this, e, conf);
+                    if(e){
+                        conf.onClick.call(this, e, conf);
+                    }
                     if (this === conf.tab) return;
                     var t = this,
                         tab = $(t),
