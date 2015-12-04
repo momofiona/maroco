@@ -82,6 +82,10 @@ define(function(require, exports, module) {
                 rule: /^[^\\\/:\*\?\"<>\|]*$/,
                 label: '不能包含\/:*?"<>|等字符'
             },
+            ip: {
+                rule: /^(?:(25[0-5]|2[0-4]\d|1\d{2}|[1-9]\d|[0-9]\.)){3}(25[0-5]|2[0-4]\d|1\d{2}|[1-9]\d|[0-9])$/,
+                label: '不合法的IP地址'
+            },
             //输入类别算长度，选择类算个数
             length: {
                 rule: function(value, pm, status, rule) {
