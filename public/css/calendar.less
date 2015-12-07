@@ -1,0 +1,65 @@
+.calendar {
+    display: block;
+    background: #fff;
+    border-radius: 2px;
+    border: solid 1px #ddd;
+    width: 294px;
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        width: 100%;
+        text-align: center;
+        line-height: 40px;
+    }
+    thead th{
+        color: #BBB;
+        font-size: 12px;
+        line-height: 30px;
+        font-weight: normal;
+        border: solid 1px transparent;
+        border-width: 0 1px;
+    }
+
+    tr td:first-child {
+        border-left-color: transparent;
+    }
+    tr td:last-child {
+        border-right-color: transparent;
+    }
+    tr:last-child td {
+        border-bottom-color: transparent;
+    }
+    tbody td {
+        border: solid 1px #ebebeb;
+        font-size: 14px;
+        color: #ccc;
+        cursor: default;
+        font-family: arial;
+        &:hover {
+            border-color:#F04A54;
+            border-style: double;
+        }
+    }
+    .calendar-b{
+        margin:0 -1px -1px -1px;
+    }
+    //本月
+    .on {
+        color: #333;
+    }
+    .today{
+        background: #eeeef0;
+    }
+    .active {
+        color: #fff;
+        background: #F04A54;
+    }
+    //禁止选择
+    .disabled {
+        color: #bbb;
+        background: #eeeef0;
+        &:hover {
+            border-color:#ebebeb;
+        }
+    }
+}

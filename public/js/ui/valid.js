@@ -14,6 +14,10 @@ define(function(require, exports, module) {
             eachValidField: $.noop,
             invalid: $.noop,
             valid: $.noop,
+            //检查制定的元素
+            validField:function(field){
+                return validateField.call(field,{},this).isValid;
+            },
             label: function(msg, isSafe) {
                 if (isSafe) {
                     return msg ? '<span class="c-safe"><i class="f f-done"></i> ' + msg + '</span>' : '';
@@ -77,6 +81,10 @@ define(function(require, exports, module) {
             charsafe: {
                 rule: /^[^\\\/:\*\?\"<>\|]*$/,
                 label: '不能包含\/:*?"<>|等字符'
+            },
+            ip: {
+                rule: /^(?:(25[0-5]|2[0-4]\d|1\d{2}|[1-9]\d|[0-9]\.)){3}(25[0-5]|2[0-4]\d|1\d{2}|[1-9]\d|[0-9])$/,
+                label: '不合法的IP地址'
             },
             //输入类别算长度，选择类算个数
             length: {
