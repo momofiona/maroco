@@ -336,6 +336,9 @@ var calendar = UI({
         }
         return fmt;
     },
+    // 分成三个模块 日模块，月模块，年模块，可能还有时间模块....理想情况下想这么做的，偷偷懒就直接插HTML吧
+
+    // 
     //渲染日
     render: function(year, month) {
         //先获取基准月，没有就用当前月，
@@ -343,7 +346,8 @@ var calendar = UI({
         var monthDays = new Date(year, month, 0).getDate(),
             lastMonthDays = new Date(year, month - 1, 0).getDate(),
             firstDayWeek = new Date(year, month, 1).getDay();
-
+        //绘制一个7x7的表格
+        
         //如果不是周一向前遍历填补空白
         //向后遍历到月末，向后填补下月日历
     },
