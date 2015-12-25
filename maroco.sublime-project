@@ -14,6 +14,9 @@
 		},
 		{
 			"path": "D:\\workspace\\o2o\\code\\ecology\\ecology-admin-gprs\\src\\main\\webapp"
+		},
+		{
+			"path": "D:\\workspace\\o2o\\code\\ecology\\ecology-admin-web\\src\\main\\webapp\\static\\js\\vendor\\echarts"
 		}
 	]
 }

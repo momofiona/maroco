@@ -30,7 +30,7 @@ body {
     .tab {
         border: none;
         a {
-            border-color: transparent;
+            border:none;
             border-radius: 3px 0 0 3px;
             color: @appFontColor;
             padding: 10px 0;
@@ -64,24 +64,24 @@ body {
         left: 0;
     }
     .main-container {
-        width: 100%;
-        height: 100%;
+        overflow:hidden;
     }
 }
 
 #header {
     right: 0;
+    bottom:auto;
     left: @appbarWidth+@sidebarWidth;
     padding: 0;
     color: #fbe9d2;
     // background: @sidebarBgColor;
-    border-bottom: 1px solid #d9d9d9;
+    //border-bottom: 1px solid #d9d9d9;
     z-index: 300;
     .closepen & {
         left: 0;
     }
     .dropdown {
-        border-top: solid 2px #E69227;
+        border:solid 1px #293038;
         color: #333;
     }
     >.log {
@@ -116,8 +116,12 @@ body {
         top: 0;
         right: 210px;
         overflow: hidden;
-        left: 74px;
+        left: 26px;
         font-size: 12px;
+        transition: left .3s ease;
+        .closepen & {
+            left: 73px;
+        }
     }
     .tab {
         height: 36px;
@@ -125,44 +129,64 @@ body {
         .ac-close {
             cursor: pointer;
             position: absolute;
-            font-size: 12px;
+            transition: top .3s ease;
             right: 0px;
             top: -20px;
-            transition: top .3s ease;
+            color: #337ab7;
             transform: scale(.8);
             border-radius: 16px;
             width: 18px;
             height: 18px;
             line-height: 18px;
-            :hover {
-                :hover {
-                    color: #fff;
-                    background: #f33;
-                }
+            &:hover {
+                color: #fff;
+                background: #ff3333;
             }
+        }
+        .ac-fresh{
+            top: 11px;
+            left:-26px;
+            color: #d0d0d0;
+            display:none;
+            position: absolute;
+            transition: left .3s ease;
         }
         li {
             display: inline-block;
+            overflow: hidden;
             float: none;
             vertical-align: top;
-            &:hover .ac-close {
+            &.active{
+              margin-top:1px;
+            }
+            &:hover {
+              .ac-close {
                 top: 0px;
+              }
+              .ac-fresh{
+                left:6px;
+              }
             }
         }
         a {
-            border-right: solid 1px #ddd;
-            border-left: solid 1px #ddd;
-            border-radius: 0;
+            border: 0;
+            color: #f8f8f8;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
             max-width: 120px;
-            margin: 0 0 0 -1px;
-            background: @sidebarBgColor;
+            min-width: 70px;
+            padding:10px 25px;
+            &:hover{
+                background: #000;
+            }
         }
         .active a {
             background: #fff;
-            border-top-color: #E46D1C;
+            color: #000;
+            .ac-fresh{
+                display:block;
+            }
         }
     }
 }
@@ -216,12 +240,3 @@ body {
     }
 }
 
-#sitemapHome {
-    padding: 0;
-    margin: 0;
-    line-height: 30px;
-    max-height: 400px;
-    a {
-        padding: 0 10px 0 30px;
-    }
-}
