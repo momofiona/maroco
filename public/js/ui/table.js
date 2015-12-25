@@ -412,6 +412,7 @@ define(function(require, exports, module) {
             baseparams: config.baseparams,
             alias: config.alias,
             loadtip: config.loadtip,
+            loadtype: config.loadtype,
             count: config.count,
             url: config.url,
             beforeLoad: function(filter) {
