@@ -79,7 +79,7 @@ define(function(require, exports, module) {
         <div class="ctable-foot"><div class="ctable-status"></div>{{?it.count}}<div class="pager"></div>{{?}}</div>\
         </div>');
     var _tbody = _.dot('{{~it.data :trdata:index}}\
-        <tr class="{{=index%2==0?"even":"odd"}}{{?it.__appendIndex__}} am-fadeinright{{?}}" data-index="{{=(it.__appendIndex__||0)+index}}">\
+        <tr class="{{=index%2==0?"even":"odd"}}{{?it.__appendIndex__}} am-fadeinright{{?}} {{=trdata.cls||""}}" data-index="{{=(it.__appendIndex__||0)+index}}">\
         {{?it.sortable}}<td class="chandler"></td>{{?}}\
         {{?it.checkbox}}<td><input type="{{?it.radiobox}}radio{{??}}checkbox{{?}}" name="cr{{=it.id}}" class="ctable-checkbox" value="{{=(it.__appendIndex__||0)+index}}"></td>{{?}}\
         {{~it.cols :col:colindex}}\
