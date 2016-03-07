@@ -83,7 +83,7 @@ define(function(require, exports, module) {
                 label: '不能包含\/:*?"<>|等字符'
             },
             ip: {
-                rule: /^(?:(25[0-5]|2[0-4]\d|1\d{2}|[1-9]\d|[0-9]\.)){3}(25[0-5]|2[0-4]\d|1\d{2}|[1-9]\d|[0-9])$/,
+                rule: /^(?:(25[0-5]|2[0-4]\d|1\d{2}|[1-9]\d|[0-9])\.){3}(25[0-5]|2[0-4]\d|1\d{2}|[1-9]\d|[0-9])$/,
                 label: '不合法的IP地址'
             },
             //输入类别算长度，选择类算个数
@@ -164,7 +164,7 @@ define(function(require, exports, module) {
             //第三个附加参数标记小数位
             if ($.isNumeric(rg[2])) {
                 label += ', ' + labels[4];
-                if (error || num.replace(/.*\./, '').length > rg[2]) {
+                if (error || ((num+'').indexOf(".")!=-1 && num.replace(/.*\./, '').length > rg[2]) ) {
                     error = 1;
                 }
             }

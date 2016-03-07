@@ -17,6 +17,9 @@
 		},
 		{
 			"path": "D:\\workspace\\o2o\\code\\ecology\\ecology-admin-web\\src\\main\\webapp\\static\\js\\vendor\\echarts"
+		},
+		{
+			"path": "D:\\github\\koa examples"
 		}
 	]
 }
