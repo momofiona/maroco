@@ -11,8 +11,6 @@ define(function(require, exports, module) {
         displayedPages: 5, //中间个数
         prevText: '&lt;',
         nextText: '&gt;',
-        firstText: '|&lt;',
-        lastText: '&gt;|',
         ellipseText: '&hellip;',
         onPageClick: $.noop,
         onInit: $.noop,
@@ -48,22 +46,27 @@ define(function(require, exports, module) {
         },
         render: function(total, page, count) {
             total = parseInt(total);
+            var r = '';
             if (!total) {
-                return this.el.empty();
+                if(count>0){
+                    r += this.link(page-1, page, this.prevText, 'prev', page == 1, 1);
+                    r += ' &nbsp; 第<input type="text" class="text-center nobd va-t text w' + (page > 99 ? 2 : 1) + ' tiny ac-page" value="' + page + '">页 ';
+                    r += this.link(page+1, page, this.nextText, 'next', false, 1);
+                }
+                return this.el.html(r);
             }
             //page>1 page<totalPage
             page = page ? this.page = page : this.page;
             //count 永远不为0
             count = count ? this.count = count : this.count;
-            var r = '',
-                totalPage = Math.ceil(total / count);
+            var totalPage = Math.ceil(total / count);
             if (totalPage == 1) return this.el.empty();
 
             //如果page超过99，使用精简模式
             if (totalPage >= this.stone) {
-                r += this.link(1, page, this.firstText, 'prev', page == 1, 1);
-                r += ' &nbsp; 第<input type="number" min="1" max="' + totalPage + '" class="text-center nobd va-t text w' + (page > 9999 ? 3 : 2) + ' tiny ac-page" value="' + page + '">页 / 共 ' + totalPage + ' 页  &nbsp; ';
-                r += this.link(totalPage, page, this.lastText, 'next', page == totalPage, 1);
+                r += this.link(page-1, page, this.prevText, 'prev', page == 1, 1);
+                r += ' &nbsp; 第<input type="text" class="text-center nobd va-t text w' + (page > 99 ? 2 : 1) + ' tiny ac-page" value="' + page + '">页 / 共 ' + totalPage + ' 页  &nbsp; ';
+                r += this.link(page+1, page, this.nextText, 'next', page == totalPage, 1);
             } else {
                 //prev
                 r += this.link(page - 1, page, this.prevText, 'prev', page == 1);

@@ -333,10 +333,12 @@ define(function(require, exports, module) {
                 title: '请确认',
                 buttons: [{
                     label: '<i class="f mr f-done"></i>确定',
-                    cls: config.okCls||'note',
+                    tag:'button',
+                    cls: (config.okCls||'note')+" ac-confirm-ok",
                     click: 'doComfirm'
                 }, {
                     label: '取消',
+                    tag:'button',
                     click: 'doComfirm'
                 }],
                 doComfirm: function(e, _config, op) {
@@ -345,6 +347,7 @@ define(function(require, exports, module) {
                 },
                 create: function() {
                     this.contentEl.css('padding', 20);
+                    this.$('.ac-confirm-ok').focus();
                 }
             }, config));
         }
