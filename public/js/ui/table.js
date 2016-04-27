@@ -122,7 +122,7 @@ define(function(require, exports, module) {
         },
         //状态栏
         status: function(total, page, count) {
-            return '共 ' + total + ' 条数据';
+            return total?'共 ' + total + ' 条数据':"";
         },
         //数据策略
         parseData: function(data) {
@@ -408,6 +408,17 @@ define(function(require, exports, module) {
             }
         });
         if (!config.count) pagebar.hide();
+        //如果count是个数组
+        if(config.count instanceof Array){
+            $('<select class="tiny text xr ctable-countswitch">'+ _.map(config.count, function (o, i) {
+                    return '<option value="'+o+'">'+o+'</option>';
+                }).join('')+'</select>').insertBefore(pagebar).change(function (e) {
+                config.loader[config.alias.count]=this.value;
+                config.loader[config.alias.page]=1;
+                config.load();
+            });
+            config.count=config.count[0];
+        }
         var loader = config.loader = UI.loader({
             baseparams: config.baseparams,
             alias: config.alias,
@@ -417,13 +428,15 @@ define(function(require, exports, module) {
             url: config.url,
             beforeLoad: function(filter) {
                 config.beforeLoad(filter);
+                table.addClass('ctable-loading');
             },
             afterLoad: function(data) {
-
+                table.removeClass('ctable-loading');
                 var cache = config.cache = config.parseData(data) || [];
                 //如果page不是第一页但是返回数据为0，则自动刷新到前一页
-                if (cache.length === 0 && this.page > 1) {
-                    this.page = this.page - 1;
+                //No No No...自动跳到最后一页
+                if (cache.length === 0 && this.page > 1 && data.total) {
+                    this.page=Math.ceil(data.total/this.count);
                     this.load();
                     return;
                 }

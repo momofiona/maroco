@@ -164,7 +164,7 @@ define(function(require, exports, module) {
             //第三个附加参数标记小数位
             if ($.isNumeric(rg[2])) {
                 label += ', ' + labels[4];
-                if (error || ((num+'').indexOf(".")!=-1 && num.replace(/.*\./, '').length > rg[2]) ) {
+                if (error || ((num+'').indexOf(".")!=-1 && num.replace(/.*\./, '').length > rg[2])) {
                     error = 1;
                 }
             }
