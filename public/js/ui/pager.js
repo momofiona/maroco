@@ -44,14 +44,20 @@ define(function(require, exports, module) {
             if (isSpan) return '<span class="' + cls + '">' + (text || page) + '</span>';
             return '<a class="' + cls + '"' + (UI.browser.ie == 6 ? ' href="#"' : '') + ' page="' + page + '">' + (text || page) + '</a>'
         },
-        render: function(total, page, count) {
+        render: function(total, page, count,dataLength) {
             total = parseInt(total);
             var r = '';
-            if (!total) {
-                if(count>0){
-                    r += this.link(page-1, page, this.prevText, 'prev', page == 1, 1);
-                    r += ' &nbsp; 第<input type="text" class="text-center nobd va-t text w' + (page > 99 ? 2 : 1) + ' tiny ac-page" value="' + page + '">页 ';
-                    r += this.link(page+1, page, this.nextText, 'next', false, 1);
+            if (!total || this.stone==0) {
+                if(total==0){
+                    r="";
+                }else if(count>0){
+                    if(page==1 && dataLength<count){
+
+                    }else{
+                        r += this.link(page-1, page, this.prevText, 'prev', page == 1, 1);
+                        r += ' &nbsp; 第<input readonly type="text" class="text-center nobd va-t text w' + (page > 99 ? 2 : 1) + ' tiny ac-page" value="' + page + '">页 &nbsp; ';
+                        r += this.link(page+1, page, this.nextText, 'next', dataLength < count, 1);
+                    }
                 }
                 return this.el.html(r);
             }

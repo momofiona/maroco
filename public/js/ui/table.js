@@ -402,6 +402,7 @@ define(function(require, exports, module) {
         //loader and pager
         var paging = pager({
             el: pagebar,
+            stone:config.stone,
             onPageClick: function(e, page) {
                 loader.page = page;
                 loader.load();
@@ -435,11 +436,11 @@ define(function(require, exports, module) {
                 var cache = config.cache = config.parseData(data) || [];
                 //如果page不是第一页但是返回数据为0，则自动刷新到前一页
                 //No No No...自动跳到最后一页
-                if (cache.length === 0 && this.page > 1 && data.total) {
+                /*if (cache.length === 0 && this.page > 1 && data.total) {
                     this.page=Math.ceil(data.total/this.count);
                     this.load();
                     return;
-                }
+                }*/
                 config.data = config.render(cache);
                 var tbodyHtml = _tbody(config);
 

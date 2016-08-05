@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+    pre {
+        background: #efefef;
+        padding: 10px;
+        margin: 10px 0 20px;
+        border-radius: 4px;
+    }
+    
+    select,button {
+        padding: 5px;
+    }
+    </style>
+</head>
+
+<body>
+    <script src="sea.js"></script>
+    <div id="region1"></div>
+    <pre>
+		$('#region1').region();
+	</pre>
+    <div id="region2"></div>
+    <pre>
+		$('#region2').region({
+				fields:["北京市","县",""]
+			});
+	</pre>
+    <div id="region3"></div>
+    <pre>
+			$('#region3').region({
+				fields:["北京市","县"]
+			});
+	</pre>
+    <div id="region4"></div>
+    <pre>
+			$('#region4').region();
+			$('#region4').region("北京市,县");
+	</pre>
+    <form action="" onsubmit="return false;">
+        <span id="region5"></span>
+        <button>submit</button>
+        <button type="button" id="getRegin5">获取结果</button>
+        <pre>
+        var getRegin5Btn = $('#getRegin5').click(function(){
+            //大多数情况下直接form表单取值
+            var rez=$('#region5').data('region');
+            alert(rez);
+        })
+        $('#region5').region({
+            accuracy: 2, //精度  1 province  2-city  3-district
+            names:['pv','ct','dt'],//修改select的name属性，默认['province','city','district']
+            onselected:function(v){
+                getRegin5Btn.prop('disabled',v.length==0);
+                console.log(v);
+            }
+        });
+    	</pre>
+    </form>
+    <script>
+    seajs.use('ui.region.min', function() {
+        $('#region1').region();
+        $('#region2').region({
+            fields: ["北京市", "县", ""]
+        });
+        $('#region3').region({
+            fields: ["北京市", "县"]
+        });
+        $('#region4').region();
+        $('#region4').region("北京市,县");
+
+
+        var getRegin5Btn = $('#getRegin5').click(function(){
+            var rez=$('#region5').data('region');
+            alert(rez);
+        })
+        $('#region5').region({
+            accuracy: 2, //精度  1 province  2-city  3-district
+            names:['pv','ct','dt'],//修改select的name属性，默认['province','city','district']
+            onselected:function(v){
+                getRegin5Btn.prop('disabled',v.length==0);
+            	console.log(v);
+            }
+        });
+    });
+    </script>
+</body>
+
+</html>
